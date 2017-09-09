@@ -19,7 +19,7 @@ public class HelloWorldTest {
     
     @Test
     public void test() {
-        assertEquals(1, 1);
+        assertEquals(new HelloWorld().helloWorld(), "Hello, World!");
     }
     
 }

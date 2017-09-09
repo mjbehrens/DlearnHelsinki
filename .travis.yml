@@ -3,7 +3,7 @@ sudo: false
 matrix:
   include:
     - language: java
-      jdk: openjdk7
+      jdk: openjdk8
       # TODO: Database setup or should we mock database in tests? Probably yes.
       # services:
       #   - postgresql

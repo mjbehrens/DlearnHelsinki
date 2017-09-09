@@ -1,0 +1,29 @@
+dist: trusty
+sudo: false
+matrix:
+  include:
+    - language: java
+      jdk:
+        - openjdk8
+        - oraclejdk8
+      # TODO: Database setup or should we mock database in tests? Probably yes.
+      # services:
+      #   - postgresql
+      before_script:
+        - cd DlearnHelsinki
+        # - psql -c ./src/main/resources/TestDB.sql -U postgres
+  # include:
+  #   - language: android
+  #     jdk:
+  #       - openjdk8
+  #       - oraclejdk8
+  #     android:
+  #       components:
+  #         - tools
+  #         - android-25
+  #         - build-tools-25.0.3
+  #     before_script:
+  #       - cd nativeScriptApp
+  #     script:
+  # TODO: How to build and run NativeScript tests
+  #       - ./gradlew build connectedCheck

@@ -10,6 +10,8 @@ matrix:
       before_script:
         - cd DlearnHelsinki
         # - psql -c ./src/main/resources/TestDB.sql -U postgres
+      after_success:
+        - mvn clean cobertura:cobertura coveralls:report
   # include:
   #   - language: android
   #     jdk:

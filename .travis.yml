@@ -3,12 +3,7 @@ sudo: false
 matrix:
   include:
     - language: java
-      jdk:
-        # TODO: The travis guide says that there is open JDK 8 support on trusty image, but it fails
-        # - openjdk8
-        - openjdk7
-        - oraclejdk8
-        - oraclejdk7 
+      jdk: openjdk7
       # TODO: Database setup or should we mock database in tests? Probably yes.
       # services:
       #   - postgresql

@@ -93,3 +93,6 @@ dist/
 nbdist/
 nbactions.xml
 .nb-gradle/
+
+# NodeJS specific
+node_modules

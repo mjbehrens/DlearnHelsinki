@@ -9,7 +9,7 @@ function User(info) {
         let viewModel = new observableModule.fromObject();
 
         viewModel.putScore = function() {
-            return fetchModule.fetch(config.apiUrl + "student/1/spidergraphs/1", {
+            return fetchModule.fetch(config.apiUrl + "students/1/spidergraphs/1", {
                 method: "PUT",
                 body: JSON.stringify({
                     _id: "1",

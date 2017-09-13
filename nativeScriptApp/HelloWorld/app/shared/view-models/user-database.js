@@ -32,4 +32,5 @@ function handleErrors(response) {
     return response;
 }
 
+// Export the module User 
 module.exports = User;

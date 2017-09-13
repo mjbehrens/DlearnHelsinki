@@ -1,0 +1,11 @@
+<Page loaded="pageLoaded">
+
+    <StackLayout orientation="vertical" horizontalAlignment="center" verticalAlignment="center" >
+       
+        <Label class="exerciseTitle" text="Press the button to gain points"/>
+
+        <Button class="button" text="+1" tap="press" />
+
+    </StackLayout>
+    
+</Page>

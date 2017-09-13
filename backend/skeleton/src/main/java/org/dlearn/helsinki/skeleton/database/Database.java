@@ -49,22 +49,22 @@ public class Database {
 		PreparedStatement ps_select = null;
 		ResultSet rs_index = null;
 		
-		String selectBarFromId = "SELECT * FROM public.\"SpiderGraphs\" WHERE _id = " + spidergraph_id + " AND student_id = " + student_id;
+		String selectSpiderGraphFromId = "SELECT * FROM public.\"SpiderGraphs\" WHERE _id = " + spidergraph_id + " AND student_id = " + student_id;
 		
 		try {
 			dbConnection = getDBConnection();
 			// Set up batch of statements
-			ps_select = dbConnection.prepareStatement(selectBarFromId);
+			ps_select = dbConnection.prepareStatement(selectSpiderGraphFromId);
 			// execute query
 			rs_index = ps_select.executeQuery();
 			while (rs_index.next()) {
 				spidergraph.set_id(spidergraph_id);
 				spidergraph.setStudent_id(student_id);
-				spidergraph.setValue1(rs_index.getInt(0));
-				spidergraph.setValue2(rs_index.getInt(1));
-				spidergraph.setValue3(rs_index.getInt(2));
-				spidergraph.setValue4(rs_index.getInt(3));
-				spidergraph.setValue5(rs_index.getInt(4));
+				spidergraph.setValue1(rs_index.getInt(1));
+				spidergraph.setValue2(rs_index.getInt(2));
+				spidergraph.setValue3(rs_index.getInt(3));
+				spidergraph.setValue4(rs_index.getInt(4));
+				spidergraph.setValue5(rs_index.getInt(5));
 			}
 
 		} catch (SQLException e) {
@@ -87,6 +87,49 @@ public class Database {
 		}
 		
 		return spidergraph;
+	}
+	
+	public SpiderGraph updateSpidergraph(SpiderGraph spidergraph) throws SQLException {
+		
+		Connection dbConnection = null;
+		PreparedStatement ps_update = null;
+		
+		SpiderGraph old_spidergraph = getSpiderGraph(spidergraph.getStudent_id(), spidergraph.get_id());
+		System.out.println(old_spidergraph.getValue1());
+		old_spidergraph.setValue1((old_spidergraph.getValue1()+1)%5);
+		
+		String updateSpidergraphFromId = "UPDATE public.\"SpiderGraphs\" SET value1 = " + old_spidergraph.getValue1() 
+				+ " WHERE _id = " + old_spidergraph.get_id() + " AND student_id = " + old_spidergraph.getStudent_id();
+
+		try {
+			dbConnection = getDBConnection();
+			ps_update = dbConnection.prepareStatement(updateSpidergraphFromId);
+			//ps_update.setInt(1, spidergraph.getValue1());
+			//ps_update.setInt(2, spidergraph.getValue2());
+			//ps_update.setInt(3, spidergraph.getValue3());
+			//ps_update.setInt(4, spidergraph.getValue4());
+			//ps_update.setInt(5, spidergraph.getValue5()); 
+			
+			//ps_update.setInt(6, spidergraph.get_id());
+			//ps_update.setInt(7, spidergraph.getStudent_id());
+			// execute update SQL statement
+			ps_update.executeUpdate();
+			
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (ps_update != null) {
+				ps_update.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+		return getSpiderGraph(spidergraph.getStudent_id(), spidergraph.get_id());
 	}
 	
 /////////////////////////////////////////////////////////

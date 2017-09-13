@@ -32,4 +32,17 @@ public class SpiderGraphService {
 		return new SpiderGraph(-1,-1,-1,-1,-1,-1,-1);
 	}
 
+	public SpiderGraph updateSpiderGraphFromid(int student_id, int spidergraph_id, SpiderGraph spidergraph) {
+		spidergraph.set_id(student_id);
+		spidergraph.setStudent_id(student_id);
+		SpiderGraph newSpider = new SpiderGraph();
+		try {
+			newSpider = db.updateSpidergraph(spidergraph);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return newSpider;
+	}
+
 }

@@ -2,7 +2,9 @@ package org.dlearn.helsinki.skeleton.resource;
 
 import java.util.ArrayList;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -28,5 +30,13 @@ public class SpiderGraphResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public SpiderGraph getSpiderGraph(@PathParam("student_id") int student_id,@PathParam("spidergraph_id") int spidergraph_id){
 		return spiderGraphService.getSpiderGraphFromid(student_id,spidergraph_id);
+	}
+	
+	@PUT
+	@Path("/{spidergraph_id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public SpiderGraph updateSpiderGraph(@PathParam("student_id") int student_id,@PathParam("spidergraph_id") int spidergraph_id, SpiderGraph spidergraph){
+		return spiderGraphService.updateSpiderGraphFromid(student_id,spidergraph_id,spidergraph);
 	}
 }

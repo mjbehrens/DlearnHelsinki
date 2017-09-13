@@ -6,10 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.dlearn.helsinki.skeleton.model.SpiderGraph;
+
 public class Database {
 	
 	private static final String DB_DRIVER = "org.postgresql.Driver";
-	private static final String DB_CONNECTION = "jdbc:postgresql://localhost:5432/postgres?verifyServerCertificate=false&useSSL=true";
+	private static final String DB_CONNECTION = "jdbc:postgresql://localhost:5432/Dlearn_db?verifyServerCertificate=false&useSSL=true";
 	private static final String DB_USER = "postgres";
 	private static final String DB_PASSWORD = "admin";
 	
@@ -39,15 +41,15 @@ public class Database {
 		
 	}
 	
-	public int getBarFromId(String id) throws SQLException{
+	public SpiderGraph getSpiderGraph(int student_id, int spidergraph_id) throws SQLException{
 		
-		int random_attr = -1;
+		SpiderGraph spidergraph = new SpiderGraph();
 		
 		Connection dbConnection = null;
 		PreparedStatement ps_select = null;
 		ResultSet rs_index = null;
 		
-		String selectBarFromId = "SELECT * FROM nightapp_database.bars WHERE _id = \"" + id + "\"";
+		String selectBarFromId = "SELECT * FROM public.\"SpiderGraphs\" WHERE _id = " + spidergraph_id + " AND student_id = " + student_id;
 		
 		try {
 			dbConnection = getDBConnection();
@@ -56,7 +58,13 @@ public class Database {
 			// execute query
 			rs_index = ps_select.executeQuery();
 			while (rs_index.next()) {
-				random_attr = rs_index.getInt(0);
+				spidergraph.set_id(spidergraph_id);
+				spidergraph.setStudent_id(student_id);
+				spidergraph.setValue1(rs_index.getInt(0));
+				spidergraph.setValue2(rs_index.getInt(1));
+				spidergraph.setValue3(rs_index.getInt(2));
+				spidergraph.setValue4(rs_index.getInt(3));
+				spidergraph.setValue5(rs_index.getInt(4));
 			}
 
 		} catch (SQLException e) {
@@ -78,7 +86,7 @@ public class Database {
 			}
 		}
 		
-		return random_attr;
+		return spidergraph;
 	}
 	
 /////////////////////////////////////////////////////////

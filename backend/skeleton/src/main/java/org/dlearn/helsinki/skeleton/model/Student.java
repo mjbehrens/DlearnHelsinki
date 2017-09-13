@@ -8,6 +8,10 @@ public class Student {
 	public String username;
 	public String password;
 	
+	public Student(){
+		super();
+	}
+	
 	public Student(int _id, String lastname, String firstname, String username,
 			String password) {
 		super();

@@ -1,0 +1,11 @@
+<Page loaded="pageLoaded">
+
+    <StackLayout orientation="vertical">
+
+        <Label text ="Hello world"/>
+
+        <Button text="TOUCH ME" tap="press"/>
+
+    </StackLayout>
+
+</Page>

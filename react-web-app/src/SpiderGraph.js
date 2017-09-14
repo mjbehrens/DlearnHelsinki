@@ -6,7 +6,8 @@ class SpiderGraph extends Component {
 constructor(props) {
     super(props);
     this.state = {
-      url: "http://10.0.200.185:8080/skeleton/webapi/students/1/spidergraphs/1",
+      cpt: 0,
+      url: "http://172.20.10.3:8080/skeleton/webapi/students/1/spidergraphs/1",
       data: {
 	  labels: ['Value1', 'Value2', 'Value3', 'Value4', 'Value5'],
 	  datasets: [
@@ -18,7 +19,7 @@ constructor(props) {
 		  pointBorderColor: '#fff',
 		  pointHoverBackgroundColor: '#fff',
 		  pointHoverBorderColor: 'rgba(179,181,198,1)',
-		  data: [0, 0, 0, 0, 0]
+		  data: [0, 2, 5, 8, 4]
 		}
 	  ]}
 	};
@@ -61,6 +62,25 @@ constructor(props) {
     return (
       <div>
         <Radar data={this.state.data} />
+        <p>
+        <button onClick={() => this.setState({...this.state,
+          cpt: this.state.cpt + 1,
+		  data: {...this.state.data, datasets: [
+			{
+			  label: "Test SpiderGraph",
+			  backgroundColor: "rgba(179,181,198,0.2)",
+			  borderColor: "rgba(179,181,198,1)",
+			  pointBackgroundColor: "rgba(179,181,198,1)",
+			  pointBorderColor: "#fff",
+			  pointHoverBackgroundColor: "#fff",
+			  pointHoverBorderColor: "rgba(179,181,198,1)",
+			  data: [this.state.cpt, 2, 5, 8, 4]
+			}
+		  ]},
+		})
+        }>Click me!</button>
+        <span>{this.state.cpt}</span>
+        </p>
       </div>
     );
   }

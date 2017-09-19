@@ -1,2 +1,15 @@
 dist: trusty
 sudo: false
+
+language: node_js
+node_js:
+  - '8'
+  - '7'
+  - '6'
+
+before_script:
+  - cd react-web-app
+  - npm install
+
+after_success:
+  - npm run coveralls

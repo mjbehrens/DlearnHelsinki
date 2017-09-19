@@ -9,19 +9,19 @@ constructor(props) {
       cpt: 0,
       url: "http://172.20.10.3:8080/skeleton/webapi/students/1/spidergraphs/1",
       data: {
-	  labels: ['Value1', 'Value2', 'Value3', 'Value4', 'Value5'],
-	  datasets: [
-		{
-		  label: 0,
-		  backgroundColor: 'rgba(179,181,198,0.2)',
-		  borderColor: 'rgba(179,181,198,1)',
-		  pointBackgroundColor: 'rgba(179,181,198,1)',
-		  pointBorderColor: '#fff',
-		  pointHoverBackgroundColor: '#fff',
-		  pointHoverBorderColor: 'rgba(179,181,198,1)',
-		  data: [0, 2, 5, 8, 4]
-		}
-	  ]}
+				labels: ['Value1', 'Value2', 'Value3', 'Value4', 'Value5'],
+				datasets: [ {
+					label: 0,
+					backgroundColor: 'rgba(179,181,198,0.2)',
+					borderColor: 'rgba(179,181,198,1)',
+					pointBackgroundColor: 'rgba(179,181,198,1)',
+					pointBorderColor: '#fff',
+					pointHoverBackgroundColor: '#fff',
+					pointHoverBorderColor: 'rgba(179,181,198,1)',
+					data: [0, 2, 5, 8, 4]
+				}
+				]
+			}
 	};
   }
   
@@ -41,7 +41,7 @@ constructor(props) {
   	.then((resp) => resp.json())
   	.then(function(jdata) {
   
-		this.setState({...this.state,
+			this.setState({...this.state,
 		  data: {...this.state.data, datasets: [
 			{
 			  label: "Test SpiderGraph",
@@ -65,20 +65,19 @@ constructor(props) {
         <p>
         <button onClick={() => this.setState({...this.state,
           cpt: this.state.cpt + 1,
-		  data: {...this.state.data, datasets: [
-			{
-			  label: "Test SpiderGraph",
-			  backgroundColor: "rgba(179,181,198,0.2)",
-			  borderColor: "rgba(179,181,198,1)",
-			  pointBackgroundColor: "rgba(179,181,198,1)",
-			  pointBorderColor: "#fff",
-			  pointHoverBackgroundColor: "#fff",
-			  pointHoverBorderColor: "rgba(179,181,198,1)",
-			  data: [this.state.cpt, 2, 5, 8, 4]
-			}
-		  ]},
-		})
-        }>Click me!</button>
+					data: {...this.state.data, datasets: [
+					{
+						label: "Test SpiderGraph",
+						backgroundColor: "rgba(179,181,198,0.2)",
+						borderColor: "rgba(179,181,198,1)",
+						pointBackgroundColor: "rgba(179,181,198,1)",
+						pointBorderColor: "#fff",
+						pointHoverBackgroundColor: "#fff",
+						pointHoverBorderColor: "rgba(179,181,198,1)",
+						data: [this.state.cpt, 2, 5, 8, 4]
+					}
+					]},
+				})}>Click me!</button>
         <span>{this.state.cpt}</span>
         </p>
       </div>

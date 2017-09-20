@@ -1,1 +1,1 @@
-web: node react-web-app/src/index.js
+web: cd react-web-app && npm start

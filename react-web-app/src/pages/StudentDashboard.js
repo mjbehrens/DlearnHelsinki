@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
-import Footer from '../components/Footer.js';
-import Header from '../components/Header.js';
+
 import SpiderGraph from '../components/SpiderGraph.js';
 
 class StudentDashboard extends Component {
@@ -10,7 +9,7 @@ class StudentDashboard extends Component {
   
     return (
       <div className="text-center">
-        <Header />
+
         <h1>Welcome Tobi!</h1>
          
         <div className="row">
@@ -25,7 +24,7 @@ class StudentDashboard extends Component {
 		    <SpiderGraph />
 		  </div>
 		</div> 
-        <Footer />
+
       </div>
     );
   }

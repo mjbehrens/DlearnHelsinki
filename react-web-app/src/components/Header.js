@@ -4,7 +4,8 @@ export default class Header extends React.Component {
   render() {
   
     return (
-		<div>
+		<div className="App-header">
+                    
 		</div>
     );
   }

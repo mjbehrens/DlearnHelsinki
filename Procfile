@@ -1,1 +1,1 @@
-web: cd react-web-app && npm start
+web: npm start

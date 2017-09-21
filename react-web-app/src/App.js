@@ -6,6 +6,8 @@ import Footer from './components/Footer.js';
 import Header from './components/Header.js';
 import Home from './pages/Home.js';
 import StudentDashboard from './pages/StudentDashboard.js';
+import ClassSelection from './pages/ClassSelection.js';
+import TeacherDashboard from './pages/TeacherDashboard.js'
 
 class App extends Component {
   render() {
@@ -17,6 +19,8 @@ class App extends Component {
             <Switch>
 		  <Route exact path='/' component={Home}/>
 		  <Route path='/student-dashboard' component={StudentDashboard}/>
+                  <Route path= '/class-selection' component = {ClassSelection}/>
+                  <Route path= '/teacher-dashbpard' component = {TeacherDashboard}/>
             </Switch>
         </Router>
         <Footer />

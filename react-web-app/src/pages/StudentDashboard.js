@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 
 import Footer from '../components/Footer.js';
 import Header from '../components/Header.js';
@@ -16,8 +18,8 @@ class StudentDashboard extends Component {
         <div className="row">
 		  <div className="col-sm-4">
 		    <div className="btn-group-vertical">
-		      <button type="button" className="btn btn-primary">Survey</button>
-		      <button type="button" className="btn btn-primary">Historic</button>
+				<Link to='/student-survey'><button type="button" className="btn btn-primary">Survey</button></Link>
+				<button type="button" className="btn btn-primary">Historic</button>
 		      <button type="button" className="btn btn-primary">Profil</button>
 		    </div>
 		  </div>

@@ -26,7 +26,6 @@ buildNumber.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 *.zip
@@ -93,6 +92,9 @@ dist/
 nbdist/
 nbactions.xml
 .nb-gradle/
+*\nb-configuration.xml
 
 # NodeJS specific
 node_modules
+package-lock.json
+/react-web-app/nbproject/private/

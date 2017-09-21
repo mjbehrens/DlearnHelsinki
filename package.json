@@ -1,0 +1,20 @@
+{
+  "name": "react-web-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-scripts": "1.0.13"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.4"
+  },
+  "scripts": {
+    "start": "cd react-web-app && react-scripts start",
+    "build": "cd react-web-app && react-scripts build",
+    "test": "cd react-web-app && react-scripts test --coverage --env=jsdom",
+    "coveralls": "cd react-web-app && cat ./coverage/lcov.info | coveralls",
+    "eject": "cd react-web-app && react-scripts eject"
+  }
+}

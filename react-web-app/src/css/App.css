@@ -27,6 +27,10 @@
     margin: auto;
 }
 
+button {
+    margin: 20px;
+}
+
 @keyframes Icon-spin { 
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

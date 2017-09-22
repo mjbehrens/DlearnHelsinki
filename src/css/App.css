@@ -28,12 +28,22 @@
 }
 
 button {
-    margin: 20px;
+    margin: 1vmin;
 }
 
 .Icon {
-    height: 5vmin;
+    height: 70px;
+    margin: 1vmin;
 }
+
+.Latest-results {
+    width: 60vw;
+    border: 3px solid black;
+    padding: 10px;
+    margin: auto;
+    text-align: left;
+}
+
 
 @keyframes Icon-spin { 
   from { transform: rotate(0deg); }

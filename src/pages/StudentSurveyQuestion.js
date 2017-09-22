@@ -85,9 +85,7 @@ class StudentSurveyQuestion extends Component {
             return <Redirect to="/student-dashboard"/>
         }else{
             return (
-                <div style={style}>
-                  <Header />
-    
+                <div style={style}>    
                     <p> { this.state.currentQuestion } </p>
                     <Slider min={1} max={5} dots={true} 
                             value={this.state.startPoint} 
@@ -98,8 +96,6 @@ class StudentSurveyQuestion extends Component {
                     <button type="button" 
                             className="btn btn-primary"
                             onClick={this.onClickNext}>{ this.state.buttonValue }</button>
-                  
-                  <Footer />
                 </div>
               );
         }

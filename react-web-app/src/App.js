@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import './css/App.css';
 
 import Footer from './components/Footer.js';
@@ -21,6 +21,7 @@ class App extends Component {
           <Route path='/student-dashboard' component={StudentDashboard}/>
           <Route path='/student-survey' component={StudentSurveyQuestion}/>
 		    </Switch>
+
         <Footer />
       </div>
     );

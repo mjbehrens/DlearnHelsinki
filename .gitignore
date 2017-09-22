@@ -97,3 +97,4 @@ nbactions.xml
 # NodeJS specific
 node_modules
 package-lock.json
+/react-web-app/nbproject/private/

@@ -7,6 +7,9 @@ import Header from './components/Header.js';
 import Home from './pages/Home.js';
 import StudentDashboard from './pages/StudentDashboard.js';
 
+
+import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
+
 class App extends Component {
   render() {
   
@@ -14,11 +17,13 @@ class App extends Component {
       <div classsName="App">
         <Header />
         <Router>
-            <Switch>
-		  <Route exact path='/' component={Home}/>
-		  <Route path='/student-dashboard' component={StudentDashboard}/>
-            </Switch>
+          <Switch>
+            <Route exact path='/' component={Home}/>
+            <Route path='/student-dashboard' component={StudentDashboard}/>
+            <Route path='/student-survey' component={StudentSurveyQuestion}/>
+          </Switch>
         </Router>
+
         <Footer />
       </div>
     );

@@ -9,9 +9,13 @@ import StudentDashboard from './pages/StudentDashboard.js';
 import ClassSelection from './pages/ClassSelection.js';
 import TeacherDashboard from './pages/TeacherDashboard.js'
 
+
+import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
+
 class App extends Component {
   render() {
-  
+      
+ 
     return (
       <div classsName="App">
         <Header />
@@ -21,8 +25,10 @@ class App extends Component {
 		  <Route path='/student-dashboard' component={StudentDashboard}/>
                   <Route path= '/class-selection' component = {ClassSelection}/>
                   <Route path= '/teacher-dashboard' component = {TeacherDashboard}/>
+                  <Route path='/student-survey' component={StudentSurveyQuestion}/>
             </Switch>
         </Router>
+
         <Footer />
       </div>
     );

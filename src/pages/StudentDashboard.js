@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 
-import SpiderGraph from '../components/SpiderGraph.js';
+import SpiderGraph from '../components/shared/SpiderGraph.js';
 
 class StudentDashboard extends Component {
 

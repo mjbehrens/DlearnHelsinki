@@ -14,10 +14,10 @@
     "coveralls": "^2.11.4"
   },
   "scripts": {
-    "start": "cd react-web-app && react-scripts start",
-    "build": "cd react-web-app && react-scripts build",
-    "test": "cd react-web-app && react-scripts test --coverage --env=jsdom",
-    "coveralls": "cd react-web-app && cat ./coverage/lcov.info | coveralls",
-    "eject": "cd react-web-app && react-scripts eject"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --coverage --env=jsdom",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "eject": "react-scripts eject"
   }
 }

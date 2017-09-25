@@ -15,20 +15,20 @@ import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
 
 class App extends Component {
   render() {
-      
- 
+
+
     return (
       <div classsName="App">
         <Header />
         <Router>
 
-            <Switch>
-		  <Route exact path='/' component={Home}/>
-		  <Route path='/student-dashboard' component={StudentDashboard}/>
-                  <Route path= '/class-selection' component = {ClassSelection}/>
-                  <Route path= '/teacher-dashboard' component = {TeacherDashboard}/>
-                  <Route path='/student-survey' component={StudentSurveyQuestion}/>
-            </Switch>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route path='/student-dashboard' component={StudentDashboard} />
+            <Route path='/class-selection' component={ClassSelection} />
+            <Route path='/teacher-dashboard' component={TeacherDashboard} />
+            <Route path='/student-survey' component={StudentSurveyQuestion} />
+          </Switch>
 
         </Router>
 

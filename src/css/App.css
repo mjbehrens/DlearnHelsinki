@@ -31,6 +31,10 @@ button {
     margin: 1vmin;
 }
 
+.btn-toolbar {
+    display: flex;
+    justify-content: center;
+}
 
 .Icon {
     height: 70px;

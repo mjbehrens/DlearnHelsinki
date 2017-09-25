@@ -4,6 +4,25 @@ import { Link } from 'react-router-dom';
 
 class Home extends Component {
 
+	constructor(props){
+		super(props);
+		this.state = {
+			goTo : "/"
+		};
+	}
+
+	onClickStudent = () => {
+		this.setState({...this.state,
+							goTo : "/student-dashboard"
+						})
+	}
+
+	onClickTeacher = () => {
+		this.setState({...this.state,
+							goTo : "/teacher-dashboard"
+						})
+	}
+
   render() {
   
     return (
@@ -20,17 +39,17 @@ class Home extends Component {
 		    <input type="password" className="form-control" id="pwd" />
 	      </div>
 	      
-	      <div className="radio">
-		    <label><input type="radio" name="status" />Student</label>
+	    <div className="radio">
+		    <label><input type="radio" name="status" onClick={this.onClickStudent} />Student</label>
 		  </div>
 		  <div className="radio">
-		    <label><input type="radio" name="status" />Teacher</label>
+		    <label><input type="radio" name="status" onClick={this.onClickTeacher} />Teacher</label>
 		  </div>
 		  <div className="radio disabled">
 		    <label><input type="radio" name="status" disabled />Researcher</label>
 		  </div>
 		  
-		  <Link style={{display: 'block', height: '100%'}} to='/student-dashboard'><button type="button" className="btn btn-primary">Connection</button></Link>
+		  <Link style={{display: 'block', height: '100%'}} to={this.state.goTo}><button type="button" className="btn btn-primary">Connection</button></Link>
 	      
 
       </div>

@@ -41,18 +41,11 @@ button {
     margin: 1vmin;
 }
 
-.Latest-results {
-    width: 60vw;
-    border: 3px solid black;
-    padding: 10px;
-    margin: auto;
-    text-align: left;
-}
-
 .SelectClass {
     width: 60vw;
     margin: auto;
     text-align: center;
+
 }
 
 @keyframes Icon-spin { 

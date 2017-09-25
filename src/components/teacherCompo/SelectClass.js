@@ -5,12 +5,12 @@ class SelectClass extends React.Component {
     render(){
 
         return(
-            <div>
+//            <div>
                 <button type="button" 
                         className="btn btn-primary">
                             {this.props.nameOfClass}
                 </button>
-            </div>
+//            </div>
         );
     }
 }

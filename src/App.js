@@ -10,6 +10,7 @@ import ClassSelection from './pages/ClassSelection.js';
 import TeacherDashboard from './pages/TeacherDashboard.js'
 
 
+
 import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
       <div classsName="App">
         <Header />
         <Router>
+
             <Switch>
 		  <Route exact path='/' component={Home}/>
 		  <Route path='/student-dashboard' component={StudentDashboard}/>
@@ -27,6 +29,7 @@ class App extends Component {
                   <Route path= '/teacher-dashboard' component = {TeacherDashboard}/>
                   <Route path='/student-survey' component={StudentSurveyQuestion}/>
             </Switch>
+
         </Router>
 
         <Footer />

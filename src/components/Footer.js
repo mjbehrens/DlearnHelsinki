@@ -8,7 +8,7 @@ export default class Footer extends React.Component {
     return (
         <div className = "App">
             <div className = "App-footer">
-                <Link to = "http://www.un.org/sustainabledevelopment/sustainable-development-goals/"><img src={icon} className="Icon" alt="Sustainable development goals" /></Link>
+                <a href = "http://www.un.org/sustainabledevelopment/sustainable-development-goals/"><img src={icon} className="Icon" alt="Sustainable development goals" /></a>
             </div>
         </div>
     );

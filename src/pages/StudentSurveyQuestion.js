@@ -85,7 +85,7 @@ class StudentSurveyQuestion extends Component {
             return <Redirect to="/student-dashboard"/>
         }else{
             return (
-                <div style={style}>    
+                <div className = "Login-form">    
                     <p> { this.state.currentQuestion } </p>
                     <Slider min={1} max={5} dots={true} 
                             value={this.state.startPoint} 

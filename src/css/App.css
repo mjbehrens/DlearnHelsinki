@@ -27,6 +27,27 @@
     margin: auto;
 }
 
+button {
+    margin: 1vmin;
+}
+
+.btn-toolbar {
+    display: flex;
+    justify-content: center;
+}
+
+.Icon {
+    height: 70px;
+    margin: 1vmin;
+}
+
+.SelectClass {
+    width: 60vw;
+    margin: auto;
+    text-align: center;
+
+}
+
 @keyframes Icon-spin { 
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

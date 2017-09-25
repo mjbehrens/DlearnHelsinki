@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import new_survey from './icons/survey.svg';
+
 import { Link } from 'react-router-dom';
 
 

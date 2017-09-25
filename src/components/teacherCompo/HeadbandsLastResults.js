@@ -33,8 +33,7 @@ class HeadbandsLastResults extends React.Component {
             <button style = {styleButton} type="button" className="btn btn-primary">Group2</button>,
             <button style = {styleButton} type="button" className="btn btn-primary">Group3</button>,
             <button style = {styleButton} type="button" className="btn btn-primary">Group4</button>,
-            <button style = {styleButton} type="button" className="btn btn-primary">Group5</button>,
-            
+            <button style = {styleButton} type="button" className="btn btn-primary">Group5</button>,    
         ]
 
         return (

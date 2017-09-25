@@ -30,7 +30,7 @@ class GroupManagmentButon extends React.Component {
                 <div style={style} className={this.props.className}>
                     <img
                         src={this.state.picture} width="100" height="100"
-                        onClick={this.onClickGrpManagment}  //updateFilter is wierd name
+                        onClick={this.onClickGrpManagment}  
                     />
                     <h3>{this.state.text}</h3>
                 </div>

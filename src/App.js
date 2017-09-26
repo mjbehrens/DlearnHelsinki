@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import './css/App.css';
+import './css/popup.css';
 
 import Footer from './components/Footer.js';
 import Header from './components/Header.js';
@@ -8,6 +9,8 @@ import Home from './pages/Home.js';
 import StudentDashboard from './pages/StudentDashboard.js';
 import ClassSelection from './pages/ClassSelection.js';
 import TeacherDashboard from './pages/TeacherDashboard.js'
+
+import Popup from 'react-popup';
 
 
 
@@ -19,6 +22,15 @@ class App extends Component {
 
     return (
       <div classsName="App">
+        <Popup
+          className="mm-popup"
+          btnClass="mm-popup__btn"
+          closeBtn={true}
+          closeHtml={null}
+          defaultOk="Ok"
+          defaultCancel="Cancel"
+          wildClasses={false}
+          closeOnOutsideClick={true} />
         <Header />
         <Router>
 

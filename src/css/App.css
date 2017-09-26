@@ -17,6 +17,14 @@
   padding: 1vmin;
 }
 
+.App-footer {
+    text-align: right;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
 .App-intro {
   font-size: large;
 }
@@ -37,7 +45,7 @@ button {
 }
 
 .Icon {
-    height: 70px;
+    height: 10vmin;
     margin: 1vmin;
 }
 

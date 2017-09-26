@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import icon from '../pages/icons/UN-Quality Education.jpg'
+import icon from '../res/icons/UN-Quality Education.jpg'
 
 export default class Footer extends React.Component {
   render() {

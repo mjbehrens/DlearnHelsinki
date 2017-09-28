@@ -1,28 +1,63 @@
+:root {
+	--black-custom: #020202;
+	--brown-dark: #503B31;
+	--brown-light: #705D56;
+	--blue-dark: #9097CO;
+	--blue-light: #A7BBEC;
+	--light-background: #F9F8F8;
+}
+
+html, body, header, nav, section, footer, nav ul, footer ul {
+	padding: 0;
+	margin: 0;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+    position: relative;
+    min-height: 100%;
+    padding-bottom: 0rem;
+	background-color: var(--light-background);
+}
+
+footer {
+	text-align: center;
+}
+
+
+/*
+header
+{
+	position: relative;
+	width: 100%;
+	text-align: center;
+	background: var(--black-custom);
+	color: var(--blue-light);
+	box-shadow: 0 1px 12px black;
+	padding: 10px;
+}
+*/
+
+h1 {
+	color: var(--blue-dark);
+}
+
 .App {
+  min-height: 100%;
+  position: relative;
   text-align: center;
+}
+
+#main-bloc {
+	padding-bottom: 50px;
 }
 
 .App-logo {
  /* animation: Icon-spin infinite 20s linear;*/
   height: 10vmin;
-}
-
-.App-header {
-  background-color: #222;
-  height: 20vmin;
-  width: 100%;
-  font-size: 3vmin;
-  color: white;
-  text-align: center;
-  padding: 1vmin;
-}
-
-.App-footer {
-    text-align: right;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
 }
 
 .App-intro {
@@ -45,8 +80,8 @@ button {
 }
 
 .Icon {
-    height: 10vmin;
-    margin: 1vmin;
+    height: 40px;
+    margin: 2px;
 }
 
 .SelectClass {

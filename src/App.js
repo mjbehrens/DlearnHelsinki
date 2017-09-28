@@ -22,7 +22,6 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div id="main-bloc">
 		    <Popup
 		      className="mm-popup"
 		      btnClass="mm-popup__btn"
@@ -32,9 +31,10 @@ class App extends Component {
 		      defaultCancel="Cancel"
 		      wildClasses={false}
 		      closeOnOutsideClick={true} />
+			  <Router>
+	    <div>
 		    <Header />
 		    <section>
-			  <Router>
 				<Switch>
 				  <Route exact path='/' component={Home} />
 				  <Route path='/login' component={Login} />
@@ -43,10 +43,10 @@ class App extends Component {
 				  <Route path='/teacher-dashboard' component={TeacherDashboard} />
 				  <Route path='/student-survey' component={StudentSurveyQuestion} />
 				</Switch>
-		      </Router>
 		    </section>
-		</div>
         <Footer />
+	    </div>
+		      </Router>
       </div>
     );
   }

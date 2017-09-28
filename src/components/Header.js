@@ -25,7 +25,7 @@ export default class Header extends React.Component {
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
             <li className="dropdown">
-              <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
               <ul className="dropdown-menu">
                 <li><a href="#">Action</a></li>
                 <li><a href="#">Another action</a></li>
@@ -38,7 +38,7 @@ export default class Header extends React.Component {
             </li>
           </ul>
           <ul className="nav navbar-nav navbar-right">
-            <li><Link style={{dispaly: 'block', height: '100%'}} to="/login">Login</Link></li>
+            <li><Link style={{dispaly: 'block', height: '100%'}} to="/login"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button></Link></li>
           </ul>
         </div>
       </div>

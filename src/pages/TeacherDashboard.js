@@ -25,9 +25,9 @@ class TeacherDashboard extends Component {
       <div className="text-center">
         
         <div className="row">
-          <Link to="/"> <button type="button" className="col-sm-3"> Go Back </button> </Link>
-          <h1 className="col-sm-3"> Dashboard of class {this.state.className} </h1>
-          <button type="button" className="col-sm-3"> Log Out </button>
+          <h1 className = "col-sm-4"></h1>
+          <h1 className="col-sm-5"> Dashboard of class {this.state.className} </h1>
+          <button type="button" className="col-sm-1"> Log Out </button>
         </div>
 
         <div className="row">

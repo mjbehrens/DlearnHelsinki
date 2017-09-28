@@ -10,7 +10,7 @@ const style = {
 };
 
 const styleButton = {
-    marginLeft : "0px"
+    marginLeft : "15px"
 }
 
 
@@ -38,14 +38,14 @@ class HeadbandsLastResults extends React.Component {
 
         return (
             <div style={ style }>
-                <div className="text-center">
+                <div className="text-left">
                     <div className="row">
-                        <div className="col-sm-6">
+                        <div className="col-sm-4">
                             <div className="btn-group-vertical">
                                { group_list }
                             </div>
                         </div>
-                        <div className="col-sm-4">
+                        <div className="col-sm-6">
                             <SpiderGraph />
 
                         </div>

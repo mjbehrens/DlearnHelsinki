@@ -11,7 +11,7 @@ constructor(props) {
       data: {
 				labels: ['Value1', 'Value2', 'Value3', 'Value4', 'Value5'],
 				datasets: [ {
-					label: 0,
+					label: this.props.name,
 					backgroundColor: 'rgba(179,181,198,0.2)',
 					borderColor: 'rgba(179,181,198,1)',
 					pointBackgroundColor: 'rgba(179,181,198,1)',
@@ -60,27 +60,27 @@ constructor(props) {
 
   render() {  
     return (
-      <div>
+//      <div>
         <Radar data={this.state.data} />
-        <p>
-        <button onClick={() => this.setState({...this.state,
-          cpt: this.state.cpt + 1,
-					data: {...this.state.data, datasets: [
-					{
-						label: "Test SpiderGraph",
-						backgroundColor: "rgba(179,181,198,0.2)",
-						borderColor: "rgba(179,181,198,1)",
-						pointBackgroundColor: "rgba(179,181,198,1)",
-						pointBorderColor: "#fff",
-						pointHoverBackgroundColor: "#fff",
-						pointHoverBorderColor: "rgba(179,181,198,1)",
-						data: [this.state.cpt, 2, 5, 8, 4]
-					}
-					]},
-				})}>Click me!</button>
-        <span>{this.state.cpt}</span>
-        </p>
-      </div>
+//        <p>
+//        <button onClick={() => this.setState({...this.state,
+//          cpt: this.state.cpt + 1,
+//					data: {...this.state.data, datasets: [
+//					{
+//						label: "Test SpiderGraph",
+//						backgroundColor: "rgba(179,181,198,0.2)",
+//						borderColor: "rgba(179,181,198,1)",
+//						pointBackgroundColor: "rgba(179,181,198,1)",
+//						pointBorderColor: "#fff",
+//						pointHoverBackgroundColor: "#fff",
+//						pointHoverBorderColor: "rgba(179,181,198,1)",
+//						data: [this.state.cpt, 2, 5, 8, 4]
+//					}
+//					]},
+//				})}>Click me!</button>
+//        <span>{this.state.cpt}</span>
+//        </p>
+//      </div>
     );
   }
 }

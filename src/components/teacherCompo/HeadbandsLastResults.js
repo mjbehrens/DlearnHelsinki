@@ -13,28 +13,34 @@ const styleButton = {
     marginLeft : "15px"
 }
 
+//Get unique groups
+const groupsJSON = '[{"_id": 1, "groupNumber": 1}, {"_id": 2, "groupNumber": 2}, {"_id": 3, "groupNumber": 3}, {"_id": 5, "groupNumber":4}, {"_id": 6, "groupNumber": 5}]';
 
 class HeadbandsLastResults extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-
-        }
+        this.state = { groupNr: "Selected group is supposed to be displayed here, but..." };
     }
 
     onClickSurvey = () => {
 
     }
+    
+    buttonClicked = () => {
+        this.setState({groupNr: "Something happened..."})
+    }
 
     render() {
-        var group_list = [
-            <button style = {styleButton} type="button" className="btn btn-primary">Group1</button>,
-            <button style = {styleButton} type="button" className="btn btn-primary">Group2</button>,
-            <button style = {styleButton} type="button" className="btn btn-primary">Group3</button>,
-            <button style = {styleButton} type="button" className="btn btn-primary">Group4</button>,
-            <button style = {styleButton} type="button" className="btn btn-primary">Group5</button>,    
-        ]
+
+        var parsed_groups = JSON.parse(groupsJSON);
+        var group_list = [];
+        var temp = 0;
+        parsed_groups.forEach(function(e){
+           group_list[temp] = <button style = {styleButton} type="button" className="btn btn-primary">Group {e.groupNumber}</button>
+           temp = temp+1;
+        });
+        
 
         return (
             <div style={ style }>
@@ -46,7 +52,7 @@ class HeadbandsLastResults extends React.Component {
                             </div>
                         </div>
                         <div className="col-sm-6">
-                            <SpiderGraph />
+                            <SpiderGraph name={this.state.groupNr} />
 
                         </div>
                     </div>

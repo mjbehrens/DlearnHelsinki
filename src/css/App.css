@@ -9,7 +9,7 @@
 	--footer-height: 60px;
 }
 
-html, body, header, section, footer {
+html, body, header, section, footer, .row {
 	padding: 0;
 	margin: 0;
 }

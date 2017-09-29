@@ -13,7 +13,7 @@ const styleButton = {
     marginLeft : "15px"
 }
 
-//Get unique groups
+//Get unique groups for the teacher from the database
 const groupsJSON = '[{"_id": 1, "groupNumber": 1}, {"_id": 2, "groupNumber": 2}, {"_id": 3, "groupNumber": 3}, {"_id": 5, "groupNumber":4}, {"_id": 6, "groupNumber": 5}]';
 
 class HeadbandsLastResults extends React.Component {
@@ -27,8 +27,22 @@ class HeadbandsLastResults extends React.Component {
 
     }
     
-    buttonClicked = () => {
-        this.setState({groupNr: "Something happened..."})
+    buttonClicked = (buttonValue) => (e) => {
+            e.preventDefault();
+            this.setState({groupNr: "Something happened..."});
+            console.log("You clicked on group "+ buttonValue);
+    }
+    
+    renderButton(buttonValue) {
+        return ( //BUG!!!!!!!!!!!!!!!!!!!!
+            <button 
+                style = {styleButton} 
+                onClick = {this.buttonClicked(buttonValue)}
+                type="button" 
+                className="btn btn-primary">
+                        Group {buttonValue}
+            </button>
+        );
     }
 
     render() {
@@ -37,7 +51,7 @@ class HeadbandsLastResults extends React.Component {
         var group_list = [];
         var temp = 0;
         parsed_groups.forEach(function(e){
-           group_list[temp] = <button style = {styleButton} type="button" className="btn btn-primary">Group {e.groupNumber}</button>
+           group_list[temp] = e.groupNumber
            temp = temp+1;
         });
         
@@ -48,7 +62,10 @@ class HeadbandsLastResults extends React.Component {
                     <div className="row">
                         <div className="col-sm-4">
                             <div className="btn-group-vertical">
-                               { group_list }
+                               { group_list.map(function(buttonValue, i){
+                                       this.renderButton(buttonValue);   
+                                    }, this) 
+                                }
                             </div>
                         </div>
                         <div className="col-sm-6">

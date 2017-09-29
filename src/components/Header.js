@@ -4,9 +4,10 @@ import logo from '../res/icons/dlearn_logo.svg';
 
 export default class Header extends React.Component {
   render() {
-
+//The Dlearn link to homepage is inactive
     return (
-        <header><Router>
+        <header>
+        <Router>
             <nav className="navbar navbar-inverse bg-inverse navbar-default navbar-static-top">
                 <div className="container">
                     <div className="navbar-header">
@@ -16,7 +17,6 @@ export default class Header extends React.Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-
                         <Link style={{dispaly: 'block', height: '100%'}} to="/"><a className="navbar-brand" href="#">Dlearn</a></Link>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
@@ -42,7 +42,8 @@ export default class Header extends React.Component {
                         </ul>
                     </div>
                 </div>
-            </nav></Router>
+            </nav> 
+        </Router>
         </header>
     );
   }

@@ -9,7 +9,7 @@ class StudentDashboard extends Component {
 
 startSurvey = (e) => {
         e.preventDefault();
-        return <Redirect to="/student-survey"/>;
+        return <Redirect to="/student-survey"/>; //THIS DOESN'T WORK
 }
 
 	render() {

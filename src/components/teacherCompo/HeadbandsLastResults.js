@@ -10,7 +10,8 @@ const style = {
 };
 
 const styleButton = {
-    marginLeft : "15px"
+    marginLeft : "15px",
+    marginTop : "15px"
 }
 
 //Get unique groups for the teacher from the database
@@ -20,23 +21,23 @@ class HeadbandsLastResults extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { groupNr: "Selected group is supposed to be displayed here, but..." };
+        this.state = { groupNr: "Initiating..." };
     }
 
     onClickSurvey = () => {
 
     }
     
+    
     buttonClicked = (buttonValue) => (e) => {
             e.preventDefault();
-            this.setState({groupNr: "Something happened..."});
+            this.setState({groupNr: "Something happened..."}); //THIS DOESN'T WORK
             console.log("You clicked on group "+ buttonValue);
     }
     
     renderButton(buttonValue) {
-        return ( //BUG!!!!!!!!!!!!!!!!!!!!
-            <button 
-                style = {styleButton} 
+        return (
+           <button  
                 onClick = {this.buttonClicked(buttonValue)}
                 type="button" 
                 className="btn btn-primary">
@@ -60,10 +61,10 @@ class HeadbandsLastResults extends React.Component {
             <div style={ style }>
                 <div className="text-left">
                     <div className="row">
-                        <div className="col-sm-4">
+                        <div className="col-sm-4" style = {styleButton}>
                             <div className="btn-group-vertical">
                                { group_list.map(function(buttonValue, i){
-                                       this.renderButton(buttonValue);   
+                                       return this.renderButton(buttonValue)
                                     }, this) 
                                 }
                             </div>

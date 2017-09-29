@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import { Redirect } from 'react-router'
 
 
 import SpiderGraph from '../components/shared/SpiderGraph.js';
 
 class StudentDashboard extends Component {
+
+startSurvey = (e) => {
+        e.preventDefault();
+        return <Redirect to="/student-survey"/>;
+}
 
 	render() {
 
@@ -17,9 +22,9 @@ class StudentDashboard extends Component {
 				<div className="row">
 					<div className="col-sm-4">
 						<div className="btn-group-vertical">
-							<Link to='/student-survey'><button type="button" className="btn btn-primary">Survey</button></Link>
-							<button type="button" className="btn btn-primary">Historic</button>
-							<button type="button" className="btn btn-primary">Profil</button>
+							<button type="button" onClick = {this.startSurvey} className="btn btn-primary">Survey</button>
+							<button type="button" className="btn btn-primary">History</button>
+							<button type="button" className="btn btn-primary">Profile</button>
 						</div>
 					</div>
 					<div className="col-sm-8">

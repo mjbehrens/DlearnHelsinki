@@ -21,7 +21,7 @@ class HeadbandsLastResults extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { groupNr: "Initiating..." };
+        this.state = { groupNr: "Initial Value" };
     }
 
     onClickSurvey = () => {
@@ -31,7 +31,7 @@ class HeadbandsLastResults extends React.Component {
     
     buttonClicked = (buttonValue) => (e) => {
             e.preventDefault();
-            this.setState({groupNr: "Something happened..."}); //THIS DOESN'T WORK
+            this.setState({groupNr: "Group " + buttonValue}); //THIS DOESN'T WORK
             console.log("You clicked on group "+ buttonValue);
     }
     
@@ -56,7 +56,6 @@ class HeadbandsLastResults extends React.Component {
            temp = temp+1;
         });
         
-
         return (
             <div style={ style }>
                 <div className="text-left">

@@ -5,6 +5,7 @@ class SpiderGraph extends Component {
 
 constructor(props) {
     super(props);
+    
     this.state = {
       cpt: 0,
       url: "http://172.20.10.3:8080/skeleton/webapi/students/1/spidergraphs/1",
@@ -34,6 +35,31 @@ constructor(props) {
   
   componentWillUnmount() {
     clearInterval(this.timerID);
+  }
+  
+  shouldComponentUpdate(nextProps, nextState) { 
+      console.log("I wonder if an update is in order..." + nextProps.name !== this.props.name);
+      console.log("The label used to be:" + this.state.graphLabel);
+      
+      return nextProps.name !== this.props.name; 
+  } 
+  
+  componentWillReceiveProps(nextProps) {
+      console.log("Got new props! " + nextProps.name)
+      this.setState({...this.state,
+		  data: {...this.state.data, datasets: [
+			{
+			  label: nextProps.name,
+			  backgroundColor: "rgba(179,181,198,0.2)",
+			  borderColor: "rgba(179,181,198,1)",
+			  pointBackgroundColor: "rgba(179,181,198,1)",
+			  pointBorderColor: "#fff",
+			  pointHoverBackgroundColor: "#fff",
+			  pointHoverBorderColor: "rgba(179,181,198,1)",
+			  data: [0, 2, 5, 8, 4]
+			}
+		  ]},
+		});
   }
   
   tick() {

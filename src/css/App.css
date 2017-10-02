@@ -5,30 +5,71 @@
 	--blue-dark: #9097CO;
 	--blue-light: #A7BBEC;
 	--light-background: #F9F8F8;
+
+	--footer-height: 60px;
 }
 
-html, body, header, nav, section, footer, nav ul, footer ul {
+html, body, header, section, footer, .row {
 	padding: 0;
 	margin: 0;
 }
 
 html, body {
-	height: 100%;
-}
-
-body {
     position: relative;
-    min-height: 100%;
-    padding-bottom: 0rem;
-	background-color: var(--light-background);
+    min-height: 100vh;
+}
+    
+body {
+    padding-bottom: var(--footer-height);
 }
 
 footer {
-
-        color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: var(--footer-height);
+    line-height: var(--footer-height);
+    background: #f5f5f5;
+    text-align: right;
 }
 
+section {
+    text-align: center;
+}
+
+.Icon {
+    height: 50px;
+}
+
+.Login-form {
+    text-align: center;
+    width: 60vmin;
+    margin: auto;
+}
+
+.SelectClass {
+    width: 60vw;
+    margin: auto;
+    text-align: center;
+
+}
+
+.left-align {
+    text-align: left;
+}
+
+.right-align {
+    text-align: right;
+}
+
+.centered {
+    text-align: center;
+}
 /*
+button {
+    margin: 1vmin;
+}
+
 header
 {
 	position: relative;
@@ -39,7 +80,6 @@ header
 	box-shadow: 0 1px 12px black;
 	padding: 10px;
 }
-*/
 
 h1 {
 	color: var(--blue-dark);
@@ -51,12 +91,7 @@ h1 {
   text-align: center;
 }
 
-#main-bloc {
-	padding-bottom: 50px;
-}
-
 .App-logo {
- /* animation: Icon-spin infinite 20s linear;*/
   height: 10vmin;
 }
 
@@ -64,30 +99,22 @@ h1 {
   font-size: large;
 }
 
+<<<<<<< HEAD
 .Login-form {
     text-align: center;
     width: 60vmin;
     margin: auto;
 }
 
+=======
+>>>>>>> css-fix
 .btn-toolbar {
     display: flex;
     justify-content: center;
-}
-
-.Icon {
-    height: 40px;
-    margin: 2px;
-}
-
-.SelectClass {
-    width: 60vw;
-    margin: auto;
-    text-align: center;
-
 }
 
 @keyframes Icon-spin { 
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+*/

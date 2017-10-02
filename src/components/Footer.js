@@ -7,18 +7,18 @@ export default class Footer extends React.Component {
   
     return (
         <footer>
-	    <nav className="navbar navbar-inverse bg-inverse navbar-default navbar-fixed-bottom">
-		<div className="container">
-		    <div id="navbar" className="navbar-collapse collapse">
 
-                        This spot is reserved for legal information.
-                    <div id= "navbar" className= "nav navbar-nav navbar-right">
-                        <a href = "http://www.un.org/sustainabledevelopment/sustainable-development-goals/"><img src={icon} className="Icon" alt="Sustainable development goals"/></a>
-                    </div>
-            
-                    </div>
+	    <div className="row">
+		<div className="col-md-4 left-align">
+
 		</div>
-	    </nav>
+		<div className="col-md-4 centered">
+		<span>&copy; Dlearn 2017</span>
+		</div>
+		<div className="col-md-4 right-align">
+		    <a href = "http://www.un.org/sustainabledevelopment/sustainable-development-goals/"><img src={icon} className="Icon" alt="Sustainable development goals" /></a>
+		</div>
+	    </div>
         </footer>
     );
   }

@@ -31,8 +31,7 @@ class HeadbandsLastResults extends React.Component {
     
     buttonClicked = (buttonValue) => (e) => {
             e.preventDefault();
-            this.setState({groupNr: "Group " + buttonValue}); //THIS DOESN'T WORK
-            console.log("You clicked on group "+ buttonValue);
+            this.setState({groupNr: "Group " + buttonValue}); 
     }
     
     renderButton(buttonValue) {

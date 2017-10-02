@@ -37,15 +37,11 @@ constructor(props) {
     clearInterval(this.timerID);
   }
   
-  shouldComponentUpdate(nextProps, nextState) { 
-      console.log("I wonder if an update is in order..." + nextProps.name !== this.props.name);
-      console.log("The label used to be:" + this.state.graphLabel);
-      
+  shouldComponentUpdate(nextProps, nextState) {       
       return nextProps.name !== this.props.name; 
   } 
   
   componentWillReceiveProps(nextProps) {
-      console.log("Got new props! " + nextProps.name)
       this.setState({...this.state,
 		  data: {...this.state.data, datasets: [
 			{

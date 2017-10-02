@@ -21,7 +21,7 @@ export default class Header extends React.Component {
         </div>
         <div id="navbar" className="navbar-collapse collapse">
           <ul className="nav navbar-nav">
-            <li className="active"><Link style={{dispaly: 'block', height: '100%'}} to="/">Home</Link></li>
+            <li><Link style={{dispaly: 'block', height: '100%'}} to="/">Home</Link></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
             <li className="dropdown">
@@ -38,7 +38,7 @@ export default class Header extends React.Component {
             </li>
           </ul>
           <ul className="nav navbar-nav navbar-right">
-            <li><Link style={{dispaly: 'block', height: '100%'}} to="/login"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button></Link></li>
+            <li><Link style={{dispaly: 'block', height: '100%'}} to="/login">Login</Link></li>
           </ul>
         </div>
       </div>

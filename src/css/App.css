@@ -14,14 +14,12 @@ html, body, header, section, footer, .row {
 	margin: 0;
 }
 
-html {
+html, body {
     position: relative;
     min-height: 100vh;
 }
-
+    
 body {
-    min-height: 100vh;
-    position: relative;
     padding-bottom: var(--footer-height);
 }
 

@@ -30,10 +30,11 @@ class TeacherDashboard extends Component {
           <HeadbandsLastResults />
         </div >
 
+
         <div className="row">
-          <OpenSurveyButton className="col-sm-3" />
-          <GroupManagmentButton className="col-sm-3" />
-          <HistoryButton className="col-sm-3" />
+                <OpenSurveyButton className="col-sm-3" />
+                <GroupManagmentButton className="col-sm-3" />
+                <HistoryButton className="col-sm-3" />
         </div>
       </div>
     );

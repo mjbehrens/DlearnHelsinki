@@ -4,7 +4,6 @@ import logo from '../res/icons/dlearn_logo.svg';
 
 export default class Header extends React.Component {
   render() {
-//The Dlearn link to homepage is inactive
     return (
       <header>
     <nav className="navbar navbar-inverse bg-inverse navbar-default navbar-static-top">

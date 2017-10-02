@@ -21,7 +21,7 @@ class HeadbandsLastResults extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { groupNr: "Initial Value" };
+        this.state = { groupNr: "Average between all groups" };
     }
 
     onClickSurvey = () => {

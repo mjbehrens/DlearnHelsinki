@@ -52,7 +52,7 @@ constructor(props) {
 			  pointBorderColor: "#fff",
 			  pointHoverBackgroundColor: "#fff",
 			  pointHoverBorderColor: "rgba(179,181,198,1)",
-			  data: [0, 2, 5, 8, 4]
+			  data: [3, 1, 5, 2, 4, 6, 2, 2, 3, 2, 5, 4, 7, 5]
 			}
 		  ]},
 		});

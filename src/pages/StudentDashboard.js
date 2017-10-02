@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
-import { Link, Redirect, BrowserRouter as Router } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
 
 class StudentDashboard extends Component {
+    
+    constructor() {
+        super();
+    }
 
 startSurvey = (e) => {
         e.preventDefault();
         console.log("Well, at least the method's being called correctly...");
-        return <Redirect to="/student-survey"/>; //THIS DOESN'T WORK
+        this.props.history.push("/student-survey");
+//        return <Redirect to="/student-survey"/>; //THIS DOESN'T WORK
 }
 
 	render() {

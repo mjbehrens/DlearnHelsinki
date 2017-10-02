@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router'
+import { Link, Redirect } from 'react-router-dom';
 
-
+import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
 
 class StudentDashboard extends Component {
 
 startSurvey = (e) => {
         e.preventDefault();
+        console.log("Well, at least the method's being called correctly...");
         return <Redirect to="/student-survey"/>; //THIS DOESN'T WORK
 }
 
 	render() {
-
+// DO NOT put margins into buttons in CSS! 
+// They may not be applied correctly during rendering.
 		return (
 			<div className="text-center">
 

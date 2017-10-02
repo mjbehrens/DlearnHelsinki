@@ -61,7 +61,7 @@ class HeadbandsLastResults extends React.Component {
             <div style={ style }>
                 <div className="text-left">
                     <div className="row">
-                        <div className="col-sm-4" style = {styleButton}>
+                        <div className="col-sm-3" style = {styleButton}>
                             <div className="btn-group-vertical">
                                { group_list.map(function(buttonValue, i){
                                        return this.renderButton(buttonValue)
@@ -69,7 +69,7 @@ class HeadbandsLastResults extends React.Component {
                                 }
                             </div>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-7">
                             <SpiderGraph name={this.state.groupNr} />
 
                         </div>

@@ -15,15 +15,30 @@ Results will be drawn in spider graphs, also known as radar graphs.
 # Teacher  
 
 ## Making a New Survey  
-To create a new survey, click on the Survey icon on your dashboard.
+To create a new survey, click on the Survey icon on your dashboard.  
+Then, fill in a title and a description for the survey.  
+Surveys are created per class and only one survey per class can be active at a time.
 
-## Opening and Closing an Existing Survey  
+## Closing an Existing Survey  
+When a survey is open, the icon for opening the survey will change into an icon for closing an existing survey. 
+To close a survey, simply click that button.
+
+## Viewing Results  
+Results for surveys will be displayed on the dashboard. By default, it will display averages for all groups. 
+To view results for a specific group, click the button containing the group's name next to the spider graph.
 
 ## Managing Groups  
-
+TBD
 
 # Student  
 
 ## Answering a Survey
+When a survey is active, log in and from your dashboard, click on "Survey". 
+Then, answer the questions by selecting a value between 1 and 5, or in some cases 1 and 7, and click "Next".
+Once you have finished filling out the survey, your results for it will be displayed on your dashboard.
 
 # Researcer  
+
+## Adding New Questions
+
+## Viewing Results

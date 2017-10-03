@@ -18,6 +18,7 @@ class StudentSurveyQuestion extends Component {
             buttonValue: 'Next',
             redirect: false,
             index: 0,
+            survey_id : 0,
             survey: [],
             currentQuestion: {
                 id: 0,
@@ -61,29 +62,13 @@ class StudentSurveyQuestion extends Component {
             message: ''
         };
 
-
-
-        /*
-                axios({
-                    method: 'get',
-                    url: 'https://dlearn-helsinki-backend-dev.herokuapp.com/webapi/teachers/1/classes/1/surveys/'
-                })
-                    .then(function (response) {
-                        console.log(response);
-                    });
-        
-
-                    */
-
-
-        fetch('http://dlearn-helsinki-backend-dev.herokuapp.com/webapi/teachers/1/classes/1/surveys/', {
+        fetch('http://dlearn-helsinki-backend.herokuapp.com/webapi/teachers/1/classes/1/surveys/', {
             method: "GET",
             headers: {
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': '*',
+                'Authorization' : 'Basic ' + btoa('teacher:password')
             }
-        })
-            .then(function (response) {
-                console.log("coucou")
+        }).then(function (response) {
                 if (response.ok) {
                     console.log(response)
                     response.json().then(data => {

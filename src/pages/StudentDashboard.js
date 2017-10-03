@@ -7,6 +7,18 @@ import SpiderGraph from '../components/shared/SpiderGraph.js';
 
 class StudentDashboard extends Component {
 
+
+	constructor(props) {
+		super(props);
+
+	}
+
+	componentDidMount() {
+		//call for survey open 
+		
+	}
+
+
 	render() {
 
 		return (

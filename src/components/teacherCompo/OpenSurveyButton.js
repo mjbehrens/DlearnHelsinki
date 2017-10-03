@@ -45,6 +45,29 @@ class OpenSurveyButton extends React.Component {
                 classID: '1'
             }
         });
+
+        this.requestOpenSurvey();
+    }
+
+    requestOpenSurvey = () => {
+
+        var newProcess = {
+            name: this.state.survey.title,
+            //WARING not group_id but class_id 
+            group_id: this.state.survey.classID,
+            start_data: this.state.survey.date,
+            end_date: null,
+            teacher_id: this.state.survey.teacherID,
+        };
+    
+        var data = new FormData();
+        data.append( "json", JSON.stringify( newProcess ) );
+    
+        fetch(  'teachers/'+this.state.survey.teacherID+'/surveys', {
+            method: 'post',
+            body: data
+        });
+
     }
 
     onClickSurvey = () => {
@@ -81,7 +104,7 @@ class OpenSurveyButton extends React.Component {
 }
 
 
-/** Prompt plugin */
+/** Survey Form plugin */
 Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
     let _title = null;
     let _description = null;

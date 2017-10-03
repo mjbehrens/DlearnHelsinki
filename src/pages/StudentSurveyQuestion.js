@@ -8,11 +8,10 @@ import 'rc-slider/assets/index.css';
 
 
 const DOMAINE = "localhost:8080/skeleton/webapi";
-const SERVICE = "/student/groups/1/surveys/1/questions";
-const URL = DOMAINE + SERVICE;
+const GETSURVEY = "/student/groups/1/surveys/3/questions";
+const PUTANSWER = "/student/groups/1/surveys/3/questions/{question_id}/answer"
 
-
-const surveyJson = '[{"_id": 1,"question": "I presented my own viewpoints in the group","min_answer": 1,"max_answer": 10},{"_id": 2,"question": "I listening other\'s opinions","min_answer": 1,"max_answer": 5},{"_id": 3,"question": "I tried to understand others ideas","min_answer": 1,"max_answer": 5},{"_id": 4,"question": "I gave feedback of the developments for others","min_answer": 1,"max_answer": 5},{"_id": 5,"question": "I participated actively to the groupework","min_answer": 1,"max_answer": 5},{"_id": 6,"question": "I took enought responsibility of the groupwork","min_answer": 1,"max_answer": 5},{"_id": 7,"question": "I helped others in the challenges of the groupwork","min_answer": 1,"max_answer": 5},{"_id": 8,"question": "I received useful feedback in the group to continue the work","min_answer": 1,"max_answer": 5},{"_id": 9,"question": "I focused completely on doing the groupwork","min_answer": 1,"max_answer": 5},{"_id": 10,"question": "I took others ideas into account in the groupwork","min_answer": 1,"max_answer": 5},{"_id": 11,"question": "Everyone participated equally in the groupwork","min_answer": 1,"max_answer": 5},{"_id": 12,"question": "I worked with others who could help","min_answer": 1,"max_answer": 5},{"_id": 13,"question": "I encouraged our group in doing the collaborative task","min_answer": 1,"max_answer": 5}]';
+const surveyJson = '[{"_id": 1,"question": "I presented my own viewpoints in the group","min_answer": 1,"max_answer": 10},{"_id": 2,"question": "I listening other\'s opinions","min_answer": 1,"max_answer": 5},{"_id": 3,"question": "I tried to understand others ideas","min_answer": 1,"max_answer": 5},{"_id": 4,"question": "I gave feedback of the developments for others","min_answer": 1,"max_answer": 5},{"_id": 5,"question": "I participated actively to the groupework","min_answer": 1,"max_answer": 5},{"_id": 6,"question": "I took enough responsibility of the groupwork","min_answer": 1,"max_answer": 5},{"_id": 7,"question": "I helped others in the challenges of the groupwork","min_answer": 1,"max_answer": 5},{"_id": 8,"question": "I received useful feedback in the group to continue the work","min_answer": 1,"max_answer": 5},{"_id": 9,"question": "I focused completely on doing the groupwork","min_answer": 1,"max_answer": 5},{"_id": 10,"question": "I took others ideas into account in the groupwork","min_answer": 1,"max_answer": 5},{"_id": 11,"question": "Everyone participated equally in the groupwork","min_answer": 1,"max_answer": 5},{"_id": 12,"question": "I worked with others who could help","min_answer": 1,"max_answer": 5},{"_id": 13,"question": "I encouraged our group in doing the collaborative task","min_answer": 1,"max_answer": 5}]';
 
 
 class StudentSurveyQuestion extends Component {
@@ -72,7 +71,7 @@ class StudentSurveyQuestion extends Component {
                         result.message = response.statusText;
 
                         console.log(result.data.description);
-                        console.log(result)
+                        console.log(result);
 
                         //return responseData(result);
                     });
@@ -91,13 +90,24 @@ class StudentSurveyQuestion extends Component {
         });
     }
 
-    onAfterChange = (value) => {
-
-    }
 
     onClickNext = () => {
 
         if (this.state.index < this.state.survey.length) {
+            //send answer to server
+            var newProcess = {
+                answer : this.state.startPoint
+            };
+        
+            var data = new FormData();
+            data.append( "json", JSON.stringify( newProcess ) );
+        
+            fetch( '/student/groups/1/surveys/3/questions/'+this.state.currentQuestion.id+'/answer', {
+                method: 'put',
+                body: data
+            });
+            //check if message send correctly
+            
             this.state.index = this.state.index + 1;
             this.setState({
                 ...this.state,
@@ -135,8 +145,7 @@ class StudentSurveyQuestion extends Component {
                         min={this.state.currentQuestion.min_answer} 
                         max={this.state.currentQuestion.max_answer} dots={true}
                         value={this.state.startPoint}
-                        onChange={this.onSliderChange}
-                        onAfterChange={this.onAfterChange} />
+                        onChange={this.onSliderChange} />
 
                     <span>{this.state.startPoint}/{this.state.currentQuestion.max_answer} </span>
                     <button type="button"

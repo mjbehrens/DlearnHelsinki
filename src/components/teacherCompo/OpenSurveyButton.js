@@ -21,12 +21,11 @@ class OpenSurveyButton extends React.Component {
             open: true,
             text: "Open Survey",
             picture: iconSurveyOpen,
+            teacherID: 1,
+            classID: 1,
             survey: {
                 title: null,
                 description: null,
-                date: null,
-                teacherID: null,
-                classID: null,
             }
         }
     }
@@ -40,9 +39,6 @@ class OpenSurveyButton extends React.Component {
             survey: {
                 title: t,
                 description: d,
-                date: new Date(),
-                teacherID: '1',
-                classID: '1'
             }
         });
 
@@ -52,21 +48,23 @@ class OpenSurveyButton extends React.Component {
     requestOpenSurvey = () => {
 
         var newProcess = {
-            name: this.state.survey.title,
-            //WARING not group_id but class_id 
-            group_id: this.state.survey.classID,
-            start_data: this.state.survey.date,
-            end_date: null,
-            teacher_id: this.state.survey.teacherID,
+           // title: this.state.survey.title,
+           // description: this.state.survey.description,
         };
-    
+
         var data = new FormData();
-        data.append( "json", JSON.stringify( newProcess ) );
-    
-        fetch(  'teachers/'+this.state.survey.teacherID+'/surveys', {
-            method: 'post',
-            body: data
-        });
+        data.append("json", JSON.stringify(newProcess));
+
+        fetch('https://dlearn-helsinki-backend.herokuapp.com/webapi/teachers/'
+            + this.state.teacherID + '/classes/'
+            + this.state.classID + '/surveys', {
+                method: 'post',
+                headers: {
+                    'Authorization': 'Basic ' + btoa('teacher:password'),
+                    'Content-Type': 'application/json'
+                },
+                body: data
+            });
 
     }
 
@@ -119,10 +117,10 @@ Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
 
     this.create({
         title: 'Creation of a new Survey',
-        content: <SurveyCreationForm    onChangeTitle={getTitle} 
-                                        onChangeDescription={getDescription} 
-                                        title={"New Survey"} 
-                                        description={"new survey for today\'s exercices"} />,
+        content: <SurveyCreationForm onChangeTitle={getTitle}
+            onChangeDescription={getDescription}
+            title={"New Survey"}
+            description={"new survey for today\'s exercices"} />,
         buttons: {
             left: [{
                 text: 'Cancel',

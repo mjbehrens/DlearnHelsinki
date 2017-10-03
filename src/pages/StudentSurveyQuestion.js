@@ -29,7 +29,7 @@ class StudentSurveyQuestion extends Component {
      
 
     componentDidMount(){
-        this.setState({...this.state.currentQuestion = this.getQuestions()[this.state.index]}) 
+        this.setState({...this.state.currentQuestion = this.getQuestions()[this.state.index]})
     }
 
     
@@ -80,7 +80,7 @@ class StudentSurveyQuestion extends Component {
     }
 
     render() {
-
+        
         if(this.state.redirect){
             return <Redirect to="/student-dashboard"/>
         }else{

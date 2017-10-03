@@ -1,28 +1,99 @@
+:root {
+	--black-custom: #020202;
+	--brown-dark: #503B31;
+	--brown-light: #705D56;
+	--blue-dark: #9097CO;
+	--blue-light: #A7BBEC;
+	--light-background: #F9F8F8;
+
+	--footer-height: 60px;
+}
+
+html, body, header, section, footer, .row {
+	padding: 0;
+	margin: 0;
+}
+
+html, body {
+    position: relative;
+    min-height: 100vh;
+}
+    
+body {
+    padding-bottom: var(--footer-height);
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: var(--footer-height);
+    line-height: var(--footer-height);
+    background: #f5f5f5;
+    text-align: right;
+}
+
+section {
+    text-align: center;
+}
+
+.Icon {
+    height: 50px;
+}
+
+.Login-form {
+    text-align: center;
+    width: 60vmin;
+    margin: auto;
+}
+
+.SelectClass {
+    width: 60vw;
+    margin: auto;
+    text-align: center;
+
+}
+
+.left-align {
+    text-align: left;
+}
+
+.right-align {
+    text-align: right;
+}
+
+.centered {
+    text-align: center;
+}
+
+/*
+button {
+    margin: 1vmin;
+}
+
+header
+{
+	position: relative;
+	width: 100%;
+	text-align: center;
+	background: var(--black-custom);
+	color: var(--blue-light);
+	box-shadow: 0 1px 12px black;
+	padding: 10px;
+}
+
+h1 {
+	color: var(--blue-dark);
+}
+
 .App {
+  min-height: 100%;
+  position: relative;
   text-align: center;
 }
 
 .App-logo {
- /* animation: Icon-spin infinite 20s linear;*/
   height: 10vmin;
-}
-
-.App-header {
-  background-color: #222;
-  height: 20vmin;
-  width: 100%;
-  font-size: 3vmin;
-  color: white;
-  text-align: center;
-  padding: 1vmin;
-}
-
-.App-footer {
-    text-align: right;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
 }
 
 .App-intro {
@@ -35,28 +106,13 @@
     margin: auto;
 }
 
-button {
-    margin: 1vmin;
-}
-
 .btn-toolbar {
     display: flex;
     justify-content: center;
-}
-
-.Icon {
-    height: 10vmin;
-    margin: 1vmin;
-}
-
-.SelectClass {
-    width: 60vw;
-    margin: auto;
-    text-align: center;
-
 }
 
 @keyframes Icon-spin { 
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+*/

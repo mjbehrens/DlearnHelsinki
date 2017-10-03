@@ -23,21 +23,18 @@ class TeacherDashboard extends Component {
 
     return (
       <div className="text-center">
-        
-        <div className="row">
-          <Link to="/"> <button type="button" className="col-sm-3"> Go Back </button> </Link>
-          <h1 className="col-sm-3"> Dashboard of class {this.state.className} </h1>
-          <button type="button" className="col-sm-3"> Log Out </button>
-        </div>
+
+          <h1> Insert Class Name Here {this.state.className} </h1>
 
         <div className="row">
           <HeadbandsLastResults />
         </div >
 
+
         <div className="row">
-          <OpenSurveyButton className="col-sm-3" />
-          <GroupManagmentButton className="col-sm-3" />
-          <HistoryButton className="col-sm-3" />
+                <OpenSurveyButton className="col-sm-3" />
+                <GroupManagmentButton className="col-sm-3" />
+                <HistoryButton className="col-sm-3" />
         </div>
       </div>
     );

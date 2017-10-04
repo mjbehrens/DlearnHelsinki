@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
 
 const ORIGIN = 'http://dlearn-helsinki-backend.herokuapp.com/webapi';
-var GET_ANSWERS = 'students/1/classes/1/surveys/27/answers';
-var GET_QUESTIONS_FOR_SURVEY = 'students/1/classes/1/surveys/27/questions';
+var GET_ANSWERS = '';
+var GET_QUESTIONS_FOR_SURVEY = '';
 
 class SpiderGraph extends Component {
 
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			cpt: 0,
 			data: {
@@ -16,7 +17,7 @@ class SpiderGraph extends Component {
 				datasets: [{
 					label: this.props.name,
 					lineTension: .1,
-					backgroundColor: 'rgba(179,181,198,0.2)',
+					backgroundColor: this.stringToColour(this.props.color),
 					borderColor: 'rgba(179,181,198,1)',
 					pointBackgroundColor: 'rgba(179,181,198,1)',
 					pointBorderColor: '#fff',
@@ -33,44 +34,46 @@ class SpiderGraph extends Component {
 		this.getDataForGraph();
 	}
 
-	
+	/*
+	// Doesn't work 
 	shouldComponentUpdate(nextProps, nextState) {
 		return nextProps.name !== this.props.name;
 	}
+	*/
 
+
+	// Called everytime a props value change
 	componentWillReceiveProps(nextProps) {
 		this.getDataForGraph();
-	}
-	
 
-	getDataForGraph = function (){
+	}
+
+	// Fetch resquest for questions and answer
+	getDataForGraph = function () {
 		this.buildRequestRest();
 		this.getSurveyQuestionsREST();
 		this.getSurveyAnswersREST();
 	}
 
-	buildRequestRest= function (){
+	// Build request from props send to the component
+	// ( looks ugly but it's a propotype :) )
+	buildRequestRest = function () {
 
 		var s = "";
-		if(this.props.students != null){
-			console.log('students/'+this.props.students);
-			s += '/students/'+this.props.students;
+		if (this.props.students != null) {
+			s += '/students/' + this.props.students;
 		}
-		if(this.props.teachers != null){
-			console.log('teachers/'+this.props.teachers);
-			s += '/teachers/'+this.props.teachers;
+		if (this.props.teachers != null) {
+			s += '/teachers/' + this.props.teachers;
 		}
-		if(this.props.classes != null){
-			console.log('classes/'+this.props.classes);
-			s += '/classes/'+this.props.classes;
+		if (this.props.classes != null) {
+			s += '/classes/' + this.props.classes;
 		}
-		if(this.props.groups != null){
-			console.log('groups/'+this.props.groups);
-			s += '/groups/'+this.props.groups;
+		if (this.props.groups != null) {
+			s += '/groups/' + this.props.groups;
 		}
-		if(this.props.surveys != null){
-			console.log('surveys/'+this.props.surveys);
-			s += '/surveys/'+this.props.surveys;
+		if (this.props.surveys != null) {
+			s += '/surveys/' + this.props.surveys;
 		}
 
 		GET_ANSWERS = s + '/answers';
@@ -145,6 +148,7 @@ class SpiderGraph extends Component {
 									...component.state.data.datasets,
 									label: component.props.name,
 									data: arrayAnswers,
+									backgroundColor: component.stringToColour(component.props.color),
 								}]
 							}
 						});
@@ -159,6 +163,36 @@ class SpiderGraph extends Component {
 			// Error :(
 			console.log(err);
 		});
+	}
+
+	//take a string and create a original color 
+	stringToColour = function (str) {
+
+		// default value if props null
+		if (str == null) {
+			str = 'unkle - lonely soul';
+		}
+
+		var hash = 0;
+		for (var i = 0; i < str.length; i++) {
+			hash = str.charCodeAt(i) + ((hash << 5) - hash);
+		}
+		var colour = '#';
+		for (var i = 0; i < 3; i++) {
+			var value = (hash >> (i * 8)) & 0xFF;
+			colour += ('00' + value.toString(16)).substr(-2);
+		}
+
+		function cutHex(h) { return (h.charAt(0) == "#") ? h.substring(1, 7) : h }
+		function hexToR(h) { return parseInt((cutHex(h)).substring(0, 2), 16) }
+		function hexToG(h) { return parseInt((cutHex(h)).substring(2, 4), 16) }
+		function hexToB(h) { return parseInt((cutHex(h)).substring(4, 6), 16) }
+
+		let R = hexToR(colour);
+		let G = hexToG(colour);
+		let B = hexToB(colour);
+
+		return 'rgba(' + R + ',' + G + ',' + B + ',0.4)';
 	}
 
 

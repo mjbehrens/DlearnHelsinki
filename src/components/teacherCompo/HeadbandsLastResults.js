@@ -15,7 +15,7 @@ const styleButton = {
 }
 
 //Get unique groups for the teacher from the database
-const groupsJSON = '[{"_id": 1, "groupNumber": 1}, {"_id": 2, "groupNumber": 2}, {"_id": 3, "groupNumber": 3}, {"_id": 5, "groupNumber":4}, {"_id": 6, "groupNumber": 5}]';
+const groupsJSON = '[{"_id": 1, "groupNumber": 122}, {"_id": 2, "groupNumber": 135}, {"_id": 3, "groupNumber": 9999}, {"_id": 5, "groupNumber":19000}, {"_id": 6, "groupNumber": 32}]';
 
 class HeadbandsLastResults extends React.Component {
 
@@ -70,7 +70,7 @@ class HeadbandsLastResults extends React.Component {
                             </div>
                         </div>
                         <div className="col-sm-7">
-                            <SpiderGraph name={this.state.groupNr} students={1} classes={1} surveys={27} />
+                            <SpiderGraph name={this.state.groupNr} students={1} classes={1} groups={null} surveys={27} color={this.state.groupNr} />
 
                         </div>
                     </div>

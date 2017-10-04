@@ -34,13 +34,7 @@ class StudentSurveyQuestion extends Component {
     }
 
     componentDidMount() {
-
-
         this.getSurveyQuestionsREST();
-
-
-
-
     }
 
     getSurveyQuestionsREST = function () {
@@ -89,6 +83,7 @@ class StudentSurveyQuestion extends Component {
             // Error :(
             console.log(err);
         });
+
     }
 
     putQuestionsAnswerREST = function (data) {
@@ -163,6 +158,7 @@ class StudentSurveyQuestion extends Component {
             return <Redirect to="/student-dashboard" />
         }
         else {
+
             return (
                 <div className="Login-form">
                     <p> {this.state.currentQuestion.question} </p>

@@ -10,43 +10,65 @@ const style = {
 };
 
 const styleButton = {
-    marginLeft : "0px"
+    marginLeft : "15px",
+    marginTop : "15px"
 }
 
+//Get unique groups for the teacher from the database
+const groupsJSON = '[{"_id": 1, "groupNumber": 1}, {"_id": 2, "groupNumber": 2}, {"_id": 3, "groupNumber": 3}, {"_id": 5, "groupNumber":4}, {"_id": 6, "groupNumber": 5}]';
 
 class HeadbandsLastResults extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-
-        }
+        this.state = { groupNr: "Average between all groups" };
     }
 
     onClickSurvey = () => {
 
     }
+    
+    
+    buttonClicked = (buttonValue) => (e) => {
+            e.preventDefault();
+            this.setState({groupNr: "Group " + buttonValue}); 
+    }
+    
+    renderButton(buttonValue) {
+        return (
+           <button  
+                onClick = {this.buttonClicked(buttonValue)}
+                type="button" 
+                className="btn btn-primary">
+                        Group {buttonValue}
+            </button>
+        );
+    }
 
     render() {
-        var group_list = [
-            <button style = {styleButton} type="button" className="btn btn-primary">Group1</button>,
-            <button style = {styleButton} type="button" className="btn btn-primary">Group2</button>,
-            <button style = {styleButton} type="button" className="btn btn-primary">Group3</button>,
-            <button style = {styleButton} type="button" className="btn btn-primary">Group4</button>,
-            <button style = {styleButton} type="button" className="btn btn-primary">Group5</button>,    
-        ]
 
+        var parsed_groups = JSON.parse(groupsJSON);
+        var group_list = [];
+        var temp = 0;
+        parsed_groups.forEach(function(e){
+           group_list[temp] = e.groupNumber
+           temp = temp+1;
+        });
+        
         return (
             <div style={ style }>
-                <div className="text-center">
+                <div className="text-left">
                     <div className="row">
-                        <div className="col-sm-6">
+                        <div className="col-sm-3" style = {styleButton}>
                             <div className="btn-group-vertical">
-                               { group_list }
+                               { group_list.map(function(buttonValue, i){
+                                       return this.renderButton(buttonValue)
+                                    }, this) 
+                                }
                             </div>
                         </div>
-                        <div className="col-sm-4">
-                            <SpiderGraph />
+                        <div className="col-sm-7">
+                            <SpiderGraph name={this.state.groupNr} />
 
                         </div>
                     </div>

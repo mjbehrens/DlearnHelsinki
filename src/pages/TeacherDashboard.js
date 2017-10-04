@@ -24,7 +24,7 @@ class TeacherDashboard extends Component {
     return (
       <div className="text-center">
 
-          <h1> Insert Class Name Here {this.state.className} </h1>
+          <h1> {this.props.location.state.className} </h1>
 
         <div className="row">
           <HeadbandsLastResults />

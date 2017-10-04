@@ -21,7 +21,9 @@ class HeadbandsLastResults extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { groupNr: "Average between all groups" };
+        this.state = {
+             groupNr: "Average between all groups",
+             };
     }
 
     onClickSurvey = () => {
@@ -68,7 +70,7 @@ class HeadbandsLastResults extends React.Component {
                             </div>
                         </div>
                         <div className="col-sm-7">
-                            <SpiderGraph name={this.state.groupNr} />
+                            <SpiderGraph name={this.state.groupNr} students={1} classes={1} surveys={27} />
 
                         </div>
                     </div>

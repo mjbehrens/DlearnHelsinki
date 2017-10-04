@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
 
-const ORIGIN = 'http://dlearn-helsinki-backend.herokuapp.com/webapi/';
-const GET_ANSWERS = 'students/1/classes/1/surveys/27/answers';
-const GET_QUESTIONS_FOR_SURVEY = 'students/1/classes/1/surveys/27/questions';
+const ORIGIN = 'http://dlearn-helsinki-backend.herokuapp.com/webapi';
+var GET_ANSWERS = 'students/1/classes/1/surveys/27/answers';
+var GET_QUESTIONS_FOR_SURVEY = 'students/1/classes/1/surveys/27/questions';
 
 class SpiderGraph extends Component {
 
@@ -30,39 +30,55 @@ class SpiderGraph extends Component {
 	}
 
 	componentDidMount() {
-		this.getSurveyQuestionsREST();
-		this.getSurveyAnswersREST();
+		this.getDataForGraph();
 	}
 
-	/*
-	componentWillUnmount() {
-	
-	}
 	
 	shouldComponentUpdate(nextProps, nextState) {
 		return nextProps.name !== this.props.name;
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({
-			...this.state,
-			data: {
-				...this.state.data, datasets: [
-					{
-						label: nextProps.name,
-						backgroundColor: "rgba(179,181,198,0.2)",
-						borderColor: "rgba(179,181,198,1)",
-						pointBackgroundColor: "rgba(179,181,198,1)",
-						pointBorderColor: "#fff",
-						pointHoverBackgroundColor: "#fff",
-						pointHoverBorderColor: "rgba(179,181,198,1)",
-						data: [3, 1, 5, 2, 4, 6, 2, 2, 3, 2, 5, 4, 7, 5]
-					}
-				]
-			},
-		});
+		this.getDataForGraph();
 	}
-	*/
+	
+
+	getDataForGraph = function (){
+		this.buildRequestRest();
+		this.getSurveyQuestionsREST();
+		this.getSurveyAnswersREST();
+	}
+
+	buildRequestRest= function (){
+
+		var s = "";
+		if(this.props.students != null){
+			console.log('students/'+this.props.students);
+			s += '/students/'+this.props.students;
+		}
+		if(this.props.teachers != null){
+			console.log('teachers/'+this.props.teachers);
+			s += '/teachers/'+this.props.teachers;
+		}
+		if(this.props.classes != null){
+			console.log('classes/'+this.props.classes);
+			s += '/classes/'+this.props.classes;
+		}
+		if(this.props.groups != null){
+			console.log('groups/'+this.props.groups);
+			s += '/groups/'+this.props.groups;
+		}
+		if(this.props.surveys != null){
+			console.log('surveys/'+this.props.surveys);
+			s += '/surveys/'+this.props.surveys;
+		}
+
+		GET_ANSWERS = s + '/answers';
+		GET_QUESTIONS_FOR_SURVEY = s + '/questions';
+
+	}
+
+
 
 	getSurveyQuestionsREST = function () {
 		var component = this;
@@ -81,7 +97,7 @@ class SpiderGraph extends Component {
 					data.forEach(function (e) {
 						questionLabels.push(e.question);
 					}, this);
-					console.log(questionLabels);
+
 					if (questionLabels.length > 0) {
 						component.setState({
 							...component.state,
@@ -119,7 +135,6 @@ class SpiderGraph extends Component {
 					data.forEach(function (e) {
 						arrayAnswers.push(e.answer);
 					}, this);
-					console.log(arrayAnswers);
 
 					if (arrayAnswers.length > 0) {
 						component.setState({

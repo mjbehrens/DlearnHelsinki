@@ -5,7 +5,10 @@ import Slider from 'rc-slider';
 import { Redirect } from 'react-router'
 import 'rc-slider/assets/index.css';
 
-
+const ORIGIN = 'http://dlearn-helsinki-backend.herokuapp.com/webapi/';
+const GET_SURVEYS = 'teachers/1/classes/1/surveys/';
+const GET_QUESTIONS_FOR_SURVEY = 'students/1/classes/1/surveys/27/questions';
+const PUT_QUESTION_ANSWER = 'students/1/classes/1/surveys/27/answers/'; //needs one more parameters
 
 const surveyJson = '[{"_id": 1,"question": "I presented my own viewpoints in the group","min_answer": 1,"max_answer": 10},{"_id": 2,"question": "I listening other\'s opinions","min_answer": 1,"max_answer": 5},{"_id": 3,"question": "I tried to understand others ideas","min_answer": 1,"max_answer": 5},{"_id": 4,"question": "I gave feedback of the developments for others","min_answer": 1,"max_answer": 5},{"_id": 5,"question": "I participated actively to the groupework","min_answer": 1,"max_answer": 5},{"_id": 6,"question": "I took enough responsibility of the groupwork","min_answer": 1,"max_answer": 5},{"_id": 7,"question": "I helped others in the challenges of the groupwork","min_answer": 1,"max_answer": 5},{"_id": 8,"question": "I received useful feedback in the group to continue the work","min_answer": 1,"max_answer": 5},{"_id": 9,"question": "I focused completely on doing the groupwork","min_answer": 1,"max_answer": 5},{"_id": 10,"question": "I took others ideas into account in the groupwork","min_answer": 1,"max_answer": 5},{"_id": 11,"question": "Everyone participated equally in the groupwork","min_answer": 1,"max_answer": 5},{"_id": 12,"question": "I worked with others who could help","min_answer": 1,"max_answer": 5},{"_id": 13,"question": "I encouraged our group in doing the collaborative task","min_answer": 1,"max_answer": 5}]';
 
@@ -18,11 +21,11 @@ class StudentSurveyQuestion extends Component {
             buttonValue: 'Next',
             redirect: false,
             index: 0,
-            survey_id : 0,
+            survey_id: 0,
             survey: [],
             currentQuestion: {
                 id: 0,
-                question: '',
+                question: 'NaN',
                 min_answer: 0,
                 max_answer: 0,
             },
@@ -32,87 +35,102 @@ class StudentSurveyQuestion extends Component {
 
     componentDidMount() {
 
-        this.setState({
-            ...this.state,
-            survey: this.parsingJsonQuestion(),
-            currentQuestion: this.parsingJsonQuestion()[this.state.index]
-        })
+
+        this.getSurveyQuestionsREST();
+
+
+
+
     }
 
-    parsingJsonQuestion = function () {
-        let survey = [];
-        var myObject = JSON.parse(surveyJson);
-        myObject.forEach(function (e) {
-            let question = {
-                id: e._id,
-                question: e.question,
-                min_answer: e.min_answer,
-                max_answer: e.max_answer,
-            }
-
-            survey.push(question);
-
-        }, this);
-        return survey;
-    }
-
-    requestSurveyContent = function () {
-        let result = {
-            data: [],
-            message: ''
-        };
-
-        fetch('http://dlearn-helsinki-backend.herokuapp.com/webapi/teachers/1/classes/1/surveys/', {
+    getSurveyQuestionsREST = function () {
+        var component = this;
+        
+        var survey = [];
+        
+        fetch(ORIGIN + GET_QUESTIONS_FOR_SURVEY, {
             method: "GET",
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Authorization' : 'Basic ' + btoa('teacher:password')
+                'Authorization': 'Basic ' + btoa('teacher:password')
             }
         }).then(function (response) {
-                if (response.ok) {
-                    console.log(response)
-                    response.json().then(data => {
+            if (response.ok) {
+                response.json().then(data => {
+                    data.forEach(function (e) {
+                        let q = {
+                            id: e._id,
+                            question: e.question,
+                            min_answer: e.min_answer,
+                            max_answer: e.max_answer,
+                        }
+                        survey.push(q);
+                    }, this);
 
-                        result.data = data;
-                        result.message = response.statusText;
-                        //console.log(result.data);
-                        console.log(result);
-                    });
-                } else {
-                    result.message = 'Network response was not ok.';
-                    console.log(result);
-                }
-            }).catch(function (err) {
-                // Error :(
-                console.log(err);
-            });
 
+                    var tempSurvey = survey;
+                    var tempCurrentQuestion = tempSurvey[component.state.index];
+
+                    if (tempSurvey.length > 0) {
+                        component.setState({
+                            ...component.state,
+                            survey: tempSurvey,
+                            currentQuestion: tempCurrentQuestion,
+                        })
+                    }
+
+                });
+            } else {
+                console.log('Network response was not ok.');
+            }
+            return survey;
+
+        }).catch(function (err) {
+            // Error :(
+            console.log(err);
+        });
     }
 
+    putQuestionsAnswerREST = function (data) {
+        fetch(ORIGIN + PUT_QUESTION_ANSWER + this.state.index, {
+            method: "PUT",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa('teacher:password')
+            },
+            body: data
+        }).then(function (response) {
+            if (response.ok) {
+                console.log(response.body)
+                console.log("answer put on server")
+            } else {
+                console.log('Network response was not ok.');
+            }
+        }).catch(function (err) {
+            // Error :(
+            console.log(err);
+        });
+    }
+
+    // Called every time the slider bar changes its value
+    // update the state
     onSliderChange = (value) => {
         this.setState({
             ...this.state.startPoint = value,
         });
     }
 
-
     onClickNext = () => {
-        this.requestSurveyContent();
+        this.getSurveyQuestionsREST();
 
         if (this.state.index < this.state.survey.length) {
             //send answer to server
-            var newProcess = {
+
+            var data = JSON.stringify({
                 answer: this.state.startPoint
-            };
-
-            var data = new FormData();
-            data.append("json", JSON.stringify(newProcess));
-
-            /* fetch('/student/groups/1/surveys/3/questions/' + this.state.currentQuestion.id + '/answer', {
-                 method: 'put',
-                 body: data
-             });
-             */
+            });
+            this.putQuestionsAnswerREST(data);
             //check if message send correctly
 
             this.state.index = this.state.index + 1;

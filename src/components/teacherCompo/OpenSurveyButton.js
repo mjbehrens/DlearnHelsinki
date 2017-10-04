@@ -21,12 +21,11 @@ class OpenSurveyButton extends React.Component {
             open: true,
             text: "Open Survey",
             picture: iconSurveyOpen,
+            teacherID: 1,
+            classID: 1,
             survey: {
                 title: null,
                 description: null,
-                date: null,
-                teacherID: null,
-                classID: null,
             }
         }
     }
@@ -40,11 +39,33 @@ class OpenSurveyButton extends React.Component {
             survey: {
                 title: t,
                 description: d,
-                date: new Date(),
-                teacherID: '1',
-                classID: '1'
             }
         });
+
+        this.requestOpenSurvey();
+    }
+
+    requestOpenSurvey = () => {
+
+        var newProcess = {
+           // title: this.state.survey.title,
+           // description: this.state.survey.description,
+        };
+
+        var data = new FormData();
+        data.append("json", JSON.stringify(newProcess));
+
+        fetch('https://dlearn-helsinki-backend.herokuapp.com/webapi/teachers/'
+            + this.state.teacherID + '/classes/'
+            + this.state.classID + '/surveys', {
+                method: 'post',
+                headers: {
+                    'Authorization': 'Basic ' + btoa('teacher:password'),
+                    'Content-Type': 'application/json'
+                },
+                body: data
+            });
+
     }
 
     onClickSurvey = () => {
@@ -81,7 +102,7 @@ class OpenSurveyButton extends React.Component {
 }
 
 
-/** Prompt plugin */
+/** Survey Form plugin */
 Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
     let _title = null;
     let _description = null;
@@ -96,10 +117,10 @@ Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
 
     this.create({
         title: 'Creation of a new Survey',
-        content: <SurveyCreationForm    onChangeTitle={getTitle} 
-                                        onChangeDescription={getDescription} 
-                                        title={"New Survey"} 
-                                        description={"new survey for today\'s exercices"} />,
+        content: <SurveyCreationForm onChangeTitle={getTitle}
+            onChangeDescription={getDescription}
+            title={"New Survey"}
+            description={"new survey for today\'s exercices"} />,
         buttons: {
             left: [{
                 text: 'Cancel',

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 import Slider from 'rc-slider';
 import { Redirect } from 'react-router'

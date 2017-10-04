@@ -2,16 +2,25 @@ import React, { Component } from 'react';
 
 import SelectClass from '../components/teacherCompo/SelectClass.js';
 
-//Change this part to pull information from the database once it's implemented.
-var tempList = ["Math 1", "Math 2", "Math 5", "Math 8", "Math 12", "Math 21"];
+var classesJSON = '[{"_id": 1, "className": "Math 1"}, {"_id": 2, "className": "Math 2"}, \n\
+{"_id": 3, "className": "Math 5"}, {"_id": 4, "className": "Math 8"}, {"_id": 12, "className": "Math 1"},\n\
+ {"_id": 6, "className": "Math 21"}, {"_id": 7, "className": "Homeroom"}]';
 
-var buttons = tempList.map(function(object, i){
-                             return <SelectClass nameOfClass={object} key={i} />;
-                        });
 
 class ClassSelection extends Component {
     
     render() {
+        var parsed_classes = JSON.parse(classesJSON);
+        var class_list = [];
+        var temp = 0;
+        parsed_classes.forEach(function(e){
+           class_list[temp] = e.className;
+           temp = temp+1;
+        });
+        
+        var buttons = class_list.map(function(object, i){
+                             return <SelectClass nameOfClass={object} key={i} />;
+                        });
         
         return (
             <div className="SelectClass">
@@ -20,8 +29,8 @@ class ClassSelection extends Component {
                     <div>
                         {buttons}
                     </div>
-                    <div>
-                        <button type = "button" className = "btn btn-default">Add New</button>
+                    <div style = {{margin: "1vmin"}}>
+                        <button className = "btn btn-default">Continue</button>
                     </div>
             </div>
         );

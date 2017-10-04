@@ -6,7 +6,7 @@ class SelectClass extends React.Component {
 
         return(
 //            <div>
-                <button type="button" 
+                <button style = {{margin: "1vmin"}}
                         className="btn btn-primary">
                             {this.props.nameOfClass}
                 </button>

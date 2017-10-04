@@ -43,7 +43,7 @@ class StudentDashboard extends Component {
 						</div>
 					</div>
 					<div className="col-sm-8">
-						<SpiderGraph />
+						<SpiderGraph name={"Last Survey Results"}/>
 					</div>
 				</div>
 

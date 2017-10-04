@@ -35,9 +35,9 @@ class StudentSurveyQuestion extends Component {
 
     getSurveyQuestionsREST = function () {
         var component = this;
-        
+
         var survey = [];
-        
+
         fetch(ORIGIN + GET_QUESTIONS_FOR_SURVEY, {
             method: "GET",
             headers: {
@@ -68,23 +68,19 @@ class StudentSurveyQuestion extends Component {
                             currentQuestion: tempCurrentQuestion,
                         })
                     }
-
                 });
             } else {
                 console.log('Network response was not ok.');
             }
-            return survey;
-
         }).catch(function (err) {
             // Error :(
             console.log(err);
         });
-
     }
 
     putQuestionsAnswerREST = function (data) {
-        fetch(ORIGIN + PUT_QUESTION_ANSWER + this.state.index, {
-            method: "PUT",
+        fetch(ORIGIN + PUT_QUESTION_ANSWER + this.state.currentQuestion.id, {
+            method: "POST",
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
@@ -157,17 +153,19 @@ class StudentSurveyQuestion extends Component {
 
             return (
                 <div className="Login-form">
-                    <p> {this.state.currentQuestion.question} </p>
+                    <p><h3>{this.state.currentQuestion.id}</h3>{this.state.currentQuestion.question}</p>
                     <Slider
                         min={this.state.currentQuestion.min_answer}
                         max={this.state.currentQuestion.max_answer} dots={true}
                         value={this.state.startPoint}
                         onChange={this.onSliderChange} />
 
-                    <span>{this.state.startPoint}/{this.state.currentQuestion.max_answer} </span>
-                    <button type="button"
-                        className="btn btn-primary"
-                        onClick={this.onClickNext}>{this.state.buttonValue}</button>
+                    <p> 
+                        <h5>{this.state.startPoint}/{this.state.currentQuestion.max_answer} </h5>
+                        <button type="button"
+                            className="btn btn-primary"
+                            onClick={this.onClickNext}>{this.state.buttonValue}</button>
+                    </p>
                 </div>
             );
         }

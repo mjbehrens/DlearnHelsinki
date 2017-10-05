@@ -42,16 +42,17 @@ class OpenSurveyButton extends React.Component {
             }
         });
 
-        this.requestOpenSurvey();
+        this.requestOpenSurvey(t, d);
+
     }
 
-    requestOpenSurvey = () => {
-
+    requestOpenSurvey = (t, d) => {
 
         var data = JSON.stringify({
-             title: this.state.survey.title,
-             description: this.state.survey.description,
+             title: t,
+             description: d,
         });
+        console.log(data);
 
         fetch('https://dlearn-helsinki-backend.herokuapp.com/webapi/teachers/' + this.state.teacherID
             + '/classes/' + this.state.classID + '/surveys', {
@@ -63,7 +64,6 @@ class OpenSurveyButton extends React.Component {
                 },
                 body: data
             });
-
     }
 
     onClickSurvey = () => {
@@ -122,7 +122,7 @@ Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
         buttons: {
             left: [{
                 text: 'Cancel',
-                className: 'special-btn', // optional
+                className: 'danger', // optional
                 action: function (popup) {
                     //do things
                     popup.close();

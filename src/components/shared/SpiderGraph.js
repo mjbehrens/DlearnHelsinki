@@ -5,10 +5,15 @@ const ORIGIN = 'http://dlearn-helsinki-backend.herokuapp.com/webapi';
 var GET_ANSWERS = '';
 var GET_QUESTIONS_FOR_SURVEY = '';
 
+// VERY IMPORTANT !
+var params ;
+
 class SpiderGraph extends Component {
 
 	constructor(props) {
 		super(props);
+
+		params = this.props.parameters;
 
 		this.state = {
 			cpt: 0,
@@ -33,20 +38,15 @@ class SpiderGraph extends Component {
 	componentDidMount() {
 		this.getDataForGraph();
 	}
-
-	/*
-	// Doesn't work 
-	shouldComponentUpdate(nextProps, nextState) {
-		return nextProps.name !== this.props.name;
-	}
-	*/
-
+		 
 
 	// Called everytime a props value change
 	componentWillReceiveProps(nextProps) {
+		params = nextProps.parameters;
+		console.log(params);
 		this.getDataForGraph();
+		}
 
-	}
 
 	// Fetch resquest for questions and answer
 	getDataForGraph = function () {
@@ -60,28 +60,26 @@ class SpiderGraph extends Component {
 	buildRequestRest = function () {
 
 		var s = "";
-		if (this.props.students != null) {
-			s += '/students/' + this.props.students;
+		if (params.students != null) {
+			s += '/students/' + params.students;
 		}
-		if (this.props.teachers != null) {
-			s += '/teachers/' + this.props.teachers;
+		if (params.teachers != null) {
+			s += '/teachers/' + params.teachers;
 		}
-		if (this.props.classes != null) {
-			s += '/classes/' + this.props.classes;
+		if (params.classes != null) {
+			s += '/classes/' + params.classes;
 		}
-		if (this.props.groups != null) {
-			s += '/groups/' + this.props.groups;
+		if (params.groups != null) {
+			s += '/groups/' + params.groups;
 		}
-		if (this.props.surveys != null) {
-			s += '/surveys/' + this.props.surveys;
+		if (params.surveys != null) {
+			s += '/surveys/' + params.surveys;
 		}
 
 		GET_ANSWERS = s + '/answers';
 		GET_QUESTIONS_FOR_SURVEY = s + '/questions';
 
 	}
-
-
 
 	getSurveyQuestionsREST = function () {
 		var component = this;
@@ -98,7 +96,7 @@ class SpiderGraph extends Component {
 			if (response.ok) {
 				response.json().then(data => {
 					data.forEach(function (e) {
-						questionLabels.push(e.question);
+						questionLabels.push(e._id +": "+ e.question);
 					}, this);
 
 					if (questionLabels.length > 0) {
@@ -138,7 +136,6 @@ class SpiderGraph extends Component {
 					data.forEach(function (e) {
 						arrayAnswers.push(e.answer);
 					}, this);
-
 					if (arrayAnswers.length > 0) {
 						component.setState({
 							...component.state,
@@ -165,6 +162,8 @@ class SpiderGraph extends Component {
 		});
 	}
 
+
+
 	//take a string and create a original color 
 	stringToColour = function (str) {
 
@@ -174,16 +173,16 @@ class SpiderGraph extends Component {
 		}
 
 		var hash = 0;
-		for (var i = 0; i < str.length; i++) {
+		for (let i = 0; i < str.length; i++) {
 			hash = str.charCodeAt(i) + ((hash << 5) - hash);
 		}
 		var colour = '#';
-		for (var i = 0; i < 3; i++) {
+		for (let i = 0; i < 3; i++) {
 			var value = (hash >> (i * 8)) & 0xFF;
 			colour += ('00' + value.toString(16)).substr(-2);
 		}
 
-		function cutHex(h) { return (h.charAt(0) == "#") ? h.substring(1, 7) : h }
+		function cutHex(h) { return (h.charAt(0) === "#") ? h.substring(1, 7) : h }
 		function hexToR(h) { return parseInt((cutHex(h)).substring(0, 2), 16) }
 		function hexToG(h) { return parseInt((cutHex(h)).substring(2, 4), 16) }
 		function hexToB(h) { return parseInt((cutHex(h)).substring(4, 6), 16) }

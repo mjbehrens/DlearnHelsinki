@@ -47,21 +47,19 @@ class OpenSurveyButton extends React.Component {
 
     requestOpenSurvey = () => {
 
-        var newProcess = {
-           // title: this.state.survey.title,
-           // description: this.state.survey.description,
-        };
 
-        var data = new FormData();
-        data.append("json", JSON.stringify(newProcess));
+        var data = JSON.stringify({
+             title: this.state.survey.title,
+             description: this.state.survey.description,
+        });
 
-        fetch('https://dlearn-helsinki-backend.herokuapp.com/webapi/teachers/'
-            + this.state.teacherID + '/classes/'
-            + this.state.classID + '/surveys', {
+        fetch('https://dlearn-helsinki-backend.herokuapp.com/webapi/teachers/' + this.state.teacherID
+            + '/classes/' + this.state.classID + '/surveys', {
                 method: 'post',
                 headers: {
-                    'Authorization': 'Basic ' + btoa('teacher:password'),
-                    'Content-Type': 'application/json'
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + btoa('teacher:password')
                 },
                 body: data
             });

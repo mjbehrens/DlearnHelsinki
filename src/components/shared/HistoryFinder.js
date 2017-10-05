@@ -8,10 +8,15 @@ class HistoryFinder extends Component {
         super(props);
     }
 
-    searchHistory = () => (e) => {
-        var query = this.refs.searchInput.getDOMNode().value;
+    searchHistory = function(event) {
+        var query = event.target.value.toLowerCase();
         this.props.doSearch(query);
-        console.log("Are we even searching for anything?");
+        console.log("Query: "+query);
+    }
+    
+
+    sayHi = function () {
+        console.log("Hello!")
     }
 
     render() {
@@ -20,9 +25,17 @@ class HistoryFinder extends Component {
             <div>
                 An amazing search bar is supposed to be here, but it hasn't been implemented yet.
                 <div className = "searchBar">
-                    <input type="text" ref="searchInput" placeholder="Search" defaultValue = {this.props.query} onChange = {this.searchHistory}/>
+                    <input type="text" placeholder="Search" value = {this.props.query} onChange = {this.searchHistory.bind(this)}/>
                 </div>
             </div>
         ); 
+//        return (
+//            <div>
+//                <div className = "form-group">
+//                    <input type = "text" id = "query" onChange = {this.sayHi}/>
+//                    <button type="button" className="btn btn-default" onClick = {this.sayHi}>Search</button>
+//                </div>
+//            </div>
+//        );
     }
 } export default HistoryFinder;

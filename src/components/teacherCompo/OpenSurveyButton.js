@@ -70,15 +70,14 @@ class OpenSurveyButton extends React.Component {
 
         return (
 
-  <div class="card">
-    <div class="card-block">
-		<img className="card-img-top"
-                    src={this.state.picture} width="100" height="100"
-                    onClick={this.onClickSurvey}
-                />
-      <h4 class="card-title">Open Survey</h4>
+  <div className="card">
+		<img className="card-img-top teacher-card-img" src={this.state.picture} width="100" height="100"
+	    onClick={this.onClickSurvey}
+	    alt="survey icon" />
+    <div className="card-body">
+		<h4 className="card-title">{this.state.text}</h4>
     </div>
-</div>
+  </div>
         )
     }
 }

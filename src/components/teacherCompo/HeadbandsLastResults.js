@@ -58,7 +58,8 @@ class HeadbandsLastResults extends React.Component {
         });
         
         return (
-            <div style={ style }>
+	    <div className="container">
+<div className="jumbotron">
                 <div className="text-left">
                     <div className="row">
                         <div className="col-sm-3" style = {styleButton}>
@@ -76,7 +77,8 @@ class HeadbandsLastResults extends React.Component {
                     </div>
 
                 </div>
-            </div>
+</div>
+		</div>
         );
 
     }

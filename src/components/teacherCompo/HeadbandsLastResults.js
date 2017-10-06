@@ -82,12 +82,13 @@ class HeadbandsLastResults extends React.Component {
 <div className="jumbotron">
                 <div className="text-left">
                     <div className="row">
-                        <div className="col-sm-3" style={styleButton}>
+                        <div className="col-sm-2" style = {styleButton}>
                             <div className="btn-group-vertical">
                                 {buttonList}
                             </div>
                         </div>
-                        <div className="col-sm-7">
+
+                        <div className="col-sm-9">
                             <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
 
                         </div>

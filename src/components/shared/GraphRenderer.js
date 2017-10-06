@@ -101,7 +101,7 @@ class GraphRenderer extends Component {
                 surveys:compo.props.surveyID,
             } ;
             console.log("Group "+ g._id + " added");
-            spiderGraphs.push(<SpiderGraph name={g.name} parameters = { parameters } color={g.name} />);
+            spiderGraphs.push(<div key = {g._id}><SpiderGraph name={g.name} parameters = { parameters } color={g.name} /></div>);
         });
         
         console.log(spiderGraphs);

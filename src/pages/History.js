@@ -58,7 +58,7 @@ class History extends Component {
                         <HistoryDisplay loadResult = {this.loadResult.bind(this)} searchData = {this.state.filteredData} />
                     </div>
                     <div className = "col-sm-8">
-                        <GraphRenderer surveyID = {27} />
+                        <GraphRenderer surveyID={27} />
                     </div>
                 </div>
             </div>

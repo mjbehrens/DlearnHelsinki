@@ -22,6 +22,9 @@ class HeadbandsLastResults extends React.Component {
 
     constructor(props) {
         super(props);
+
+        buttonList = [] ;
+        
         this.state = {
             group_id: 1,
             group_name: "No Group Selected",

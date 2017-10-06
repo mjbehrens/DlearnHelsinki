@@ -17,7 +17,12 @@ class StudentSurveyQuestion extends Component {
             redirect: false,
             index: 0,
             survey_id: 0,
-            survey: [],
+            survey: [{
+                id: 0,
+                question: 'Loading the survey...',
+                min_answer: 0,
+                max_answer: 0,
+            },],
             currentQuestion: {
                 id: 0,
                 question: 'Loading the survey...',

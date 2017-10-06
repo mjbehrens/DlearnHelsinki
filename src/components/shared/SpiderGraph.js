@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
 
-const ORIGIN = 'http://dlearn-helsinki-backend.herokuapp.com/webapi';
+const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
 var GET_ANSWERS = '';
 var GET_QUESTIONS_FOR_SURVEY = '';
 

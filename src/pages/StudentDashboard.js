@@ -30,23 +30,26 @@ class StudentDashboard extends Component {
 		// DO NOT put margins into buttons in CSS! 
 		// They may not be applied correctly during rendering.
 		return (
-			<div className="text-center">
+			<div className="container text-center">
+		    <div className="jumbotron">
 
 				<h1>Welcome Tobi!</h1>
 
+		    <hr className="my-4" />
 				<div className="row">
-					<div className="col-sm-4">
+					<div className="col-sm-3">
 						<div className="btn-group-vertical">
 							<button type="button" onClick={this.startSurvey} className="btn btn-primary">Survey</button>
 							<button type="button" className="btn btn-primary">History</button>
 							<button type="button" className="btn btn-primary">Profile</button>
 						</div>
 					</div>
-					<div className="col-sm-8">
+					<div className="col-sm-9">
 						<SpiderGraph name={"Last Survey Results"} students={1} classes={1} surveys={27} />
 					</div>
 				</div>
 
+			</div>
 			</div>
 		);
 	}

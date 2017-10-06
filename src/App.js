@@ -10,12 +10,12 @@ import Login from './pages/Login.js';
 import StudentDashboard from './pages/StudentDashboard.js';
 import ClassSelection from './pages/ClassSelection.js';
 import TeacherDashboard from './pages/TeacherDashboard.js'
+import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
+
 
 import Popup from 'react-popup';
 
 
-
-import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
 
 class App extends Component {
   render() {

@@ -9,7 +9,6 @@ class StudentDashboard extends Component {
 
 	startSurvey = (e) => {
 		e.preventDefault();
-		console.log("Well, at least the method's being called correctly...");
 		this.props.history.push("/student-survey");
 		//        return <Redirect to="/student-survey"/>; //THIS DOESN'T WORK
 	}
@@ -29,6 +28,15 @@ class StudentDashboard extends Component {
 	render() {
 		// DO NOT put margins into buttons in CSS! 
 		// They may not be applied correctly during rendering.
+
+		let parameters = {
+            teachers : null,
+            students : 3,
+            classes:1, 
+            groups: null, 
+            surveys:27,
+        }
+
 		return (
 			<div className="text-center">
 
@@ -43,7 +51,7 @@ class StudentDashboard extends Component {
 						</div>
 					</div>
 					<div className="col-sm-8">
-						<SpiderGraph name={"Last Survey Results"} students={1} classes={1} surveys={27} />
+						<SpiderGraph name={"Last Survey Results"} parameters={parameters} />
 					</div>
 				</div>
 

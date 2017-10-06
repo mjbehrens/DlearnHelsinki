@@ -42,30 +42,28 @@ class OpenSurveyButton extends React.Component {
             }
         });
 
-        this.requestOpenSurvey();
+        this.requestOpenSurvey(t, d);
+
     }
 
-    requestOpenSurvey = () => {
+    requestOpenSurvey = (t, d) => {
 
-        var newProcess = {
-           // title: this.state.survey.title,
-           // description: this.state.survey.description,
-        };
+        var data = JSON.stringify({
+             title: t,
+             description: d,
+        });
+        console.log(data);
 
-        var data = new FormData();
-        data.append("json", JSON.stringify(newProcess));
-
-        fetch('https://dlearn-helsinki-backend.herokuapp.com/webapi/teachers/'
-            + this.state.teacherID + '/classes/'
-            + this.state.classID + '/surveys', {
+        fetch('https://dlearn-helsinki-backend.herokuapp.com/webapi/teachers/' + this.state.teacherID
+            + '/classes/' + this.state.classID + '/surveys', {
                 method: 'post',
                 headers: {
-                    'Authorization': 'Basic ' + btoa('teacher:password'),
-                    'Content-Type': 'application/json'
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + btoa('teacher:password')
                 },
                 body: data
             });
-
     }
 
     onClickSurvey = () => {
@@ -126,7 +124,7 @@ Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
         buttons: {
             left: [{
                 text: 'Cancel',
-                className: 'special-btn', // optional
+                className: 'danger', // optional
                 action: function (popup) {
                     //do things
                     popup.close();

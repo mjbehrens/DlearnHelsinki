@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 
+
+
+var buttonList = [];
+
 class HistoryDisplay extends Component {
     
     constructor(props) {
+        
+        buttonList = [];
+        
         super(props);
     }
 //    
@@ -12,6 +19,7 @@ class HistoryDisplay extends Component {
   
   componentWillReceiveProps(nextProps) {
         if (this.props != nextProps) {
+
             this.setState({...this.state,
             	searchData: nextProps.searchData
             });
@@ -20,9 +28,10 @@ class HistoryDisplay extends Component {
     
     render() {
         var searchResults = [];
+        let compo = this;
         this.props.searchData.forEach( function(result) {
             if (true) {
-                searchResults.push(<div> {result} </div>)
+                searchResults.push(<div><button onClick = {compo.props.loadResult}> {result} </button></div>)
             }
         });
         return(

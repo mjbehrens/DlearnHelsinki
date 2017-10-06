@@ -23,7 +23,6 @@ class HistoryFinder extends Component {
         
         return(
             <div>
-                An amazing search bar is supposed to be here, but it hasn't been implemented yet.
                 <div className = "searchBar">
                     <input type="text" placeholder="Search" value = {this.props.query} onChange = {this.searchHistory.bind(this)}/>
                 </div>

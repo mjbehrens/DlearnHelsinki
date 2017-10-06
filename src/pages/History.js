@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import HistoryFinder from '../components/shared/HistoryFinder.js';
 import HistoryDisplay from '../components/shared/HistoryDisplay.js';
+import GraphRenderer from '../components/shared/GraphRenderer.js';
 
 //Select * From SpiderGraphs
 var sampleData = ["This is a test.", "There is nothing interesting here.", "For now.", "No, seriously!"];
@@ -25,7 +26,6 @@ class History extends Component {
         sampleData.forEach(function(i) {
            if (i.toLowerCase().indexOf(queryText) != -1) {
                queryResult.push(i);
-               console.log("Hello "+i)
            }
         });
         this.setState({ 
@@ -35,14 +35,31 @@ class History extends Component {
     }
     
 
-                
+    loadResult = function() {
+        console.log("Hello world!");
+    }
 
     render() {
+        
+        let parameters = {
+            teachers : 1,
+            students : null,
+            classes:1, 
+            groups: 1, 
+            surveys:27,
+        }
+        
         return(
-            <div className = "left-align">
-                <HistoryFinder query = {this.state.query} doSearch = {this.doSearch.bind(this)} />
-                <HistoryDisplay searchData = {this.state.filteredData} />
+            <div className = "row">
+                <div className = "left-align col-sm-4">
+                    <HistoryFinder query = {this.state.query} doSearch = {this.doSearch.bind(this)} />
+                    <HistoryDisplay loadResult = {this.loadResult.bind(this)} searchData = {this.state.filteredData} />
+                </div>
+                <div className = "col-sm-8">
+                    <GraphRenderer surveyID = {27} />
+                </div>
             </div>
+            
         )
     }
 } export default History;

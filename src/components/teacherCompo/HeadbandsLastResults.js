@@ -23,13 +23,13 @@ class HeadbandsLastResults extends React.Component {
     constructor(props) {
         super(props);
 
-        buttonList = [] ;
-        
+        buttonList = [];
+
         this.state = {
             group_id: 1,
             group_name: "No Group Selected",
         };
-        
+
         this.tempParsingJson();
     }
 
@@ -69,36 +69,36 @@ class HeadbandsLastResults extends React.Component {
 
 
     render() {
-        
+
         //requires for spiderGraph
         let parameters = {
-            teachers : 1,
-            students : null,
-            classes:1, 
-            groups:this.state.group_id, 
-            surveys:27,
+            teachers: 1,
+            students: null,
+            classes: 1,
+            groups: this.state.group_id,
+            surveys: 27,
         }
 
         return (
 
-	    <div className="container">
-<div className="jumbotron">
-                <div className="text-left">
-                    <div className="row">
-                        <div className="col-sm-3" style={styleButton}>
-                            <div className="btn-group-vertical">
-                                {buttonList}
+            <div className="container">
+                <div className="jumbotron">
+                    <div className="text-left">
+                        <div className="row">
+                            <div className="col-sm-3" style={styleButton}>
+                                <div className="btn-group-vertical">
+                                    {buttonList}
+                                </div>
+                            </div>
+                            <div className="col-sm-7">
+                                <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
+
                             </div>
                         </div>
-                        <div className="col-sm-7">
-                            <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
 
-                        </div>
                     </div>
-
                 </div>
-</div>
-		</div>
+            </div>
         );
 
     }

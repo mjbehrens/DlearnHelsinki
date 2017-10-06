@@ -4,7 +4,7 @@ import Slider from 'rc-slider';
 import { Redirect } from 'react-router'
 import 'rc-slider/assets/index.css';
 
-const ORIGIN = 'http://dlearn-helsinki-backend.herokuapp.com/webapi/';
+const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi/';
 const GET_QUESTIONS_FOR_SURVEY = 'students/1/classes/1/surveys/27/questions';
 const PUT_QUESTION_ANSWER = 'students/1/classes/1/surveys/27/answers/'; //needs one more parameters
 

@@ -23,8 +23,9 @@ class History extends Component {
     doSearch = function(queryText){
         var queryResult = [];
         sampleData.forEach(function(i) {
-           if (i.toLowerCase().indexOf(queryText != -1)) {
+           if (i.toLowerCase().indexOf(queryText) != -1) {
                queryResult.push(i);
+               console.log("Hello "+i)
            }
         });
         this.setState({ 

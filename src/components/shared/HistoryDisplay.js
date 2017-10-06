@@ -5,15 +5,17 @@ class HistoryDisplay extends Component {
     constructor(props) {
         super(props);
     }
-    
-    shouldComponentUpdate(nextProps, nextState) {       
-        return nextProps.searchData !== this.props.searchData; 
-    } 
+//    
+//    shouldComponentUpdate(nextProps, nextState) {       
+//        return nextProps.searchData !== this.props.searchData; 
+//    } 
   
   componentWillReceiveProps(nextProps) {
-      this.setState({...this.state,
-		  searchData: nextProps.searchData
-		});
+        if (this.props != nextProps) {
+            this.setState({...this.state,
+            	searchData: nextProps.searchData
+            });
+        }
   }
     
     render() {

@@ -50,16 +50,18 @@ class History extends Component {
         }
         
         return(
-            <div className = "row">
-                <div className = "left-align col-sm-4">
-                    <HistoryFinder query = {this.state.query} doSearch = {this.doSearch.bind(this)} />
-                    <HistoryDisplay loadResult = {this.loadResult.bind(this)} searchData = {this.state.filteredData} />
-                </div>
-                <div className = "col-sm-8">
-                    <GraphRenderer surveyID = {27} />
+            <div className = "centered">
+                <h1> History </h1>
+                <div className = "row">
+                    <div className = "left-align col-sm-4">
+                        <HistoryFinder query = {this.state.query} doSearch = {this.doSearch.bind(this)} />
+                        <HistoryDisplay loadResult = {this.loadResult.bind(this)} searchData = {this.state.filteredData} />
+                    </div>
+                    <div className = "col-sm-8">
+                        <GraphRenderer surveyID = {27} />
+                    </div>
                 </div>
             </div>
-            
         )
     }
 } export default History;

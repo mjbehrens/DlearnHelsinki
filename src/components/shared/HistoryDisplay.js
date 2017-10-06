@@ -29,9 +29,11 @@ class HistoryDisplay extends Component {
     render() {
         var searchResults = [];
         let compo = this;
+        let i = 0;
         this.props.searchData.forEach( function(result) {
             if (true) {
-                searchResults.push(<div><button onClick = {compo.props.loadResult}> {result} </button></div>)
+                searchResults.push(<div key = {i}><button onClick = {compo.props.loadResult}> {result} </button></div>)
+                i = i+1;
             }
         });
         return(

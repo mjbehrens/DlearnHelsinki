@@ -33,15 +33,20 @@ class TeacherDashboard extends Component {
 
         <div className="row">
           <HeadbandsLastResults />
-        </div >
+            </div>
+
+	<div className="container">
+<div className="card-deck">
+	    <OpenSurveyButton />
+	    <GroupManagmentButton />
+	    <HistoryButton />
+</div>
+	    </div>
+
+	</div>
 
 
-        <div className="row">
-                <OpenSurveyButton className="col-sm-3" />
-                <GroupManagmentButton className="col-sm-3" />
-                <HistoryButton className="col-sm-3" />
-        </div>
-      </div>
+	
     );
   }
 }

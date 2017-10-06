@@ -24,9 +24,7 @@ body {
 }
 
 
-/*  NEEDS TO BE INSIDE A SPECIFIC CLASS !!! 
-    
-footer {
+.footer {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -39,6 +37,8 @@ footer {
 
 section {
     text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .Icon {
@@ -70,6 +70,9 @@ section {
     text-align: center;
 }
 
+.teacher-card-img {
+    margin-top: 10px;
+}
 /*
 button {
     margin: 1vmin;

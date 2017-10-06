@@ -6,7 +6,7 @@ export default class Footer extends React.Component {
   render() {
   
     return (
-        <footer>
+        <footer className="footer">
 
 	    <div className="row">
 		<div className="col-md-4 left-align">

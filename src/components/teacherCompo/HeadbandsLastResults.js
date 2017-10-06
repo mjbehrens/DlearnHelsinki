@@ -93,6 +93,7 @@ class HeadbandsLastResults extends React.Component {
                             <div className="col-sm-7">
                                 <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
 
+
                             </div>
                         </div>
 

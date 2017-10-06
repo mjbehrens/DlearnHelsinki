@@ -62,7 +62,7 @@ class HeadbandsLastResults extends React.Component {
 <div className="jumbotron">
                 <div className="text-left">
                     <div className="row">
-                        <div className="col-sm-3" style = {styleButton}>
+                        <div className="col-sm-2" style = {styleButton}>
                             <div className="btn-group-vertical">
                                { group_list.map(function(buttonValue, i){
                                        return this.renderButton(buttonValue)
@@ -70,8 +70,10 @@ class HeadbandsLastResults extends React.Component {
                                 }
                             </div>
                         </div>
-                        <div className="col-sm-7">
+                        <div className="col-sm-9">
+		<div className="graph-container">
                             <SpiderGraph name={this.state.groupNr} students={1} classes={1} groups={null} surveys={27} color={this.state.groupNr} />
+		</div>
 
                         </div>
                     </div>

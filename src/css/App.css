@@ -71,6 +71,10 @@ section {
 .teacher-card-img {
     margin-top: 10px;
 }
+
+.graph-container {
+    min-height: 200px;
+}
 /*
 button {
     margin: 1vmin;

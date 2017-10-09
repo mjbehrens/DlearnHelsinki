@@ -23,6 +23,7 @@ class History extends Component {
         this.state = {
             query: "",
             filteredData: sampleData,
+            selectedSurvey: 27,
             sorter: 0 // 0 = no order, 1 = date ascending, 2 = date descending
         }
     }
@@ -49,8 +50,11 @@ class History extends Component {
         sampleData = JSON.parse(sampleDataJSON);
     }
     
-    // Final function will alter the value that is passed to the GraphRenderer
-    loadResult = function() { 
+    // Final function will alter the value that is passed to the GraphRenderer. 
+    // Functional part of code commented out because with the current database 
+    // implementation and dummy data used here, clicking on buttons would break things.
+    loadResult = function(surveyID) { 
+        // this.setState({selectedSurvey: surveyID}); 
         console.log("Hello world!");
     }
 
@@ -83,7 +87,7 @@ class History extends Component {
                         <HistoryDisplay loadResult = {this.loadResult.bind(this)} searchData = {this.state.filteredData} />
                     </div>
                     <div className = "col-sm-8">
-                        <GraphRenderer surveyID={27} />
+                        <GraphRenderer surveyID={this.state.selectedSurvey} />
                     </div>
                 </div>
             </div>

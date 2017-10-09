@@ -34,7 +34,7 @@ class HistoryDisplay extends Component {
         let i = 0;
         this.props.searchData.forEach( function(result) {
             if (true) {
-                searchResults.push(<button key = {i} className="btn btn-default left-align" onClick = {compo.props.loadResult}> {result.start_date +" "+ result.testInput} </button>)
+                searchResults.push(<button key = {i} className="btn btn-default left-align" onClick = {compo.props.loadResult(result._id)}> {result.start_date +" "+ result.testInput} </button>)
                 i = i+1;
             }
         });

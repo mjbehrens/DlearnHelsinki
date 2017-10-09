@@ -7,7 +7,7 @@ import GraphRenderer from '../components/shared/GraphRenderer.js';
 
 //http://underscorejs.org/#sortBy
 
-//Select * From SpiderGraphs
+//Select * From Surveys
 var sampleData = [];
 var sampleDataJSON = '[{"_id": 1, "testInput": "This is a test.", "start_date": "2017-12-05"}, \n\
 {"_id": 2, "testInput": "There is nothing interesting here.", "start_date": "2016-05-10"},\n\
@@ -36,7 +36,6 @@ class History extends Component {
                 || (i.start_date.indexOf(queryText) != -1)) {
                
                 queryResult.push(i); 
-                console.log("Dates are handled as "+typeof(i.start_date)+"s.");
            }
         });
         this.setState({ 
@@ -55,13 +54,13 @@ class History extends Component {
         console.log("Hello world!");
     }
 
+    // As SQL's Date-datatype ends up parsed into a conveniently structured string, 
+    // we just sort things alphabetically
     sortData = function() {
         let sortThis = this.state.filteredData;
         if (this.state.sorter == 1) {
-            // Do some magic
             this.setState({sorter: 2, filteredData: _.sortBy(sortThis, 'start_date').reverse()});
         } else {
-            // Do some magic
             this.setState({sorter: 1, filteredData: _.sortBy(sortThis, 'start_date')});
         }
     }

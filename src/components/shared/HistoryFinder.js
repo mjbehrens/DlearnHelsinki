@@ -15,12 +15,6 @@ class HistoryFinder extends Component {
     searchHistory = function(event) {
         var query = event.target.value.toLowerCase();
         this.props.doSearch(query);
-        console.log("Query: "+query);
-    }
-    
-
-    sayHi = function () {
-        console.log("Hello!")
     }
 
     render() {
@@ -33,13 +27,6 @@ class HistoryFinder extends Component {
                 </div>
             </div>
         ); 
-//        return (
-//            <div>
-//                <div className = "form-group">
-//                    <input type = "text" id = "query" onChange = {this.sayHi}/>
-//                    <button type="button" className="btn btn-default" onClick = {this.sayHi}>Search</button>
-//                </div>
-//            </div>
-//        );
+
     }
 } export default HistoryFinder;

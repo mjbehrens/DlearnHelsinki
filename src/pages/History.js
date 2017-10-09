@@ -8,7 +8,6 @@ import GraphRenderer from '../components/shared/GraphRenderer.js';
 //var sampleData = ["This is a test.", "There is nothing interesting here.", "For now.", "No, seriously!"];
 
 var sampleData = [];
-var initData = [];
 var sampleDataJSON = '[{"_id": 1, "testInput": "This is a test."}, \n\
 {"_id": 2, "testInput": "There is nothing interesting here."},\n\
 {"_id": 3, "testInput": "For now..."}, {"_id": 4, "testInput": "No, seriously!"}]';
@@ -17,10 +16,11 @@ class History extends Component {
     
     constructor(props) {
         super(props);
+        sampleData = [];
         this.parseData();
         this.state = {
             query: "",
-            filteredData: initData
+            filteredData: sampleData
         }
     }
 
@@ -28,9 +28,10 @@ class History extends Component {
     doSearch = function(queryText){
         var queryResult = [];
         sampleData.forEach(function(i) {
-           if ((i.testInput.toLowerCase().indexOf(queryText) != -1) || (i._id.indexOf(queryText) != -1)) {
-               queryResult.push(i);
-               console.log(i)
+           if ((i.testInput.toLowerCase().indexOf(queryText) != -1) 
+                || (i._id.toString().indexOf(queryText) != -1)) {
+               
+                queryResult.push(i); 
            }
         });
         this.setState({ 
@@ -41,13 +42,11 @@ class History extends Component {
     
     parseData = function () {
         var compo = this;
-        let sampleData = JSON.parse(sampleDataJSON);
-        sampleData.forEach(function(i) {
-           initData.push(i.testInput); 
-        });
+        sampleData = JSON.parse(sampleDataJSON);
     }
-
-    loadResult = function() {
+    
+    // Final function will alter the value that is passed to the GraphRenderer
+    loadResult = function() { 
         console.log("Hello world!");
     }
 

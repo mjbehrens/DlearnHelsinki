@@ -5,9 +5,9 @@ import HistoryFinder from '../components/shared/HistoryFinder.js';
 import HistoryDisplay from '../components/shared/HistoryDisplay.js';
 import GraphRenderer from '../components/shared/GraphRenderer.js';
 
-//Select * From SpiderGraphs
-//var sampleData = ["This is a test.", "There is nothing interesting here.", "For now.", "No, seriously!"];
+//http://underscorejs.org/#sortBy
 
+//Select * From SpiderGraphs
 var sampleData = [];
 var sampleDataJSON = '[{"_id": 1, "testInput": "This is a test.", "start_date": "2017-12-05"}, \n\
 {"_id": 2, "testInput": "There is nothing interesting here.", "start_date": "2016-05-10"},\n\

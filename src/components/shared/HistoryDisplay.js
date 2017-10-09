@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-
+const buttonStyle = {
+    margin: '5px'
+}
 
 var buttonList = [];
 
@@ -32,12 +34,12 @@ class HistoryDisplay extends Component {
         let i = 0;
         this.props.searchData.forEach( function(result) {
             if (true) {
-                searchResults.push(<div key = {i}><button onClick = {compo.props.loadResult}> {result.start_date +" "+ result.testInput} </button></div>)
+                searchResults.push(<button key = {i} className="btn btn-default left-align" onClick = {compo.props.loadResult}> {result.start_date +" "+ result.testInput} </button>)
                 i = i+1;
             }
         });
         return(
-            <div>
+            <div style = {buttonStyle} className="btn-group-vertical">
                 { searchResults }
             </div>
         )

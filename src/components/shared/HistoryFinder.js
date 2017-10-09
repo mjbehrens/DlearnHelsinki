@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 
 //http://voidcanvas.com/react-tutorial-understanding-and-making-the-first-application/
 
+const margins = {
+    margin: '5px'
+}
+
 class HistoryFinder extends Component {    
 
     constructor(props) {
@@ -24,8 +28,8 @@ class HistoryFinder extends Component {
         return(
             <div>
                 <div className = "searchBar">
-                    <input type="text" placeholder="Search" value = {this.props.query} onChange = {this.searchHistory.bind(this)}/>
-                    <button className="btn-btn default" onClick = {this.props.sortData}> Sort by Date </button>
+                    <input type="text" style = {margins} placeholder="Search" value = {this.props.query} onChange = {this.searchHistory.bind(this)}/>
+                    <button className="btn btn-primary" style = {margins} onClick = {this.props.sortData}> Sort by Date </button>
                 </div>
             </div>
         ); 

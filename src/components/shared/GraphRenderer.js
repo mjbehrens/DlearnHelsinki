@@ -6,6 +6,9 @@ import SpiderGraph from './SpiderGraph.js'
 // - Array of every studentID in class
 // - Groups of the classroom
 
+const buttonStyle = {
+    margin: '5px'
+}
 
 var fakeJson = '[ \n\
   { \n\
@@ -158,9 +161,9 @@ class GraphRenderer extends Component {
         return(
             <div>
                 <div>
-                    <button onClick={this.loadClassGraphs.bind(this)}>Class</button>
-                    <button onClick={this.loadGroupsGraphs.bind(this)}>Groups</button>
-                    <button onClick={this.loadStudentsGraphs.bind(this)}>Students</button>
+                    <button style = {buttonStyle} className="btn btn-primary" onClick={this.loadClassGraphs.bind(this)}>Class</button>
+                    <button style = {buttonStyle} className="btn btn-primary" onClick={this.loadGroupsGraphs.bind(this)}>Groups</button>
+                    <button style = {buttonStyle} className="btn btn-primary" onClick={this.loadStudentsGraphs.bind(this)}>Students</button>
                 </div>
                 <div>
                     {this.state.graphs}

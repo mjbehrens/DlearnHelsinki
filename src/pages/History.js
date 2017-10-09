@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'underscore';
 
+
 import HistoryFinder from '../components/shared/HistoryFinder.js';
 import HistoryDisplay from '../components/shared/HistoryDisplay.js';
 import GraphRenderer from '../components/shared/GraphRenderer.js';
@@ -69,6 +70,10 @@ class History extends Component {
         }
     }
 
+    selectRange = function(start, end) {
+        console.log("I'm supposed to be narrowing down results, but right now, I'm idle.");
+    }
+
     render() {
         let parameters = {
             teachers : 1,
@@ -83,7 +88,7 @@ class History extends Component {
                 <h1> History </h1>
                 <div className = "row">
                     <div className = "left-align col-sm-4">
-                        <HistoryFinder query = {this.state.query} sortData = {this.sortData.bind(this)} doSearch = {this.doSearch.bind(this)} />
+                        <HistoryFinder query = {this.state.query} selectRange = {this.selectRange.bind(this)} sortData = {this.sortData.bind(this)} doSearch = {this.doSearch.bind(this)} />
                         <HistoryDisplay loadResult = {this.loadResult.bind(this)} searchData = {this.state.filteredData} />
                     </div>
                     <div className = "col-sm-8">

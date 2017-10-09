@@ -32,7 +32,8 @@ class History extends Component {
         var queryResult = [];
         sampleData.forEach(function(i) {
            if ((i.testInput.toLowerCase().indexOf(queryText) != -1) 
-                || (i._id.toString().indexOf(queryText) != -1)) {
+                || (i._id.toString().indexOf(queryText) != -1)
+                || (i.start_date.indexOf(queryText) != -1)) {
                
                 queryResult.push(i); 
                 console.log("Dates are handled as "+typeof(i.start_date)+"s.");

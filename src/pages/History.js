@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'underscore';
 
 import HistoryFinder from '../components/shared/HistoryFinder.js';
 import HistoryDisplay from '../components/shared/HistoryDisplay.js';
@@ -8,9 +9,10 @@ import GraphRenderer from '../components/shared/GraphRenderer.js';
 //var sampleData = ["This is a test.", "There is nothing interesting here.", "For now.", "No, seriously!"];
 
 var sampleData = [];
-var sampleDataJSON = '[{"_id": 1, "testInput": "This is a test."}, \n\
-{"_id": 2, "testInput": "There is nothing interesting here."},\n\
-{"_id": 3, "testInput": "For now..."}, {"_id": 4, "testInput": "No, seriously!"}]';
+var sampleDataJSON = '[{"_id": 1, "testInput": "This is a test.", "start_date": "2017-12-05"}, \n\
+{"_id": 2, "testInput": "There is nothing interesting here.", "start_date": "2016-05-10"},\n\
+{"_id": 3, "testInput": "For now...", "start_date": "2017-05-01"}, \n\
+{"_id": 4, "testInput": "No, seriously!", "start_date": "2018-03-10"}]';
 
 class History extends Component {
     
@@ -20,7 +22,8 @@ class History extends Component {
         this.parseData();
         this.state = {
             query: "",
-            filteredData: sampleData
+            filteredData: sampleData,
+            sorter: 0 // 0 = no order, 1 = date ascending, 2 = date descending
         }
     }
 
@@ -32,6 +35,7 @@ class History extends Component {
                 || (i._id.toString().indexOf(queryText) != -1)) {
                
                 queryResult.push(i); 
+                console.log("Dates are handled as "+typeof(i.start_date)+"s.");
            }
         });
         this.setState({ 
@@ -50,6 +54,17 @@ class History extends Component {
         console.log("Hello world!");
     }
 
+    sortData = function() {
+        let sortThis = this.state.filteredData;
+        if (this.state.sorter == 1) {
+            // Do some magic
+            this.setState({sorter: 2, filteredData: _.sortBy(sortThis, 'start_date').reverse()});
+        } else {
+            // Do some magic
+            this.setState({sorter: 1, filteredData: _.sortBy(sortThis, 'start_date')});
+        }
+    }
+
     render() {
         let parameters = {
             teachers : 1,
@@ -64,7 +79,7 @@ class History extends Component {
                 <h1> History </h1>
                 <div className = "row">
                     <div className = "left-align col-sm-4">
-                        <HistoryFinder query = {this.state.query} doSearch = {this.doSearch.bind(this)} />
+                        <HistoryFinder query = {this.state.query} sortData = {this.sortData.bind(this)} doSearch = {this.doSearch.bind(this)} />
                         <HistoryDisplay loadResult = {this.loadResult.bind(this)} searchData = {this.state.filteredData} />
                     </div>
                     <div className = "col-sm-8">

@@ -25,6 +25,7 @@ class HistoryFinder extends Component {
             <div>
                 <div className = "searchBar">
                     <input type="text" placeholder="Search" value = {this.props.query} onChange = {this.searchHistory.bind(this)}/>
+                    <button className="btn-btn default" onClick = {this.props.sortData}> Sort by Date </button>
                 </div>
             </div>
         ); 

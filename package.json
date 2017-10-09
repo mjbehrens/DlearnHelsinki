@@ -12,7 +12,8 @@
     "react-popup": "^0.8.0",
     "react-pure-grid": "^2.1.1",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.13"
+    "react-scripts": "1.0.13",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",

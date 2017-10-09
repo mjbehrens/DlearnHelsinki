@@ -88,6 +88,11 @@ class GraphRenderer extends Component {
 
     }
     
+    /*
+     * While it would be possible to load all graphs through a single function, the
+     * resulting function would be both too long, and a mess of conditional statements.
+     */
+    
     loadGroupsGraphs = function() { 
         let compo = this;
         console.log("Groups: "+groups)

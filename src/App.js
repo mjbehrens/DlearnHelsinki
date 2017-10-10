@@ -9,8 +9,10 @@ import Home from './pages/Home.js';
 import Login from './pages/Login.js';
 import StudentDashboard from './pages/StudentDashboard.js';
 import ClassSelection from './pages/ClassSelection.js';
-import TeacherDashboard from './pages/TeacherDashboard.js'
+import TeacherDashboard from './pages/TeacherDashboard.js';
+import History from './pages/History.js'
 import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
+
 
 
 import Popup from 'react-popup';
@@ -42,6 +44,7 @@ class App extends Component {
 				  <Route path='/class-selection' component={ClassSelection} />
 				  <Route path='/teacher-dashboard' component={TeacherDashboard} />
 				  <Route path='/student-survey' component={StudentSurveyQuestion} />
+                                  <Route path = '/history' component = {History} />
 				</Switch>
 		    </section>
         <Footer />

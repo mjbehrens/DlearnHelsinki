@@ -11,7 +11,7 @@ const buttonStyle = {
 }
 
 const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
-var GET_SURVEYS = '';
+var GET_GROUPS = '';
 
 var fakeJson = '[ \n\
   { \n\
@@ -66,13 +66,17 @@ class GraphRenderer extends Component {
     
     buildRequestREST = function() {
         var s = '';
-        // Stuff happens
-        GET_SURVEYS = s;
+        // Build request here
+        // teachers/{teacher_id}/classes/{class_id}/groups/
+        
+        s = s + '/teachers/1/classes/1/groups' // Warning! Hard coded for testing purposes.
+        
+        GET_GROUPS = s;
     }
     
-    getSurveysREST = function() {
+    getGroupsREST = function() {
         
-        fetch(ORIGIN + GET_SURVEYS, {
+        fetch(ORIGIN + GET_GROUPS, {
             method: "GET",
             headers: {
 		'Access-Control-Allow-Origin': '*',
@@ -80,9 +84,7 @@ class GraphRenderer extends Component {
             }
         }).then(function(response) {
             if(response.ok) {
-                response.json().then(data => {
-                    //Parse JSON
-                });
+                this.parseJSON(response.json());
             }else {
 		console.log('Network response was not ok.');
             }
@@ -93,13 +95,19 @@ class GraphRenderer extends Component {
     }
     
     componentDidMount() {
-        this.tempParsingJson();          
+//        this.buildRequest;
+//        this.getGroupsREST();
+        this.tempParsingJson();        
+    }
+    
+    parseJSON = function(dataJSON) {
+        groups = JSON.parse(dataJSON);
+        console.log("Here's what we got: "+toString(groups))
     }
     
     tempParsingJson = function () {
-        var compo = this;
         groups = JSON.parse(fakeJson);
-        console.log("Groups after init: "+groups)
+        console.log("Groups after init: "+toString(groups))
     }
     
     /*

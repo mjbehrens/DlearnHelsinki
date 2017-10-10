@@ -102,10 +102,10 @@ class GraphRenderer extends Component {
 //        this.tempParsingJson();        
     }
     
-    parseJSON = function(dataJSON) {
-        groups = JSON.parse(dataJSON);
-        console.log("Here's what we got: "+toString(groups));
-    }
+//    parseJSON = function(dataJSON) {
+//        groups = JSON.parse(dataJSON);
+//        console.log("Here's what we got: "+toString(groups));
+//    }
     
 //    tempParsingJson = function () {
 //        groups = JSON.parse(fakeJson);

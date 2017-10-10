@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import Calendar from 'react-input-calendar';
+import 'react-input-calendar/style/index.css'
 
 // http://voidcanvas.com/react-tutorial-understanding-and-making-the-first-application/
 // Pick one: https://react.rocks/tag/DatePicker
+// https://github.com/Rudeg/react-input-calendar
 
-
+// Don't let the names fool you! These two don't need to be in chronological order.
+var rangeStart;
+var rangeEnd;
 
 const margins = {
     margin: '5px'
@@ -13,11 +18,9 @@ const margins = {
 class HistoryFinder extends Component {    
 
     constructor(props) {
+        var rangeStart = null;
+        var rangeEnd = null;
         super(props);
-        this.state = {
-            rangeStart: moment(),
-            rangeEnd: moment()
-        }
         this.changeStart = this.changeStart.bind(this);
         this.changeEnd = this.changeEnd.bind(this);
     }
@@ -28,15 +31,11 @@ class HistoryFinder extends Component {
     }
 
     changeStart(date) {
-        this.setState({
-           rangeStart: date 
-        });
+        rangeStart = date;
     }
     
     changeEnd(date) {
-        this.setState({
-           rangeEnd: date 
-        });
+        rangeEnd = date;
     }
 
     render() {
@@ -44,12 +43,33 @@ class HistoryFinder extends Component {
         return(
             <div>
                 <div className = "searchBar">
-                    <input type="text" style = {margins} placeholder="Search" value = {this.props.query} onChange = {this.searchHistory.bind(this)}/>
-                    <button className="btn btn-primary" style = {margins} onClick = {this.props.sortData}> Sort by Date </button>
+                    <input type="text" 
+                        style = {margins} 
+                        placeholder="Search" 
+                        value = {this.props.query} 
+                        onChange = {this.searchHistory.bind(this)}/>
+                    <button className="btn btn-primary" 
+                        style = {margins} 
+                        onClick = {this.props.sortData}> 
+                            Sort by Date 
+                    </button>
                 </div>
-                <div className = "timeRange">
-                    Narrow down by date
-                    
+                <div className = "row" style = {margins}>
+                    <Calendar 
+                        format='DD-MM-YYYY' 
+                        computableFormat = 'YYYY-MM-DD'
+                        date = {rangeStart}
+                        onChange = {this.changeStart} />
+                    <Calendar 
+                        format='DD-MM-YYYY' 
+                        computableFormat = 'YYYY-MM-DD'
+                        date = {rangeEnd}
+                        onChange = {this.changeEnd} />
+                    <button className="btn btn-primary" 
+                        style = {margins}
+                        onClick = {this.props.selectRange(rangeStart, rangeEnd)}> 
+                            Go 
+                    </button>
                 </div>
             </div>
         ); 

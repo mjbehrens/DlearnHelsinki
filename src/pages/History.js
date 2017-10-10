@@ -8,6 +8,7 @@ import GraphRenderer from '../components/shared/GraphRenderer.js';
 
 //http://underscorejs.org/#sortBy
 
+
 //Select * From Surveys
 var sampleData = [];
 var sampleDataJSON = '[{"_id": 1, "testInput": "This is a test.", "start_date": "2017-12-05"}, \n\
@@ -18,6 +19,7 @@ var sampleDataJSON = '[{"_id": 1, "testInput": "This is a test.", "start_date": 
 class History extends Component {
     
     constructor(props) {
+
         super(props);
         sampleData = [];
         this.parseData();
@@ -56,7 +58,7 @@ class History extends Component {
     // implementation and dummy data used here, clicking on buttons would break things.
     loadResult = function(surveyID) { 
         // this.setState({selectedSurvey: surveyID}); 
-        console.log("Hello world!");
+        console.log("Loading...");
     }
 
     // As SQL's Date-datatype ends up parsed into a conveniently structured string, 
@@ -72,6 +74,8 @@ class History extends Component {
 
     selectRange = function(start, end) {
         console.log("I'm supposed to be narrowing down results, but right now, I'm idle.");
+        console.log(start + " to "+ end + ". Format: "+typeof(start));
+        console.log("Does start come before end? " + start>end); //Why is this always true?
     }
 
     render() {
@@ -88,8 +92,12 @@ class History extends Component {
                 <h1> History </h1>
                 <div className = "row">
                     <div className = "left-align col-sm-4">
-                        <HistoryFinder query = {this.state.query} selectRange = {this.selectRange.bind(this)} sortData = {this.sortData.bind(this)} doSearch = {this.doSearch.bind(this)} />
-                        <HistoryDisplay loadResult = {this.loadResult.bind(this)} searchData = {this.state.filteredData} />
+                        <HistoryFinder query = {this.state.query}
+                            selectRange = {this.selectRange.bind(this)}
+                            sortData = {this.sortData.bind(this)}
+                            doSearch = {this.doSearch.bind(this)} />
+                        <HistoryDisplay loadResult = {this.loadResult.bind(this)}
+                            searchData = {this.state.filteredData} />
                     </div>
                     <div className = "col-sm-8">
                         <GraphRenderer surveyID={this.state.selectedSurvey} />

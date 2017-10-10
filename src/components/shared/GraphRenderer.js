@@ -48,109 +48,95 @@ var fakeJson = '[ \n\
 
 var groups = [];
 
-class GraphRenderer extends Component {    
+class GraphRenderer extends Component {
 
     constructor(props) {
-        
+
         super(props);
-        
+
         groups = [];
-             
+
         this.state = {
-            graphs : []
+            graphs: []
         }
-        
-        
+
+
     }
-    
-        
-	componentDidMount() {
-		this.tempParsingJson();
-                   
-	}
-    
+
+
+    componentDidMount() {
+        this.tempParsingJson();
+
+    }
+
     tempParsingJson = function () {
-        var compo = this;
         groups = JSON.parse(fakeJson);
-        console.log("Groups after init: "+groups)
-/*
+        console.log("Groups after init: " + groups)
+    }
+
+
+
+    loadClassGraphs = function () {
+        let compo = this;
+
+        let spiderGraphs = [];
+        spiderGraphs.push(<SpiderGraph name="Class name" parameters={{
+            teachers: 1,
+            students: null,
+            classes: 1,
+            groups: null,
+            surveys: compo.props.surveyID,
+        }} />);
+
+        this.setState({ graphs: spiderGraphs });
+    }
+
+    loadGroupsGraphs = function () {
+        let compo = this;
+        console.log("Groups: " + groups)
+        let spiderGraphs = [];
         groups.forEach(function (g) {
-           
-           console.log(g);
-           let students = g.students;
-           students.forEach(function (s) {
-               console.log(s);
-           
-           });
-
+            console.log("Group " + g._id + " added");
+            spiderGraphs.push(<div key={g._id}><SpiderGraph name={g.name} parameters={{
+                teachers: 1,
+                students: null,
+                classes: 1,
+                groups: g._id,
+                surveys: compo.props.surveyID,
+            }} color={g.name} /></div>);
         });
-*/
 
-    }
-    
-    loadGroupsGraphs = function() { 
-        let compo = this;
-        console.log("Groups: "+groups)
-        let spiderGraphs = [];
-        groups.forEach(function(g) {
-           let parameters = {
-                teachers : 1,
-                students : null,
-                classes:1, 
-                groups: g._id, 
-                surveys:compo.props.surveyID,
-            } ;
-            console.log("Group "+ g._id + " added");
-            spiderGraphs.push(<div key = {g._id}><SpiderGraph name={g.name} parameters = { parameters } color={g.name} /></div>);
-        });
-        
         console.log(spiderGraphs);
-        this.setState({graphs : spiderGraphs});
+        this.setState({ graphs: spiderGraphs });
     }
-    
-    loadClassGraphs = function() { 
-        let compo = this;
 
-        let spiderGraphs = [];
-        let parameters = {
-                teachers : 1,
-                students : null,
-                classes: 1, 
-                groups: null, 
-                surveys:compo.props.surveyID,
-            }
-            spiderGraphs.push(<SpiderGraph name="Class name" parameters = { parameters } />);
-        
-        this.setState({graphs : spiderGraphs});
-    }
-    
-
-    loadStudentsGraphs = function() { 
+    loadStudentsGraphs = function () {
         let compo = this;
         let spiderGraphs = [];
         //to change and go to students
-        groups.forEach(function(g) {
-           g.students.forEach(function (s) {
+        groups.forEach(function (g) {
+            g.students.forEach(function (s) {
                 let parameters = {
-                teachers : null,
-                students : s._id,
-                classes:1, 
-                groups: null, 
-                surveys:compo.props.surveyID,
-            } ;
-            spiderGraphs.push(<div key = {s._id}><SpiderGraph name={s.username} parameters = { parameters } color={s.username}/></div>);
-           });
-           
+                    teachers: null,
+                    students: s._id,
+                    classes: 1,
+                    groups: null,
+                    surveys: compo.props.surveyID,
+                };
+                spiderGraphs.push(<div key={s._id}><SpiderGraph name={s.username} parameters={parameters} color={s.username} /></div>);
+                console.log(parameters);
+            });
+
         });
-        
-        this.setState({graphs : spiderGraphs});
+
+        this.setState({ graphs: spiderGraphs });
     }
-    
-            
+
+
 
     render() {
-        
-        return(
+
+        return (
             <div>
                 <div>
                     <button onClick={this.loadClassGraphs.bind(this)}>Class</button>
@@ -161,8 +147,8 @@ class GraphRenderer extends Component {
                     {this.state.graphs}
                 </div>
             </div>
-           );
+        );
     }
-    
-    
+
+
 } export default GraphRenderer;

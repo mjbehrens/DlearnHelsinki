@@ -3,6 +3,9 @@ import { Link, Redirect } from 'react-router-dom';
 
 import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
+import LinearGraph from '../components/shared/LinearGraph.js';
+
+
 
 class StudentDashboard extends Component {
 
@@ -10,7 +13,7 @@ class StudentDashboard extends Component {
 	startSurvey = (e) => {
 		e.preventDefault();
 		this.props.history.push("/student-survey");
-		//        return <Redirect to="/student-survey"/>; //THIS DOESN'T WORK
+		// return <Redirect to="/student-survey"/>; //THIS DOESN'T WORK
 	}
 
 
@@ -31,7 +34,7 @@ class StudentDashboard extends Component {
 
 		let parameters = {
             teachers : null,
-            students : 3,
+            students : 1,
             classes:1, 
             groups: null, 
             surveys:27,

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
 
 const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
-var GET_ANSWERS = '';
-var GET_QUESTIONS_FOR_SURVEY = '';
+let GET_ANSWERS = '';
+let GET_QUESTIONS_FOR_SURVEY = '';
 
 // VERY IMPORTANT !
-var params ;
+let params;
 
 class SpiderGraph extends Component {
 
@@ -18,48 +18,55 @@ class SpiderGraph extends Component {
 		this.state = {
 			cpt: 0,
 			data: {
-				labels: [], //label of the questions 
+				labels: [], //label of the themes 
 				datasets: [{
-					label: this.props.name,
-					lineTension: .1,
+					label: this.props.name, // name of the graph
+					lineTension: .05,
 					backgroundColor: this.stringToColour(this.props.color),
 					borderColor: 'rgba(179,181,198,1)',
 					pointBackgroundColor: 'rgba(179,181,198,1)',
 					pointBorderColor: '#fff',
 					pointHoverBackgroundColor: '#fff',
 					pointHoverBorderColor: 'rgba(179,181,198,1)',
-					data: []
+					data: [] // answers
 				}
 				]
 			}
 		};
+
+		this.getDataForGraph();
 	}
 
 	componentDidMount() {
-		this.getDataForGraph();
+		//this.getDataForGraph();
 	}
-		 
 
 	// Called everytime a props value change
 	componentWillReceiveProps(nextProps) {
-		params = nextProps.parameters;
-		console.log(params);
-		this.getDataForGraph();
+		if (params != nextProps.parameters) {
+			params = nextProps.parameters;
+			console.log(params);
+			this.getDataForGraph();
 		}
+	}
 
 
 	// Fetch resquest for questions and answer
 	getDataForGraph = function () {
 		this.buildRequestRest();
-		this.getSurveyQuestionsREST();
 		this.getSurveyAnswersREST();
+	}
+
+	componentDidUpdate(){
+		//console.log('In spider : ' + params.students)
+		//console.log(this.state.data);
 	}
 
 	// Build request from props send to the component
 	// ( looks ugly but it's a propotype :) )
 	buildRequestRest = function () {
 
-		var s = "";
+		let s = "";
 		if (params.students != null) {
 			s += '/students/' + params.students;
 		}
@@ -81,48 +88,12 @@ class SpiderGraph extends Component {
 
 	}
 
-	getSurveyQuestionsREST = function () {
-		var component = this;
-
-		var questionLabels = [];
-
-		fetch(ORIGIN + GET_QUESTIONS_FOR_SURVEY, {
-			method: "GET",
-			headers: {
-				'Access-Control-Allow-Origin': '*',
-				'Authorization': 'Basic ' + btoa('teacher:password')
-			}
-		}).then(function (response) {
-			if (response.ok) {
-				response.json().then(data => {
-					data.forEach(function (e) {
-						questionLabels.push(e._id +": "+ e.question);
-					}, this);
-
-					if (questionLabels.length > 0) {
-						component.setState({
-							...component.state,
-							data: {
-								...component.state.data,
-								labels: questionLabels
-							}
-						});
-					} else {
-						console.log("problem while parsing json data")
-					}
-				});
-			} else {
-				console.log('Network response was not ok.');
-			}
-		}).catch(function (err) {
-			// Error :(
-			console.log(err);
-		});
-	}
-
 	getSurveyAnswersREST = function () {
-		var component = this;
-		var arrayAnswers = [];
+		let component = this;
+		let Answers = [];
+		
+		
+		
 
 		fetch(ORIGIN + GET_ANSWERS, {
 			method: "GET",
@@ -133,18 +104,37 @@ class SpiderGraph extends Component {
 		}).then(function (response) {
 			if (response.ok) {
 				response.json().then(data => {
-					data.forEach(function (e) {
-						arrayAnswers.push(e.answer);
+					data.forEach(function (a) {
+						let answer = {
+							theme_id : a.theme_id,
+							answer : a.answer,
+							theme_title : a.theme_title,
+							description : a.description,
+							start_date : a.start_date,
+						}
+						Answers.push(a);
+
 					}, this);
-					if (arrayAnswers.length > 0) {
+					
+					if (Answers.length > 0) {
+						
+						let labelsArray = [];
+						let answerArray = [];
+						Answers.forEach(function(e){
+							labelsArray.push(e.theme_title);
+							answerArray.push(e.answer);
+							// if description supported, added here
+						}, this);
+						
 						component.setState({
 							...component.state,
 							data: {
 								...component.state.data,
+								labels : labelsArray,
 								datasets: [{
 									...component.state.data.datasets,
 									label: component.props.name,
-									data: arrayAnswers,
+									data: answerArray,
 									backgroundColor: component.stringToColour(component.props.color),
 								}]
 							}
@@ -172,13 +162,13 @@ class SpiderGraph extends Component {
 			str = 'unkle - lonely soul';
 		}
 
-		var hash = 0;
+		let hash = 0;
 		for (let i = 0; i < str.length; i++) {
 			hash = str.charCodeAt(i) + ((hash << 5) - hash);
 		}
-		var colour = '#';
+		let colour = '#';
 		for (let i = 0; i < 3; i++) {
-			var value = (hash >> (i * 8)) & 0xFF;
+			let value = (hash >> (i * 8)) & 0xFF;
 			colour += ('00' + value.toString(16)).substr(-2);
 		}
 

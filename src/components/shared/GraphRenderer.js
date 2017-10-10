@@ -10,6 +10,9 @@ const buttonStyle = {
     margin: '5px'
 }
 
+const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
+var GET_SURVEYS = '';
+
 var fakeJson = '[ \n\
   { \n\
     "_id" : 1, \n\
@@ -54,41 +57,49 @@ var groups = [];
 class GraphRenderer extends Component {    
 
     constructor(props) {
-        
         super(props);
-        
         groups = [];
-             
         this.state = {
             graphs : []
         }
-        
-        
     }
     
+    buildRequestREST = function() {
+        var s = '';
+        // Stuff happens
+        GET_SURVEYS = s;
+    }
+    
+    getSurveysREST = function() {
         
-	componentDidMount() {
-		this.tempParsingJson();
-                   
-	}
+        fetch(ORIGIN + GET_SURVEYS, {
+            method: "GET",
+            headers: {
+		'Access-Control-Allow-Origin': '*',
+		'Authorization': 'Basic ' + btoa('teacher:password') // BAD! REALLY BAD!!!
+            }
+        }).then(function(response) {
+            if(response.ok) {
+                response.json().then(data => {
+                    //Parse JSON
+                });
+            }else {
+		console.log('Network response was not ok.');
+            }
+        }).catch(function (err) {
+            // Error
+            console.log(err);
+	});
+    }
+    
+    componentDidMount() {
+        this.tempParsingJson();          
+    }
     
     tempParsingJson = function () {
         var compo = this;
         groups = JSON.parse(fakeJson);
         console.log("Groups after init: "+groups)
-/*
-        groups.forEach(function (g) {
-           
-           console.log(g);
-           let students = g.students;
-           students.forEach(function (s) {
-               console.log(s);
-           
-           });
-
-        });
-*/
-
     }
     
     /*

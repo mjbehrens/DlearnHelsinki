@@ -27,12 +27,15 @@ class History extends Component {
             query: "",
             filteredData: sampleData,
             selectedSurvey: 27,
+            warning: "",
             sorter: 0 // 0 = no order, 1 = date ascending, 2 = date descending
         }
     }
 
+    // How to implement search and narrowing down the results at the same time?
     
     doSearch = function(queryText){
+        this.setState({ warning: "" })
         var queryResult = [];
         sampleData.forEach(function(i) {
            if ((i.testInput.toLowerCase().indexOf(queryText) != -1) 
@@ -64,6 +67,7 @@ class History extends Component {
     // As SQL's Date-datatype ends up parsed into a conveniently structured string, 
     // we just sort things alphabetically
     sortData = function() {
+        this.setState({ warning: "" })
         let sortThis = this.state.filteredData;
         if (this.state.sorter == 1) {
             this.setState({sorter: 2, filteredData: _.sortBy(sortThis, 'start_date').reverse()});
@@ -73,9 +77,23 @@ class History extends Component {
     }
 
     selectRange = function(start, end) {
-        console.log("I'm supposed to be narrowing down results, but right now, I'm idle.");
-        console.log(start + " to "+ end + ". Format: "+typeof(start));
-        console.log("Does start come before end? " + start>end); //Why is this always true?
+        let narrowDown = [];
+        let compo = this;
+        this.setState({ warning: "" })
+            sampleData.forEach(function(i) {
+                if (start<=end && i.start_date>=start && i.start_date<=end) {
+                    narrowDown.push(i); console.log("Everything chronological.");
+                } else if (start>end && i.start_date<=start && i.start_date>=end) {
+                    narrowDown.push(i); console.log("Did you reverse something?");
+                } else if (start == null || end == null) {
+                    compo.setState({ warning: "Please input both a start and an end date." });
+                }
+            });
+            if (start != null && end != null) {
+                this.setState({ 
+                    filteredData: narrowDown
+                }); console.log("Updating...");
+            }
     }
 
     render() {
@@ -96,6 +114,9 @@ class History extends Component {
                             selectRange = {this.selectRange.bind(this)}
                             sortData = {this.sortData.bind(this)}
                             doSearch = {this.doSearch.bind(this)} />
+                        <div className = 'warning'>
+                            {this.state.warning}
+                        </div>
                         <HistoryDisplay loadResult = {this.loadResult.bind(this)}
                             searchData = {this.state.filteredData} />
                     </div>

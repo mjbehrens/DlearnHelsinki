@@ -15,6 +15,12 @@ const margins = {
     margin: '5px'
 }
 
+const pickDate = {
+    margin: '5px',
+    position: 'relative',
+    zIndex: '30'
+}
+
 class HistoryFinder extends Component {    
 
     constructor(props) {
@@ -38,6 +44,10 @@ class HistoryFinder extends Component {
         rangeEnd = date;
     }
 
+    selectRange = function(event) {
+        this.props.selectRange(rangeStart, rangeEnd);
+    }
+
     render() {
         
         return(
@@ -54,7 +64,7 @@ class HistoryFinder extends Component {
                             Sort by Date 
                     </button>
                 </div>
-                <div className = "row" style = {margins}>
+                <div className = "row" style = {pickDate}>
                     <Calendar 
                         format='DD-MM-YYYY' 
                         computableFormat = 'YYYY-MM-DD'
@@ -67,7 +77,7 @@ class HistoryFinder extends Component {
                         onChange = {this.changeEnd} />
                     <button className="btn btn-primary" 
                         style = {margins}
-                        onClick = {this.props.selectRange(rangeStart, rangeEnd)}> 
+                        onClick = {this.selectRange.bind(this)}> 
                             Go 
                     </button>
                 </div>

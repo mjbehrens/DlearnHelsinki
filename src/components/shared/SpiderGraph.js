@@ -57,7 +57,7 @@ class SpiderGraph extends Component {
 		this.getSurveyAnswersREST();
 	}
 
-	componentDidUpdate(){
+	componentDidUpdate() {
 		//console.log('In spider : ' + params.students)
 		//console.log(this.state.data);
 	}
@@ -91,9 +91,9 @@ class SpiderGraph extends Component {
 	getSurveyAnswersREST = function () {
 		let component = this;
 		let Answers = [];
-		
-		
-		
+
+
+
 
 		fetch(ORIGIN + GET_ANSWERS, {
 			method: "GET",
@@ -106,31 +106,31 @@ class SpiderGraph extends Component {
 				response.json().then(data => {
 					data.forEach(function (a) {
 						let answer = {
-							theme_id : a.theme_id,
-							answer : a.answer,
-							theme_title : a.theme_title,
-							description : a.description,
-							start_date : a.start_date,
+							theme_id: a.theme_id,
+							answer: a.answer,
+							theme_title: a.theme_title,
+							description: a.description,
+							start_date: a.start_date,
 						}
 						Answers.push(a);
 
 					}, this);
-					
+
 					if (Answers.length > 0) {
-						
+
 						let labelsArray = [];
 						let answerArray = [];
-						Answers.forEach(function(e){
+						Answers.forEach(function (e) {
 							labelsArray.push(e.theme_title);
 							answerArray.push(e.answer);
 							// if description supported, added here
 						}, this);
-						
+
 						component.setState({
 							...component.state,
 							data: {
 								...component.state.data,
-								labels : labelsArray,
+								labels: labelsArray,
 								datasets: [{
 									...component.state.data.datasets,
 									label: component.props.name,
@@ -186,8 +186,20 @@ class SpiderGraph extends Component {
 
 
 	render() {
+		
+		var options = {
+			responsive: true,
+			maintainAspectRatio: true,
+			scale: {
+				ticks: {
+					beginAtZero: true,
+					max: 5
+				}
+			}
+		};
+
 		return (
-			<Radar data={this.state.data} />
+			<Radar data={this.state.data} options={options} />
 		);
 	}
 }

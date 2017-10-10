@@ -113,8 +113,7 @@ class StudentSurveyQuestion extends Component {
     }
 
     onClickNext = () => {
-        this.getSurveyQuestionsREST();
-
+       
         if (this.state.index < this.state.survey.length) {
             //send answer to server
 

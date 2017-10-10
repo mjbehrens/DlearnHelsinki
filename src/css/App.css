@@ -76,6 +76,11 @@ section {
 .graph-container {
     min-height: 200px;
 }
+
+.warning {
+    color: red;
+    margin: 5px;
+}
 /*
 button {
     margin: 1vmin;

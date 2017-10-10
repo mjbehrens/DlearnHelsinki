@@ -4,14 +4,9 @@ const buttonStyle = {
     margin: '5px'
 }
 
-var buttonList = [];
-
 class HistoryDisplay extends Component {
     
     constructor(props) {
-        
-        buttonList = [];
-        
         super(props);
     }
 //    

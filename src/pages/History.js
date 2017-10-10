@@ -15,6 +15,7 @@ var sampleDataJSON = '[{"_id": 1, "testInput": "This is a test.", "start_date": 
 {"_id": 2, "testInput": "There is nothing interesting here.", "start_date": "2016-05-10"},\n\
 {"_id": 3, "testInput": "For now...", "start_date": "2017-05-01"}, \n\
 {"_id": 4, "testInput": "No, seriously!", "start_date": "2018-03-10"}]';
+var tempData = [];
 
 class History extends Component {
     
@@ -22,22 +23,28 @@ class History extends Component {
 
         super(props);
         sampleData = [];
+        var tempData = [];
         this.parseData();
         this.state = {
             query: "",
             filteredData: sampleData,
             selectedSurvey: 27,
+            dateSelected: false,
             warning: "",
             sorter: 0 // 0 = no order, 1 = date ascending, 2 = date descending
         }
     }
 
-    // How to implement search and narrowing down the results at the same time?
+    // You can narrow down the dates and search by name at the same time, but
+    // the process is buggy and you will have to reset if there is a typo.
     
     doSearch = function(queryText){
-        this.setState({ warning: "" })
+        this.setState({ warning: "" });
+        if (this.state.dateSelected) {
+            tempData = this.state.filteredData
+        } else { tempData = sampleData }
         var queryResult = [];
-        sampleData.forEach(function(i) {
+        tempData.forEach(function(i) {
            if ((i.testInput.toLowerCase().indexOf(queryText) != -1) 
                 || (i._id.toString().indexOf(queryText) != -1)
                 || (i.start_date.indexOf(queryText) != -1)) {
@@ -79,21 +86,30 @@ class History extends Component {
     selectRange = function(start, end) {
         let narrowDown = [];
         let compo = this;
-        this.setState({ warning: "" })
-            sampleData.forEach(function(i) {
-                if (start<=end && i.start_date>=start && i.start_date<=end) {
-                    narrowDown.push(i); console.log("Everything chronological.");
-                } else if (start>end && i.start_date<=start && i.start_date>=end) {
-                    narrowDown.push(i); console.log("Did you reverse something?");
-                } else if (start == null || end == null) {
-                    compo.setState({ warning: "Please input both a start and an end date." });
-                }
-            });
-            if (start != null && end != null) {
-                this.setState({ 
-                    filteredData: narrowDown
-                }); console.log("Updating...");
+        this.setState({ warning: "" });
+        if (this.state.query != "") {
+            tempData = this.state.filteredData
+        } else { tempData = sampleData }
+
+        tempData.forEach(function(i) {
+            if (start<=end && i.start_date>=start && i.start_date<=end) {
+                narrowDown.push(i); console.log("Everything chronological.");
+            } else if (start>end && i.start_date<=start && i.start_date>=end) {
+                narrowDown.push(i); console.log("Did you reverse something?");
+            } else if (start == null || end == null) {
+                compo.setState({ 
+                    warning: "Please input both a start and an end date.",
+                    dateSelected: false
+                });
             }
+        });
+        if (start != null && end != null) {
+            this.setState({ 
+                filteredData: narrowDown,
+                dateSelected: true
+            }); 
+            console.log("Updating...");
+        }
     }
 
     render() {
@@ -114,7 +130,7 @@ class History extends Component {
                             selectRange = {this.selectRange.bind(this)}
                             sortData = {this.sortData.bind(this)}
                             doSearch = {this.doSearch.bind(this)} />
-                        <div className = 'warning'>
+                        <div className = "warning">
                             {this.state.warning}
                         </div>
                         <HistoryDisplay loadResult = {this.loadResult.bind(this)}

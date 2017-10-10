@@ -13,44 +13,44 @@ const buttonStyle = {
 const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
 var GET_GROUPS = '';
 
-var fakeJson = '[ \n\
-  { \n\
-    "_id" : 1, \n\
-    "name" : "Grp1",\n\
-    "students" : [\n\
-      {\n\
-        "_id" : 1,\n\
-        "username" : "nico",\n\
-        "age" : 10,\n\
-        "gender" : "male"\n\
-      },\n\
-      {\n\
-        "_id" : 2,\n\
-        "username" : "maria",\n\
-        "age" : 10,\n\
-        "gender" : "female"\n\
-      }\n\
-    ]\n\
-  },\n\
-  {\n\
-    "_id" : 2,\n\
-    "name" : "Grp2",\n\
-    "students" : [\n\
-      {\n\
-        "_id" : 3,\n\
-        "username" : "pascal",\n\
-        "age" : 10,\n\
-        "gender" : "male"\n\
-      },\n\
-      {\n\
-        "_id" : 4,\n\
-        "username" : "colinne",\n\
-        "age" : 10,\n\
-        "gender" : "female"\n\
-      }\n\
-    ]\n\
-  }\n\
-]';
+//var fakeJson = '[ \n\
+//  { \n\
+//    "_id" : 1, \n\
+//    "name" : "Grp1",\n\
+//    "students" : [\n\
+//      {\n\
+//        "_id" : 1,\n\
+//        "username" : "nico",\n\
+//        "age" : 10,\n\
+//        "gender" : "male"\n\
+//      },\n\
+//      {\n\
+//        "_id" : 2,\n\
+//        "username" : "maria",\n\
+//        "age" : 10,\n\
+//        "gender" : "female"\n\
+//      }\n\
+//    ]\n\
+//  },\n\
+//  {\n\
+//    "_id" : 2,\n\
+//    "name" : "Grp2",\n\
+//    "students" : [\n\
+//      {\n\
+//        "_id" : 3,\n\
+//        "username" : "pascal",\n\
+//        "age" : 10,\n\
+//        "gender" : "male"\n\
+//      },\n\
+//      {\n\
+//        "_id" : 4,\n\
+//        "username" : "colinne",\n\
+//        "age" : 10,\n\
+//        "gender" : "female"\n\
+//      }\n\
+//    ]\n\
+//  }\n\
+//]';
 
 var groups = [];
 
@@ -69,22 +69,24 @@ class GraphRenderer extends Component {
         // Build request here
         // teachers/{teacher_id}/classes/{class_id}/groups/
         
-        s = s + '/teachers/1/classes/1/groups' // Warning! Hard coded for testing purposes.
+        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes. Also, 404.
         
         GET_GROUPS = s;
     }
     
     getGroupsREST = function() {
-        
+        console.log(ORIGIN + GET_GROUPS);
         fetch(ORIGIN + GET_GROUPS, {
             method: "GET",
             headers: {
 		'Access-Control-Allow-Origin': '*',
-		'Authorization': 'Basic ' + btoa('teacher:password') // BAD! REALLY BAD!!!
+		'Authorization': 'Basic ' + btoa('teacher:password') // This needs to be changed in the final version...
             }
         }).then(function(response) {
             if(response.ok) {
-                this.parseJSON(response.json());
+                response.json().then(data => {
+                                    groups = data;
+				});
             }else {
 		console.log('Network response was not ok.');
             }
@@ -95,20 +97,20 @@ class GraphRenderer extends Component {
     }
     
     componentDidMount() {
-//        this.buildRequest;
-//        this.getGroupsREST();
-        this.tempParsingJson();        
+        this.buildRequestREST();
+        this.getGroupsREST();
+//        this.tempParsingJson();        
     }
     
     parseJSON = function(dataJSON) {
         groups = JSON.parse(dataJSON);
-        console.log("Here's what we got: "+toString(groups))
+        console.log("Here's what we got: "+toString(groups));
     }
     
-    tempParsingJson = function () {
-        groups = JSON.parse(fakeJson);
-        console.log("Groups after init: "+toString(groups))
-    }
+//    tempParsingJson = function () {
+//        groups = JSON.parse(fakeJson);
+//        console.log("Groups after init: "+toString(groups))
+//    }
     
     /*
      * While it would be possible to load all graphs through a single function, the

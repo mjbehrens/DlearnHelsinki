@@ -5,10 +5,13 @@
   "dependencies": {
     "axios": "^0.16.2",
     "chart.js": "^2.7.0",
+    "moment": "^2.18.1",
+    "moment-range": "^2.1.0",
     "rc-slider": "^8.3.1",
     "react": "^15.6.1",
     "react-chartjs-2": "^2.6.2",
     "react-dom": "^15.6.1",
+    "react-input-calendar": "^0.4.1",
     "react-popup": "^0.8.0",
     "react-pure-grid": "^2.1.1",
     "react-redux": "^5.0.6",
@@ -18,6 +21,7 @@
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^4.4.1",
     "redux-thunk": "^2.2.0"
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",

@@ -20,39 +20,39 @@ import Popup from 'react-popup';
 
 
 class App extends Component {
-  render() {
+	render() {
 
-    return (
-      <div className="App">
-		    <Popup
-		      className="mm-popup"
-		      btnClass="mm-popup__btn"
-		      closeBtn={true}
-		      closeHtml={null}
-		      defaultOk="Ok"
-		      defaultCancel="Cancel"
-		      wildClasses={false}
-		      closeOnOutsideClick={true} />
-			  <Router>
-	    <div>
-		    <Header />
-		    <section>
-				<Switch>
-				  <Route exact path='/' component={Home} />
-				  <Route path='/login' component={Login} />
-				  <Route path='/student-dashboard' component={StudentDashboard} />
-				  <Route path='/class-selection' component={ClassSelection} />
-				  <Route path='/teacher-dashboard' component={TeacherDashboard} />
-				  <Route path='/student-survey' component={StudentSurveyQuestion} />
-                                  <Route path = '/history' component = {History} />
-				</Switch>
-		    </section>
-        <Footer />
-	    </div>
-		      </Router>
-      </div>
-    );
-  }
+		return (
+			<div className="App">
+				<Popup
+					className="mm-popup"
+					btnClass="mm-popup__btn"
+					closeBtn={true}
+					closeHtml={null}
+					defaultOk="Ok"
+					defaultCancel="Cancel"
+					wildClasses={false}
+					closeOnOutsideClick={true} />
+				<Router>
+					<div>
+						<Header />
+						<section>
+							<Switch>
+								<Route exact path='/' component={Home} />
+								<Route path='/login' component={Login} />
+								<Route path='/student-dashboard' component={StudentDashboard} />
+								<Route path='/class-selection' component={ClassSelection} />
+								<Route path='/teacher-dashboard' component={TeacherDashboard} />
+								<Route path='/student-survey' component={StudentSurveyQuestion} />
+								<Route path='/history' component={History} />
+							</Switch>
+						</section>
+						<Footer />
+					</div>
+				</Router>
+			</div>
+		);
+	}
 }
 
 export default App;

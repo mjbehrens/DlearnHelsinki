@@ -6,8 +6,6 @@ import iconSurveyOpen from "../../res/icons/survey.svg";
 import iconSurveyClose from "../../res/icons/close_survey.svg";
 
 
-
-
 const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
 let GET_SURVEYS = '';
 let POST_SURVEY = '';

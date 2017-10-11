@@ -93,8 +93,6 @@ class SpiderGraph extends Component {
 		let Answers = [];
 
 
-
-
 		fetch(ORIGIN + GET_ANSWERS, {
 			method: "GET",
 			headers: {

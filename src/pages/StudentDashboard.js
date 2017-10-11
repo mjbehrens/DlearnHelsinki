@@ -18,8 +18,10 @@ class StudentDashboard extends Component {
 
 	startSurvey = (e) => {
 		e.preventDefault();
-		this.props.history.push("/student-survey");
-		// return <Redirect to="/student-survey"/>; //this doesn't work anymore
+		this.props.history.push({
+			pathname: "/student-survey",
+			state: { survey_id: compo.state.survey._id }
+		});
 	}
 
 
@@ -28,11 +30,18 @@ class StudentDashboard extends Component {
 
 		compo = this;
 
+		let survey_id = null ;
+		if(this.props.location.state != null){
+			console.log(this.props.location.state);
+			survey_id = this.props.location.state.survey_id
+			console.log(survey_id);
+			
+		}
+
 		this.state = {
 			disabledSurvey: true,
-			lastSurveyId: null,
-			lastSurvey : {
-				_id: null,
+			lastSurvey: {
+				_id: survey_id ,
 				open: false,
 				title: "Last Result Survey",
 				description: null,
@@ -70,12 +79,14 @@ class StudentDashboard extends Component {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',
-				'Authorization': 'Basic ' + btoa('teacher:password')  
+				'Authorization': 'Basic ' + btoa('teacher:password')
 			}
 		}).then(function (response) {
 			if (response.ok) {
 				response.json().then(data => {
 					surveys = data;
+					console.log(surveys);
+					
 					// check if a survey is open & check the last survey done
 					compo.checkIfSurveyOpen();
 					compo.checkLastSurveyDone();
@@ -98,7 +109,7 @@ class StudentDashboard extends Component {
 		let lastSurveyId = surveys[0]._id;
 
 		surveys.forEach(function (s) {
-
+			
 			let tempDate = Date.parse(s.end_date);
 
 			tempDate = Date.parse(s.end_date);
@@ -128,31 +139,31 @@ class StudentDashboard extends Component {
 
 	// check if a survey is currently open 
 	checkLastSurveyDone = function () {
+		console.log(this.state.lastSurvey);
 
-		let noSurveyOpen = true;
+		if (this.state.lastSurvey._id == null) {
+			let lastDate = Date.parse(surveys[0].end_date);
+			let lastSurvey = surveys[0];
 
-		let lastDate = Date.parse(surveys[0].end_date);
-		let lastSurvey = surveys[0];
+			surveys.forEach(function (s) {
 
-		surveys.forEach(function (s) {
+				let tempDate = Date.parse(s.end_date);
 
-			let tempDate = Date.parse(s.end_date);
+				tempDate = Date.parse(s.end_date);
+				if (lastDate < tempDate) {
+					lastDate = tempDate;
+					lastSurvey = s;
+				}
 
-			tempDate = Date.parse(s.end_date);
-			if (lastDate < tempDate) {
-				lastDate = tempDate;
-				lastSurvey = s;
-			}
+			}, this);
 
-		}, this);
-
-		// update the last survey id.
-		this.setState({
-			...this.state,
-			lastSurvey : lastSurvey
-		});
+			// update the last survey id.
+			this.setState({
+				...this.state,
+				lastSurvey: lastSurvey
+			});
+		}
 	}
-
 
 	// call for update the state with the survey
 	updateState = (s) => {

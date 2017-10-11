@@ -14,102 +14,69 @@ const styleButton = {
     marginTop: "15px"
 }
 
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
-var GET_GROUPS = '';
-
 //Get unique groups for the teacher from the database
-var groups = [];
-var compo;
+const groupsJSON = '[{"group_id": 1, "group_name": "First Group"}, {"group_id": 2, "group_name": "Second Group"}, {"group_id": 3, "group_name": "Third Group"}, {"group_id": 4, "group_name":"Fourth Group"}]';
+var buttonList = [];
 
 class HeadbandsLastResults extends React.Component {
 
     constructor(props) {
         super(props);
 
-        compo = this;
-
-        groups = [];
+        buttonList = [];
 
         this.state = {
-            buttonList: [],
-            group_id: null,
-            group_name: "Class",
+            group_id: 1,
+            group_name: "No Group Selected",
         };
 
-        this.buildRequestREST();
-        this.getGroupsREST();
+        this.tempParsingJson();
     }
 
     tempParsingJson = function () {
-        var buttonList = [];
-        groups.forEach(function (element) {
+        var compo = this;
+        let obj = JSON.parse(groupsJSON);
+
+        obj.forEach(function (element) {
+            let g = {
+                group_id: element.group_id,
+                group_name: element.group_name,
+            }
+
             buttonList.push(
                 <button
                     onClick={compo.onClickButton()}
                     type="button"
                     className="btn btn-primary"
-                    value={element._id}>
-                    {element.name}
+                    value={g.group_id}>
+                    {g.group_name}
                 </button>)
+
         });
 
-        this.setState({
-            ...this.state,
-            buttonList: buttonList
-        });
+        //this.setState({ ...this.state, });
 
     }
 
-    buildRequestREST = function () {
-        var s = '';
-        // Build request here
-        // teachers/{teacher_id}/classes/{class_id}/groups/
-
-        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes. 
-
-        GET_GROUPS = s;
-    }
-
-    getGroupsREST = function () {
-        console.log(ORIGIN + GET_GROUPS);
-        fetch(ORIGIN + GET_GROUPS, {
-            method: "GET",
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Basic ' + btoa('teacher:password') // This needs to be changed in the final version...
-            }
-        }).then(function (response) {
-            if (response.ok) {
-                response.json().then(data => {
-                    groups = data;
-                    compo.tempParsingJson();
-                });
-            } else {
-                console.log('Network response was not ok.');
-            }
-        }).catch(function (err) {
-            // Error
-            console.log(err);
-        });
-    }
 
     onClickButton = () => (e) => {
         e.preventDefault();
-        compo.setState({
+        this.setState({
             group_id: e.target.value,
             group_name: e.target.innerText
         });
     }
 
+
     render() {
 
         //requires for spiderGraph
         let parameters = {
-            teachers: 1, // need to be change
+            teachers: 1,
             students: null,
-            classes: 1, // need to be change
-            groups: compo.state.group_id,
-            surveys: 27, // need to be change
+            classes: 1,
+            groups: this.state.group_id,
+            surveys: 27,
         }
 
         return (
@@ -119,13 +86,14 @@ class HeadbandsLastResults extends React.Component {
                     <div className="text-left">
                         <div className="row">
                             <div className="col-sm-3" style={styleButton}>
-                                <div key = {1} className="btn-group-vertical">
-                                    {compo.state.buttonList}
-                                    <button type="button" className="btn btn-primary"> Class </button>
+                                <div className="btn-group-vertical">
+                                    {buttonList}
                                 </div>
                             </div>
                             <div className="col-sm-7">
                                 <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
+
+
                             </div>
                         </div>
 

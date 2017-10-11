@@ -69,7 +69,7 @@ class GraphRenderer extends Component {
         // Build request here
         // teachers/{teacher_id}/classes/{class_id}/groups/
         
-        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes. 
+        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes. Also, 404.
         
         GET_GROUPS = s;
     }
@@ -115,7 +115,6 @@ class GraphRenderer extends Component {
     /*
      * While it would be possible to load all graphs through a single function, the
      * resulting function would be both too long, and a mess of conditional statements.
-     * => No.
      */
     
     loadClassGraphs = function() { 

@@ -93,6 +93,8 @@ class SpiderGraph extends Component {
 		let Answers = [];
 
 
+
+
 		fetch(ORIGIN + GET_ANSWERS, {
 			method: "GET",
 			headers: {
@@ -120,7 +122,7 @@ class SpiderGraph extends Component {
 						let answerArray = [];
 						Answers.forEach(function (e) {
 							labelsArray.push(e.theme_title);
-							answerArray.push((e.answer).toFixed(1));
+							answerArray.push(e.answer);
 							// if description supported, added here
 						}, this);
 

@@ -7,6 +7,7 @@ import 'react-input-calendar/style/index.css'
 // Pick one: https://react.rocks/tag/DatePicker
 // https://github.com/Rudeg/react-input-calendar
 
+// Don't let the names fool you! These two don't need to be in chronological order.
 var rangeStart;
 var rangeEnd;
 

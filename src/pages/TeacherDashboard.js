@@ -45,8 +45,6 @@ class TeacherDashboard extends Component {
 
       </div>
 
-
-
     );
   }
 }

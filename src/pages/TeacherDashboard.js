@@ -22,31 +22,29 @@ class TeacherDashboard extends Component {
   render() {
 
     if (this.props.location.state == null) {
-        this.props.history.push("/class-selection");
-        return null;
+      this.props.history.push("/class-selection");
+      return null;
     }
 
     else return (
       <div className="text-center">
 
-          <h1> {this.props.location.state.className} </h1>
+        <h1> {this.props.location.state.className} </h1>
 
         <div className="row">
           <HeadbandsLastResults />
-            </div>
+        </div>
 
-	<div className="container">
-<div className="card-deck">
-	    <OpenSurveyButton />
-	    <GroupManagmentButton />
-	    <HistoryButton />
-</div>
-	    </div>
+        <div className="container">
+          <div className="card-deck">
+            <OpenSurveyButton />
+            <GroupManagmentButton />
+            <HistoryButton />
+          </div>
+        </div>
 
-	</div>
+      </div>
 
-
-	
     );
   }
 }

@@ -69,7 +69,7 @@ class GraphRenderer extends Component {
         // Build request here
         // teachers/{teacher_id}/classes/{class_id}/groups/
         
-        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes. Also, 404.
+        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes. 
         
         GET_GROUPS = s;
     }

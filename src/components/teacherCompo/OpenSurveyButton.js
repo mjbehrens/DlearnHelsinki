@@ -3,106 +3,255 @@ import Popup from 'react-popup';
 import SurveyCreationForm from './SurveyCreationForm.js'
 
 import iconSurveyOpen from "../../res/icons/survey.svg";
-import iconSurveyClose from "../../res/icons/history.svg";
+import iconSurveyClose from "../../res/icons/close_survey.svg";
 
-const style = {
-    padding: 50,
-    margin: 50,
-    textAlign: 'center',
-    background: 'yellow'
-};
 
+
+
+const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
+let GET_SURVEYS = '';
+let POST_SURVEY = '';
+let POST_CLOSE_SURVEY = '';
+
+var surveys = [];
+var compo = null;
 
 class OpenSurveyButton extends React.Component {
 
     constructor(props) {
         super(props);
+        compo = this;
+        surveys = [];
+
         this.state = {
-            open: true,
+            disable: true,
             text: "Open Survey",
             picture: iconSurveyOpen,
             teacherID: 1,
             classID: 1,
             survey: {
+                _id: null,
+                open: false,
                 title: null,
                 description: null,
+                start_date: null,
             }
         }
+
+        this.buildRequestRest();
+        this.getAllSurveyREST();
     }
 
-    updateState = (t, d) => {
-        this.setState({
-            ...this.state,
-            open: false,
-            picture: iconSurveyOpen,
-            text: "Close survey",
-            survey: {
-                title: t,
-                description: d,
+    buildRequestRest = function () {
+
+        GET_SURVEYS = '/teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
+        POST_SURVEY = '/teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
+        POST_CLOSE_SURVEY = '/teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
+
+    }
+
+    // call for update the state with the survey
+    updateState = (s) => {
+        //if a survey is open
+        if (s.open) {
+            this.setState({
+                ...this.state,
+                picture: iconSurveyClose,
+                text: "Close Survey",
+                survey: {
+                    _id: s._id,
+                    title: s.title,
+                    description: s.description,
+                    open: s.open,
+                    start_date: s.start_date,
+                }
+            });
+            //else if they are all closed
+        } else {
+            this.setState({
+                ...this.state,
+                picture: iconSurveyOpen,
+                text: "Open Survey",
+                survey: {
+                    _id: s._id,
+                    title: s.title,
+                    description: s.description,
+                    open: s.open,
+                    start_date: s.start_date,
+                }
+            });
+        }
+
+        console.log(this.state.survey);
+    }
+
+    // Get all the survey from one class
+    getAllSurveyREST = function () {
+
+        fetch(ORIGIN + GET_SURVEYS, {
+            method: "GET",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Basic ' + btoa('teacher:password') // This needs to be changed in the final version...
             }
+        }).then(function (response) {
+            if (response.ok) {
+                response.json().then(data => {
+                    surveys = data;
+                    console.log(surveys);
+                    // TODO : check if a survey is open
+                    compo.checkIfSurveyOpen();
+                });
+            } else {
+                console.log('Network response was not ok.');
+            }
+        }).catch(function (err) {
+            // Error
+            console.log(err);
         });
+    }
 
-        this.requestOpenSurvey(t, d);
+    // check if a survey is currently open 
+    checkIfSurveyOpen = function () {
+
+        let noSurveyOpen = true;
+        surveys.forEach(function (s) {
+            console.log(s);
+            if (s.open) {
+                noSurveyOpen = false;
+                console.log('is open');
+                this.updateState(s);
+            }
+        }, this);
+
+        // if no survey open then do nothing.
+        if (noSurveyOpen) {
+            compo.updateState({
+                _id: null,
+                open: false,
+                title: null,
+                description: null,
+                start_date: null,
+            });
+        }
 
     }
 
-    requestOpenSurvey = (t, d) => {
+    // send a request to the database to open a new survey
+    // get the info of the new survey
+    requestOpenSurveyREST = (t, d) => {
 
         var data = JSON.stringify({
-             title: t,
-             description: d,
+            title: t,
+            description: d,
         });
         console.log(data);
 
-        fetch('https://dlearn-helsinki-backend.herokuapp.com/webapi/teachers/' + this.state.teacherID
-            + '/classes/' + this.state.classID + '/surveys', {
-                method: 'post',
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Basic ' + btoa('teacher:password')
-                },
-                body: data
-            });
+        fetch(ORIGIN + POST_SURVEY, {
+            method: 'POST',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa('teacher:password')
+            },
+            body: data
+            //TODO !
+        }).then(function (response) {
+            if (response.ok) {
+                response.json().then(data => {
+                    compo.updateState(data)
+                });
+            } else {
+                console.log('Network response was not ok.');
+            }
+        }).catch(function (err) {
+            // Error
+            console.log(err);
+        });
     }
 
+    requestCloseSurveyREST = (t, d) => {
+
+        fetch(ORIGIN + POST_CLOSE_SURVEY + '/' + compo.state.survey._id, {
+            method: 'POST',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa('teacher:password')
+            },
+            //TODO !
+        }).then(function (response) {
+            if (response.ok) {
+                console.log('HAS BEEN CLOSED');
+                compo.getAllSurveyREST();
+            } else {
+                console.log('Network response was not ok.');
+            }
+        }).catch(function (err) {
+            // Error
+            console.log(err);
+        });
+    }
+
+    // executed when the user click on the survey button
     onClickSurvey = () => {
         // open a new suvey
-        if (this.state.open === true) {
-            Popup.plugins().createSurveyForm(this.updateState);
+        console.log(this.state.survey);
+        if (this.state.survey.open === false) {
+            Popup.plugins().createSurveyForm(this.requestOpenSurveyREST);
 
         } else {
             //close the previously opened survey
-            if (this.state.open === false) {
-                console.log('Survey close');
-                this.setState({
-                    ...this.state,
-                    open: true,
-                    picture: iconSurveyOpen,
-                    text: "Open survey"
+            if (this.state.survey.open === true) {
+                console.log('Survey Close');
+                // do the fetch for close
+
+                Popup.create({
+                    title: "Closing the current survey",
+                    content: 'You are about to close the survey. \n\
+                    The students will no longer be able to answer this survey after that. \n\
+                    Do you really want to close the survey \"' +compo.state.survey.title+ '\" (from '+ compo.state.survey.start_date +') ?',
+                    buttons: {
+                        left: [{
+                            text: 'Cancel',
+                            className: 'danger',
+                            action: function () {
+                                /** Close this popup. Close will always close the current visible one, if one is visible */
+                                Popup.close();
+                            }
+                        }],
+                        right: [{
+                            text: 'Confirm',
+                            className: 'success',
+                            action: function () {
+                                compo.requestCloseSurveyREST();
+                                Popup.close();
+                            }
+                        }]
+                    }
                 });
             }
         }
     }
 
     render() {
-
         return (
-
-  <div className="card">
-		<img className="card-img-top teacher-card-img" src={this.state.picture} width="100" height="100"
-	    onClick={this.onClickSurvey}
-	    alt="survey icon" />
-    <div className="card-body">
-		<h4 className="card-title">{this.state.text}</h4>
-    </div>
-  </div>
+            <div className="card" onClick={this.onClickSurvey} >
+                <img className="card-img-top teacher-card-img"
+                    src={this.state.picture}
+                    width="100" height="100"
+                    alt="survey icon" />
+                <div className="card-body">
+                    <h4 className="card-title">{this.state.text}</h4>
+                </div>
+            </div>
         )
     }
 }
 
 
 /** Survey Form plugin */
+// create a popup when the user want to open a new survey
 Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
     let _title = null;
     let _description = null;

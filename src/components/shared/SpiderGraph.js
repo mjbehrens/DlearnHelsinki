@@ -150,8 +150,6 @@ class SpiderGraph extends Component {
 		});
 	}
 
-
-
 	//take a string and create a original color 
 	stringToColour = function (str) {
 

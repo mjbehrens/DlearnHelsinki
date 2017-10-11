@@ -63,61 +63,61 @@ class GraphRenderer extends Component {
             graphs: []
         }
     }
-    
-    buildRequestREST = function() {
+
+    buildRequestREST = function () {
         var s = '';
         // Build request here
         // teachers/{teacher_id}/classes/{class_id}/groups/
-        
-        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes. Also, 404.
-        
+
+        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes. 
+
         GET_GROUPS = s;
     }
-    
-    getGroupsREST = function() {
+
+    getGroupsREST = function () {
         console.log(ORIGIN + GET_GROUPS);
         fetch(ORIGIN + GET_GROUPS, {
             method: "GET",
             headers: {
-		'Access-Control-Allow-Origin': '*',
-		'Authorization': 'Basic ' + btoa('teacher:password') // This needs to be changed in the final version...
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Basic ' + btoa('teacher:password') // This needs to be changed in the final version...
             }
-        }).then(function(response) {
-            if(response.ok) {
+        }).then(function (response) {
+            if (response.ok) {
                 response.json().then(data => {
-                                    groups = data;
-				});
-            }else {
-		console.log('Network response was not ok.');
+                    groups = data;
+                });
+            } else {
+                console.log('Network response was not ok.');
             }
         }).catch(function (err) {
             // Error
             console.log(err);
-	});
+        });
     }
-    
+
     componentDidMount() {
         this.buildRequestREST();
         this.getGroupsREST();
-//        this.tempParsingJson();        
+        //        this.tempParsingJson();        
     }
-    
-//    parseJSON = function(dataJSON) {
-//        groups = JSON.parse(dataJSON);
-//        console.log("Here's what we got: "+toString(groups));
-//    }
-    
-//    tempParsingJson = function () {
-//        groups = JSON.parse(fakeJson);
-//        console.log("Groups after init: "+toString(groups))
-//    }
-    
+
+    //    parseJSON = function(dataJSON) {
+    //        groups = JSON.parse(dataJSON);
+    //        console.log("Here's what we got: "+toString(groups));
+    //    }
+
+    //    tempParsingJson = function () {
+    //        groups = JSON.parse(fakeJson);
+    //        console.log("Groups after init: "+toString(groups))
+    //    }
+
     /*
      * While it would be possible to load all graphs through a single function, the
      * resulting function would be both too long, and a mess of conditional statements.
      */
-    
-    loadClassGraphs = function() { 
+
+    loadClassGraphs = function () {
         let compo = this;
 
         let spiderGraphs = [];
@@ -179,9 +179,9 @@ class GraphRenderer extends Component {
         return (
             <div>
                 <div>
-                    <button style = {buttonStyle} className="btn btn-primary" onClick={this.loadClassGraphs.bind(this)}>Class</button>
-                    <button style = {buttonStyle} className="btn btn-primary" onClick={this.loadGroupsGraphs.bind(this)}>Groups</button>
-                    <button style = {buttonStyle} className="btn btn-primary" onClick={this.loadStudentsGraphs.bind(this)}>Students</button>
+                    <button style={buttonStyle} className="btn btn-primary" onClick={this.loadClassGraphs.bind(this)}>Class</button>
+                    <button style={buttonStyle} className="btn btn-primary" onClick={this.loadGroupsGraphs.bind(this)}>Groups</button>
+                    <button style={buttonStyle} className="btn btn-primary" onClick={this.loadStudentsGraphs.bind(this)}>Students</button>
                 </div>
                 <div>
                     {this.state.graphs}

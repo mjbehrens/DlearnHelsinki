@@ -172,8 +172,6 @@ class GraphRenderer extends Component {
         this.setState({ graphs: spiderGraphs });
     }
 
-
-
     render() {
 
         return (

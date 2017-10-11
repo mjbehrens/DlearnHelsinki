@@ -83,6 +83,10 @@ class History extends Component {
         }
     }
 
+    // Known issue: If you enter a date while query is non-empty, clearing or changing the dates
+    // while the query is non-empty will cause the app to not enter selectRange at all. If you
+    // enter a date range that contains no data, clear the search bar before pressing "Go".
+
     selectRange = function(start, end) {
         let narrowDown = [];
         let compo = this;
@@ -93,14 +97,20 @@ class History extends Component {
 
         tempData.forEach(function(i) {
             if (start<=end && i.start_date>=start && i.start_date<=end) {
-                narrowDown.push(i); console.log("Everything chronological.");
+                narrowDown.push(i);
             } else if (start>end && i.start_date<=start && i.start_date>=end) {
-                narrowDown.push(i); console.log("Did you reverse something?");
+                narrowDown.push(i);
             } else if (start == null || end == null) {
-                compo.setState({ 
-                    warning: "Please input both a start and an end date.",
-                    dateSelected: false
-                });
+                if (start == null && end == null) {
+                    compo.setState({ 
+                        dateSelected: false
+                    }, () => compo.doSearch(compo.state.query));
+                } else {
+                    compo.setState({ 
+                        warning: "Please input both a start and an end date.",
+                        dateSelected: false
+                    });
+                }
             }
         });
         if (start != null && end != null) {

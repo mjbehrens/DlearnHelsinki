@@ -22,7 +22,7 @@
     "redux-promise-middleware": "^4.4.1",
     "redux-thunk": "^2.2.0",
     "underscore": "^1.8.3",
-    "webpack": "^3.6.0",    
+    "webpack": "^3.6.0"    
   },
   "devDependencies": {
     "coveralls": "^2.11.4",

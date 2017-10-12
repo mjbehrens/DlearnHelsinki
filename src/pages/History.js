@@ -39,6 +39,7 @@ class History extends Component {
     // the process is buggy and you will have to reset if there is a typo.
     
     doSearch = function(queryText){
+        console.log("Searching...");
         this.setState({ warning: "" });
         if (this.state.dateSelected) {
             tempData = this.state.filteredData
@@ -91,15 +92,15 @@ class History extends Component {
         let narrowDown = [];
         let compo = this;
         this.setState({ warning: "" });
-        if (this.state.query != "") {
+        if (this.state.query != "" && start != null && end != null) {
             tempData = this.state.filteredData
         } else { tempData = sampleData }
 
         tempData.forEach(function(i) {
             if (start<=end && i.start_date>=start && i.start_date<=end) {
-                narrowDown.push(i);
+                narrowDown.push(i); 
             } else if (start>end && i.start_date<=start && i.start_date>=end) {
-                narrowDown.push(i);
+                narrowDown.push(i); 
             } else if (start == null || end == null) {
                 if (start == null && end == null) {
                     compo.setState({ 
@@ -118,7 +119,6 @@ class History extends Component {
                 filteredData: narrowDown,
                 dateSelected: true
             }); 
-            console.log("Updating...");
         }
     }
 

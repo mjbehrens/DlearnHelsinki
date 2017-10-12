@@ -128,7 +128,6 @@ class HeadbandsLastResults extends React.Component {
                                 <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

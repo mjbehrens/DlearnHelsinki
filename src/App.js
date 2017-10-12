@@ -11,6 +11,7 @@ import StudentDashboard from './pages/StudentDashboard.js';
 import ClassSelection from './pages/ClassSelection.js';
 import TeacherDashboard from './pages/TeacherDashboard.js'
 import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
+import TeacherGroupManagement from './pages/TeacherGroupManagement.js'
 
 
 import Popup from 'react-popup';
@@ -42,6 +43,7 @@ class App extends Component {
 				  <Route path='/class-selection' component={ClassSelection} />
 				  <Route path='/teacher-dashboard' component={TeacherDashboard} />
 				  <Route path='/student-survey' component={StudentSurveyQuestion} />
+				  <Route path='/teacher-group-management' component={TeacherGroupManagement} />
 				</Switch>
 		    </section>
         <Footer />

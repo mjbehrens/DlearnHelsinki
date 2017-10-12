@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import Popup from 'react-popup';
 
-import infoGroupManagement from "../../res/icons/icon.png";
 import InfoStudent from "./InfoStudent";
 
 

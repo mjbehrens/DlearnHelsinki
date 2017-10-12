@@ -208,7 +208,7 @@ class OpenSurveyButton extends React.Component {
                     title: "Closing the current survey",
                     content: 'You are about to close the survey. \n\
                     The students will no longer be able to answer this survey after that. \n\
-                    Do you really want to close the survey \"' +compo.state.survey.title+ '\" (from '+ compo.state.survey.start_date +') ?',
+                    Do you really want to close the survey \"' + compo.state.survey.title + '\" (from ' + compo.state.survey.start_date + ') ?',
                     buttons: {
                         left: [{
                             text: 'Cancel',
@@ -253,6 +253,7 @@ class OpenSurveyButton extends React.Component {
 Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
     let _title = null;
     let _description = null;
+    let _themes = [];
 
     let getTitle = function (e) {
         _title = e.target.value;
@@ -262,10 +263,33 @@ Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
         _description = e.target.value;
     };
 
+    let getThemes = function (e) {
+
+        // function to remove item
+        function removeItem(array, item) {
+            for (var i in array) {
+                if (array[i] == item) {
+                    array.splice(i, 1);
+                    break;
+                }
+            }
+        }
+        let box = e.target;
+
+        if (box.checked) {
+            _themes.push(box.value);
+        } else if (box.checked == false) {
+            removeItem(_themes, box.value);
+        }
+        console.log(_themes);
+    }
+
     this.create({
         title: 'Creation of a new Survey',
-        content: <SurveyCreationForm onChangeTitle={getTitle}
+        content: <SurveyCreationForm
+            onChangeTitle={getTitle}
             onChangeDescription={getDescription}
+            onChangeThemes={getThemes}
             title={"New Survey"}
             description={"new survey for today\'s exercices"} />,
         buttons: {
@@ -273,16 +297,26 @@ Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
                 text: 'Cancel',
                 className: 'danger', // optional
                 action: function (popup) {
-                    //do things
                     popup.close();
                 }
             }],
             right: [{
-                text: 'Confirm',
+                text: 'Create',
                 className: 'success', // optional
                 action: function (popup) {
-                    callbackConfirm(_title, _description);
-                    popup.close();
+                    console.log(_title);
+                    console.log(_description);
+                    if ((_themes.length > 0)
+                        && (_title !== "")
+                        && (_description !== "")) {
+                            //TODO : add the _themes to the callback function 
+                            callbackConfirm(_title, _description);
+                            popup.close();
+                    } else { // popup if information are missing
+                        alert("Make sure every information has been filled before creating the survey.")
+                    }
+
+
                 }
             }]
         },

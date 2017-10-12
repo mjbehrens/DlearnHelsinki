@@ -15,7 +15,7 @@ class Group extends React.Component {
         super(props);
         compo = this;
         this.state = {
-            picture: infoGroupManagement,
+            picture: null,
             student: {
                 name: [],
                 password: null,
@@ -117,21 +117,21 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student) {
                               age={student.age}/>,
         buttons: {
             left: [{
-                text: 'Cancel',
-                className: 'danger', // optional
+                text: 'Quit',
+                className: null, // optional
                 action: function (popup) {
                     //do things
                     popup.close();
                 }
             }],
-            right: [{
+           /* right: [{
                 text: 'Confirm',
                 className: 'success', // optional
                 action: function (popup) {
                     callbackConfirm(_title);
                     popup.close();
                 }
-            }]
+            }]*/
         },
         className: null, // or string
         noOverlay: true, // hide overlay layer (default is false, overlay visible)

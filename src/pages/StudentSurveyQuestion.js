@@ -4,20 +4,31 @@ import Slider from 'rc-slider';
 import { Redirect } from 'react-router'
 import 'rc-slider/assets/index.css';
 
-const ORIGIN = 'http://dlearn-helsinki-backend.herokuapp.com/webapi/';
-const GET_QUESTIONS_FOR_SURVEY = 'students/1/classes/1/surveys/27/questions';
-const PUT_QUESTION_ANSWER = 'students/1/classes/1/surveys/27/answers/'; //needs one more parameters
+const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi/';
+let GET_QUESTIONS_FOR_SURVEY = 'students/1/classes/1/surveys/27/questions';
+let PUT_QUESTION_ANSWER = 'students/1/classes/1/surveys/27/answers/'; //needs one more parameters
 
 class StudentSurveyQuestion extends Component {
 
     constructor(props) {
         super(props);
+
+        let survey_id = null ;
+		if(this.props.location.state.survey_id !== null){
+			survey_id = this.props.location.state.survey_id
+		}
+
         this.state = {
             buttonValue: 'Next',
             redirect: false,
             index: 0,
-            survey_id: 0,
-            survey: [],
+            survey_id: survey_id,
+            survey: [{
+                id: 0,
+                question: 'Loading the survey...',
+                min_answer: 0,
+                max_answer: 0,
+            },],
             currentQuestion: {
                 id: 0,
                 question: 'Loading the survey...',
@@ -26,6 +37,12 @@ class StudentSurveyQuestion extends Component {
             },
             startPoint: 3
         }
+
+        console.log("RECEIVE : " + this.props.location.state.survey_id);
+
+        GET_QUESTIONS_FOR_SURVEY = 'students/1/classes/1/surveys/' + this.state.survey_id + '/questions';
+        PUT_QUESTION_ANSWER = 'students/1/classes/1/surveys/' + this.state.survey_id + '/answers/'; //needs one more parameters
+
     }
 
     componentDidMount() {
@@ -34,7 +51,6 @@ class StudentSurveyQuestion extends Component {
 
     getSurveyQuestionsREST = function () {
         var component = this;
-
         var survey = [];
 
         fetch(ORIGIN + GET_QUESTIONS_FOR_SURVEY, {
@@ -88,7 +104,6 @@ class StudentSurveyQuestion extends Component {
             body: data
         }).then(function (response) {
             if (response.ok) {
-                console.log(response.body)
                 console.log("answer put on server")
             } else {
                 console.log('Network response was not ok.');
@@ -108,7 +123,6 @@ class StudentSurveyQuestion extends Component {
     }
 
     onClickNext = () => {
-        this.getSurveyQuestionsREST();
 
         if (this.state.index < this.state.survey.length) {
             //send answer to server
@@ -146,20 +160,25 @@ class StudentSurveyQuestion extends Component {
     render() {
         // if survey finish (no more survey)
         if (this.state.redirect) {
-            return <Redirect to="/student-dashboard" />
+            let compo = this;
+            this.props.history.push({
+                pathname: "/student-dashboard",
+                state: { survey_id : compo.state.survey_id }
+            });
+            //return <Redirect to="/student-dashboard" />
         }
         else {
 
             return (
                 <div className="Login-form">
-                    <p><h3>{this.state.currentQuestion.id}</h3>{this.state.currentQuestion.question}</p>
+                    <p>{this.state.currentQuestion.question}</p>
                     <Slider
                         min={this.state.currentQuestion.min_answer}
                         max={this.state.currentQuestion.max_answer} dots={true}
                         value={this.state.startPoint}
                         onChange={this.onSliderChange} />
 
-                    <p> 
+                    <p>
                         <h5>{this.state.startPoint}/{this.state.currentQuestion.max_answer} </h5>
                         <button type="button"
                             className="btn btn-primary"

@@ -7,38 +7,37 @@ const margins = {
     margin: '5px'
 }
 
+var adj = "";
+var adv = "";
+var noun = "";
+var nbr = "";
+var username = "";
+
 class LoginCreator extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {
-            adj: "",
-            adv: "",
-            noun: "",
-            nbr: "",
-            username: ""
-        }
+        var adj = "";
+        var adv = "";
+        var noun = "";
+        var nbr = "";
+        var username = "";
+       this.generateUsername();
     }
 
     selectAdjective = function() {
-        this.setState ({
-            adj: "a"
-        });
-        // select random adjective
+        adj = "a"
+        console.log("adjective chosen")
     }
 
     selectAdjectiveVerb = function() {
-        this.setState ({
-            adv: "b"
-        });
-        // select random adjective that is a verb
+        adv = "b"
+        console.log("adv chosen");
     }
     
-    selectNount = function() {
-        this.setState ({
-            noun: "c"
-        });
-        // select random noun
+    selectNoun = function() {
+        noun = "c"
+         console.log("noun chosen")
     }
     
     selectNumber = function() {
@@ -46,29 +45,29 @@ class LoginCreator extends Component {
         let temp = "";
         while (temp.length < 4) {
             temp = temp + Math.floor((Math.random()*10));
-        }
-        this.setState ({
-            nbr: temp
-        });
+        }; 
+        nbr = temp;
+        console.log("number chosen")
         
     }
 
     generateUsername = function() {
         // Where are the words stored?
         // Math.floor((Math.random()*(wordlist_length)+1) //if indexing starts from 1
-        this.selectAdjective;
-        this.selectAdjectiveVerb;
-        this.selectNoun;
-        this.selectNumber;
+        this.selectAdjective();
+        this.selectAdjectiveVerb();
+        this.selectNoun();
+        this.selectNumber();
         
-        this.setState ({
-            username: (""+this.state.adj +" "+this.state.adv +" "+ this.state.noun +" "+ this.state.nbr)
-        });
+        let temp = ""+adj +" "+adv +" "+ noun +nbr;
+        username = temp;
+        // Check that the generated username is not already in the system.
+        // If it is, run this function again.
+        console.log("username generated")
     }
 
     render() {
-        this.genedateUsername;
-        console.log("Username: "+this.state.username);
+        console.log("Username: "+username);
         
         return(
             <div className ="Login-form">
@@ -80,21 +79,20 @@ class LoginCreator extends Component {
                         className="form-control"
                         style = {margins}  
                         id = "uName"
-                        value = {this.state.username}
-                        required
+                        value = {username}
                         />
                     <label for="password">Choose a password:</label>
                     <input type="text" 
                         className="form-control"
                         style = {margins}  
                         id = "password"
-                        required
                         />
                     <div style = {{textAlign: "left"}}>
                         <i>
                         <ul>
                             <li>It is recommended to use a password that is as long as possible. </li>
-                            <li>A password must be at least X characters long. </li>
+                            <li>A password must be at least 12 characters long. </li>
+                            <li>Passwords can contain any UTF-8 characters.</li>
                             <li>Be creative with your choice, or use a random word or password generator.</li>
                             <li>Do not use a username or a real name as the password. </li>
                             <li>Do not use obvious choices for passwords such as "password", a movie title,

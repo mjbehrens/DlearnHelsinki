@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 // About password guidelines: https://pages.nist.gov/800-63-3/sp800-63b.html
 // TL;DR: https://nakedsecurity.sophos.com/2016/08/18/nists-new-password-rules-what-you-need-to-know/
 
+//https://stackoverflow.com/questions/21080605/parse-a-text-file-into-an-array
+
 const margins = {
     margin: '5px'
 }
@@ -12,6 +14,8 @@ var noun = "";
 var nbr = "";
 var username = "";
 
+var adjectives = [];
+var nouns = [];
 class LoginCreator extends Component {
     
     constructor(props) {
@@ -20,22 +24,34 @@ class LoginCreator extends Component {
         var noun = "";
         var nbr = "";
         var username = "";
+        var adjectives = [];
+        var nouns = [];
         this.generateUsername();
-        
     }
 
     // Select 2 adjectives
     selectAdjectives = function() {
+        let adjList = '../res/adjectives.txt';
+        let lines = adjList.split('\n');
+        let i = 0;
+        
+
+        let rnb = Math.floor(Math.random()*(adjectives.length));
+        console.log("An adjective should be here. "+adjectives[rnb]);
+        
         let temp1 = "";
         let temp2 = "";
         adj = temp1+" "+temp2
+
         console.log("adjective chosen")
     }
     
     // Select a noun
     selectNoun = function() {
+        let nounList = '../res/nouns.txt';
+        
         noun = "c"
-         console.log("noun chosen")
+        console.log("noun chosen")
     }
     
     // Select a number
@@ -52,7 +68,6 @@ class LoginCreator extends Component {
 
     generateUsername = function() {
         // Math.floor((Math.random()*(wordlist_length)+1) //if indexing starts from 1
-        
         
         this.selectAdjectives();
         this.selectNoun();

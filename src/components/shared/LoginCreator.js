@@ -20,7 +20,8 @@ class LoginCreator extends Component {
         var noun = "";
         var nbr = "";
         var username = "";
-       this.generateUsername();
+        this.generateUsername();
+        
     }
 
     // Select 2 adjectives
@@ -50,8 +51,9 @@ class LoginCreator extends Component {
     }
 
     generateUsername = function() {
-        // Where are the words stored?
         // Math.floor((Math.random()*(wordlist_length)+1) //if indexing starts from 1
+        
+        
         this.selectAdjectives();
         this.selectNoun();
         this.selectNumber();

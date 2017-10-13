@@ -8,7 +8,6 @@ const margins = {
 }
 
 var adj = "";
-var adv = "";
 var noun = "";
 var nbr = "";
 var username = "";
@@ -18,28 +17,27 @@ class LoginCreator extends Component {
     constructor(props) {
         super(props);
         var adj = "";
-        var adv = "";
         var noun = "";
         var nbr = "";
         var username = "";
        this.generateUsername();
     }
 
-    selectAdjective = function() {
-        adj = "a"
+    // Select 2 adjectives
+    selectAdjectives = function() {
+        let temp1 = "";
+        let temp2 = "";
+        adj = temp1+" "+temp2
         console.log("adjective chosen")
     }
-
-    selectAdjectiveVerb = function() {
-        adv = "b"
-        console.log("adv chosen");
-    }
     
+    // Select a noun
     selectNoun = function() {
         noun = "c"
          console.log("noun chosen")
     }
     
+    // Select a number
     selectNumber = function() {
         // select pseudorandom 4 digit number?
         let temp = "";
@@ -54,12 +52,11 @@ class LoginCreator extends Component {
     generateUsername = function() {
         // Where are the words stored?
         // Math.floor((Math.random()*(wordlist_length)+1) //if indexing starts from 1
-        this.selectAdjective();
-        this.selectAdjectiveVerb();
+        this.selectAdjectives();
         this.selectNoun();
         this.selectNumber();
         
-        let temp = ""+adj +" "+adv +" "+ noun +nbr;
+        let temp = ""+adj +" "+ noun +nbr;
         username = temp;
         // Check that the generated username is not already in the system.
         // If it is, run this function again.

@@ -22,23 +22,23 @@ class HistoryButton extends React.Component {
     }
 
     onClickHistory = (e) => {
-        
+
     }
 
     render() {
         return (
 
 
-  <div className="card">
-            <Link to = "/history">
-		<img className="card-img-top teacher-card-img" src={this.state.picture} width="100" height="100"
-	    onClick={this.onClickHistory}
-	    alt="survey icon" />
-    <div className="card-body">
-		<h4 className="card-title">{this.state.text}</h4>
-    </div>
-            </Link>
-  </div>
+            <div className="card">
+                <Link to="/history">
+                    <img className="card-img-top teacher-card-img" src={this.state.picture} width="100" height="100"
+                        onClick={this.onClickHistory}
+                        alt="survey icon" />
+                    <div className="card-body">
+                        <h4 className="card-title">{this.state.text}</h4>
+                    </div>
+                </Link>
+            </div>
 
 
 

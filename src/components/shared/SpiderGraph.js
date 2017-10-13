@@ -93,8 +93,6 @@ class SpiderGraph extends Component {
 		let Answers = [];
 
 
-
-
 		fetch(ORIGIN + GET_ANSWERS, {
 			method: "GET",
 			headers: {
@@ -122,7 +120,7 @@ class SpiderGraph extends Component {
 						let answerArray = [];
 						Answers.forEach(function (e) {
 							labelsArray.push(e.theme_title);
-							answerArray.push(e.answer);
+							answerArray.push((e.answer).toFixed(1));
 							// if description supported, added here
 						}, this);
 
@@ -151,8 +149,6 @@ class SpiderGraph extends Component {
 			console.log(err);
 		});
 	}
-
-
 
 	//take a string and create a original color 
 	stringToColour = function (str) {

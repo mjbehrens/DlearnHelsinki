@@ -251,8 +251,8 @@ class OpenSurveyButton extends React.Component {
 /** Survey Form plugin */
 // create a popup when the user want to open a new survey
 Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
-    let _title = null;
-    let _description = null;
+    let _title = "";
+    let _description = "";
     let _themes = [];
 
     let getTitle = function (e) {
@@ -307,8 +307,8 @@ Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
                     console.log(_title);
                     console.log(_description);
                     if ((_themes.length > 0)
-                        && (_title !== "")
-                        && (_description !== "")) {
+                        && (_title.length !== 0)
+                        && (_description.length !== 0)) {
                             //TODO : add the _themes to the callback function 
                             callbackConfirm(_title, _description);
                             popup.close();

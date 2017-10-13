@@ -1,5 +1,6 @@
 import React from "react";
 import SpiderGraph from '../shared/SpiderGraph.js';
+import Spinner from 'react-spinner'
 
 
 const style = {
@@ -31,6 +32,7 @@ class HeadbandsLastResults extends React.Component {
         groups = [];
 
         this.state = {
+            isLoading: true,
             buttonList: [],
             group_id: null,
             group_name: "Class",
@@ -55,6 +57,7 @@ class HeadbandsLastResults extends React.Component {
 
         this.setState({
             ...this.state,
+            isLoading: false,
             buttonList: buttonList
         });
 
@@ -71,7 +74,9 @@ class HeadbandsLastResults extends React.Component {
     }
 
     getGroupsREST = function () {
-        console.log(ORIGIN + GET_GROUPS);
+
+        compo.setState({ isLoading: true });
+
         fetch(ORIGIN + GET_GROUPS, {
             method: "GET",
             headers: {
@@ -112,26 +117,37 @@ class HeadbandsLastResults extends React.Component {
             surveys: 27, // need to be change
         }
 
-        return (
+        if (this.state.isLoading) {
+            return (
+                <div className="spinner-container">
+                    <Spinner />
+                </div >
+            )
 
-            <div className="container">
-                <div className="jumbotron">
-                    <div className="text-left">
-                        <div className="row">
-                            <div className="col-sm-3" style={styleButton}>
-                                <div key = {1} className="btn-group-vertical">
-                                    {compo.state.buttonList}
-                                    <button type="button" className="btn btn-primary"> Class </button>
+        } else {
+            return (
+
+                <div className="container">
+                    <div className="jumbotron">
+                        <div className="text-left">
+                            <div className="row">
+                                <div className="col-sm-3" style={styleButton}>
+                                    <div key={1} className="btn-group-vertical">
+                                        {compo.state.buttonList}
+                                        <button type="button" className="btn btn-primary"> Class </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col-sm-7">
-                                <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
+                                <div className="col-sm-7">
+                                    <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
+
+
 
     }
 

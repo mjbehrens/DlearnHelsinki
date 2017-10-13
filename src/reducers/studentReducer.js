@@ -1,5 +1,5 @@
 export default function reducer(state={
-    classes: [],
+    students: [],
   }, action) {
 
     switch (action.type) {
@@ -30,4 +30,3 @@ export default function reducer(state={
 
     return state
 }
-

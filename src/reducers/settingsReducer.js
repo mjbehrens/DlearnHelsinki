@@ -1,5 +1,5 @@
 export default function reducer(state={
-    baseURL: "",
+    baseURL: "http://dlearn-helsinki-backend.herokuapp.com/webapi/",
   }, action) {
     
     switch (action.type) {

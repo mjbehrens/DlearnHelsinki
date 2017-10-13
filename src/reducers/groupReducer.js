@@ -1,5 +1,5 @@
 export default function reducer(state={
-    classes: [],
+    groups: [],
   }, action) {
 
     switch (action.type) {

@@ -5,6 +5,8 @@ import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
 import LinearGraph from '../components/shared/LinearGraph.js';
 
+import Spinner from 'react-spinner';
+
 
 
 const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
@@ -30,18 +32,18 @@ class StudentDashboard extends Component {
 
 		compo = this;
 
-		let survey_id = null ;
-		if(this.props.location.state != null){
+		let survey_id = null;
+		if (this.props.location.state != null) {
 			console.log(this.props.location.state);
 			survey_id = this.props.location.state.survey_id
 			console.log(survey_id);
-			
+
 		}
 
 		this.state = {
 			disabledSurvey: true,
 			lastSurvey: {
-				_id: survey_id ,
+				_id: survey_id,
 				open: false,
 				title: "Last Result Survey",
 				description: null,
@@ -86,7 +88,7 @@ class StudentDashboard extends Component {
 				response.json().then(data => {
 					surveys = data;
 					console.log(surveys);
-					
+
 					// check if a survey is open & check the last survey done
 					compo.checkIfSurveyOpen();
 					compo.checkLastSurveyDone();
@@ -109,7 +111,7 @@ class StudentDashboard extends Component {
 		let lastSurveyId = surveys[0]._id;
 
 		surveys.forEach(function (s) {
-			
+
 			let tempDate = Date.parse(s.end_date);
 
 			tempDate = Date.parse(s.end_date);
@@ -198,7 +200,7 @@ class StudentDashboard extends Component {
 		console.log(this.state.survey);
 	}
 
-	displaySpiderGraph= function (){
+	displaySpiderGraph = function () {
 
 		let parameters = {
 			teachers: null,
@@ -208,21 +210,26 @@ class StudentDashboard extends Component {
 			surveys: compo.state.lastSurvey._id,
 		}
 
-		if(parameters.surveys){
+		if (parameters.surveys) {
 			return (
 				<SpiderGraph name={this.state.lastSurvey.title} parameters={parameters} />
 			)
 		}
-		else{
+		else {
 			return (
-				<h3> </h3>
+				<div>
+					<div className='spinner-container'>
+						<Spinner />
+					</div>
+					Check for open survey ...
+				</div>
 			)
 		}
 	}
 
 	render() {
 
-		
+
 
 		return (
 			<div className="container text-center">

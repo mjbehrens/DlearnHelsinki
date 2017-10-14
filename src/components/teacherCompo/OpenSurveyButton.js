@@ -1,7 +1,11 @@
 import React from "react";
 import Popup from 'react-popup';
+import Spinner from 'react-spinner';
+
+// Popup form
 import SurveyCreationForm from './SurveyCreationForm.js'
 
+// icons for the page
 import iconSurveyOpen from "../../res/icons/survey.svg";
 import iconSurveyClose from "../../res/icons/close_survey.svg";
 
@@ -22,6 +26,7 @@ class OpenSurveyButton extends React.Component {
         surveys = [];
 
         this.state = {
+            isLoading: true,
             disable: true,
             text: "Open Survey",
             picture: iconSurveyOpen,
@@ -40,6 +45,7 @@ class OpenSurveyButton extends React.Component {
         this.getAllSurveyREST();
     }
 
+
     buildRequestRest = function () {
 
         GET_SURVEYS = '/teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
@@ -54,6 +60,7 @@ class OpenSurveyButton extends React.Component {
         if (s.open) {
             this.setState({
                 ...this.state,
+                isLoading : false,
                 picture: iconSurveyClose,
                 text: "Close Survey",
                 survey: {
@@ -68,6 +75,7 @@ class OpenSurveyButton extends React.Component {
         } else {
             this.setState({
                 ...this.state,
+                isLoading : false,
                 picture: iconSurveyOpen,
                 text: "Open Survey",
                 survey: {
@@ -80,11 +88,11 @@ class OpenSurveyButton extends React.Component {
             });
         }
 
-        console.log(this.state.survey);
     }
 
     // Get all the survey from one class
     getAllSurveyREST = function () {
+        compo.setState({isLoading: true});
 
         fetch(ORIGIN + GET_SURVEYS, {
             method: "GET",
@@ -94,7 +102,7 @@ class OpenSurveyButton extends React.Component {
             }
         }).then(function (response) {
             if (response.ok) {
-                response.json().then(data => {
+                response.json().then(data => {                    
                     surveys = data;
                     console.log(surveys);
                     // TODO : check if a survey is open
@@ -138,6 +146,7 @@ class OpenSurveyButton extends React.Component {
     // send a request to the database to open a new survey
     // get the info of the new survey
     requestOpenSurveyREST = (t, d) => {
+        compo.setState({isLoading : true});
 
         var data = JSON.stringify({
             title: t,
@@ -233,17 +242,29 @@ class OpenSurveyButton extends React.Component {
     }
 
     render() {
-        return (
-            <div className="card" onClick={this.onClickSurvey} >
-                <img className="card-img-top teacher-card-img"
-                    src={this.state.picture}
-                    width="100" height="100"
-                    alt="survey icon" />
-                <div className="card-body">
-                    <h4 className="card-title">{this.state.text}</h4>
+        if (this.state.isLoading) {
+            return (
+                <div className="card">
+                    <div className="spinner-container">
+                        <Spinner />
+                    </div >
+
                 </div>
-            </div>
-        )
+            )
+
+        } else {
+            return (
+                <div className="card" onClick={this.onClickSurvey} >
+                    <img className="card-img-top teacher-card-img"
+                        src={this.state.picture}
+                        width="100" height="100"
+                        alt="survey icon" />
+                    <div className="card-body">
+                        <h4 className="card-title">{this.state.text}</h4>
+                    </div>
+                </div>
+            )
+        }
     }
 }
 
@@ -309,9 +330,9 @@ Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
                     if ((_themes.length > 0)
                         && (_title.length !== 0)
                         && (_description.length !== 0)) {
-                            //TODO : add the _themes to the callback function 
-                            callbackConfirm(_title, _description);
-                            popup.close();
+                        //TODO : add the _themes to the callback function 
+                        callbackConfirm(_title, _description);
+                        popup.close();
                     } else { // popup if information are missing
                         alert("Make sure every information has been filled before creating the survey.")
                     }

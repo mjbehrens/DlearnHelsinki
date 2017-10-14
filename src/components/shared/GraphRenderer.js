@@ -1,56 +1,13 @@
 import React, { Component } from 'react';
 import SpiderGraph from './SpiderGraph.js'
 
-
-// We will need:
-// - Array of every studentID in class
-// - Groups of the classroom
-
 const buttonStyle = {
     margin: '5px'
 }
 
+
 const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
 var GET_GROUPS = '';
-
-//var fakeJson = '[ \n\
-//  { \n\
-//    "_id" : 1, \n\
-//    "name" : "Grp1",\n\
-//    "students" : [\n\
-//      {\n\
-//        "_id" : 1,\n\
-//        "username" : "nico",\n\
-//        "age" : 10,\n\
-//        "gender" : "male"\n\
-//      },\n\
-//      {\n\
-//        "_id" : 2,\n\
-//        "username" : "maria",\n\
-//        "age" : 10,\n\
-//        "gender" : "female"\n\
-//      }\n\
-//    ]\n\
-//  },\n\
-//  {\n\
-//    "_id" : 2,\n\
-//    "name" : "Grp2",\n\
-//    "students" : [\n\
-//      {\n\
-//        "_id" : 3,\n\
-//        "username" : "pascal",\n\
-//        "age" : 10,\n\
-//        "gender" : "male"\n\
-//      },\n\
-//      {\n\
-//        "_id" : 4,\n\
-//        "username" : "colinne",\n\
-//        "age" : 10,\n\
-//        "gender" : "female"\n\
-//      }\n\
-//    ]\n\
-//  }\n\
-//]';
 
 var groups = [];
 
@@ -99,24 +56,8 @@ class GraphRenderer extends Component {
     componentDidMount() {
         this.buildRequestREST();
         this.getGroupsREST();
-//        this.tempParsingJson();        
     }
-    
-//    parseJSON = function(dataJSON) {
-//        groups = JSON.parse(dataJSON);
-//        console.log("Here's what we got: "+toString(groups));
-//    }
-    
-//    tempParsingJson = function () {
-//        groups = JSON.parse(fakeJson);
-//        console.log("Groups after init: "+toString(groups))
-//    }
-    
-    /*
-     * While it would be possible to load all graphs through a single function, the
-     * resulting function would be both too long, and a mess of conditional statements.
-     * => No.
-     */
+        
     
     loadClassGraphs = function() { 
         let compo = this;
@@ -159,7 +100,7 @@ class GraphRenderer extends Component {
         groups.forEach(function (g) {
             g.students.forEach(function (s) {
                 let parameters = {
-                    teachers: null,
+                    teachers: 1,
                     students: s._id,
                     classes: 1,
                     groups: null,

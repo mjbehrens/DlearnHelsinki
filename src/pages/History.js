@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'underscore';
+import Spinner from 'react-spinner'
 
 
 import HistoryFinder from '../components/shared/HistoryFinder.js';
@@ -26,28 +27,29 @@ class History extends Component {
         compo = this;
 
         this.state = {
+            isLoading: true,
             query: "",
             filteredData: [],
             selectedSurvey: null,
             dateSelected: false,
             warning: "",
             sorter: 1 // 0 = no order, 1 = date ascending, 2 = date descending
-        }        
+        }
     }
 
     componentDidMount() {
-        this.getAllSurveyREST();        
+        this.getAllSurveyREST();
     }
 
     // You can narrow down the dates and search by name at the same time, but
     // the process is buggy and you will have to reset if there is a typo.
 
     doSearch = function (queryText) {
-        
+
         if (this.state.dateSelected) {
             tempData = this.state.filteredData;
-        } else { 
-            tempData = sampleData; 
+        } else {
+            tempData = sampleData;
         }
         var queryResult = [];
         tempData.forEach(function (i) {
@@ -68,8 +70,9 @@ class History extends Component {
 
     // Get all the survey from one class
     getAllSurveyREST = function () {
-        var compo = this;
-        console.log(ORIGIN + GET_SURVEYS)
+        compo = this;
+        compo.setState({ isLoading: true });
+
         fetch(ORIGIN + GET_SURVEYS, {
             method: "GET",
             headers: {
@@ -78,12 +81,12 @@ class History extends Component {
             }
         }).then(function (response) {
             if (response.ok) {
-                response.json().then(data => {                    
+                response.json().then(data => {
                     sampleData = data;
                     compo.setState({
+                        isLoading: false,
                         filteredData: data,
                     });
-                    console.log(this.state.filteredData);
                 });
             } else {
                 console.log('Network response was not ok.');
@@ -97,8 +100,7 @@ class History extends Component {
 
     // Final function will alter the value that is passed to the GraphRenderer. 
     loadResult = (surveyID) => {
-        console.log("survey " + surveyID + " selected ");        
-        compo.setState({selectedSurvey: surveyID}); 
+        compo.setState({ selectedSurvey: surveyID });
     }
 
     // As SQL's Date-datatype ends up parsed into a conveniently structured string, 
@@ -119,17 +121,17 @@ class History extends Component {
         this.setState({ warning: "" });
         if (this.state.query != "") {
             tempData = this.state.filteredData
-        } 
+        }
         else {
-             tempData = sampleData
+            tempData = sampleData
         }
 
         tempData.forEach(function (i) {
             if (start <= end && i.start_date >= start && i.start_date <= end) {
-                narrowDown.push(i); 
+                narrowDown.push(i);
                 console.log("Everything chronological.");
             } else if (start > end && i.start_date <= start && i.start_date >= end) {
-                narrowDown.push(i); 
+                narrowDown.push(i);
                 console.log("Did you reverse something?");
             } else if (start == null || end == null) {
                 compo.setState({
@@ -149,33 +151,48 @@ class History extends Component {
 
     render() {
 
-        return (
-            <div className="centered">
-                <h1> History </h1>
-                <div className="row">
-                    <div className="left-align col-sm-4">
-                        
-                        <HistoryFinder query={this.state.query}
-                            selectRange={this.selectRange.bind(this)}
-                            sortData={this.sortData.bind(this)}
-                            doSearch={this.doSearch.bind(this)} />
-                        
-                        <div className="warning">
-                            {this.state.warning}
-                        </div>
-                       
-                        <HistoryDisplay loadResult={this.loadResult.bind(this)}
-                            searchData={this.state.filteredData} />
-
-                    </div>
-                    <div className="col-sm-8" hidden={this.state.selectedSurvey == null}>
-                        {
-                            // TODO : Give all the information of the survey to GraphRenderer (if possible) 
-                        }
-                        <GraphRenderer surveyID={this.state.selectedSurvey} />
+        if (compo.state.isLoading) {
+            return (
+                <div className="centered">
+                    <h1> History </h1>
+                    <div className="row">
+                        <div className="spinner-container">
+                            <Spinner />
+                        </div >
                     </div>
                 </div>
-            </div>
-        )
+            )
+        }
+        else {
+            return (
+                <div className="centered">
+                    <h1> History </h1>
+                    <div className="row">
+                        <div className="left-align col-sm-4">
+
+                            <HistoryFinder query={this.state.query}
+                                selectRange={this.selectRange.bind(this)}
+                                sortData={this.sortData.bind(this)}
+                                doSearch={this.doSearch.bind(this)} />
+
+                            <div className="warning">
+                                {this.state.warning}
+                            </div>
+
+                            <HistoryDisplay loadResult={this.loadResult.bind(this)}
+                                searchData={this.state.filteredData} />
+
+                        </div>
+                        <div className="col-sm-8" hidden={this.state.selectedSurvey == null}>
+                            {
+                                // TODO : Give all the information of the survey to GraphRenderer (if possible) 
+                            }
+                            <GraphRenderer surveyID={this.state.selectedSurvey} />
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+
     }
 } export default History;

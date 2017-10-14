@@ -29,7 +29,7 @@ class GroupManagmentButon extends React.Component {
     render() {
         return (
             <div className="card">
-                <Link to="">
+                <Link to="/groups-management">
                     <img className="card-img-top teacher-card-img" src={this.state.picture} width="100" height="100"
                         onClick={this.onClickSurvey}
                         alt="survey icon" />

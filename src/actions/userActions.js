@@ -1,14 +1,3 @@
-export function fetchUser() {
-  return {
-    type: "FETCH_USER_FULFILLED",
-    payload: {
-	// Add api call
-      name: "Will",
-      age: 35,
-    }
-  }
-}
-
 export function setUserId(id) {
   return {
     type: 'SET_USER_ID',

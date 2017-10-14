@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
+import Spinner from 'react-spinner'
 
 const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
 let GET_ANSWERS = '';
 let GET_QUESTIONS_FOR_SURVEY = '';
+
+let account = '';
 
 // VERY IMPORTANT !
 let params;
@@ -16,6 +19,7 @@ class SpiderGraph extends Component {
 		params = this.props.parameters;
 
 		this.state = {
+			isLoading: true,
 			cpt: 0,
 			data: {
 				labels: [], //label of the themes 
@@ -66,22 +70,46 @@ class SpiderGraph extends Component {
 	// ( looks ugly but it's a propotype :) )
 	buildRequestRest = function () {
 
+		 
+
 		let s = "";
-		if (params.students != null) {
-			s += '/students/' + params.students;
-		}
+		
+		
 		if (params.teachers != null) {
 			s += '/teachers/' + params.teachers;
+
+			
+			if (params.classes != null) {
+				s += '/classes/' + params.classes;
+			}
+			if (params.groups != null) {
+				s += '/groups/' + params.groups;
+			}
+			if (params.students != null) {
+				s += '/students/' + params.students;
+			}
+
+			// TODO : REMOVE !!!
+			account = 'teacher:password';
+			
+		}else if (params.students != null) {
+			s += '/students/' + params.students;
+		
+			if (params.classes != null) {
+				s += '/classes/' + params.classes;
+			}
+			if (params.groups != null) {
+				s += '/groups/' + params.groups;
+			}
+
+			//TODO : REMOVE !!!!
+			account = 'nhlad:password';
 		}
-		if (params.classes != null) {
-			s += '/classes/' + params.classes;
-		}
-		if (params.groups != null) {
-			s += '/groups/' + params.groups;
-		}
+
 		if (params.surveys != null) {
 			s += '/surveys/' + params.surveys;
 		}
+		
 
 		GET_ANSWERS = s + '/answers';
 		GET_QUESTIONS_FOR_SURVEY = s + '/questions';
@@ -89,6 +117,7 @@ class SpiderGraph extends Component {
 	}
 
 	getSurveyAnswersREST = function () {
+		this.setState({ isLoading: true });
 		let component = this;
 		let Answers = [];
 
@@ -97,7 +126,7 @@ class SpiderGraph extends Component {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',
-				'Authorization': 'Basic ' + btoa('teacher:password')
+				'Authorization': 'Basic ' + btoa(account)
 			}
 		}).then(function (response) {
 			if (response.ok) {
@@ -126,6 +155,7 @@ class SpiderGraph extends Component {
 
 						component.setState({
 							...component.state,
+							isLoading: false,
 							data: {
 								...component.state.data,
 								labels: labelsArray,
@@ -182,7 +212,7 @@ class SpiderGraph extends Component {
 
 
 	render() {
-		
+
 		var options = {
 			responsive: true,
 			maintainAspectRatio: true,
@@ -194,9 +224,19 @@ class SpiderGraph extends Component {
 			}
 		};
 
-		return (
-			<Radar data={this.state.data} options={options} />
-		);
+		if (this.state.isLoading) {
+			return (
+				<div className = 'spinner-container'>
+					<Spinner />
+				</div>
+				
+			)
+		} else {
+			return (
+				<Radar data={this.state.data} options={options} />
+			);
+		}
+
 	}
 }
 

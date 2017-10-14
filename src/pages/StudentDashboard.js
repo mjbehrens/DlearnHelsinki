@@ -62,7 +62,7 @@ class StudentDashboard extends Component {
 
 	buildRequestRest = function () {
 
-		GET_SURVEYS = '/teachers/' + 1 + '/classes/' + 1 + '/surveys';
+		GET_SURVEYS = '/students/' + 1 + '/classes/' + 1 + '/surveys';
 
 	}
 
@@ -79,7 +79,7 @@ class StudentDashboard extends Component {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',
-				'Authorization': 'Basic ' + btoa('teacher:password')
+				'Authorization': 'Basic ' + btoa('nhlad:password')
 			}
 		}).then(function (response) {
 			if (response.ok) {
@@ -198,15 +198,31 @@ class StudentDashboard extends Component {
 		console.log(this.state.survey);
 	}
 
-	render() {
+	displaySpiderGraph= function (){
 
 		let parameters = {
 			teachers: null,
 			students: 1,
 			classes: 1,
 			groups: null,
-			surveys: this.state.lastSurvey._id,
+			surveys: compo.state.lastSurvey._id,
 		}
+
+		if(parameters.surveys){
+			return (
+				<SpiderGraph name={this.state.lastSurvey.title} parameters={parameters} />
+			)
+		}
+		else{
+			return (
+				<h3> </h3>
+			)
+		}
+	}
+
+	render() {
+
+		
 
 		return (
 			<div className="container text-center">
@@ -224,7 +240,7 @@ class StudentDashboard extends Component {
 							</div>
 						</div>
 						<div className="col-sm-9">
-							<SpiderGraph name={this.state.lastSurvey.title} parameters={parameters} />
+							{compo.displaySpiderGraph()}
 						</div>
 					</div>
 

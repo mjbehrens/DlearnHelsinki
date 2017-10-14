@@ -6,6 +6,8 @@ const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
 let GET_ANSWERS = '';
 let GET_QUESTIONS_FOR_SURVEY = '';
 
+let account = '';
+
 // VERY IMPORTANT !
 let params;
 
@@ -86,6 +88,9 @@ class SpiderGraph extends Component {
 			if (params.students != null) {
 				s += '/students/' + params.students;
 			}
+
+			// TODO : REMOVE !!!
+			account = 'teacher:password';
 			
 		}else if (params.students != null) {
 			s += '/students/' + params.students;
@@ -96,6 +101,9 @@ class SpiderGraph extends Component {
 			if (params.groups != null) {
 				s += '/groups/' + params.groups;
 			}
+
+			//TODO : REMOVE !!!!
+			account = 'nhlad:password';
 		}
 
 		if (params.surveys != null) {
@@ -118,7 +126,7 @@ class SpiderGraph extends Component {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',
-				'Authorization': 'Basic ' + btoa('teacher:password')
+				'Authorization': 'Basic ' + btoa(account)
 			}
 		}).then(function (response) {
 			if (response.ok) {

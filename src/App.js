@@ -1,6 +1,7 @@
 import Popup from 'react-popup';
 import React, { Component } from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import { connect } from 'react-redux';
 import './css/App.css';
 import './css/popup.css';
 
@@ -16,6 +17,12 @@ import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
 import TeacherDashboard from './pages/TeacherDashboard.js';
 import TeacherGroupManagement from './pages/TeacherGroupManagement.js'
 
+
+function mapStateToProps(store) {
+    return {
+	user: store.user.user,
+    }
+}﻿
 
 class App extends Component {
 	render() {
@@ -37,8 +44,10 @@ class App extends Component {
 						<section>
 							<Switch>
 								<Route exact path='/' component={Home} />
-								<Route path='/login' component={Login} />
-								<Route path='/student-dashboard' component={StudentDashboard} />
+			<Route path='/login' render={() => (<Route component={Login} />)}
+							   />
+			<Route path='/student-dashboard' component={StudentDashboard}
+								  />
 								<Route path='/class-selection' component={ClassSelection} />
 								<Route path='/teacher-dashboard' component={TeacherDashboard} />
 								<Route path='/student-survey' component={StudentSurveyQuestion} />
@@ -55,4 +64,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default connect(mapStateToProps)(App);

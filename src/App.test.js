@@ -6,7 +6,7 @@ class TestApp extends Component {
 
 	return (
 	    <div>
-	    <p>This is a basic test component</p>
+	    <p>This is a basic test component.</p>
 		</div>
 		);
 	}

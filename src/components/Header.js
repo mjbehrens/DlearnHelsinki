@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import logo from '../res/icons/dlearn_logo.svg';
+import LoginLogout from './LoginLogout.js';
 
 export default class Header extends React.Component {
   render() {
@@ -33,7 +34,7 @@ export default class Header extends React.Component {
                 </div>
               </li>
             </ul>
-            <Link to="/login"><button className="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button></Link>
+	    <LoginLogout />
           </div>
         </nav>
 

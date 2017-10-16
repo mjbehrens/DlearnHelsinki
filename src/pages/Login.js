@@ -81,6 +81,8 @@ class Login extends Component {
 		console.log('Login successful!')
 		this.props.dispatch(userActions.setUserLogin(login))
 		this.props.dispatch(userActions.setUserHash(btoa(login + ':' + password)))
+		this.props.dispatch(userActions.setUserType(userType))
+		this.props.dispatch(userActions.loginUser())
 		this.setState({...this.state,
 		    redirect: true
 		})
@@ -173,4 +175,3 @@ class Login extends Component {
 }
 
 export default connect(mapStateToProps)(Login);
-

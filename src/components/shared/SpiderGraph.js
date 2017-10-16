@@ -2,11 +2,23 @@ import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
 import Spinner from 'react-spinner'
 
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
+//reduce setup
+import * as userActions from '../../actions/userActions';
+import { connect } from 'react-redux';
+
+
 let GET_ANSWERS = '';
 let GET_QUESTIONS_FOR_SURVEY = '';
 
-let account = '';
+
+
+
+function mapStateToProps(store) {
+	return {
+		user: store.user.user,
+		baseURL: store.settings.baseURL,
+	}
+}
 
 // VERY IMPORTANT !
 let params;
@@ -70,13 +82,10 @@ class SpiderGraph extends Component {
 	// ( looks ugly but it's a propotype :) )
 	buildRequestRest = function () {
 
-		 
-
-		let s = "";
-		
+		let s = "";		
 		
 		if (params.teachers != null) {
-			s += '/teachers/' + params.teachers;
+			s += 'teachers/' + params.teachers;
 
 			
 			if (params.classes != null) {
@@ -88,12 +97,9 @@ class SpiderGraph extends Component {
 			if (params.students != null) {
 				s += '/students/' + params.students;
 			}
-
-			// TODO : REMOVE !!!
-			account = 'teacher:password';
 			
 		}else if (params.students != null) {
-			s += '/students/' + params.students;
+			s += 'students/' + params.students;
 		
 			if (params.classes != null) {
 				s += '/classes/' + params.classes;
@@ -101,32 +107,30 @@ class SpiderGraph extends Component {
 			if (params.groups != null) {
 				s += '/groups/' + params.groups;
 			}
-
-			//TODO : REMOVE !!!!
-			account = 'nhlad:password';
 		}
 
 		if (params.surveys != null) {
 			s += '/surveys/' + params.surveys;
 		}
 		
-
 		GET_ANSWERS = s + '/answers';
 		GET_QUESTIONS_FOR_SURVEY = s + '/questions';
 
 	}
 
 	getSurveyAnswersREST = function () {
+		// set the spinner to true
 		this.setState({ isLoading: true });
+		
 		let component = this;
 		let Answers = [];
 
 
-		fetch(ORIGIN + GET_ANSWERS, {
+		fetch(this.props.baseURL + GET_ANSWERS, {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',
-				'Authorization': 'Basic ' + btoa(account)
+				'Authorization': 'Basic ' + this.props.user.hash,
 			}
 		}).then(function (response) {
 			if (response.ok) {
@@ -240,4 +244,5 @@ class SpiderGraph extends Component {
 	}
 }
 
-export default SpiderGraph;
+export default connect(mapStateToProps)(SpiderGraph);
+

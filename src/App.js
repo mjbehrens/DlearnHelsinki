@@ -12,7 +12,7 @@ import ClassSelection from './pages/ClassSelection.js';
 import TeacherDashboard from './pages/TeacherDashboard.js';
 import History from './pages/History.js'
 import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
-import StudentAccountCreator from './components/shared/StudentAccountCreator.js';
+import UsernameGenerator from './components/shared/UsernameGenerator.js';
 
 
 
@@ -46,7 +46,7 @@ class App extends Component {
 				  <Route path='/teacher-dashboard' component={TeacherDashboard} />
 				  <Route path='/student-survey' component={StudentSurveyQuestion} />
                                   <Route path = '/history' component = {History} />
-                                  <Route path = '/create-student' component = {StudentAccountCreator} />
+                                  <Route path = '/create-student' component = {UsernameGenerator} />
 				</Switch>
 		    </section>
         <Footer />

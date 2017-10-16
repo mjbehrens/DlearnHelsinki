@@ -20,7 +20,7 @@ class LoginLogout extends React.Component {
   render() {
       if (this.props.user.loggedin) {
     return (
-	<Link to="/"><button className="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button></Link>
+	    <Link to="/"><button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={this.onLoginClick}>Logout</button></Link>
     );
       } else {
     return (

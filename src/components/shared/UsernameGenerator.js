@@ -42,7 +42,7 @@ class UsernameGenerator extends Component {
     
     // Select a number
     selectNumber = function() {
-        // select pseudorandom 4 digit number?
+        // select pseudorandom 4 digit number
         let temp = "";
         while (temp.length < 4) {
             temp = temp + Math.floor((Math.random()*10));
@@ -50,9 +50,7 @@ class UsernameGenerator extends Component {
         nbr = temp;   
     }
 
-    generateUsername = function() {
-        // Math.floor((Math.random()*(wordlist_length)+1) //if indexing starts from 1
-        
+    generateUsername = function() {      
         this.selectAdjectives();
         this.selectNoun();
         this.selectNumber();

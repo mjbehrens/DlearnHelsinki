@@ -86,6 +86,7 @@ class Login extends Component {
 					console.log(data);
 
 					this.props.dispatch(userActions.setUserId(data._id));
+					this.props.dispatch(userActions.setUserType(userType))
 					this.props.dispatch(userActions.setUserLogin(login));
 					this.props.dispatch(userActions.setUserName(data.username));
 					this.props.dispatch(userActions.setUserHash(btoa(login + ':' + password)));
@@ -187,4 +188,3 @@ class Login extends Component {
 }
 
 export default connect(mapStateToProps)(Login);
-

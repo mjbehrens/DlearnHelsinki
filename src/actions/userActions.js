@@ -1,3 +1,17 @@
+export function loginUser() {
+    return {
+	type: 'LOGIN_USER',
+	payload: null
+    }
+}
+
+export function logoutUser() {
+    return {
+	type: 'LOGOUT_USER',
+	payload: null
+    }
+}
+
 export function setUserId(id) {
   return {
     type: 'SET_USER_ID',

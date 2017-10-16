@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+
+class TestApp extends Component {
+    render() {
+
+	return (
+	    <div>
+	    <p>This is a basic test component</p>
+		</div>
+		);
+	}
+}
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  ReactDOM.render(<TestApp />, div);
 });

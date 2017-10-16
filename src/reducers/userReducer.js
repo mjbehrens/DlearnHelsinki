@@ -7,6 +7,7 @@ export default function reducer(state={
       type: null, /* student, teacher, researcher */
       login: null,
       hash: null,
+      loggedin: false,
       groupid: [],
       classid: [],
     },
@@ -29,6 +30,29 @@ export default function reducer(state={
           fetched: true,
           user: action.payload,
         }
+      }
+      case "LOGIN_USER": {
+	return {
+	  ...state,
+	  user: {...state.user, loggedin: true},
+	}
+      }
+      case "LOGOUT_USER": {
+	return {
+	  ...state,
+	  user: {
+	    id: null,
+	    name: null,
+	    sex: null,
+	    age: null,
+	    type: null,
+	    login: null,
+	    hash: null,
+	    loggedin: false,
+	    groupid: [],
+	    classid: [],
+          }
+	}
       }
       case "SET_USER_ID": {
         return {

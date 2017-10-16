@@ -13,6 +13,7 @@ import TeacherDashboard from './pages/TeacherDashboard.js';
 import History from './pages/History.js'
 import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
 import UsernameGenerator from './components/shared/UsernameGenerator.js';
+import TeacherGroupManagement from './pages/TeacherGroupManagement.js'
 
 
 
@@ -46,6 +47,7 @@ class App extends Component {
 				  <Route path='/teacher-dashboard' component={TeacherDashboard} />
 				  <Route path='/student-survey' component={StudentSurveyQuestion} />
                                   <Route path = '/history' component = {History} />
+                                  <Route path='/groups-management' component={TeacherGroupManagement} />
                                   <Route path = '/create-student' component = {UsernameGenerator} />
 				</Switch>
 		    </section>

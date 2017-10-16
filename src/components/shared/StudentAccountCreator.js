@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 // About password guidelines: https://pages.nist.gov/800-63-3/sp800-63b.html
 // TL;DR: https://nakedsecurity.sophos.com/2016/08/18/nists-new-password-rules-what-you-need-to-know/
 
-//https://stackoverflow.com/questions/21080605/parse-a-text-file-into-an-array
+
+//import adjList from '../res/adjectives.txt';
+//import nounList from '../res/nouns.txt';
 
 const margins = {
     margin: '5px'
@@ -16,7 +18,8 @@ var username = "";
 
 var adjectives = [];
 var nouns = [];
-class LoginCreator extends Component {
+
+class StudentAccountCreator extends Component {
     
     constructor(props) {
         super(props);
@@ -29,11 +32,21 @@ class LoginCreator extends Component {
         this.generateUsername();
     }
 
+    readFile = (file, target) => {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            
+        }
+        
+    }
+
     // Select 2 adjectives
     selectAdjectives = function() {
-        let adjList = '../res/adjectives.txt';
-        let lines = adjList.split('\n');
-        let i = 0;
+//        console.log(adjList);
+//        let lines = adjList.split('\n');
+//        let i = 0;
+        let file = "../res/adjectives.txt"
+        this.readFile(file, adjectives);
         
 
         let rnb = Math.floor(Math.random()*(adjectives.length));
@@ -128,4 +141,4 @@ class LoginCreator extends Component {
             </div>
         )
     }
-} export default LoginCreator;
+} export default StudentAccountCreator;

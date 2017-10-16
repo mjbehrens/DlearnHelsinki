@@ -37,14 +37,15 @@ class History extends Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.getAllSurveyREST();
     }
 
     // You can narrow down the dates and search by name at the same time, but
     // the process is buggy and you will have to reset if there is a typo.
-
-    doSearch = function (queryText) {
+    
+    doSearch = function(queryText){
+        this.setState({ warning: "" });
 
         if (this.state.dateSelected) {
             tempData = this.state.filteredData;
@@ -119,33 +120,37 @@ class History extends Component {
         let narrowDown = [];
         let compo = this;
         this.setState({ warning: "" });
-        if (this.state.query != "") {
+        if (this.state.query != "" && start != null && end != null) {
             tempData = this.state.filteredData
         }
         else {
             tempData = sampleData
         }
 
-        tempData.forEach(function (i) {
-            if (start <= end && i.start_date >= start && i.start_date <= end) {
-                narrowDown.push(i);
-                console.log("Everything chronological.");
-            } else if (start > end && i.start_date <= start && i.start_date >= end) {
-                narrowDown.push(i);
-                console.log("Did you reverse something?");
+        tempData.forEach(function(i) {
+            if (start<=end && i.start_date>=start && i.start_date<=end) {
+                narrowDown.push(i); 
+            } else if (start>end && i.start_date<=start && i.start_date>=end) {
+                narrowDown.push(i); 
             } else if (start == null || end == null) {
-                compo.setState({
-                    warning: "Please input both a start and an end date.",
-                    dateSelected: false
-                });
+                if (start == null && end == null) {
+                    compo.setState({ 
+                        dateSelected: false
+                    }, () => compo.doSearch(compo.state.query));
+                } else {
+                    compo.setState({ 
+                        warning: "Please input both a start and an end date.",
+                        dateSelected: false
+                    });
+                }
             }
         });
         if (start != null && end != null) {
             this.setState({
                 filteredData: narrowDown,
                 dateSelected: true
-            });
-            console.log("Updating...");
+            }); 
+
         }
     }
 

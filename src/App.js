@@ -22,7 +22,7 @@ function mapStateToProps(store) {
     return {
 	user: store.user.user,
     }
-}﻿
+}
 
 class App extends Component {
     render() {

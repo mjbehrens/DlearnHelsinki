@@ -26,7 +26,7 @@ class GraphRenderer extends Component {
         // Build request here
         // teachers/{teacher_id}/classes/{class_id}/groups/
         
-        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes. 
+        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes.
         
         GET_GROUPS = s;
     }
@@ -113,8 +113,6 @@ class GraphRenderer extends Component {
 
         this.setState({ graphs: spiderGraphs });
     }
-
-
 
     render() {
 

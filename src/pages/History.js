@@ -37,7 +37,7 @@ class History extends Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.getAllSurveyREST();
     }
 

@@ -8,10 +8,10 @@ import { connect } from 'react-redux';
 
 
 function mapStateToProps(store) {
-	return {
-		user: store.user.user,
-		baseURL: store.settings.baseURL,
-	}
+    return {
+        user: store.user.user,
+        baseURL: store.settings.baseURL,
+    }
 }
 
 
@@ -39,7 +39,6 @@ class HeadbandsLastResults extends React.Component {
         super(props);
 
         compo = this;
-
         groups = [];
 
         this.state = {
@@ -47,6 +46,7 @@ class HeadbandsLastResults extends React.Component {
             buttonList: [],
             group_id: null,
             group_name: "Class",
+            survey : this.props.survey,
         };
 
         this.buildRequestREST();
@@ -74,16 +74,25 @@ class HeadbandsLastResults extends React.Component {
 
     }
 
+    // Called everytime a props value change
+    componentWillReceiveProps(nextProps) {
+        if (compo.state.survey !== nextProps.survey) {
+            compo.setState({survey : nextProps.survey});
+        }
+    }
+
     buildRequestREST = function () {
         var s = '';
         // Build request here
         // teachers/{teacher_id}/classes/{class_id}/groups/
 
-        s = s + 'teachers/'+this.props.user.id+'/classes/1/groups'; 
+        s = s + 'teachers/' + this.props.user.id + '/classes/1/groups';
 
         GET_GROUPS = s;
     }
 
+    // Get all the current groups of the class
+    // WARNING : if the groups has been modified, the answer from this survey will not appear 
     getGroupsREST = function () {
 
         compo.setState({ isLoading: true });
@@ -121,11 +130,11 @@ class HeadbandsLastResults extends React.Component {
 
         //requires for spiderGraph
         let parameters = {
-            teachers: this.props.user.id, // need to be change
+            teachers: this.props.user.id, 
             students: null,
-            classes: 1, // need to be change
+            classes: 1, // TODO : UPDATE WITH REAL VALUE !
             groups: compo.state.group_id,
-            surveys: 27, // need to be change
+            surveys: compo.state.survey._id, 
         }
 
         if (this.state.isLoading) {
@@ -149,6 +158,7 @@ class HeadbandsLastResults extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-sm-7">
+                                    <h6>Results from survey "{compo.state.survey.title}"</h6>
                                     <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
                                 </div>
                             </div>

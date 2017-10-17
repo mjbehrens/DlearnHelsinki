@@ -66,16 +66,10 @@ class SpiderGraph extends Component {
 		}
 	}
 
-
 	// Fetch resquest for questions and answer
 	getDataForGraph = function () {
 		this.buildRequestRest();
 		this.getSurveyAnswersREST();
-	}
-
-	componentDidUpdate() {
-		//console.log('In spider : ' + params.students)
-		//console.log(this.state.data);
 	}
 
 	// Build request from props send to the component

@@ -21,7 +21,6 @@ function mapStateToProps(store) {
 }
 
 
-
 let GET_SURVEYS = '';
 let POST_SURVEY = '';
 let POST_CLOSE_SURVEY = '';
@@ -42,24 +41,24 @@ class OpenSurveyButton extends React.Component {
             text: "Open Survey",
             picture: iconSurveyOpen,
             teacherID: this.props.user.id,
-            classID: 1,
-            survey: {
-                _id: null,
-                open: false,
-                title: null,
-                description: null,
-                start_date: null,
-            }
+            classID: 1,     // TODO : UPDATE WITH REAL VALUE !
+            survey: this.props.survey,
         }
 
         this.buildRequestRest();
-        this.getAllSurveyREST();
     }
+
+    // Called everytime a props value change
+	componentWillReceiveProps(nextProps) {
+		if (compo.state.survey !== nextProps.survey) {
+            compo.updateState(nextProps.survey);
+            console.log(nextProps.survey);
+		}
+	}
 
 
     buildRequestRest = function () {
 
-        GET_SURVEYS = 'teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
         POST_SURVEY = 'teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
         POST_CLOSE_SURVEY = 'teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
         
@@ -101,64 +100,12 @@ class OpenSurveyButton extends React.Component {
 
     }
 
-    // Get all the survey from one class
-    getAllSurveyREST = function () {
-        compo.setState({isLoading: true});
-
-        fetch(this.props.baseURL + GET_SURVEYS, {
-            method: "GET",
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Basic ' + this.props.user.hash 
-            }
-        }).then(function (response) {
-            if (response.ok) {
-                response.json().then(data => {                    
-                    surveys = data;
-                    console.log(surveys);
-                    // TODO : check if a survey is open
-                    compo.checkIfSurveyOpen();
-                });
-            } else {
-                console.log('Network response was not ok.');
-            }
-        }).catch(function (err) {
-            // Error
-            console.log(err);
-        });
-    }
-
-    // check if a survey is currently open 
-    checkIfSurveyOpen = function () {
-
-        let noSurveyOpen = true;
-        surveys.forEach(function (s) {
-            console.log(s);
-            if (s.open) {
-                noSurveyOpen = false;
-                console.log('is open');
-                this.updateState(s);
-            }
-        }, this);
-
-        // if no survey open then do nothing.
-        if (noSurveyOpen) {
-            compo.updateState({
-                _id: null,
-                open: false,
-                title: null,
-                description: null,
-                start_date: null,
-            });
-        }
-
-    }
 
     // send a request to the database to open a new survey
     // get the info of the new survey
-    requestOpenSurveyREST = (t, d) => {
-        compo.setState({isLoading : true});
+    requestToOpenSurveyREST = (t, d) => {
 
+        compo.setState({isLoading : true});
         var data = JSON.stringify({
             title: t,
             description: d,
@@ -178,6 +125,7 @@ class OpenSurveyButton extends React.Component {
             if (response.ok) {
                 response.json().then(data => {
                     compo.updateState(data)
+                    compo.props.callback();
                 });
             } else {
                 console.log('Network response was not ok.');
@@ -188,8 +136,10 @@ class OpenSurveyButton extends React.Component {
         });
     }
 
-    requestCloseSurveyREST = (t, d) => {
+    requestToCloseSurveyREST = (t, d) => {
 
+        compo.setState({isLoading : true});
+        
         fetch(this.props.baseURL + POST_CLOSE_SURVEY + '/' + compo.state.survey._id, {
             method: 'POST',
             headers: {
@@ -201,7 +151,7 @@ class OpenSurveyButton extends React.Component {
         }).then(function (response) {
             if (response.ok) {
                 console.log('HAS BEEN CLOSED');
-                compo.getAllSurveyREST();
+                compo.props.callback();
             } else {
                 console.log('Network response was not ok.');
             }
@@ -216,7 +166,7 @@ class OpenSurveyButton extends React.Component {
         // open a new suvey
         console.log(this.state.survey);
         if (this.state.survey.open === false) {
-            Popup.plugins().createSurveyForm(this.requestOpenSurveyREST);
+            Popup.plugins().createSurveyForm(this.requestToOpenSurveyREST);
 
         } else {
             //close the previously opened survey
@@ -242,7 +192,7 @@ class OpenSurveyButton extends React.Component {
                             text: 'Confirm',
                             className: 'success',
                             action: function () {
-                                compo.requestCloseSurveyREST();
+                                compo.requestToCloseSurveyREST();
                                 Popup.close();
                             }
                         }]

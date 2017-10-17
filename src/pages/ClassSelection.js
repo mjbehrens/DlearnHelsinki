@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { ROUTES } from '../constants.js';
 
 import SelectClass from '../components/teacherCompo/SelectClass.js';
 
@@ -10,11 +13,34 @@ var classes;
 var ORIGIN = "https://dlearn-helsinki-backend.herokuapp.com/webapi";
 var GET_CLASSES = "";
 
+function mapStateToProps(store) {
+    return {
+	    user: store.user.user,
+    }
+}
+
 class ClassSelection extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+	this.state = {
+	    goTo: ROUTES.CLASS_SELECTION
+	}
         var classes = [];
+    }
+
+    componentDidMount() {
+	if (this.props.user.type === 'teacher') {
+	    this.setState({
+		...this.state,
+		goTo: ROUTES.TEACHER_DASHBOARD
+	    })
+	} else {
+	    this.setState({
+		...this.state,
+		goTo: ROUTES.STUDENT_DASHBOARD
+	    })
+	}
     }
 
     // There are no classes implemented in the database, so it's currently impossible
@@ -91,4 +117,4 @@ class ClassSelection extends Component {
 //                    <div style = {{margin: "1vmin"}}>   
 //                        <button onClick = {this.moveToDashboard} className = "btn btn-default">Continue</button>
 //                    </div>
-export default ClassSelection;
+export default connect(mapStateToProps)(ClassSelection);

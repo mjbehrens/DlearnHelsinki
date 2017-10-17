@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
+import { ROUTES } from '../constants.js';
 import * as userActions from '../actions/userActions';
 
 function mapStateToProps(store) {
-	return {
-		user: store.user.user,
-		baseURL: store.settings.baseURL,
-	}
+    return {
+	user: store.user.user,
+	baseURL: store.settings.baseURL,
+    }
 }
 
 class Login extends Component {
@@ -19,32 +20,32 @@ class Login extends Component {
 			pwdInput: '',
 			loading: false,
 			error: false,
-			goTo: "/login",
+			goTo: ROUTES.LOGIN,
 			redirect: false,
 		};
 	}
 
 	onClickStudent = () => {
 		this.setState({
-			...this.state,
-			userType: "student",
-			goTo: "/student-dashboard"
+		    ...this.state,
+		    userType: "student",
+		    goTo: ROUTES.CLASS_SELECTION,
 		})
 	}
 
 	onClickTeacher = () => {
 		this.setState({
-			...this.state,
-			userType: "teacher",
-			goTo: "/teacher-dashboard"
+		    ...this.state,
+		    userType: "teacher",
+		    goTo: ROUTES.CLASS_SELECTION,
 		})
 	}
 
 	onClickResearcher = () => {
 		this.setState({
-			...this.state,
-			userType: "researcher",
-			goTo: "/"
+		    ...this.state,
+		    userType: "researcher",
+		    goTo: ROUTES.HOME,
 		})
 	}
 

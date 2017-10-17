@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ROUTES } from '../constants.js';
 
 import Slider from 'rc-slider';
 import { Redirect } from 'react-router'
@@ -162,7 +163,7 @@ class StudentSurveyQuestion extends Component {
         if (this.state.redirect) {
             let compo = this;
             this.props.history.push({
-                pathname: "/student-dashboard",
+                pathname: ROUTES.STUDENT_SURVEY,
                 state: { survey_id : compo.state.survey_id }
             });
             //return <Redirect to="/student-dashboard" />

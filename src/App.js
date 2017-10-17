@@ -4,6 +4,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import { connect } from 'react-redux';
 import './css/App.css';
 import './css/popup.css';
+import { ROUTES } from './constants.js';
 
 import ClassSelection from './pages/ClassSelection.js';
 import Footer from './components/Footer.js';
@@ -43,15 +44,14 @@ class App extends Component {
 			    <Header />
 			    <section>
 				<Switch>
-				    <Route exact path='/' component={Home} />
-				    <Route path='/login' component={Login} />
-				 // <Route path='/login' render={() => (this.props.user.loggedin ? <Route component={NoMatch} /> : <Route component={Login} />)} />
-				    <Route path='/student-dashboard' render={() => (this.props.user.type === 'student' ? <Route component={StudentDashboard} /> : <Route component={NoMatch} />)}/>
-				    <Route path='/class-selection' render={() => (this.props.user.type === 'teacher' ? (<Route component={ClassSelection} />) : (<Route component={NoMatch} />))}/>
-				    <Route path='/teacher-dashboard' render={() => (this.props.user.type === 'teacher' ? (<Route component={TeacherDashboard} />) : (<Route component={NoMatch} />))}/>
-				    <Route path='/student-survey' render={() => (this.props.user.type === 'student' ? (<Route component={StudentSurveyQuestion} />) : (<Route component={NoMatch} />))}/>
-				    <Route path='/history' render={() => (this.props.user.type === 'student' ? (<Route component={History} />) : (<Route component={NoMatch} />))}/>
-				    <Route path='/groups-management' render={() => (this.props.user.type === 'teacher' ? (<Route component={TeacherGroupManagement} />) : (<Route component={NoMatch} />))}/>
+				    <Route exact path={ROUTES.HOME} component={Home} />
+				    <Route path={ROUTES.LOGIN} component={Login} />
+				    <Route path={ROUTES.STUDENT_DASHBOARD} render={() => (this.props.user.type === 'student' ? <Route component={StudentDashboard} /> : <Route component={NoMatch} />)}/>
+				    <Route path={ROUTES.CLASS_SELECTION} render={() => (this.props.user.type === 'teacher' ? (<Route component={ClassSelection} />) : (<Route component={NoMatch} />))}/>
+				    <Route path={ROUTES.TEACHER_DASHBOARD} render={() => (this.props.user.type === 'teacher' ? (<Route component={TeacherDashboard} />) : (<Route component={NoMatch} />))}/>
+				    <Route path={ROUTES.STUDENT_SURVEY} render={() => (this.props.user.type === 'student' ? (<Route component={StudentSurveyQuestion} />) : (<Route component={NoMatch} />))}/>
+				    <Route path={ROUTES.HISTORY} render={() => (this.props.user.type === 'teacher' ? (<Route component={History} />) : (<Route component={NoMatch} />))}/>
+				    <Route path={ROUTES.GROUP_MANAGEMENT} render={() => (this.props.user.type === 'teacher' ? (<Route component={TeacherGroupManagement} />) : (<Route component={NoMatch} />))}/>
 				    <Route path="*" component={NoMatch} status={404}/>
 				</Switch>
 			    </section>

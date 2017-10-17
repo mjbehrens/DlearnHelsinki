@@ -10,7 +10,7 @@ export default class Header extends React.Component {
       <header>
 
         <nav className="navbar navbar-expand-md navbar-dark bg-dark navbar-static-top">
-            <Link to={ROUTES.HOME}><a className="navbar-brand" href="">Dlearn</a></Link>
+            <Link to={ROUTES.ROOT}><a className="navbar-brand" href="">Dlearn</a></Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -18,7 +18,7 @@ export default class Header extends React.Component {
           <div className="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-            <Link to={ROUTES.HOME}><a className="nav-link" href="">Home</a></Link>
+            <Link to={ROUTES.ROOT}><a className="nav-link" href="">Home</a></Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">About</a>

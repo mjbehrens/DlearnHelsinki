@@ -4,6 +4,8 @@ import { Link, Redirect } from 'react-router-dom';
 import { ROUTES } from '../constants.js';
 
 import SelectClass from '../components/teacherCompo/SelectClass.js';
+import * as userActions from '../actions/userActions';
+import * as classActions from '../actions/classActions';
 
 var classesJSON = '[{"_id": 1, "className": "Math 1"}, {"_id": 2, "className": "Math 2"}, \n\
 {"_id": 3, "className": "Math 5"}, {"_id": 4, "className": "Math 8"}, {"_id": 12, "className": "Math 9"},\n\
@@ -16,6 +18,7 @@ var GET_CLASSES = "";
 function mapStateToProps(store) {
     return {
 	user: store.user.user,
+	classes: store.classroom.classes,
     }
 }
 
@@ -24,7 +27,8 @@ class ClassSelection extends Component {
     constructor(props) {
         super(props);
 	this.state = {
-	    goTo: ROUTES.CLASS_SELECTION
+	    goTo: ROUTES.CLASS_SELECTION,
+	    api: null,
 	}
         var classes = [];
     }
@@ -58,7 +62,7 @@ class ClassSelection extends Component {
             method: "GET",
             headers: {
 		'Access-Control-Allow-Origin': '*',
-		'Authorization': 'Basic ' + btoa('teacher:password')
+		'Authorization': 'Basic ' + this.props.user.hash,
             }
         }).then(function(response) {
             if(response.ok) {

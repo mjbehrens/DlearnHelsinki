@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { ROUTES } from '../constants.js';
+import { ROUTES, BACKEND_API } from '../constants.js';
 
 import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
@@ -20,7 +20,6 @@ let compo;
 function mapStateToProps(store) {
     return {
 	user: store.user.user,
-	baseURL: store.settings.baseURL,
     }
 }
 
@@ -71,9 +70,7 @@ class StudentDashboard extends Component {
 	}
 
 	buildRequestRest = function () {
-
 		GET_SURVEYS = 'students/' + this.props.user.id + '/classes/' + 1 + '/surveys';
-
 	}
 
 	componentDidMount() {
@@ -85,7 +82,7 @@ class StudentDashboard extends Component {
 	// Get all the survey from one class
 	getAllSurveyREST = function () {
 
-		fetch(this.props.baseURL + GET_SURVEYS, {
+		fetch(BACKEND_API.ROOT + GET_SURVEYS, {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -265,6 +262,5 @@ class StudentDashboard extends Component {
 	}
 }
 
-//export default StudentDashboard;
 export default connect(mapStateToProps)(StudentDashboard);
 

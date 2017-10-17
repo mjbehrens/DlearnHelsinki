@@ -44,7 +44,7 @@ class App extends Component {
 			    <Header />
 			    <section>
 				<Switch>
-				    <Route exact path={ROUTES.HOME} component={Home} />
+				    <Route exact path={ROUTES.ROOT} component={Home} />
 				    <Route path={ROUTES.LOGIN} component={Login} />
 				    <Route path={ROUTES.STUDENT_DASHBOARD} render={() => (this.props.user.type === 'student' ? <Route component={StudentDashboard} /> : <Route component={NoMatch} />)}/>
 				    <Route path={ROUTES.CLASS_SELECTION} render={() => (this.props.user.loggedin ? (<Route component={ClassSelection} />) : (<Route component={NoMatch} />))}/>

@@ -48,8 +48,6 @@ class StudentSurveyQuestion extends Component {
             startPoint: 3
         }
 
-        console.log("RECEIVE : " + this.props.location.state.survey_id);
-
         GET_QUESTIONS_FOR_SURVEY = 'students/'+this.props.user.id+'/classes/1/surveys/' + this.state.survey_id + '/questions';
         PUT_QUESTION_ANSWER = 'students/'+this.props.user.id+'/classes/1/surveys/' + this.state.survey_id + '/answers/'; //needs one more parameters
 
@@ -104,7 +102,6 @@ class StudentSurveyQuestion extends Component {
     }
 
     postQuestionsAnswerREST = function (data) {
-        console.log(this.props.baseURL + PUT_QUESTION_ANSWER + this.state.currentQuestion.id);
         fetch(this.props.baseURL + PUT_QUESTION_ANSWER + this.state.currentQuestion.id, {
             method: "POST",
             headers: {

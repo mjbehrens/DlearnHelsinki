@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { ROUTES } from '../constants.js';
+import Spinner from 'react-spinner'
+import { ROUTES, BACKEND_API } from '../constants.js';
 import * as userActions from '../actions/userActions';
 
 function mapStateToProps(store) {
     return {
 	user: store.user.user,
-	baseURL: store.settings.baseURL,
     }
 }
 
@@ -61,6 +61,7 @@ class Login extends Component {
 
 	// Triggered when the Connection button is clicked
 	onConnectionClick = (login, password, userType) => {
+		this.setState({loading: true})
 		let endpoint = '';
 		switch (userType) {
 			case 'teacher':
@@ -73,7 +74,7 @@ class Login extends Component {
 				endpoint = 'students/'
 		}
 
-		fetch(this.props.baseURL + endpoint, {
+		fetch(BACKEND_API.ROOT + endpoint, {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -83,7 +84,7 @@ class Login extends Component {
 		}).then((response) => {
 			if (response.ok) {
 				response.json().then(data => {
-					console.log('Login successful!');					
+					console.log('Login successful!');
 					console.log(data);
 
 					this.props.dispatch(userActions.setUserId(data._id));
@@ -98,8 +99,8 @@ class Login extends Component {
 					});
 
 				});
-				
-				
+
+
 			} else {
 				console.log('Login failed.');
 				this.setState({
@@ -108,53 +109,56 @@ class Login extends Component {
 				})
 			}
 		});
+		this.setState({ ...this.state, loading: false})
 	}
 
 	render() {
-
-		if (this.state.redirect) {
-			return (<Redirect to={this.state.goTo} />)
+		if (this.state.loading) {
+		    return (
+			<div className='spinner-container'>
+			    <Spinner />
+			</div>
+		    )
+		} else if (this.state.redirect) {
+		    return (<Redirect to={this.state.goTo} />)
 		} else if (this.state.error) {
-			return (
-				<div className="Login-form">
+		    return (
+			<div className="Login-form">
+			<h1>Dlearn</h1>
+			<div className="alert alert-danger alert-dismissible fade show" role="alert">
+			    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			    </button>
+			    Invalid login or password.
+			</div>
+			<div className="form-group">
+			    <label for="usr">Login:</label>
+			    <input type="text" className="form-control" id="usr"
+				onChange={(event) => this.onLoginInputChange(event)} value={this.state.loginInput} />
+			</div>
+			<div className="form-group">
+			    <label for="pwd">Password:</label>
+			    <input type="password" className="form-control" id="pwd" value={this.state.pwdInput}
+				onChange={(event) => this.onPwdInputChange(event)} />
+			</div>
+			<div className="radio">
+			    <label><input type="radio" name="status" onClick={this.onClickStudent} />Student</label>
+			</div>
+			<div className="radio">
+			    <label><input type="radio" name="status" onClick={this.onClickTeacher} />Teacher</label>
+			</div>
+			<div className="radio disabled">
+			    <label><input type="radio" name="status" disabled />Researcher</label>
+			</div>
 
-					<h1>Dlearn</h1>
-					<div className="alert alert-danger alert-dismissible fade show" role="alert">
-						<button type="button" className="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						Invalid login or password.
-	    </div>
-					<div className="form-group">
-						<label for="usr">Login:</label>
-						<input type="text" className="form-control" id="usr"
-							onChange={(event) => this.onLoginInputChange(event)} value={this.state.loginInput} />
-					</div>
-					<div className="form-group">
-						<label for="pwd">Password:</label>
-						<input type="password" className="form-control" id="pwd" value={this.state.pwdInput}
-							onChange={(event) => this.onPwdInputChange(event)} />
-					</div>
-
-					<div className="radio">
-						<label><input type="radio" name="status" onClick={this.onClickStudent} />Student</label>
-					</div>
-					<div className="radio">
-						<label><input type="radio" name="status" onClick={this.onClickTeacher} />Teacher</label>
-					</div>
-					<div className="radio disabled">
-						<label><input type="radio" name="status" disabled />Researcher</label>
-					</div>
-
-					{//<Link style={{display: 'block', height: '100%'}} to={this.state.goTo}><button type="button" className="btn btn-primary">Connection</button></Link>
-					}
-					<button type="button" className="btn btn-primary" onClick={() => this.onConnectionClick(this.state.loginInput, this.state.pwdInput, this.state.userType)}>Connection</button>
-
-				</div>
-			);
+			{//<Link style={{display: 'block', height: '100%'}} to={this.state.goTo}><button type="button" className="btn btn-primary">Connection</button></Link>
+			}
+			<button type="button" className="btn btn-primary" onClick={() => this.onConnectionClick(this.state.loginInput, this.state.pwdInput, this.state.userType)}>Connection</button>
+		    </div>
+		);
 		} else {
-			return (
-				<div className="Login-form">
+		    return (
+			<div className="Login-form">
 
 					<h1>Dlearn</h1>
 

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
 import Spinner from 'react-spinner'
 
-//reduce setup
+//redux setup
+import { ROUTES, BACKEND_API } from '../../constants.js';
 import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
@@ -16,7 +17,6 @@ let GET_QUESTIONS_FOR_SURVEY = '';
 function mapStateToProps(store) {
 	return {
 		user: store.user.user,
-		baseURL: store.settings.baseURL,
 	}
 }
 
@@ -32,6 +32,7 @@ class SpiderGraph extends Component {
 
 		this.state = {
 			isLoading: true,
+			noData: true,
 			cpt: 0,
 			data: {
 				labels: [], //label of the themes 
@@ -66,28 +67,22 @@ class SpiderGraph extends Component {
 		}
 	}
 
-
 	// Fetch resquest for questions and answer
 	getDataForGraph = function () {
 		this.buildRequestRest();
 		this.getSurveyAnswersREST();
 	}
 
-	componentDidUpdate() {
-		//console.log('In spider : ' + params.students)
-		//console.log(this.state.data);
-	}
-
 	// Build request from props send to the component
 	// ( looks ugly but it's a propotype :) )
 	buildRequestRest = function () {
 
-		let s = "";		
-		
+		let s = "";
+
 		if (params.teachers != null) {
 			s += 'teachers/' + params.teachers;
 
-			
+
 			if (params.classes != null) {
 				s += '/classes/' + params.classes;
 			}
@@ -97,10 +92,10 @@ class SpiderGraph extends Component {
 			if (params.students != null) {
 				s += '/students/' + params.students;
 			}
-			
-		}else if (params.students != null) {
+
+		} else if (params.students != null) {
 			s += 'students/' + params.students;
-		
+
 			if (params.classes != null) {
 				s += '/classes/' + params.classes;
 			}
@@ -112,7 +107,7 @@ class SpiderGraph extends Component {
 		if (params.surveys != null) {
 			s += '/surveys/' + params.surveys;
 		}
-		
+
 		GET_ANSWERS = s + '/answers';
 		GET_QUESTIONS_FOR_SURVEY = s + '/questions';
 
@@ -121,12 +116,12 @@ class SpiderGraph extends Component {
 	getSurveyAnswersREST = function () {
 		// set the spinner to true
 		this.setState({ isLoading: true });
-		
+
 		let component = this;
 		let Answers = [];
 
 
-		fetch(this.props.baseURL + GET_ANSWERS, {
+		fetch(BACKEND_API.ROOT + GET_ANSWERS, {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -160,6 +155,7 @@ class SpiderGraph extends Component {
 						component.setState({
 							...component.state,
 							isLoading: false,
+							noData: false,
 							data: {
 								...component.state.data,
 								labels: labelsArray,
@@ -173,6 +169,10 @@ class SpiderGraph extends Component {
 						});
 					} else {
 						console.log("problem while parsing json data")
+						component.setState({
+							isLoading: false,
+							noData: true
+						});
 					}
 				});
 			} else {
@@ -230,12 +230,21 @@ class SpiderGraph extends Component {
 
 		if (this.state.isLoading) {
 			return (
-				<div className = 'spinner-container'>
+				<div className='spinner-container'>
 					<Spinner />
 				</div>
-				
+
 			)
-		} else {
+		} else if (this.state.noData === true) {
+			return (
+				<div className="jumbotron">
+					<h5>{this.props.name}</h5>
+					No Data Found
+				</div>
+
+			);
+		}
+		else {
 			return (
 				<Radar data={this.state.data} options={options} />
 			);

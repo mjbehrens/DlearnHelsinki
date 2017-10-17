@@ -5,9 +5,19 @@ import Slider from 'rc-slider';
 import { Redirect } from 'react-router'
 import 'rc-slider/assets/index.css';
 
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi/';
-let GET_QUESTIONS_FOR_SURVEY = 'students/1/classes/1/surveys/27/questions';
-let PUT_QUESTION_ANSWER = 'students/1/classes/1/surveys/27/answers/'; //needs one more parameters
+import * as userActions from '../actions/userActions';
+import { connect } from 'react-redux';
+
+
+function mapStateToProps(store) {
+    return {
+        user: store.user.user,
+        baseURL: store.settings.baseURL,
+    }
+}
+
+let GET_QUESTIONS_FOR_SURVEY = '';
+let PUT_QUESTION_ANSWER = ''; //needs one more parameters
 
 class StudentSurveyQuestion extends Component {
 
@@ -39,10 +49,8 @@ class StudentSurveyQuestion extends Component {
             startPoint: 3
         }
 
-        console.log("RECEIVE : " + this.props.location.state.survey_id);
-
-        GET_QUESTIONS_FOR_SURVEY = 'students/1/classes/1/surveys/' + this.state.survey_id + '/questions';
-        PUT_QUESTION_ANSWER = 'students/1/classes/1/surveys/' + this.state.survey_id + '/answers/'; //needs one more parameters
+        GET_QUESTIONS_FOR_SURVEY = 'students/'+this.props.user.id+'/classes/1/surveys/' + this.state.survey_id + '/questions';
+        PUT_QUESTION_ANSWER = 'students/'+this.props.user.id+'/classes/1/surveys/' + this.state.survey_id + '/answers/'; //needs one more parameters
 
     }
 
@@ -54,11 +62,11 @@ class StudentSurveyQuestion extends Component {
         var component = this;
         var survey = [];
 
-        fetch(ORIGIN + GET_QUESTIONS_FOR_SURVEY, {
+        fetch(this.props.baseURL + GET_QUESTIONS_FOR_SURVEY, {
             method: "GET",
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Basic ' + btoa('teacher:password')
+                'Authorization': 'Basic ' +this.props.user.hash,
             }
         }).then(function (response) {
             if (response.ok) {
@@ -94,13 +102,13 @@ class StudentSurveyQuestion extends Component {
         });
     }
 
-    putQuestionsAnswerREST = function (data) {
-        fetch(ORIGIN + PUT_QUESTION_ANSWER + this.state.currentQuestion.id, {
+    postQuestionsAnswerREST = function (data) {
+        fetch(this.props.baseURL + PUT_QUESTION_ANSWER + this.state.currentQuestion.id, {
             method: "POST",
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa('teacher:password')
+                'Authorization': 'Basic ' + this.props.user.hash,
             },
             body: data
         }).then(function (response) {
@@ -131,7 +139,7 @@ class StudentSurveyQuestion extends Component {
             var data = JSON.stringify({
                 answer: this.state.startPoint
             });
-            this.putQuestionsAnswerREST(data);
+            this.postQuestionsAnswerREST(data);
             //check if message send correctly
 
             this.state.index = this.state.index + 1;
@@ -191,4 +199,4 @@ class StudentSurveyQuestion extends Component {
     }
 }
 
-export default StudentSurveyQuestion;
+export default connect(mapStateToProps)(StudentSurveyQuestion);

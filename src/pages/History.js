@@ -7,11 +7,21 @@ import HistoryFinder from '../components/shared/HistoryFinder.js';
 import HistoryDisplay from '../components/shared/HistoryDisplay.js';
 import GraphRenderer from '../components/shared/GraphRenderer.js';
 
+import * as userActions from '../actions/userActions';
+import { connect } from 'react-redux';
+
+
+function mapStateToProps(store) {
+	return {
+		user: store.user.user,
+		baseURL: store.settings.baseURL,
+	}
+}
+
+
 //http://underscorejs.org/#sortBy
 
 
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
-let GET_SURVEYS = '/teachers/' + 1 + '/classes/' + 1 + '/surveys';
 
 //Select * From Surveys
 var sampleData = [];
@@ -74,11 +84,14 @@ class History extends Component {
         compo = this;
         compo.setState({ isLoading: true });
 
-        fetch(ORIGIN + GET_SURVEYS, {
+        let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + 1 + '/surveys';
+        
+
+        fetch(this.props.baseURL + GET_SURVEYS, {
             method: "GET",
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Basic ' + btoa('teacher:password')
+                'Authorization': 'Basic ' + this.props.user.hash,
             }
         }).then(function (response) {
             if (response.ok) {
@@ -200,4 +213,6 @@ class History extends Component {
         }
 
     }
-} export default History;
+} 
+
+export default connect(mapStateToProps)(History);

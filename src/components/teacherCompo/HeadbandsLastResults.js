@@ -3,6 +3,18 @@ import SpiderGraph from '../shared/SpiderGraph.js';
 import Spinner from 'react-spinner'
 
 
+import * as userActions from '../../actions/userActions';
+import { connect } from 'react-redux';
+
+
+function mapStateToProps(store) {
+    return {
+        user: store.user.user,
+        baseURL: store.settings.baseURL,
+    }
+}
+
+
 const style = {
     marginLeft: "100px",
     marginRight: "100px",
@@ -15,7 +27,6 @@ const styleButton = {
     marginTop: "15px"
 }
 
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
 var GET_GROUPS = '';
 
 //Get unique groups for the teacher from the database
@@ -28,7 +39,6 @@ class HeadbandsLastResults extends React.Component {
         super(props);
 
         compo = this;
-
         groups = [];
 
         this.state = {
@@ -36,6 +46,7 @@ class HeadbandsLastResults extends React.Component {
             buttonList: [],
             group_id: null,
             group_name: "Class",
+            survey : this.props.survey,
         };
 
         this.buildRequestREST();
@@ -63,25 +74,34 @@ class HeadbandsLastResults extends React.Component {
 
     }
 
+    // Called everytime a props value change
+    componentWillReceiveProps(nextProps) {
+        if (compo.state.survey !== nextProps.survey) {
+            compo.setState({survey : nextProps.survey});
+        }
+    }
+
     buildRequestREST = function () {
         var s = '';
         // Build request here
         // teachers/{teacher_id}/classes/{class_id}/groups/
 
-        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes. 
+        s = s + 'teachers/' + this.props.user.id + '/classes/1/groups';
 
         GET_GROUPS = s;
     }
 
+    // Get all the current groups of the class
+    // WARNING : if the groups has been modified, the answer from this survey will not appear 
     getGroupsREST = function () {
 
         compo.setState({ isLoading: true });
 
-        fetch(ORIGIN + GET_GROUPS, {
+        fetch(this.props.baseURL + GET_GROUPS, {
             method: "GET",
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Basic ' + btoa('teacher:password') // This needs to be changed in the final version...
+                'Authorization': 'Basic ' + this.props.user.hash,
             }
         }).then(function (response) {
             if (response.ok) {
@@ -110,11 +130,11 @@ class HeadbandsLastResults extends React.Component {
 
         //requires for spiderGraph
         let parameters = {
-            teachers: 1, // need to be change
+            teachers: this.props.user.id, 
             students: null,
-            classes: 1, // need to be change
+            classes: 1, // TODO : UPDATE WITH REAL VALUE !
             groups: compo.state.group_id,
-            surveys: 27, // need to be change
+            surveys: compo.state.survey._id, 
         }
 
         if (this.state.isLoading) {
@@ -138,6 +158,7 @@ class HeadbandsLastResults extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-sm-7">
+                                    <h6>Results from survey "{compo.state.survey.title}"</h6>
                                     <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
                                 </div>
                             </div>
@@ -154,4 +175,4 @@ class HeadbandsLastResults extends React.Component {
 
 }
 
-export default HeadbandsLastResults;
+export default connect(mapStateToProps)(HeadbandsLastResults);

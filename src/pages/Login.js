@@ -84,7 +84,7 @@ class Login extends Component {
 		}).then((response) => {
 			if (response.ok) {
 				response.json().then(data => {
-					console.log('Login successful!');					
+					console.log('Login successful!');
 					console.log(data);
 
 					this.props.dispatch(userActions.setUserId(data._id));
@@ -99,8 +99,8 @@ class Login extends Component {
 					});
 
 				});
-				
-				
+
+
 			} else {
 				console.log('Login failed.');
 				this.setState({

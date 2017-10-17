@@ -93,7 +93,7 @@ class StudentDashboard extends Component {
 				response.json().then(data => {
 					surveys = data;
 					//print received surveys
-					//console.log(surveys);
+					console.log(surveys);
 
 					// check if a survey is open & check the last survey done
 					compo.checkIfSurveyOpen();
@@ -120,7 +120,6 @@ class StudentDashboard extends Component {
 
 			let tempDate = Date.parse(s.end_date);
 
-			tempDate = Date.parse(s.end_date);
 			if (lastDate < tempDate) {
 				lastDate = tempDate;
 				lastSurveyId = s._id;

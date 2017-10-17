@@ -6,7 +6,7 @@ export const ROUTES = {
     CLASS_SELECTION: '/class-selection',
     STUDENT_SURVEY: '/student-survey',
     HISTORY: '/history',
-    GROUP_MANAGEMENT: '/group-management',
+    GROUP_MANAGEMENT: '/groups-management',
 }
 
 export const BACKEND_API = {

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { ROUTES } from '../constants.js';
+import { ROUTES, BACKEND_API } from '../constants.js';
 
 import Slider from 'rc-slider';
 import { Redirect } from 'react-router'
 import 'rc-slider/assets/index.css';
 
-import { BACKEND_API } from '../constants.js';
 import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
@@ -171,7 +170,7 @@ class StudentSurveyQuestion extends Component {
         if (this.state.redirect) {
             let compo = this;
             this.props.history.push({
-                pathname: ROUTES.STUDENT_SURVEY,
+                pathname: ROUTES.STUDENT_DASHBOARD,
                 state: { survey_id : compo.state.survey_id }
             });
             //return <Redirect to="/student-dashboard" />

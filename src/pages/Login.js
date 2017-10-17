@@ -90,6 +90,7 @@ class Login extends Component {
 					this.props.dispatch(userActions.setUserLogin(login));
 					this.props.dispatch(userActions.setUserName(data.username));
 					this.props.dispatch(userActions.setUserHash(btoa(login + ':' + password)));
+					this.props.dispatch(userActions.loginUser());
 					this.setState({
 						...this.state,
 						redirect: true

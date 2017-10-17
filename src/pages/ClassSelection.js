@@ -15,7 +15,7 @@ var GET_CLASSES = "";
 
 function mapStateToProps(store) {
     return {
-	    user: store.user.user,
+	user: store.user.user,
     }
 }
 
@@ -77,7 +77,7 @@ class ClassSelection extends Component {
     selectClass = (buttonValue) => (e) => {
         e.preventDefault();
         this.props.history.push({
-                pathname: '/teacher-dashboard',
+                pathname: this.state.goTo,
                 state: {className: buttonValue}
             })
     }

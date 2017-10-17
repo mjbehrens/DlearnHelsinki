@@ -47,7 +47,7 @@ class App extends Component {
 				    <Route exact path={ROUTES.HOME} component={Home} />
 				    <Route path={ROUTES.LOGIN} component={Login} />
 				    <Route path={ROUTES.STUDENT_DASHBOARD} render={() => (this.props.user.type === 'student' ? <Route component={StudentDashboard} /> : <Route component={NoMatch} />)}/>
-				    <Route path={ROUTES.CLASS_SELECTION} render={() => (this.props.user.type === 'teacher' ? (<Route component={ClassSelection} />) : (<Route component={NoMatch} />))}/>
+				    <Route path={ROUTES.CLASS_SELECTION} render={() => (this.props.user.loggedin ? (<Route component={ClassSelection} />) : (<Route component={NoMatch} />))}/>
 				    <Route path={ROUTES.TEACHER_DASHBOARD} render={() => (this.props.user.type === 'teacher' ? (<Route component={TeacherDashboard} />) : (<Route component={NoMatch} />))}/>
 				    <Route path={ROUTES.STUDENT_SURVEY} render={() => (this.props.user.type === 'student' ? (<Route component={StudentSurveyQuestion} />) : (<Route component={NoMatch} />))}/>
 				    <Route path={ROUTES.HISTORY} render={() => (this.props.user.type === 'teacher' ? (<Route component={History} />) : (<Route component={NoMatch} />))}/>

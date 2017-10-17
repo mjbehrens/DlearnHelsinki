@@ -13,14 +13,14 @@ function mapStateToProps(store) {
 
 class LoginLogout extends React.Component {
 
-    onLoginClick = () => {
+    onLogoutClick = () => {
 	this.props.dispatch(userActions.logoutUser())
     }
 
   render() {
       if (this.props.user.loggedin) {
     return (
-	    <Link to="/"><button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={this.onLoginClick}>Logout</button></Link>
+	    <Link to="/"><button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={this.onLogoutClick}>Logout</button></Link>
     );
       } else {
     return (

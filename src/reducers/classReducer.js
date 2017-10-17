@@ -3,27 +3,16 @@ export default function reducer(state={
   }, action) {
 
     switch (action.type) {
-      case "ADD_GROUP": {
+      case "ADD_CLASS": {
         return {
           ...state,
-          groups: [...state.groups, action.payload],
+          classes: [...state.classes, action.payload],
         }
       }
-      case "UPDATE_TWEET": {
-        const { id, text } = action.payload
-        const newTweets = [...state.tweets]
-        const tweetToUpdate = newTweets.findIndex(tweet => tweet.id === id)
-        newTweets[tweetToUpdate] = action.payload;
-
+      case "DELETE_CLASS": {
         return {
           ...state,
-          tweets: newTweets,
-        }
-      }
-      case "DELETE_GROUP": {
-        return {
-          ...state,
-          groups: state.groups.filter(group => group.id !== action.payload),
+          classes: state.classes.filter(classroom => classroom.id !== action.payload),
         }
       }
     }

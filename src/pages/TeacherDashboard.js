@@ -137,16 +137,10 @@ class TeacherDashboard extends Component {
   }
 
   render() {
-
-    if (this.props.location.state == null) {
-      this.props.history.push("/class-selection");
-      return null;
-    }
-
-    else return (
+    return (
       <div className="text-center">
 
-        <h1> {this.props.location.state.className} </h1>
+        <h1> {this.state.className} </h1>
 
         <div className="row">
           <HeadbandsLastResults survey={this.state.lastSurveyDone} />

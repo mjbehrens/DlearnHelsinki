@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
 import Spinner from 'react-spinner'
 
-//reduce setup
+//redux setup
+import { ROUTES, BACKEND_API } from '../../constants.js';
 import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
@@ -16,7 +17,6 @@ let GET_QUESTIONS_FOR_SURVEY = '';
 function mapStateToProps(store) {
 	return {
 		user: store.user.user,
-		baseURL: store.settings.baseURL,
 	}
 }
 
@@ -121,7 +121,7 @@ class SpiderGraph extends Component {
 		let Answers = [];
 
 
-		fetch(this.props.baseURL + GET_ANSWERS, {
+		fetch(BACKEND_API.ROOT + GET_ANSWERS, {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',

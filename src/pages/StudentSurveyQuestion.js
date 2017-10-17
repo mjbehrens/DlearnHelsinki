@@ -5,6 +5,7 @@ import Slider from 'rc-slider';
 import { Redirect } from 'react-router'
 import 'rc-slider/assets/index.css';
 
+import { BACKEND_API } from '../constants.js';
 import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
@@ -12,7 +13,6 @@ import { connect } from 'react-redux';
 function mapStateToProps(store) {
     return {
         user: store.user.user,
-        baseURL: store.settings.baseURL,
     }
 }
 
@@ -62,7 +62,7 @@ class StudentSurveyQuestion extends Component {
         var component = this;
         var survey = [];
 
-        fetch(this.props.baseURL + GET_QUESTIONS_FOR_SURVEY, {
+        fetch(BACKEND_API.ROOT + GET_QUESTIONS_FOR_SURVEY, {
             method: "GET",
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -103,7 +103,7 @@ class StudentSurveyQuestion extends Component {
     }
 
     postQuestionsAnswerREST = function (data) {
-        fetch(this.props.baseURL + PUT_QUESTION_ANSWER + this.state.currentQuestion.id, {
+        fetch(BACKEND_API.ROOT + PUT_QUESTION_ANSWER + this.state.currentQuestion.id, {
             method: "POST",
             headers: {
                 'Access-Control-Allow-Origin': '*',

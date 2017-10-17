@@ -9,8 +9,19 @@ import SurveyCreationForm from './SurveyCreationForm.js'
 import iconSurveyOpen from "../../res/icons/survey.svg";
 import iconSurveyClose from "../../res/icons/close_survey.svg";
 
+import * as userActions from '../../actions/userActions';
+import { connect } from 'react-redux';
 
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
+
+function mapStateToProps(store) {
+	return {
+		user: store.user.user,
+		baseURL: store.settings.baseURL,
+	}
+}
+
+
+
 let GET_SURVEYS = '';
 let POST_SURVEY = '';
 let POST_CLOSE_SURVEY = '';
@@ -30,7 +41,7 @@ class OpenSurveyButton extends React.Component {
             disable: true,
             text: "Open Survey",
             picture: iconSurveyOpen,
-            teacherID: 1,
+            teacherID: this.props.user.id,
             classID: 1,
             survey: {
                 _id: null,
@@ -48,10 +59,10 @@ class OpenSurveyButton extends React.Component {
 
     buildRequestRest = function () {
 
-        GET_SURVEYS = '/teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
-        POST_SURVEY = '/teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
-        POST_CLOSE_SURVEY = '/teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
-
+        GET_SURVEYS = 'teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
+        POST_SURVEY = 'teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
+        POST_CLOSE_SURVEY = 'teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
+        
     }
 
     // call for update the state with the survey
@@ -94,11 +105,11 @@ class OpenSurveyButton extends React.Component {
     getAllSurveyREST = function () {
         compo.setState({isLoading: true});
 
-        fetch(ORIGIN + GET_SURVEYS, {
+        fetch(this.props.baseURL + GET_SURVEYS, {
             method: "GET",
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Basic ' + btoa('teacher:password') // This needs to be changed in the final version...
+                'Authorization': 'Basic ' + this.props.user.hash 
             }
         }).then(function (response) {
             if (response.ok) {
@@ -154,12 +165,12 @@ class OpenSurveyButton extends React.Component {
         });
         console.log(data);
 
-        fetch(ORIGIN + POST_SURVEY, {
+        fetch(this.props.baseURL + POST_SURVEY, {
             method: 'POST',
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa('teacher:password')
+                'Authorization': 'Basic ' + this.props.user.hash,
             },
             body: data
             //TODO !
@@ -179,12 +190,12 @@ class OpenSurveyButton extends React.Component {
 
     requestCloseSurveyREST = (t, d) => {
 
-        fetch(ORIGIN + POST_CLOSE_SURVEY + '/' + compo.state.survey._id, {
+        fetch(this.props.baseURL + POST_CLOSE_SURVEY + '/' + compo.state.survey._id, {
             method: 'POST',
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa('teacher:password')
+                'Authorization': 'Basic ' + this.props.user.hash,
             },
             //TODO !
         }).then(function (response) {
@@ -350,4 +361,4 @@ Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
 
 
 
-export default OpenSurveyButton;
+export default connect(mapStateToProps)(OpenSurveyButton);

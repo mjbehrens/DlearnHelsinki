@@ -8,6 +8,19 @@ import GroupManagmentButton from '../components/teacherCompo/GroupManagmentButto
 
 import HeadbandsLastResults from '../components/teacherCompo/HeadbandsLastResults.js';
 
+
+
+import * as userActions from '../actions/userActions';
+import { connect } from 'react-redux';
+
+
+function mapStateToProps(store) {
+	return {
+		user: store.user.user,
+		baseURL: store.settings.baseURL,
+	}
+}
+
 class TeacherDashboard extends Component {
 
   constructor(props) {
@@ -48,5 +61,6 @@ class TeacherDashboard extends Component {
   }
 }
 
-export default TeacherDashboard;
+export default connect(mapStateToProps)(TeacherDashboard);
+
 

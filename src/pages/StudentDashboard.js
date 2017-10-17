@@ -4,20 +4,30 @@ import { Link, Redirect } from 'react-router-dom';
 import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
 import LinearGraph from '../components/shared/LinearGraph.js';
-
 import Spinner from 'react-spinner';
 
 
+import * as userActions from '../actions/userActions';
+import { connect } from 'react-redux';
 
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
+
+
 let GET_SURVEYS = '';
 
 var surveys = [];
 let compo;
 
+
+function mapStateToProps(store) {
+	return {
+		user: store.user.user,
+		baseURL: store.settings.baseURL,
+	}
+}
+
 class StudentDashboard extends Component {
 
-
+	// send the survey ID to the next page
 	startSurvey = (e) => {
 		e.preventDefault();
 		this.props.history.push({
@@ -25,7 +35,6 @@ class StudentDashboard extends Component {
 			state: { survey_id: compo.state.survey._id }
 		});
 	}
-
 
 	constructor(props) {
 		super(props);
@@ -37,7 +46,6 @@ class StudentDashboard extends Component {
 			console.log(this.props.location.state);
 			survey_id = this.props.location.state.survey_id
 			console.log(survey_id);
-
 		}
 
 		this.state = {
@@ -60,11 +68,12 @@ class StudentDashboard extends Component {
 			}
 		}
 
+		console.log(this.props.user);
 	}
 
 	buildRequestRest = function () {
 
-		GET_SURVEYS = '/students/' + 1 + '/classes/' + 1 + '/surveys';
+		GET_SURVEYS = 'students/' + this.props.user.id + '/classes/' + 1 + '/surveys';
 
 	}
 
@@ -77,17 +86,18 @@ class StudentDashboard extends Component {
 	// Get all the survey from one class
 	getAllSurveyREST = function () {
 
-		fetch(ORIGIN + GET_SURVEYS, {
+		fetch(this.props.baseURL + GET_SURVEYS, {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',
-				'Authorization': 'Basic ' + btoa('nhlad:password')
+				'Authorization': 'Basic ' + this.props.user.hash,
 			}
 		}).then(function (response) {
 			if (response.ok) {
 				response.json().then(data => {
 					surveys = data;
-					console.log(surveys);
+					//print received surveys
+					//console.log(surveys);
 
 					// check if a survey is open & check the last survey done
 					compo.checkIfSurveyOpen();
@@ -204,10 +214,11 @@ class StudentDashboard extends Component {
 
 		let parameters = {
 			teachers: null,
-			students: 1,
+			students: this.props.user.id,
 			classes: 1,
 			groups: null,
 			surveys: compo.state.lastSurvey._id,
+			
 		}
 
 		if (parameters.surveys) {
@@ -229,13 +240,11 @@ class StudentDashboard extends Component {
 
 	render() {
 
-
-
 		return (
 			<div className="container text-center">
 				<div className="jumbotron">
 
-					<h1>Welcome </h1>
+					<h1>Welcome {this.props.user.name}</h1>
 
 					<hr className="my-4" />
 					<div className="row">
@@ -257,4 +266,6 @@ class StudentDashboard extends Component {
 	}
 }
 
-export default StudentDashboard;
+//export default StudentDashboard;
+export default connect(mapStateToProps)(StudentDashboard);
+

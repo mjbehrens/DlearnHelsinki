@@ -3,6 +3,7 @@ import SpiderGraph from '../shared/SpiderGraph.js';
 import Spinner from 'react-spinner'
 
 
+import { BACKEND_API } from '../../constants.js';
 import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
@@ -10,7 +11,6 @@ import { connect } from 'react-redux';
 function mapStateToProps(store) {
     return {
         user: store.user.user,
-        baseURL: store.settings.baseURL,
     }
 }
 
@@ -97,7 +97,7 @@ class HeadbandsLastResults extends React.Component {
 
         compo.setState({ isLoading: true });
 
-        fetch(this.props.baseURL + GET_GROUPS, {
+        fetch(BACKEND_API.ROOT + GET_GROUPS, {
             method: "GET",
             headers: {
                 'Access-Control-Allow-Origin': '*',

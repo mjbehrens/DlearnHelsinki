@@ -9,6 +9,7 @@ import SurveyCreationForm from './SurveyCreationForm.js'
 import iconSurveyOpen from "../../res/icons/survey.svg";
 import iconSurveyClose from "../../res/icons/close_survey.svg";
 
+import { BACKEND_API } from '../../constants.js';
 import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
@@ -16,7 +17,6 @@ import { connect } from 'react-redux';
 function mapStateToProps(store) {
 	return {
 		user: store.user.user,
-		baseURL: store.settings.baseURL,
 	}
 }
 
@@ -112,7 +112,7 @@ class OpenSurveyButton extends React.Component {
         });
         console.log(data);
 
-        fetch(this.props.baseURL + POST_SURVEY, {
+        fetch(BACKEND_API.ROOT + POST_SURVEY, {
             method: 'POST',
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -140,7 +140,7 @@ class OpenSurveyButton extends React.Component {
 
         compo.setState({isLoading : true});
         
-        fetch(this.props.baseURL + POST_CLOSE_SURVEY + '/' + compo.state.survey._id, {
+        fetch(BACKEND_API.ROOT + POST_CLOSE_SURVEY + '/' + compo.state.survey._id, {
             method: 'POST',
             headers: {
                 'Access-Control-Allow-Origin': '*',

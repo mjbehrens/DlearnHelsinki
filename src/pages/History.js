@@ -7,6 +7,7 @@ import HistoryFinder from '../components/shared/HistoryFinder.js';
 import HistoryDisplay from '../components/shared/HistoryDisplay.js';
 import GraphRenderer from '../components/shared/GraphRenderer.js';
 
+import { BACKEND_API } from '../constants.js';
 import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
@@ -14,7 +15,6 @@ import { connect } from 'react-redux';
 function mapStateToProps(store) {
 	return {
 		user: store.user.user,
-		baseURL: store.settings.baseURL,
 	}
 }
 
@@ -87,7 +87,7 @@ class History extends Component {
         let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + 1 + '/surveys';
         
 
-        fetch(this.props.baseURL + GET_SURVEYS, {
+        fetch(BACKEND_API.ROOT + GET_SURVEYS, {
             method: "GET",
             headers: {
                 'Access-Control-Allow-Origin': '*',

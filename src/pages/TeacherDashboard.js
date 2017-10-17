@@ -5,16 +5,15 @@ import { Link } from 'react-router-dom';
 import OpenSurveyButton from '../components/teacherCompo/OpenSurveyButton.js';
 import HistoryButton from '../components/teacherCompo/HistoryButton.js';
 import GroupManagmentButton from '../components/teacherCompo/GroupManagmentButton.js';
-
 import HeadbandsLastResults from '../components/teacherCompo/HeadbandsLastResults.js';
 
+import { BACKEND_API } from '../constants.js';
 import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
 function mapStateToProps(store) {
   return {
     user: store.user.user,
-    baseURL: store.settings.baseURL,
   }
 }
 
@@ -58,7 +57,7 @@ class TeacherDashboard extends Component {
 
     let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + 1 + '/surveys'; // TODO : UPDATE WITH REAL CLASS    
 
-    fetch(this.props.baseURL + GET_SURVEYS, {
+    fetch(BACKEND_API.ROOT + GET_SURVEYS, {
       method: "GET",
       headers: {
         'Access-Control-Allow-Origin': '*',

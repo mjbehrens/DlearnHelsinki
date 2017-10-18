@@ -108,15 +108,18 @@ class Login extends Component {
 					error: true
 				})
 			}
+		    this.setState({ ...this.state, loading: false})
 		});
-		this.setState({ ...this.state, loading: false})
 	}
 
 	render() {
 		if (this.state.loading) {
 		    return (
-			<div className='spinner-container'>
-			    <Spinner />
+			<div className="Login-form">
+			    <h1>Dlearn</h1>
+			    <div className='spinner-container'>
+				<Spinner />
+			    </div>
 			</div>
 		    )
 		} else if (this.state.redirect) {

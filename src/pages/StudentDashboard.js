@@ -237,11 +237,10 @@ class StudentDashboard extends Component {
 
 		return (
 			<div className="container text-center">
+			    <h1>Welcome {this.props.user.name}</h1>
 				<div className="jumbotron">
 
-					<h1>Welcome {this.props.user.name}</h1>
 
-					<hr className="my-4" />
 					<div className="row">
 						<div className="col-sm-3">
 							<div className="btn-group-vertical">

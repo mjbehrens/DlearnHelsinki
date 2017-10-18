@@ -15,9 +15,9 @@ import { connect } from 'react-redux';
 
 
 function mapStateToProps(store) {
-	return {
-		user: store.user.user,
-	}
+    return {
+        user: store.user.user,
+    }
 }
 
 
@@ -49,55 +49,61 @@ class OpenSurveyButton extends React.Component {
     }
 
     // Called everytime a props value change
-	componentWillReceiveProps(nextProps) {
-		if (compo.state.survey !== nextProps.survey) {
+    componentWillReceiveProps(nextProps) {
+        console.log(compo.state.survey);
+        console.log(nextProps.survey);
+
+        if ((compo.state.survey.open !== nextProps.survey.open)) {
             compo.updateState(nextProps.survey);
-            console.log(nextProps.survey);
-		}
-	}
+        }
+
+
+    }
 
 
     buildRequestRest = function () {
 
         POST_SURVEY = 'teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
         POST_CLOSE_SURVEY = 'teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
-        
+
     }
 
     // call for update the state with the survey
     updateState = (s) => {
-        //if a survey is open
-        if (s.open) {
-            this.setState({
-                ...this.state,
-                isLoading : false,
-                picture: iconSurveyClose,
-                text: "Close Survey",
-                survey: {
-                    _id: s._id,
-                    title: s.title,
-                    description: s.description,
-                    open: s.open,
-                    start_date: s.start_date,
-                }
-            });
-            //else if they are all closed
-        } else {
-            this.setState({
-                ...this.state,
-                isLoading : false,
-                picture: iconSurveyOpen,
-                text: "Open Survey",
-                survey: {
-                    _id: s._id,
-                    title: s.title,
-                    description: s.description,
-                    open: s.open,
-                    start_date: s.start_date,
-                }
-            });
-        }
 
+        if (s.open !== null) {
+            //if a survey is open
+            if (s.open) {
+                this.setState({
+                    ...this.state,
+                    isLoading: false,
+                    picture: iconSurveyClose,
+                    text: "Close Survey",
+                    survey: {
+                        _id: s._id,
+                        title: s.title,
+                        description: s.description,
+                        open: s.open,
+                        start_date: s.start_date,
+                    }
+                });
+                //else if they are all closed
+            } else {
+                this.setState({
+                    ...this.state,
+                    isLoading: false,
+                    picture: iconSurveyOpen,
+                    text: "Open Survey",
+                    survey: {
+                        _id: s._id,
+                        title: s.title,
+                        description: s.description,
+                        open: s.open,
+                        start_date: s.start_date,
+                    }
+                });
+            }
+        }
     }
 
 
@@ -105,7 +111,7 @@ class OpenSurveyButton extends React.Component {
     // get the info of the new survey
     requestToOpenSurveyREST = (t, d) => {
 
-        compo.setState({isLoading : true});
+        compo.setState({ isLoading: true });
         var data = JSON.stringify({
             title: t,
             description: d,
@@ -124,7 +130,6 @@ class OpenSurveyButton extends React.Component {
         }).then(function (response) {
             if (response.ok) {
                 response.json().then(data => {
-                    compo.updateState(data)
                     compo.props.callback();
                 });
             } else {
@@ -138,8 +143,8 @@ class OpenSurveyButton extends React.Component {
 
     requestToCloseSurveyREST = (t, d) => {
 
-        compo.setState({isLoading : true});
-        
+        compo.setState({ isLoading: true });
+
         fetch(BACKEND_API.ROOT + POST_CLOSE_SURVEY + '/' + compo.state.survey._id, {
             method: 'POST',
             headers: {
@@ -150,7 +155,6 @@ class OpenSurveyButton extends React.Component {
             //TODO !
         }).then(function (response) {
             if (response.ok) {
-                console.log('HAS BEEN CLOSED');
                 compo.props.callback();
             } else {
                 console.log('Network response was not ok.');

@@ -32,7 +32,7 @@ class TeacherDashboard extends Component {
 
     lastSurveyDone = openSurvey = {
       _id: null,
-      open: false,
+      open: null,
       title: null,
       description: null,
       start_date: null,
@@ -112,7 +112,6 @@ class TeacherDashboard extends Component {
     let noSurveyOpen = true;
     let openSurvey = null;
     surveys.forEach(function (s) {
-      console.log(s);
       if (s.open) {
         noSurveyOpen = false;
         openSurvey = s;

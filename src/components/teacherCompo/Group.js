@@ -3,9 +3,13 @@ import { Link } from 'react-router-dom';
 import Popup from 'react-popup';
 
 import InfoStudent from "./InfoStudent";
+import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
+import AddStudent from "./AddStudent";
 
 
 const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
+
+let POST_STUDENT = 'students/1/classes/1/surveys/27/answers/'; //needs one more parameters
 
 var compo ;
 
@@ -17,14 +21,18 @@ class Group extends React.Component {
         this.state = {
             picture: null,
             student: {
+                id: 0,
                 name: [],
                 password: null,
             }
         };
+        POST_STUDENT = 'teachers/1/' + this.state.survey_id + '/answers/'; //needs one more parameters
     }
 
-    addStudent = function () {
-        /** fetch(ORIGIN + this.state.currentQuestion.id, {
+    addStudent = function (data) {
+        Popup.plugins().addStudent();
+        /**
+        fetch(ORIGIN + POST_STUDENT +this.state.student.id, {
             method: "POST",
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -42,18 +50,16 @@ class Group extends React.Component {
         }).catch(function (err) {
             // Error :(
             console.log(err);
-        }); */
+        });
         console.log('test');
-        compo.props.callbackGM();
+        compo.props.callbackGM();*/
     }
 
     onClickStudent = (student) => {
-        console.log("test 2");
-        console.log(student);
-        Popup.plugins().studentInformation(this.updateState, student);
+        Popup.plugins().studentInformation(this.updateState, student, this.props.listGroups);
 
         // open a new suvey
-        /**
+
         if (this.state.open === true) {
             Popup.plugins().createSurveyForm(this.updateState);
 
@@ -67,33 +73,32 @@ class Group extends React.Component {
                     text: "Open survey"
                 });
             }
-        }*/
+        }
     }
     //                 <img src={this.state.picture} width="30" height="30" alt="info"/>
 
     render(){
         return (
-
-            <ul className="list-group">
-                <h3>Groups</h3>
-                {this.props.list.map(function(listValue, picture){
-                    return <li className="list-group-item"><button onClick={() => compo.onClickStudent(listValue)}>{listValue.username}</button></li>;
-                })}
-                <li className="list-group-item"><button onClick={compo.addStudent}>+</button></li>
-            </ul>
-
-    )
+                <div className="row">
+                    {this.props.name}
+                    <ul className="list-group">
+                        {this.props.list.map(function(listValue){
+                            return <li className="list-group-item"><button onClick={() => compo.onClickStudent(listValue)}>{listValue.username}</button></li>;
+                        })}
+                        <li className="list-group-item"><button onClick={compo.addStudent}>+</button></li>
+                    </ul>
+                </div>
+        )
     }
-
 }
 
-/** Survey Form plugin */
-Popup.registerPlugin('studentInformation', function (callbackConfirm, student) {
+Popup.registerPlugin('studentInformation', function (callbackConfirm, student, listGroups) {
     let _title = null;
     let _gender = null;
     let _age = null;
+    let _studentId = null;
+    console.log('Hey');
 
-    console.log("test 1");
     let getTitle = function (e) {
         _title = e.target.value;
     };
@@ -104,8 +109,9 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student) {
     let getAge = function (e) {
         _age = e.target.value;
     };
-    console.log("test 5");
-    console.log(this.student);
+    let getStudentId = function (e) {
+        _studentId = e.target.value;
+    };
 
     this.create({
         title: 'Student information',
@@ -114,7 +120,9 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student) {
                               onChangeAge={getAge}
                               title={student.username}
                               gender={student.gender}
-                              age={student.age}/>,
+                              age={student.age}
+                              listGroups={listGroups}
+                              studentId={student._id}/>,
         buttons: {
             left: [{
                 text: 'Quit',
@@ -138,6 +146,65 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student) {
         position: { x: 0, y: 0 }, // or a function, more on this further down
         closeOnOutsideClick: false, // Should a click outside the popup close it? (default is closeOnOutsideClick property on the component)
     });
+});
+
+Popup.registerPlugin('addStudent', function (callbackConfirm) {
+    console.log('ici');
+    let _username = null;
+    let _age = null;
+    let _gender = null;
+    let _password = null;
+
+    let getUsername = function (e) {
+        _username = e.target.value;
+    };
+
+    let getAge = function (e) {
+        _age = e.target.value;
+    };
+
+    let getGender = function (e) {
+        _gender = e.target.value;
+    };
+
+    let getPassword = function (e) {
+        _password = e.target.value;
+    };
+
+    this.create({
+        title: 'Add student',
+        content: <AddStudent
+            onChangeUsername={getUsername}
+            onChangeAge={getAge}
+            onChangeGender={getGender}
+            onChangePassword={getPassword}
+            username={"New student - Username"}
+            age={"New student - Age"}
+            password={"New student - Password"}/>,
+        buttons: {
+            left: [{
+                text: 'Quit',
+                className: null, // optional
+                action: function (popup) {
+                    //do things
+                    popup.close();
+                }
+            }],
+             right: [{
+                 text: 'Confirm',
+                 className: 'success', // optional
+                 action: function (popup) {
+                     callbackConfirm();
+                     popup.close();
+                 }
+             }]
+        },
+        className: null, // or string
+        noOverlay: true, // hide overlay layer (default is false, overlay visible)
+        position: { x: 0, y: 0 }, // or a function, more on this further down
+        closeOnOutsideClick: false, // Should a click outside the popup close it? (default is closeOnOutsideClick property on the component)
+    });
+    console.log('ici 2');
 });
 
 export default Group;

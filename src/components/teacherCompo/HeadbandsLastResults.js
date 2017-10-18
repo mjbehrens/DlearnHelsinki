@@ -1,85 +1,178 @@
 import React from "react";
 import SpiderGraph from '../shared/SpiderGraph.js';
+import Spinner from 'react-spinner'
+
+
+import { BACKEND_API } from '../../constants.js';
+import * as userActions from '../../actions/userActions';
+import { connect } from 'react-redux';
+
+
+function mapStateToProps(store) {
+    return {
+        user: store.user.user,
+    }
+}
 
 
 const style = {
-    marginLeft : "100px",
-    marginRight : "100px",
-    border : "2px solid black",
-    borderColor : "black"
+    marginLeft: "100px",
+    marginRight: "100px",
+    border: "2px solid black",
+    borderColor: "black"
 };
 
 const styleButton = {
-    marginLeft : "15px",
-    marginTop : "15px"
+    marginLeft: "15px",
+    marginTop: "15px"
 }
 
+var GET_GROUPS = '';
+
 //Get unique groups for the teacher from the database
-const groupsJSON = '[{"_id": 1, "groupNumber": 1}, {"_id": 2, "groupNumber": 2}, {"_id": 3, "groupNumber": 3}, {"_id": 5, "groupNumber":4}, {"_id": 6, "groupNumber": 5}]';
+var groups = [];
+var compo;
 
 class HeadbandsLastResults extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { groupNr: "Average between all groups" };
+
+        compo = this;
+        groups = [];
+
+        this.state = {
+            isLoading: true,
+            buttonList: [],
+            group_id: null,
+            group_name: "Class",
+            survey : this.props.survey,
+        };
+
+        this.buildRequestREST();
+        this.getGroupsREST();
     }
 
-    onClickSurvey = () => {
+    tempParsingJson = function () {
+        var buttonList = [];
+        groups.forEach(function (element) {
+            buttonList.push(
+                <button
+                    onClick={compo.onClickButton()}
+                    type="button"
+                    className="btn btn-primary"
+                    value={element._id}>
+                    {element.name}
+                </button>)
+        });
+
+        this.setState({
+            ...this.state,
+            isLoading: false,
+            buttonList: buttonList
+        });
 
     }
-    
-    
-    buttonClicked = (buttonValue) => (e) => {
-            e.preventDefault();
-            this.setState({groupNr: "Group " + buttonValue}); 
+
+    // Called everytime a props value change
+    componentWillReceiveProps(nextProps) {
+        if (compo.state.survey !== nextProps.survey) {
+            compo.setState({survey : nextProps.survey});
+        }
     }
-    
-    renderButton(buttonValue) {
-        return (
-           <button  
-                onClick = {this.buttonClicked(buttonValue)}
-                type="button" 
-                className="btn btn-primary">
-                        Group {buttonValue}
-            </button>
-        );
+
+    buildRequestREST = function () {
+        var s = '';
+        // Build request here
+        // teachers/{teacher_id}/classes/{class_id}/groups/
+
+        s = s + 'teachers/' + this.props.user.id + '/classes/1/groups';
+
+        GET_GROUPS = s;
+    }
+
+    // Get all the current groups of the class
+    // WARNING : if the groups has been modified, the answer from this survey will not appear 
+    getGroupsREST = function () {
+
+        compo.setState({ isLoading: true });
+
+        fetch(BACKEND_API.ROOT + GET_GROUPS, {
+            method: "GET",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Basic ' + this.props.user.hash,
+            }
+        }).then(function (response) {
+            if (response.ok) {
+                response.json().then(data => {
+                    groups = data;
+                    compo.tempParsingJson();
+                });
+            } else {
+                console.log('Network response was not ok.');
+            }
+        }).catch(function (err) {
+            // Error
+            console.log(err);
+        });
+    }
+
+    onClickButton = () => (e) => {
+        e.preventDefault();
+        compo.setState({
+            group_id: e.target.value,
+            group_name: e.target.innerText
+        });
     }
 
     render() {
 
-        var parsed_groups = JSON.parse(groupsJSON);
-        var group_list = [];
-        var temp = 0;
-        parsed_groups.forEach(function(e){
-           group_list[temp] = e.groupNumber
-           temp = temp+1;
-        });
-        
-        return (
-            <div style={ style }>
-                <div className="text-left">
-                    <div className="row">
-                        <div className="col-sm-3" style = {styleButton}>
-                            <div className="btn-group-vertical">
-                               { group_list.map(function(buttonValue, i){
-                                       return this.renderButton(buttonValue)
-                                    }, this) 
-                                }
+        //requires for spiderGraph
+        let parameters = {
+            teachers: this.props.user.id, 
+            students: null,
+            classes: 1, // TODO : UPDATE WITH REAL VALUE !
+            groups: compo.state.group_id,
+            surveys: compo.state.survey._id, 
+        }
+
+        if (this.state.isLoading) {
+            return (
+                <div className="spinner-container">
+                    <Spinner />
+                </div >
+            )
+
+        } else {
+            return (
+
+                <div className="container">
+                    <div className="jumbotron">
+                        <div className="text-left">
+                            <div className="row">
+                                <div className="col-sm-3" style={styleButton}>
+                                    <div key={1} className="btn-group-vertical">
+                                        {compo.state.buttonList}
+                                        <button type="button" className="btn btn-primary"> Class </button>
+                                    </div>
+                                </div>
+                                <div className="col-sm-7">
+                                    <h6>Results from survey "{compo.state.survey.title}"</h6>
+                                    <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
+                                </div>
                             </div>
                         </div>
-                        <div className="col-sm-7">
-                            <SpiderGraph name={this.state.groupNr} />
-
-                        </div>
                     </div>
-
                 </div>
-            </div>
-        );
+            );
+        }
+
+
 
     }
 
 
 }
 
-export default HeadbandsLastResults;
+export default connect(mapStateToProps)(HeadbandsLastResults);

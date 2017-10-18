@@ -1,16 +1,13 @@
-export function fetchClasses() {
-  return {
-    type: "FETCH_CLASSES",
-    payload: {
-	// Add api call
-	classes:
-	[
-	    {
-		classid: 11,
-		classname: "some name",
-	    }
-	]
-	
+export function setClasses(classes) {
+    return {
+	type: "SET_CLASSES",
+	payload: classes,
     }
-  }
+}
+
+export function deleteClasses() {
+    return {
+	type: "DELETE_CLASSES",
+	payload: null,
+    }
 }

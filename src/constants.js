@@ -13,3 +13,7 @@ export const BACKEND_API = {
     ROOT: 'https://dlearn-helsinki-backend.herokuapp.com/webapi/',
     GET_STUDENT: ''
 }
+
+export const ACTION_TYPES = {
+
+}

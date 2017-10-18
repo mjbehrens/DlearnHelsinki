@@ -3,11 +3,13 @@ import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { ROUTES } from '../constants.js';
 import * as userActions from '../actions/userActions';
+import * as classActions from '../actions/classActions';
 
 
 function mapStateToProps(store) {
     return {
 	user: store.user.user,
+	classes: store.classroom.classes,
     }
 }﻿
 
@@ -16,6 +18,7 @@ class LoginLogout extends React.Component {
 
     onLogoutClick = () => {
 	this.props.dispatch(userActions.logoutUser())
+	this.props.dispatch(classActions.deleteClasses())
     }
 
   render() {

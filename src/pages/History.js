@@ -14,46 +14,61 @@ import { connect } from 'react-redux';
 
 function mapStateToProps(store) {
 	return {
-		user: store.user.user,
+        user: store.user.user,
+        classes: store.classroom.classes,        
 	}
 }
-
-
-//http://underscorejs.org/#sortBy
-
 
 
 //Select * From Surveys
 var sampleData = [];
 var tempData = [];
 var compo = null;
+
 class History extends Component {
 
     constructor(props) {
-
         super(props);
+       
         sampleData = [];
-        var tempData = [];
+        tempData = [];
         compo = this;
+
+        let currentClass = this.props.classes.filter(function(c){
+            return c._id === compo.props.user.classid;
+        });
 
         this.state = {
             isLoading: true,
             query: "",
+            groups : this.getGroups(currentClass),
+            students : [],
+            surveys : [],
             filteredData: [],
             selectedSurvey: null,
             dateSelected: false,
             warning: "",
             sorter: 1 // 0 = no order, 1 = date ascending, 2 = date descending
         }
+
     }
 
     componentWillMount() {
         this.getAllSurveyREST();
     }
 
+
+    getGroups = function (classroom){
+        let groups = null;
+
+        if(classroom.length === 1){
+            groups = classroom[0];
+        }
+        return groups;
+    }
+
     // You can narrow down the dates and search by name at the same time, but
     // the process is buggy and you will have to reset if there is a typo.
-    
     doSearch = function(queryText){
         this.setState({ warning: "" });
 
@@ -99,6 +114,7 @@ class History extends Component {
                 response.json().then(data => {
                     sampleData = data;
                     compo.setState({
+                        surveys : data,
                         isLoading: false,
                         filteredData: data,
                     });
@@ -205,7 +221,7 @@ class History extends Component {
                             {
                                 // TODO : Give all the information of the survey to GraphRenderer (if possible) 
                             }
-                            <GraphRenderer surveyID={this.state.selectedSurvey} />
+                            <GraphRenderer surveyID={this.state.selectedSurvey} groups={this.state.groups}/>
                         </div>
                     </div>
                 </div>

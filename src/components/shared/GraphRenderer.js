@@ -56,7 +56,8 @@ class GraphRenderer extends Component {
 
     componentDidMount() {
         this.buildRequestREST();
-        this.getGroupsREST();
+        //this.getGroupsREST();
+        groups = this.props.groups;
     }
 
 

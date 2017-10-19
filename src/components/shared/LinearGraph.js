@@ -33,8 +33,8 @@ class LinearGraph extends Component {
 
         this.state = {
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'], // surveys names
-                datasets: []
+                labels: [], // for surveys names
+                datasets: [] // actual data
             }
         };
 

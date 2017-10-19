@@ -85,7 +85,7 @@ class History extends Component {
         compo = this;
         compo.setState({ isLoading: true });
 
-        let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + 1 + '/surveys';
+        let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys';
         
 
         fetch(BACKEND_API.ROOT + GET_SURVEYS, {

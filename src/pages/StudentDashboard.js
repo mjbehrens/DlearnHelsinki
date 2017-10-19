@@ -70,7 +70,7 @@ class StudentDashboard extends Component {
 	}
 
 	buildRequestRest = function () {
-		GET_SURVEYS = 'students/' + this.props.user.id + '/classes/' + 1 + '/surveys';
+		GET_SURVEYS = 'students/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys';
 	}
 
 	componentDidMount() {

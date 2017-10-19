@@ -22,7 +22,7 @@ class ClassSelection extends Component {
             goTo: this.props.user.type === 'teacher' ? ROUTES.TEACHER_DASHBOARD : ROUTES.STUDENT_DASHBOARD,
             api: null,
             getClassesEndpoint: (this.props.user.type === 'teacher' ? 'teachers/' : 'students/')
-	        + this.props.user.id + '/classes/',
+            + this.props.user.id + '/classes/',
             loading: true,
         }
     }
@@ -57,7 +57,7 @@ class ClassSelection extends Component {
     }
 
     selectClass = (classid) => {
-	this.props.dispatch(userActions.setUserClassId(classid))
+        this.props.dispatch(userActions.setUserClassId(classid))
         this.props.history.push({
             pathname: this.state.goTo,
         })
@@ -67,7 +67,7 @@ class ClassSelection extends Component {
         return (
             <button style={{ margin: "1vmin" }}
                 key={classroom._id}
-		onClick={() => this.selectClass(classroom._id)}
+                onClick={() => this.selectClass(classroom._id)}
                 className="btn btn-primary">
                 {classroom.name}
             </button>
@@ -92,9 +92,9 @@ class ClassSelection extends Component {
             return (
                 <div className="SelectClass">
                     <h1>Select a Class</h1>
-		    <div>
-			{buttons}
-		    </div>
+                    <div>
+                        {buttons}
+                    </div>
                 </div>
             );
         }

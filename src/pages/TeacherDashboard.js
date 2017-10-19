@@ -57,7 +57,7 @@ class TeacherDashboard extends Component {
   getAllSurveyREST = function () {
     this.setState({ isLoading: true });
 
-    let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + 1 + '/surveys'; // TODO : UPDATE WITH REAL CLASS    
+    let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys';     
 
     fetch(BACKEND_API.ROOT + GET_SURVEYS, {
       method: "GET",

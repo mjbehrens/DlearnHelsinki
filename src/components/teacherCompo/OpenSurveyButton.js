@@ -41,7 +41,7 @@ class OpenSurveyButton extends React.Component {
             text: "Open Survey",
             picture: iconSurveyOpen,
             teacherID: this.props.user.id,
-            classID: 1,     // TODO : UPDATE WITH REAL VALUE !
+            classID: this.props.user.classid,     
             survey: this.props.survey,
         }
 

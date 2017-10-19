@@ -8,8 +8,8 @@ export default function reducer(state={
       login: null,
       hash: null,
       loggedin: false,
-      groupid: [],
-      classid: [],
+      groupid: null,
+      classid: null,
     },
     fetching: false,
     fetched: false,
@@ -82,6 +82,18 @@ export default function reducer(state={
         return {
           ...state,
           user: {...state.user, hash: action.payload},
+        }
+      }
+      case "SET_USER_CLASS_ID": {
+        return {
+          ...state,
+          user: {...state.user, classid: action.payload},
+        }
+      }
+      case "SET_USER_GROUP_ID": {
+        return {
+          ...state,
+          user: {...state.user, groupid: action.payload},
         }
       }
     }

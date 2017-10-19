@@ -151,19 +151,14 @@ class LinearGraph extends Component {
         progression.forEach(function (survey) {
 
             let lisThemes = [];
-            let survey_id = null;
-            let start_date = null;
-
+  
             survey.themes.forEach(function (theme) {
-
-                survey_id = theme.survey_id;
-                start_date = theme.start_date;
 
                 lisThemes.push({
                     theme_id: theme.theme_id,
                     theme_title: theme.theme_title,
                     description: theme.description,
-                    answer: theme.answer,
+                    answer: (theme.answer).toFixed(1),
                 });
 
                 if (max_theme_id < theme.theme_id) {
@@ -173,8 +168,10 @@ class LinearGraph extends Component {
             });
 
             surveys.push({
-                survey_id: survey_id,
-                start_date: start_date,
+                survey_id: survey.survey._id,
+                survey_title : survey.survey.title,
+                start_date: survey.survey.start_date,
+                survey_description : survey.survey.description,
                 themes: lisThemes,
             });
 
@@ -184,19 +181,19 @@ class LinearGraph extends Component {
         let newDatasets = new Array(max_theme_id);
         // will containt the name of the survey
         let newLabels = [];
-       
+
         for (let i = 1; i <= max_theme_id; i++) {
 
             // table of answer for this theme
-            let values = []; 
+            let values = [];
             let title = "";
             // we create a new dataset for the theme  
             newDatasets[i - 1] = {
                 label: 'Theme ' + i,
                 fill: false,
                 lineTension: 0.1,
-                backgroundColor: this.stringToColour('theme ' + i),
-                borderColor: this.stringToColour('theme ' + i),
+                backgroundColor: this.stringToColour(i),
+                borderColor: this.stringToColour(i),
                 borderCapStyle: 'butt',
                 borderDash: [],
                 borderDashOffset: 0.0,
@@ -223,38 +220,37 @@ class LinearGraph extends Component {
 
                 if (theme_i.length === 1) {
                     title = theme_i[0].theme_title;
-                    values.push(theme_i[0].answer);   
-                }else if(theme_i.length < 0){
+                    values.push(theme_i[0].answer);
+                } else if (theme_i.length < 0) {
                     values.push(null);
                 }
-                
-               // newDatasets[i - 1].backgroundColor = this.stringToColour(theme_i[0].theme_title);
-               // newDatasets[i - 1].borderColor = this.stringToColour(theme_i[0].theme_title);
+
+                // newDatasets[i - 1].backgroundColor = this.stringToColour(theme_i[0].theme_title);
+                // newDatasets[i - 1].borderColor = this.stringToColour(theme_i[0].theme_title);
             });
             newDatasets[i - 1].data = values;
             newDatasets[i - 1].backgroundColor = this.stringToColour(title);
             newDatasets[i - 1].borderColor = this.stringToColour(title);
+            newDatasets[i - 1].label = title;
         }
 
-        surveys.forEach(function(survey){
-            newLabels.push(survey.start_date);
+        surveys.forEach(function (survey) {
+            newLabels.push(survey.start_date + " - " + survey.survey_title);
         })
-        
+
         console.log(newDatasets);
 
         compo.setState({
             ...compo.state,
-            isLoading : false,
-            noData: false,            
-            data:{
-                labels : newLabels,
-                datasets : newDatasets,
+            isLoading: false,
+            noData: false,
+            data: {
+                labels: newLabels,
+                datasets: newDatasets,
             }
-            
+
         })
-
     }
-
 
     //take a string and create a original color 
     stringToColour = function (str) {
@@ -289,7 +285,27 @@ class LinearGraph extends Component {
 
     render() {
 
-        // TODO : Scale for this graph 
+        // TODO : Scale for this graph
+        // THIS DOES NOT WORK
+        var options = {
+            title: {
+                display: true,
+                position: 'top',
+                text: 'progression',
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                yAxes: {
+                    ticks: {
+                        beginAtZero: true,
+                        max: 6,
+
+                    }
+                }
+
+            }
+        };
 
         if (this.state.isLoading) {
             return (
@@ -304,13 +320,12 @@ class LinearGraph extends Component {
                     <h5>{this.props.name}</h5>
                     No Data Found
 				</div>
-
             );
         }
         else {
             return (
                 <div className="graph-container">
-                    <Line data={this.state.data} />
+                    <Line data={this.state.data} options={options} />
 
                 </div>
             );

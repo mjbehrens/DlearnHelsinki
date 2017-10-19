@@ -20,7 +20,7 @@ const pickDate = {
     zIndex: '30'
 }
 
-class HistoryFinder extends Component {    
+class HistoryFinder extends Component {
 
     constructor(props) {
         var rangeStart = null;
@@ -30,7 +30,7 @@ class HistoryFinder extends Component {
         this.changeEnd = this.changeEnd.bind(this);
     }
 
-    searchHistory = function(event) {
+    searchHistory = function (event) {
         var query = event.target.value.toLowerCase();
         this.props.doSearch(query);
     }
@@ -38,31 +38,36 @@ class HistoryFinder extends Component {
     changeStart(date) {
         rangeStart = date;
     }
-    
+
     changeEnd(date) {
         rangeEnd = date;
     }
-
-    selectRange = function(event) {
+    
+    selectRange = function (event) {
         this.props.selectRange(rangeStart, rangeEnd);
     }
+    
+
 
     render() {
-        
-        return(
+
+        return (
             <div>
-                <div className = "searchBar">
-                    <input type="text" 
-                        style = {margins} 
-                        placeholder="Search" 
-                        value = {this.props.query} 
-                        onChange = {this.searchHistory.bind(this)}/>
-                    <button className="btn btn-primary" 
-                        style = {margins} 
-                        onClick = {this.props.sortData}> 
-                            Sort by Date 
+                <div className="searchBar">
+                    <input type="text"
+                        style={margins}
+                        placeholder="Search"
+                        value={this.props.query}
+                        onChange={this.searchHistory.bind(this)} />
+                    <button className="btn btn-primary"
+                        style={margins}
+                        onClick={this.props.sortData}>
+                        Sort by Date
                     </button>
                 </div>
+                {
+                /**
+                 *  REMOVE FOR THIS VERSION
                 <div className = "row" style = {pickDate}>
                     <Calendar 
                         format='DD-MM-YYYY' 
@@ -79,9 +84,13 @@ class HistoryFinder extends Component {
                         onClick = {this.selectRange.bind(this)}> 
                             Go 
                     </button>
-                </div>
+                </div>                     
+                 */
+
+                }
+
             </div>
-        ); 
+        );
 
     }
 } export default HistoryFinder;

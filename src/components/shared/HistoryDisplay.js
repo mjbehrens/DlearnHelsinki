@@ -16,11 +16,11 @@ class HistoryDisplay extends Component {
             searchData: [],
         }
     }
-//    
-//    shouldComponentUpdate(nextProps, nextState) {       
-//        return nextProps.searchData !== this.props.searchData; 
-//    } 
-  
+    //    
+    //    shouldComponentUpdate(nextProps, nextState) {       
+    //        return nextProps.searchData !== this.props.searchData; 
+    //    } 
+
     componentWillReceiveProps(nextProps) {
         if (this.props != nextProps) {
             this.setState({
@@ -29,38 +29,71 @@ class HistoryDisplay extends Component {
             });
         }
     }
-    
-    padNumber = function(number, size) {
-        let s = ""+number;
+
+    padNumber = function (number, size) {
+        let s = "" + number;
         while (s.length < size) {
-            s = "0"+s;
+            s = "0" + s;
         } return s;
     }
-    
+
     getDisplayDate(d) {
-        return this.padNumber(d.getDate(), 2)+"-"+this.padNumber((d.getMonth()+1), 2)+"-"+d.getFullYear();
+        return this.padNumber(d.getDate(), 2) + "-" + this.padNumber((d.getMonth() + 1), 2) + "-" + d.getFullYear();
     }
 
-    onClickSurvey = function (surveyId) {
+    onClickItem = function (id) {
         // TODO : change color of the button 
-        this.props.loadResult(surveyId);
+        this.props.loadResult(id);
+    }
+
+    buildList = function () {
+        var searchResults = [];
+        let i = 0;
+
+        switch (this.props.dataType) {
+            case 'student':
+                this.state.searchData.forEach(function (result) {
+                    searchResults.push(<button key={i}
+                        className="btn btn-default left-align"
+                        onClick={compo.onClickItem.bind(compo, result._id)}>
+                        {result.username}
+                    </button>)
+                    i = i + 1;
+                });
+                break;
+            case 'group':
+                this.state.searchData.forEach(function (result) {
+                    searchResults.push(<button key={i}
+                        className="btn btn-default left-align"
+                        onClick={compo.onClickItem.bind(compo, result._id)}>
+                        {result.name}
+                    </button>)
+                    i = i + 1;
+                });
+                break;
+            case 'survey':
+                this.state.searchData.forEach(function (result) {
+                    searchResults.push(<button key={i}
+                        className="btn btn-default left-align"
+                        onClick={compo.onClickItem.bind(compo, result._id)}>
+                        {result.start_date + " " + result.title}
+                    </button>)
+                    i = i + 1;
+                });
+                break;
+
+            default:
+                break;
+        }
+
+        return searchResults;
     }
 
     render() {
-        var searchResults = [];
-        let i = 0;
-        this.state.searchData.forEach(function (result) {
-                searchResults.push(<button key={i}
-                    className="btn btn-default left-align"
-                    onClick={compo.onClickSurvey.bind(compo, result._id)}>
-                    {result.start_date + " " + result.title}
-                </button>)
-                i = i + 1;
-        });
 
         return (
             <div style={buttonStyle} className="btn-group-vertical">
-                {searchResults}
+                {this.buildList()}
             </div>
         )
     }

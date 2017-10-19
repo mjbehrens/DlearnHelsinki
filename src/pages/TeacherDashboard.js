@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 function mapStateToProps(store) {
   return {
     user: store.user.user,
+    classes: store.classroom.classes,
+    
   }
 }
 
@@ -32,7 +34,7 @@ class TeacherDashboard extends Component {
 
     lastSurveyDone = openSurvey = {
       _id: null,
-      open: false,
+      open: null,
       title: null,
       description: null,
       start_date: null,
@@ -55,7 +57,7 @@ class TeacherDashboard extends Component {
   getAllSurveyREST = function () {
     this.setState({ isLoading: true });
 
-    let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + 1 + '/surveys'; // TODO : UPDATE WITH REAL CLASS    
+    let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys';     
 
     fetch(BACKEND_API.ROOT + GET_SURVEYS, {
       method: "GET",
@@ -91,7 +93,6 @@ class TeacherDashboard extends Component {
     let lastDate = Date.parse(tempSurveys[0].end_date);
     let lastSurvey = tempSurveys[0];
 
-
     tempSurveys.forEach(function (s) {
 
       let tempDate = Date.parse(s.end_date);
@@ -112,7 +113,6 @@ class TeacherDashboard extends Component {
     let noSurveyOpen = true;
     let openSurvey = null;
     surveys.forEach(function (s) {
-      console.log(s);
       if (s.open) {
         noSurveyOpen = false;
         openSurvey = s;

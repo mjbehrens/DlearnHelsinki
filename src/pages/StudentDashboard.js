@@ -18,9 +18,9 @@ let compo;
 
 
 function mapStateToProps(store) {
-    return {
-	user: store.user.user,
-    }
+	return {
+		user: store.user.user,
+	}
 }
 
 class StudentDashboard extends Component {
@@ -29,7 +29,7 @@ class StudentDashboard extends Component {
 	startSurvey = (e) => {
 		e.preventDefault();
 		this.props.history.push({
-		    pathname: ROUTES.STUDENT_SURVEY,
+			pathname: ROUTES.STUDENT_SURVEY,
 			state: { survey_id: compo.state.survey._id }
 		});
 	}
@@ -70,7 +70,7 @@ class StudentDashboard extends Component {
 	}
 
 	buildRequestRest = function () {
-		GET_SURVEYS = 'students/' + this.props.user.id + '/classes/' + 1 + '/surveys';
+		GET_SURVEYS = 'students/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys';
 	}
 
 	componentDidMount() {
@@ -144,24 +144,28 @@ class StudentDashboard extends Component {
 		}
 	}
 
+
 	// check if a survey is currently open 
 	checkLastSurveyDone = function () {
-		console.log(this.state.lastSurvey);
 
 		if (this.state.lastSurvey._id == null) {
-			let lastDate = Date.parse(surveys[0].end_date);
-			let lastSurvey = surveys[0];
+			
+			let tempSurveys = surveys.filter(function (s) {
+				return s.open === false;
+			});
 
-			surveys.forEach(function (s) {
+			let lastDate = Date.parse(tempSurveys[0].end_date);
+			let lastSurvey = tempSurveys[0];
+
+
+			tempSurveys.forEach(function (s) {
 
 				let tempDate = Date.parse(s.end_date);
 
-				tempDate = Date.parse(s.end_date);
 				if (lastDate < tempDate) {
 					lastDate = tempDate;
 					lastSurvey = s;
 				}
-
 			}, this);
 
 			// update the last survey id.
@@ -213,7 +217,7 @@ class StudentDashboard extends Component {
 			classes: 1,
 			groups: null,
 			surveys: compo.state.lastSurvey._id,
-			
+
 		}
 
 		if (parameters.surveys) {

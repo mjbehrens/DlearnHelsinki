@@ -46,7 +46,7 @@ class HeadbandsLastResults extends React.Component {
             buttonList: [],
             group_id: null,
             group_name: "Class",
-            survey : this.props.survey,
+            survey: this.props.survey,
         };
 
         this.buildRequestREST();
@@ -77,7 +77,7 @@ class HeadbandsLastResults extends React.Component {
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
         if (compo.state.survey !== nextProps.survey) {
-            compo.setState({survey : nextProps.survey});
+            compo.setState({ survey: nextProps.survey });
         }
     }
 
@@ -85,8 +85,7 @@ class HeadbandsLastResults extends React.Component {
         var s = '';
         // Build request here
         // teachers/{teacher_id}/classes/{class_id}/groups/
-
-        s = s + 'teachers/' + this.props.user.id + '/classes/1/groups';
+        s = s + 'teachers/' + this.props.user.id + '/classes/' + this.props.user.classid + '/groups';
 
         GET_GROUPS = s;
     }
@@ -130,11 +129,11 @@ class HeadbandsLastResults extends React.Component {
 
         //requires for spiderGraph
         let parameters = {
-            teachers: this.props.user.id, 
+            teachers: this.props.user.id,
             students: null,
-            classes: 1, // TODO : UPDATE WITH REAL VALUE !
+            classes: this.props.user.classid, // TODO : UPDATE WITH REAL VALUE !
             groups: compo.state.group_id,
-            surveys: compo.state.survey._id, 
+            surveys: compo.state.survey._id,
         }
 
         if (this.state.isLoading) {

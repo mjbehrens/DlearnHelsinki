@@ -1,72 +1,46 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
+import Spinner from 'react-spinner'
 
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
+
+//redux setup
+import { ROUTES, BACKEND_API } from '../../constants.js';
+import * as userActions from '../../actions/userActions';
+import { connect } from 'react-redux';
+
+
 let GET_ANSWERS = '';
 let GET_QUESTIONS_FOR_SURVEY = '';
 
 // VERY IMPORTANT !
 let params;
 
+function mapStateToProps(store) {
+    return {
+        user: store.user.user,
+    }
+}
+let compo = null;
 
 class LinearGraph extends Component {
 
     constructor(props) {
         super(props);
 
-        if (this.props.parameters != null) {
-            params = this.props.parameters;
-        }
+        params = this.props.parameters;
+        compo = this;
+
 
         this.state = {
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                datasets: [
-                    {
-                        label: 'Theme 1',
-                        fill: false,
-                        lineTension: 0.1,
-                        backgroundColor: this.stringToColour('first'),
-                        borderColor: this.stringToColour('first'),
-                        borderCapStyle: 'butt',
-                        borderDash: [],
-                        borderDashOffset: 0.0,
-                        borderJoinStyle: 'miter',
-                        pointBorderColor: 'rgba(75,192,192,1)',
-                        pointBackgroundColor: '#fff',
-                        pointBorderWidth: 1,
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                        pointHoverBorderColor: 'rgba(220,220,220,1)',
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 1,
-                        pointHitRadius: 10,
-                        data: [65, 59, 80, 81, 56, 55, 40]
-                    },
-                    {
-                        label: 'Theme 2',
-                        fill: false,
-                        lineTension: 0.1,
-                        backgroundColor: this.stringToColour('seconde'),
-                        borderColor: this.stringToColour('seconde'),
-                        borderCapStyle: 'butt',
-                        borderDash: [],
-                        borderDashOffset: 0.0,
-                        borderJoinStyle: 'miter',
-                        pointBorderColor: 'rgba(75,192,192,1)',
-                        pointBackgroundColor: '#fff',
-                        pointBorderWidth: 1,
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                        pointHoverBorderColor: 'rgba(220,220,220,1)',
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 1,
-                        pointHitRadius: 10,
-                        data: [80, 63, 45, 81, 90, 55, 40]
-                    }
-                ]
+                labels: [], // for surveys names
+                datasets: [] // actual data
             }
         };
+
+        if (params.progression !== null) {
+            this.getDataForGraph();
+        }
 
     }
 
@@ -76,46 +50,208 @@ class LinearGraph extends Component {
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        if (params != nextProps.parameters) {
+        if ((params != nextProps.parameters) && (nextProps.parameters.progression !== null)) {
             params = nextProps.parameters;
-            console.log(params);
+            //console.log(params);
             this.getDataForGraph();
         }
     }
 
-
     // Fetch resquest for questions and answer
     getDataForGraph = function () {
         this.buildRequestRest();
+        this.getSurveyAnswersREST();
     }
 
     // Build request from props send to the component
     // ( looks ugly but it's a propotype :) )
+    // Can now be simplify with redux and the store
     buildRequestRest = function () {
 
-        GET_ANSWERS = '';
-        GET_QUESTIONS_FOR_SURVEY = '';
-
-
         let s = "";
-        if (params.students != null) {
-            s += '/students/' + params.students;
-        }
+
         if (params.teachers != null) {
-            s += '/teachers/' + params.teachers;
-        }
-        if (params.classes != null) {
-            s += '/classes/' + params.classes;
-        }
-        if (params.groups != null) {
-            s += '/groups/' + params.groups;
-        }
-        if (params.surveys != null) {
-            s += '/surveys/' + params.surveys;
+            s += 'teachers/' + params.teachers;
+
+
+            if (params.classes != null) {
+                s += '/classes/' + params.classes;
+            }
+            if (params.groups != null) {
+                s += '/groups/' + params.groups;
+            }
+            if (params.students != null) {
+                s += '/students/' + params.students;
+            }
+
+        } else if (params.students != null) {
+            s += 'students/' + params.students;
+
+            if (params.classes != null) {
+                s += '/classes/' + params.classes;
+            }
+            if (params.groups != null) {
+                s += '/groups/' + params.groups;
+            }
         }
 
-        GET_ANSWERS = s + '/answers';
-        GET_QUESTIONS_FOR_SURVEY = s + '/questions';
+        if (params.progression != null) {
+            s += '/progression/' + params.progression;
+        }
+
+        GET_ANSWERS = s;
+
+    }
+
+
+    getSurveyAnswersREST = function () {
+        // set the spinner to true
+        this.setState({ isLoading: true });
+
+        console.log(BACKEND_API.ROOT + GET_ANSWERS);
+
+        fetch(BACKEND_API.ROOT + GET_ANSWERS, {
+            method: "GET",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Basic ' + this.props.user.hash,
+            }
+        }).then(function (response) {
+            if (response.ok) {
+                response.json().then(data => {
+
+                    // TODO : if data is not empty
+                    if (true) {
+                        compo.collectData(data);
+
+                    } else {
+                        console.log("problem while parsing json data")
+                        compo.setState({
+                            isLoading: false,
+                            noData: true
+                        });
+                    }
+                });
+            } else {
+                console.log('Network response was not ok.');
+            }
+        }).catch(function (err) {
+            // Error :(
+            console.log(err);
+        });
+    }
+
+
+    collectData = function (progression) {
+
+        let max_theme_id = 0;
+        let surveys = [];
+
+        // extract the survey
+        progression.forEach(function (survey) {
+
+            let lisThemes = [];
+            let survey_id = null;
+            let start_date = null;
+
+            survey.themes.forEach(function (theme) {
+
+                survey_id = theme.survey_id;
+                start_date = theme.start_date;
+
+                lisThemes.push({
+                    theme_id: theme.theme_id,
+                    theme_title: theme.theme_title,
+                    description: theme.description,
+                    answer: theme.answer,
+                });
+
+                if (max_theme_id < theme.theme_id) {
+                    max_theme_id = theme.theme_id;
+                }
+
+            });
+
+            surveys.push({
+                survey_id: survey_id,
+                start_date: start_date,
+                themes: lisThemes,
+            });
+
+        });
+
+        // will containt the data
+        let newDatasets = new Array(max_theme_id);
+        // will containt the name of the survey
+        let newLabels = [];
+       
+        for (let i = 1; i <= max_theme_id; i++) {
+
+            // table of answer for this theme
+            let values = []; 
+            let title = "";
+            // we create a new dataset for the theme  
+            newDatasets[i - 1] = {
+                label: 'Theme ' + i,
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: this.stringToColour('theme ' + i),
+                borderColor: this.stringToColour('theme ' + i),
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: 'rgba(75,192,192,1)',
+                pointBackgroundColor: '#fff',
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                pointHoverBorderColor: 'rgba(220,220,220,1)',
+                pointHoverBorderWidth: 2,
+                pointRadius: 5,
+                pointHitRadius: 10,
+                data: []
+            };
+
+            // we are looking for, in each survey, the theme that match i (the current survey id)
+            // if it's find, we add its answer's value. otherwise we put null in order to not breaking the graph
+            surveys.forEach(function (survey) {
+
+                let theme_i = survey.themes.filter(function (t) {
+                    return t.theme_id === i;
+                });
+
+                if (theme_i.length === 1) {
+                    title = theme_i[0].theme_title;
+                    values.push(theme_i[0].answer);   
+                }else if(theme_i.length < 0){
+                    values.push(null);
+                }
+                
+               // newDatasets[i - 1].backgroundColor = this.stringToColour(theme_i[0].theme_title);
+               // newDatasets[i - 1].borderColor = this.stringToColour(theme_i[0].theme_title);
+            });
+            newDatasets[i - 1].data = values;
+            newDatasets[i - 1].backgroundColor = this.stringToColour(title);
+            newDatasets[i - 1].borderColor = this.stringToColour(title);
+        }
+
+        surveys.forEach(function(survey){
+            newLabels.push(survey.start_date);
+        })
+        
+        console.log(newDatasets);
+
+        compo.setState({
+            ...compo.state,
+            isLoading : false,
+            noData: false,            
+            data:{
+                labels : newLabels,
+                datasets : newDatasets,
+            }
+            
+        })
 
     }
 
@@ -152,10 +288,34 @@ class LinearGraph extends Component {
 
 
     render() {
-        return (
-            <Line data={this.state.data} />
-        );
+
+        // TODO : Scale for this graph 
+
+        if (this.state.isLoading) {
+            return (
+                <div className='spinner-container'>
+                    <Spinner />
+                </div>
+
+            )
+        } else if (this.state.noData === true) {
+            return (
+                <div className="jumbotron">
+                    <h5>{this.props.name}</h5>
+                    No Data Found
+				</div>
+
+            );
+        }
+        else {
+            return (
+                <div className="graph-container">
+                    <Line data={this.state.data} />
+
+                </div>
+            );
+        }
     }
 }
 
-export default LinearGraph;
+export default connect(mapStateToProps)(LinearGraph);

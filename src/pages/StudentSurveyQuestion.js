@@ -24,10 +24,10 @@ class StudentSurveyQuestion extends Component {
     constructor(props) {
         super(props);
 
-        let survey_id = null ;
-		if(this.props.location.state.survey_id !== null){
-			survey_id = this.props.location.state.survey_id
-		}
+        let survey_id = null;
+        if (this.props.location.state.survey_id !== null) {
+            survey_id = this.props.location.state.survey_id
+        }
 
         this.state = {
             buttonValue: 'Next',
@@ -49,8 +49,8 @@ class StudentSurveyQuestion extends Component {
             startPoint: 3
         }
 
-        GET_QUESTIONS_FOR_SURVEY = 'students/'+this.props.user.id+'/classes/1/surveys/' + this.state.survey_id + '/questions';
-        PUT_QUESTION_ANSWER = 'students/'+this.props.user.id+'/classes/1/surveys/' + this.state.survey_id + '/answers/'; //needs one more parameters
+        GET_QUESTIONS_FOR_SURVEY = 'students/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys/' + this.state.survey_id + '/questions';
+        PUT_QUESTION_ANSWER = 'students/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys/' + this.state.survey_id + '/answers/'; //needs one more parameters
 
     }
 
@@ -66,7 +66,7 @@ class StudentSurveyQuestion extends Component {
             method: "GET",
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Basic ' +this.props.user.hash,
+                'Authorization': 'Basic ' + this.props.user.hash,
             }
         }).then(function (response) {
             if (response.ok) {
@@ -173,7 +173,7 @@ class StudentSurveyQuestion extends Component {
             let compo = this;
             this.props.history.push({
                 pathname: ROUTES.STUDENT_DASHBOARD,
-                state: { survey_id : compo.state.survey_id }
+                state: { survey_id: compo.state.survey_id }
             });
             //return <Redirect to="/student-dashboard" />
         }

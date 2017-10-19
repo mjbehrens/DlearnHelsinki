@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SpiderGraph from './SpiderGraph.js'
+import SpiderGraph from './SpiderGraph.js';
 
 const buttonStyle = {
     margin: '5px'
@@ -20,46 +20,47 @@ class GraphRenderer extends Component {
             graphs: []
         }
     }
-    
-    buildRequestREST = function() {
+
+    //TODO : MUST DISPEAR AFTER THE STORE IS READY ! 
+    buildRequestREST = function () {
         var s = '';
         // Build request here
         // teachers/{teacher_id}/classes/{class_id}/groups/
-        
+
         s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes.
-        
+
         GET_GROUPS = s;
     }
-    
-    getGroupsREST = function() {
+
+    getGroupsREST = function () {
         console.log(ORIGIN + GET_GROUPS);
         fetch(ORIGIN + GET_GROUPS, {
             method: "GET",
             headers: {
-		'Access-Control-Allow-Origin': '*',
-		'Authorization': 'Basic ' + btoa('teacher:password') // This needs to be changed in the final version...
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Basic ' + btoa('teacher:password') // This needs to be changed in the final version...
             }
-        }).then(function(response) {
-            if(response.ok) {
+        }).then(function (response) {
+            if (response.ok) {
                 response.json().then(data => {
-                                    groups = data;
-				});
-            }else {
-		console.log('Network response was not ok.');
+                    groups = data;
+                });
+            } else {
+                console.log('Network response was not ok.');
             }
         }).catch(function (err) {
             // Error
             console.log(err);
-	});
+        });
     }
-    
+
     componentDidMount() {
         this.buildRequestREST();
         this.getGroupsREST();
     }
-        
-    
-    loadClassGraphs = function() { 
+
+
+    loadClassGraphs = function () {
         let compo = this;
 
         let spiderGraphs = [];
@@ -119,9 +120,9 @@ class GraphRenderer extends Component {
         return (
             <div>
                 <div>
-                    <button style = {buttonStyle} className="btn btn-primary" onClick={this.loadClassGraphs.bind(this)}>Class</button>
-                    <button style = {buttonStyle} className="btn btn-primary" onClick={this.loadGroupsGraphs.bind(this)}>Groups</button>
-                    <button style = {buttonStyle} className="btn btn-primary" onClick={this.loadStudentsGraphs.bind(this)}>Students</button>
+                    <button style={buttonStyle} className="btn btn-primary" onClick={this.loadClassGraphs.bind(this)}>Class</button>
+                    <button style={buttonStyle} className="btn btn-primary" onClick={this.loadGroupsGraphs.bind(this)}>Groups</button>
+                    <button style={buttonStyle} className="btn btn-primary" onClick={this.loadStudentsGraphs.bind(this)}>Students</button>
                 </div>
                 <div>
                     {this.state.graphs}

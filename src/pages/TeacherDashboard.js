@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 function mapStateToProps(store) {
   return {
     user: store.user.user,
+    classes: store.classroom.classes,
+    
   }
 }
 
@@ -90,7 +92,6 @@ class TeacherDashboard extends Component {
 
     let lastDate = Date.parse(tempSurveys[0].end_date);
     let lastSurvey = tempSurveys[0];
-
 
     tempSurveys.forEach(function (s) {
 

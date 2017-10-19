@@ -64,7 +64,8 @@ class History extends Component {
         }
         var queryResult = [];
         tempData.forEach(function (i) {
-            if ((i.title.toLowerCase().indexOf(queryText) != -1)
+            if ((i.title == null || i.start_date == null)
+                || (i.title.toLowerCase().indexOf(queryText) != -1)
                 || (i._id.toString().indexOf(queryText) != -1)
                 || (i.start_date.indexOf(queryText) != -1)) {
 
@@ -139,11 +140,10 @@ class History extends Component {
         else {
             tempData = sampleData
         }
-
         tempData.forEach(function(i) {
-            if (start<=end && i.start_date>=start && i.start_date<=end) {
+            if (start<=end && ((i.start_date == null || i.end_date == null)||(i.start_date>=start && i.start_date<=end))) {
                 narrowDown.push(i); 
-            } else if (start>end && i.start_date<=start && i.start_date>=end) {
+            } else if (start>end && ((i.start_date == null || i.end_date == null)||(i.start_date<=start && i.start_date>=end))) {
                 narrowDown.push(i); 
             } else if (start == null || end == null) {
                 if (start == null && end == null) {

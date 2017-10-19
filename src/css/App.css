@@ -74,7 +74,7 @@ section {
 }
 
 .graph-container {
-    min-height: 200px;
+    min-width: 400px;
 }
 
 .warning {
@@ -82,10 +82,7 @@ section {
     margin: 5px;
 }
 
-
-/*
-    CSS SPINNER
-*/
+/* CSS SPINNER */
 .spinner-container{
     position: absolute;
     bottom: 0px;
@@ -128,56 +125,3 @@ section {
  0% { opacity: 1; }
  100% { opacity: 0.15; }
 }
-
-
-
-/*
-button {
-    margin: 1vmin;
-}
-
-header
-{
-	position: relative;
-	width: 100%;
-	text-align: center;
-	background: var(--black-custom);
-	color: var(--blue-light);
-	box-shadow: 0 1px 12px black;
-	padding: 10px;
-}
-
-h1 {
-	color: var(--blue-dark);
-}
-
-.App {
-  min-height: 100%;
-  position: relative;
-  text-align: center;
-}
-
-.App-logo {
-  height: 10vmin;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-.Login-form {
-    text-align: center;
-    width: 60vmin;
-    margin: auto;
-}
-
-.btn-toolbar {
-    display: flex;
-    justify-content: center;
-}
-
-@keyframes Icon-spin { 
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-*/

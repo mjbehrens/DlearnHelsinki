@@ -3,6 +3,18 @@ export default function reducer(state={
   }, action) {
 
     switch (action.type) {
+      case "SET_CLASSES": {
+	return {
+	  ...state,
+	  classes: action.payload,
+	}
+      }
+      case "DELETE_CLASSES": {
+        return {
+          ...state,
+          classes: [],
+        }
+      }
       case "ADD_CLASS": {
         return {
           ...state,

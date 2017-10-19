@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import Spinner from 'react-spinner'
 import { ROUTES, BACKEND_API } from '../constants.js';
-
-import SelectClass from '../components/teacherCompo/SelectClass.js';
 import * as userActions from '../actions/userActions';
 import * as classActions from '../actions/classActions';
 
@@ -21,46 +19,21 @@ class ClassSelection extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            goTo: ROUTES.CLASS_SELECTION,
+            goTo: this.props.user.type === 'teacher' ? ROUTES.TEACHER_DASHBOARD : ROUTES.STUDENT_DASHBOARD,
             api: null,
-            getClassesEndpoint: '',
+            getClassesEndpoint: (this.props.user.type === 'teacher' ? 'teachers/' : 'students/')
+	        + this.props.user.id + '/classes/',
             loading: true,
         }
-        var classes = [];
     }
 
     componentDidMount() {
-        if (this.props.user.type === 'teacher') {
-            this.setState({
-                ...this.state,
-                goTo: ROUTES.TEACHER_DASHBOARD,
-                getClassesEndpoint: 'teachers/' + this.props.user.id + '/classes/',
-            })
-        } else if (this.props.user.type === 'student'){
-            this.setState({
-                ...this.state,
-                goTo: ROUTES.STUDENT_DASHBOARD,
-                getClassesEndpoint: 'students/' + this.props.user.id + '/classes/',
-            })
-        }
         this.getClasses();
-
     }
 
     getClasses = () => {
 
-        /**
-         * TEMPORAIRE FIX FOR NULL RESQUET 
-         * Otherwise getClassesEndpoint is empty because setstate is a thread 
-         */
-        let getClassesEndpoint = '';
-        if (this.props.user.type === 'teacher') {
-                getClassesEndpoint= 'teachers/' + this.props.user.id + '/classes/';
-        } else if (this.props.user.type === 'student'){
-                getClassesEndpoint= 'students/' + this.props.user.id + '/classes/';
-        }
-
-        fetch(BACKEND_API.ROOT + getClassesEndpoint, {
+        fetch(BACKEND_API.ROOT + this.state.getClassesEndpoint, {
             method: "GET",
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -83,29 +56,27 @@ class ClassSelection extends Component {
         });
     }
 
-    selectClass = (buttonValue) => (e) => {
-        e.preventDefault();
+    selectClass = (classid) => {
+	this.props.dispatch(userActions.setUserClassId(classid))
         this.props.history.push({
             pathname: this.state.goTo,
-            state: { className: buttonValue }
         })
     }
 
-    renderButton(buttonValue) {
+    renderButton(classroom) {
         return (
             <button style={{ margin: "1vmin" }}
-                key={buttonValue._id}
-                onClick={this.selectClass(buttonValue.name)}
+                key={classroom._id}
+		onClick={() => this.selectClass(classroom._id)}
                 className="btn btn-primary">
-                {buttonValue.name}
+                {classroom.name}
             </button>
         );
     }
 
     render() {
-        //this.getClasses();
-        var buttons = this.props.classes.map(function (classInList, i) {
-            return this.renderButton(classInList);
+        var buttons = this.props.classes.map(function (classroom, i) {
+            return this.renderButton(classroom);
         }, this);
 
         if (this.state.loading) {
@@ -121,18 +92,13 @@ class ClassSelection extends Component {
             return (
                 <div className="SelectClass">
                     <h1>Select a Class</h1>
-
-                    <div>
-                        {buttons}
-                    </div>
-
+		    <div>
+			{buttons}
+		    </div>
                 </div>
             );
         }
     }
 }
-// MOVE THIS BACK TO RENDER SHOULD YOU FIND IT MORE APPEALING
-//                    <div style = {{margin: "1vmin"}}>   
-//                        <button onClick = {this.moveToDashboard} className = "btn btn-default">Continue</button>
-//                    </div>
+
 export default connect(mapStateToProps)(ClassSelection);

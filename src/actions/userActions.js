@@ -46,3 +46,17 @@ export function setUserHash(hash) {
     payload: hash,
   }
 }
+
+export function setUserClassId(classid) {
+  return {
+    type: 'SET_USER_CLASS_ID',
+    payload: classid,
+  }
+}
+
+export function setUserGroupId(groupid) {
+  return {
+    type: 'SET_USER_GROUP_ID',
+    payload: groupid,
+  }
+}

@@ -8,6 +8,7 @@ import 'rc-slider/assets/index.css';
 import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
+import Star from '../components/Star.js';
 
 function mapStateToProps(store) {
     return {
@@ -164,6 +165,7 @@ class StudentSurveyQuestion extends Component {
             this.setState({ ...this.state.redirect = true })
         }
     }
+    
 
     render() {
         // if survey finish (no more survey)
@@ -186,7 +188,7 @@ class StudentSurveyQuestion extends Component {
                         value={this.state.startPoint}
                         onChange={this.onSliderChange} />
 
-                    <p>
+                    <p> <Star actual_size = {this.state.startPoint} max_size = {this.state.currentQuestion.max_answer} />
                         <h5>{this.state.startPoint}/{this.state.currentQuestion.max_answer} </h5>
                         <button type="button"
                             className="btn btn-primary"

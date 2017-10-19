@@ -246,7 +246,9 @@ class SpiderGraph extends Component {
 		}
 		else {
 			return (
+			    <div className="graph-container">
 				<Radar data={this.state.data} options={options} />
+			    </div>
 			);
 		}
 

@@ -29,15 +29,26 @@ At this point, reloading a page may be necessary for the survey icon to update. 
 When a survey is open, the icon for opening the survey will change into an icon for closing an existing survey. 
 To close a survey, simply click that button. You will be prompted to confirm that you actually want to close the survey.
 At this point, reloading a page may be necessary for the survey icon to update. Don't worry, the survey will have closed just fine, even if the icon doesn't change before reloading.
+
 ## Viewing Results  
 Results for surveys will be displayed on the dashboard. By default, it will display averages for all groups. 
 To view results for a specific group, click the button containing the group's name next to the spider graph.
 
 ## Managing Groups  
-To manage groups, go to group management.
+To manage groups, go to group management. 
+If there are no groups, create the first group by clicking the button that says "Add a group", giving the group a name and confirming by clicking the "Confirm" button. You can create as many groups as you want/need.
+To delete a group, click the button "Delete a group", select the group you wish to delete, and click "Confirm". **Note that you can only delete groups that are empty!** If a group you wish to delete has students in it, move the students to another group first.
+To move a student to another group, select a student from a group, you will get a popup with the student's information. Then, select a new group for the student from the popup's dropdown menu and finish by clicking the button that says "Change group".
 
 ## Creating New Students
-TBD
+Creating students happens through the Group Management. 
+After creating the desired amount of groups (at least one), click on the button with a plus(+)-sign on it to enter student creation. Then, fill in the fields in the popup as instucted and click the button on the popup to finish.
+Currently, student account information doesn't transfer between classes, so there is no way to add an existing student from another class into a group. If you wish to add a new student into a group, you have to create a new account for them, even if the student already has an account in the app created for them by another teacher, or by you but in a different class.
+There is also no way to delete existing student accounts in the current version.
+
+## Changing A Student's Password
+Should a student forget their password, there is no way to recover it. A teacher can, however assign a student a new password.
+To do so, go to group management and click on the student's name. On the popup, there is a password field. Fill in, or have the student fill in a new password and click on "Reset password".
 
 # Student  
 
@@ -47,6 +58,7 @@ Then, answer the questions by selecting a value between 1 and 5, or in some case
 Once you have finished filling out the survey, your results for it will be displayed on your dashboard.
 
 # Researcer  
+There are currently no in-app researcher tools.
 
 ## Adding New Questions
 

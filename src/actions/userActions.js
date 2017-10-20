@@ -1,12 +1,15 @@
-export function fetchUser() {
-  return {
-    type: "FETCH_USER_FULFILLED",
-    payload: {
-	// Add api call
-      name: "Will",
-      age: 35,
+export function loginUser() {
+    return {
+	type: 'LOGIN_USER',
+	payload: null
     }
-  }
+}
+
+export function logoutUser() {
+    return {
+	type: 'LOGOUT_USER',
+	payload: null
+    }
 }
 
 export function setUserId(id) {
@@ -41,5 +44,19 @@ export function setUserHash(hash) {
   return {
     type: 'SET_USER_HASH',
     payload: hash,
+  }
+}
+
+export function setUserClassId(classid) {
+  return {
+    type: 'SET_USER_CLASS_ID',
+    payload: classid,
+  }
+}
+
+export function setUserGroupId(groupid) {
+  return {
+    type: 'SET_USER_GROUP_ID',
+    payload: groupid,
   }
 }

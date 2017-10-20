@@ -1,5 +1,18 @@
 import React from "react";
 import SpiderGraph from '../shared/SpiderGraph.js';
+import Spinner from 'react-spinner'
+
+
+import { BACKEND_API } from '../../constants.js';
+import * as userActions from '../../actions/userActions';
+import { connect } from 'react-redux';
+
+
+function mapStateToProps(store) {
+    return {
+        user: store.user.user,
+    }
+}
 
 
 const style = {
@@ -14,7 +27,6 @@ const styleButton = {
     marginTop: "15px"
 }
 
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
 var GET_GROUPS = '';
 
 //Get unique groups for the teacher from the database
@@ -27,13 +39,14 @@ class HeadbandsLastResults extends React.Component {
         super(props);
 
         compo = this;
-
         groups = [];
 
         this.state = {
+            isLoading: true,
             buttonList: [],
             group_id: null,
             group_name: "Class",
+            survey: this.props.survey,
         };
 
         this.buildRequestREST();
@@ -55,28 +68,39 @@ class HeadbandsLastResults extends React.Component {
 
         this.setState({
             ...this.state,
+            isLoading: false,
             buttonList: buttonList
         });
 
+    }
+
+    // Called everytime a props value change
+    componentWillReceiveProps(nextProps) {
+        if (compo.state.survey !== nextProps.survey) {
+            compo.setState({ survey: nextProps.survey });
+        }
     }
 
     buildRequestREST = function () {
         var s = '';
         // Build request here
         // teachers/{teacher_id}/classes/{class_id}/groups/
-
-        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes. 
+        s = s + 'teachers/' + this.props.user.id + '/classes/' + this.props.user.classid + '/groups';
 
         GET_GROUPS = s;
     }
 
+    // Get all the current groups of the class
+    // WARNING : if the groups has been modified, the answer from this survey will not appear 
     getGroupsREST = function () {
-        console.log(ORIGIN + GET_GROUPS);
-        fetch(ORIGIN + GET_GROUPS, {
+
+        compo.setState({ isLoading: true });
+
+        fetch(BACKEND_API.ROOT + GET_GROUPS, {
             method: "GET",
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Basic ' + btoa('teacher:password') // This needs to be changed in the final version...
+                'Authorization': 'Basic ' + this.props.user.hash,
             }
         }).then(function (response) {
             if (response.ok) {
@@ -105,37 +129,49 @@ class HeadbandsLastResults extends React.Component {
 
         //requires for spiderGraph
         let parameters = {
-            teachers: 1, // need to be change
+            teachers: this.props.user.id,
             students: null,
-            classes: 1, // need to be change
+            classes: this.props.user.classid, // TODO : UPDATE WITH REAL VALUE !
             groups: compo.state.group_id,
-            surveys: 27, // need to be change
+            surveys: compo.state.survey._id,
         }
 
-        return (
+        if (this.state.isLoading) {
+            return (
+                <div className="spinner-container">
+                    <Spinner />
+                </div >
+            )
 
-            <div className="container">
-                <div className="jumbotron">
-                    <div className="text-left">
-                        <div className="row">
-                            <div className="col-sm-3" style={styleButton}>
-                                <div key = {1} className="btn-group-vertical">
-                                    {compo.state.buttonList}
-                                    <button type="button" className="btn btn-primary"> Class </button>
+        } else {
+            return (
+
+                <div className="container">
+                    <div className="jumbotron">
+                        <div className="text-left">
+                            <div className="row">
+                                <div className="col-sm-3" style={styleButton}>
+                                    <div key={1} className="btn-group-vertical">
+                                        {compo.state.buttonList}
+                                        <button type="button" className="btn btn-primary"> Class </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col-sm-7">
-                                <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
+                                <div className="col-sm-7">
+                                    <h6>Results from survey "{compo.state.survey.title}"</h6>
+                                    <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
+
+
 
     }
 
 
 }
 
-export default HeadbandsLastResults;
+export default connect(mapStateToProps)(HeadbandsLastResults);

@@ -1,77 +1,104 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import Spinner from 'react-spinner'
+import { ROUTES, BACKEND_API } from '../constants.js';
+import * as userActions from '../actions/userActions';
+import * as classActions from '../actions/classActions';
 
-import SelectClass from '../components/teacherCompo/SelectClass.js';
 
-var classesJSON = '[{"_id": 1, "className": "Math 1"}, {"_id": 2, "className": "Math 2"}, \n\
-{"_id": 3, "className": "Math 5"}, {"_id": 4, "className": "Math 8"}, {"_id": 12, "className": "Math 9"},\n\
- {"_id": 6, "className": "Math 21"}, {"_id": 7, "className": "Homeroom"}]';
-
+function mapStateToProps(store) {
+    return {
+        user: store.user.user,
+        classes: store.classroom.classes,
+    }
+}
 
 class ClassSelection extends Component {
 
-    constructor() {
-        super();
-//        this.state = {
-//            selectedClass: null
-//        }
+    constructor(props) {
+        super(props);
+        this.state = {
+            goTo: this.props.user.type === 'teacher' ? ROUTES.TEACHER_DASHBOARD : ROUTES.STUDENT_DASHBOARD,
+            api: null,
+            getClassesEndpoint: (this.props.user.type === 'teacher' ? 'teachers/' : 'students/')
+            + this.props.user.id + '/classes/',
+            loading: true,
+        }
     }
 
-//    moveToDashboard = () => {
-//        if (this.state.selectedClass != null) {
-//            this.props.history.push({
-//                pathname: '/teacher-dashboard',
-//                state: {className: this.state.selectedClass}  
-//            })
-//        }
-//    }
+    componentDidMount() {
+        this.getClasses();
+    }
 
-    selectClass = (buttonValue) => (e) => {
-        e.preventDefault();
-//        this.setState({selectedClass: buttonValue}); console.log("Changing state...")
-        this.props.history.push({
-                pathname: '/teacher-dashboard',
-                state: {className: buttonValue}
+    getClasses = () => {
+
+        fetch(BACKEND_API.ROOT + this.state.getClassesEndpoint, {
+            method: "GET",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Basic ' + this.props.user.hash,
+            }
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then(data => {
+                    this.props.dispatch(classActions.setClasses(data));
+                });
+            } else {
+                console.log('Network response was not ok.');
+            }
+            this.setState({
+                ...this.state,
+                loading: false,
             })
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
-    renderButton(buttonValue) {
-        return(
-                <button style = {{margin: "1vmin"}}
-                        onClick = {this.selectClass(buttonValue)}
-                        className="btn btn-primary">
-                            {buttonValue}
-                </button>
+    selectClass = (classid) => {
+        this.props.dispatch(userActions.setUserClassId(classid))
+        this.props.history.push({
+            pathname: this.state.goTo,
+        })
+    }
+
+    renderButton(classroom) {
+        return (
+            <button style={{ margin: "1vmin" }}
+                key={classroom._id}
+                onClick={() => this.selectClass(classroom._id)}
+                className="btn btn-primary">
+                {classroom.name}
+            </button>
         );
     }
-    
-    render() {
-        var parsed_classes = JSON.parse(classesJSON);
-        var class_list = [];
-        var temp = 0;
-        parsed_classes.forEach(function(e){
-           class_list[temp] = e.className;
-           temp = temp+1;
-        });
-        
-        var buttons = class_list.map(function(className, i){
-//                             return <SelectClass nameOfClass={object} key={i} />; //OBSOLETE
-                            return this.renderButton(className);
-                        }, this);
-        
-        return (
-            <div className="SelectClass">
-                <h1>Select a Class</h1> 
 
+    render() {
+        var buttons = this.props.classes.map(function (classroom, i) {
+            return this.renderButton(classroom);
+        }, this);
+
+        if (this.state.loading) {
+            return (
+                <div className="SelectClass">
+                    <h1>Select a Class</h1>
+                    <div className='spinner-container'>
+                        <Spinner />
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className="SelectClass">
+                    <h1>Select a Class</h1>
                     <div>
                         {buttons}
                     </div>
-
-            </div>
-        );
+                </div>
+            );
+        }
     }
 }
-// MOVE THIS BACK TO RENDER SHOULD YOU FIND IT MORE APPEALING
-//                    <div style = {{margin: "1vmin"}}>   
-//                        <button onClick = {this.moveToDashboard} className = "btn btn-default">Continue</button>
-//                    </div>
-export default ClassSelection;
+
+export default connect(mapStateToProps)(ClassSelection);

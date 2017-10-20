@@ -74,60 +74,54 @@ section {
 }
 
 .graph-container {
-    min-height: 200px;
+    min-width: 400px;
 }
 
 .warning {
     color: red;
     margin: 5px;
 }
-/*
-button {
-    margin: 1vmin;
+
+/* CSS SPINNER */
+.spinner-container{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 50%;
+    height: 50%;  
 }
 
-header
-{
-	position: relative;
-	width: 100%;
-	text-align: center;
-	background: var(--black-custom);
-	color: var(--blue-light);
-	box-shadow: 0 1px 12px black;
-	padding: 10px;
-}
-
-h1 {
-	color: var(--blue-dark);
-}
-
-.App {
-  min-height: 100%;
+.react-spinner {
   position: relative;
-  text-align: center;
+  width: 100px;
+  height: 20px;  
+ 
 }
 
-.App-logo {
-  height: 10vmin;
+.react-spinner_bar {
+  -webkit-animation: react-spinner_spin 1.2s linear infinite;
+  -moz-animation: react-spinner_spin 1.2s linear infinite;
+  animation: react-spinner_spin 1.2s linear infinite;
+  border-radius: 5px;
+  background-color: rgb(0, 0, 0);
+  position: absolute;
+  width: 20%;
+  height: 7.8%;
+  top: -3.9%;
+  left: -10%;
 }
 
-.App-intro {
-  font-size: large;
+@keyframes react-spinner_spin {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.15; }
 }
 
-.Login-form {
-    text-align: center;
-    width: 60vmin;
-    margin: auto;
+@-moz-keyframes react-spinner_spin {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.15; }
 }
 
-.btn-toolbar {
-    display: flex;
-    justify-content: center;
+@-webkit-keyframes react-spinner_spin {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.15; }
 }
-
-@keyframes Icon-spin { 
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-*/

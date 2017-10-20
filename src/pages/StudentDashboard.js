@@ -1,47 +1,55 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { ROUTES, BACKEND_API } from '../constants.js';
 
 import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
 import LinearGraph from '../components/shared/LinearGraph.js';
+import Spinner from 'react-spinner';
+
+import * as userActions from '../actions/userActions';
+import { connect } from 'react-redux';
 
 
-
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
 let GET_SURVEYS = '';
 
 var surveys = [];
 let compo;
 
+
+function mapStateToProps(store) {
+	return {
+		user: store.user.user,
+	}
+}
+
 class StudentDashboard extends Component {
 
-
+	// send the survey ID to the next page
 	startSurvey = (e) => {
 		e.preventDefault();
 		this.props.history.push({
-			pathname: "/student-survey",
+			pathname: ROUTES.STUDENT_SURVEY,
 			state: { survey_id: compo.state.survey._id }
 		});
 	}
-
 
 	constructor(props) {
 		super(props);
 
 		compo = this;
 
-		let survey_id = null ;
-		if(this.props.location.state != null){
+		let survey_id = null;
+		if (this.props.location.state != null) {
 			console.log(this.props.location.state);
 			survey_id = this.props.location.state.survey_id
 			console.log(survey_id);
-			
 		}
 
 		this.state = {
 			disabledSurvey: true,
 			lastSurvey: {
-				_id: survey_id ,
+				_id: survey_id,
 				open: false,
 				title: "Last Result Survey",
 				description: null,
@@ -58,12 +66,11 @@ class StudentDashboard extends Component {
 			}
 		}
 
+		console.log(this.props.user);
 	}
 
 	buildRequestRest = function () {
-
-		GET_SURVEYS = '/teachers/' + 1 + '/classes/' + 1 + '/surveys';
-
+		GET_SURVEYS = 'students/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys';
 	}
 
 	componentDidMount() {
@@ -75,18 +82,19 @@ class StudentDashboard extends Component {
 	// Get all the survey from one class
 	getAllSurveyREST = function () {
 
-		fetch(ORIGIN + GET_SURVEYS, {
+		fetch(BACKEND_API.ROOT + GET_SURVEYS, {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',
-				'Authorization': 'Basic ' + btoa('teacher:password')
+				'Authorization': 'Basic ' + this.props.user.hash,
 			}
 		}).then(function (response) {
 			if (response.ok) {
 				response.json().then(data => {
 					surveys = data;
+					//print received surveys
 					console.log(surveys);
-					
+
 					// check if a survey is open & check the last survey done
 					compo.checkIfSurveyOpen();
 					compo.checkLastSurveyDone();
@@ -109,10 +117,9 @@ class StudentDashboard extends Component {
 		let lastSurveyId = surveys[0]._id;
 
 		surveys.forEach(function (s) {
-			
+
 			let tempDate = Date.parse(s.end_date);
 
-			tempDate = Date.parse(s.end_date);
 			if (lastDate < tempDate) {
 				lastDate = tempDate;
 				lastSurveyId = s._id;
@@ -137,24 +144,28 @@ class StudentDashboard extends Component {
 		}
 	}
 
+
 	// check if a survey is currently open 
 	checkLastSurveyDone = function () {
-		console.log(this.state.lastSurvey);
 
 		if (this.state.lastSurvey._id == null) {
-			let lastDate = Date.parse(surveys[0].end_date);
-			let lastSurvey = surveys[0];
+			
+			let tempSurveys = surveys.filter(function (s) {
+				return s.open === false;
+			});
 
-			surveys.forEach(function (s) {
+			let lastDate = Date.parse(tempSurveys[0].end_date);
+			let lastSurvey = tempSurveys[0];
+
+
+			tempSurveys.forEach(function (s) {
 
 				let tempDate = Date.parse(s.end_date);
 
-				tempDate = Date.parse(s.end_date);
 				if (lastDate < tempDate) {
 					lastDate = tempDate;
 					lastSurvey = s;
 				}
-
 			}, this);
 
 			// update the last survey id.
@@ -198,23 +209,42 @@ class StudentDashboard extends Component {
 		console.log(this.state.survey);
 	}
 
-	render() {
+	displaySpiderGraph = function () {
 
 		let parameters = {
 			teachers: null,
-			students: 1,
+			students: this.props.user.id,
 			classes: 1,
 			groups: null,
-			surveys: this.state.lastSurvey._id,
+			surveys: compo.state.lastSurvey._id,
+
 		}
+
+		if (parameters.surveys) {
+			return (
+				<SpiderGraph name={this.state.lastSurvey.title} parameters={parameters} />
+			)
+		}
+		else {
+			return (
+				<div>
+					<div className='spinner-container'>
+						<Spinner />
+					</div>
+					Check for open survey ...
+				</div>
+			)
+		}
+	}
+
+	render() {
 
 		return (
 			<div className="container text-center">
+			    <h1>Welcome {this.props.user.name}</h1>
 				<div className="jumbotron">
 
-					<h1>Welcome </h1>
 
-					<hr className="my-4" />
 					<div className="row">
 						<div className="col-sm-3">
 							<div className="btn-group-vertical">
@@ -224,7 +254,7 @@ class StudentDashboard extends Component {
 							</div>
 						</div>
 						<div className="col-sm-9">
-							<SpiderGraph name={this.state.lastSurvey.title} parameters={parameters} />
+							{compo.displaySpiderGraph()}
 						</div>
 					</div>
 
@@ -234,4 +264,5 @@ class StudentDashboard extends Component {
 	}
 }
 
-export default StudentDashboard;
+export default connect(mapStateToProps)(StudentDashboard);
+

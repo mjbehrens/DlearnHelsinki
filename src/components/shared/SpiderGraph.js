@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
+import Spinner from 'react-spinner'
 
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
+//redux setup
+import { ROUTES, BACKEND_API } from '../../constants.js';
+import * as userActions from '../../actions/userActions';
+import { connect } from 'react-redux';
+
+
 let GET_ANSWERS = '';
 let GET_QUESTIONS_FOR_SURVEY = '';
+
+
+
+
+function mapStateToProps(store) {
+	return {
+		user: store.user.user,
+	}
+}
 
 // VERY IMPORTANT !
 let params;
@@ -16,6 +31,8 @@ class SpiderGraph extends Component {
 		params = this.props.parameters;
 
 		this.state = {
+			isLoading: true,
+			noData: true,
 			cpt: 0,
 			data: {
 				labels: [], //label of the themes 
@@ -34,7 +51,10 @@ class SpiderGraph extends Component {
 			}
 		};
 
-		this.getDataForGraph();
+		if(params.surveys != null){
+			this.getDataForGraph();
+		}
+		
 	}
 
 	componentDidMount() {
@@ -43,13 +63,12 @@ class SpiderGraph extends Component {
 
 	// Called everytime a props value change
 	componentWillReceiveProps(nextProps) {
-		if (params != nextProps.parameters) {
+		if ( (params != nextProps.parameters) && (nextProps.parameters.surveys != null) ) {
 			params = nextProps.parameters;
 			console.log(params);
 			this.getDataForGraph();
 		}
 	}
-
 
 	// Fetch resquest for questions and answer
 	getDataForGraph = function () {
@@ -57,28 +76,37 @@ class SpiderGraph extends Component {
 		this.getSurveyAnswersREST();
 	}
 
-	componentDidUpdate() {
-		//console.log('In spider : ' + params.students)
-		//console.log(this.state.data);
-	}
-
 	// Build request from props send to the component
 	// ( looks ugly but it's a propotype :) )
 	buildRequestRest = function () {
 
 		let s = "";
-		if (params.students != null) {
-			s += '/students/' + params.students;
-		}
+
 		if (params.teachers != null) {
-			s += '/teachers/' + params.teachers;
+			s += 'teachers/' + params.teachers;
+
+
+			if (params.classes != null) {
+				s += '/classes/' + params.classes;
+			}
+			if (params.groups != null) {
+				s += '/groups/' + params.groups;
+			}
+			if (params.students != null) {
+				s += '/students/' + params.students;
+			}
+
+		} else if (params.students != null) {
+			s += 'students/' + params.students;
+
+			if (params.classes != null) {
+				s += '/classes/' + params.classes;
+			}
+			if (params.groups != null) {
+				s += '/groups/' + params.groups;
+			}
 		}
-		if (params.classes != null) {
-			s += '/classes/' + params.classes;
-		}
-		if (params.groups != null) {
-			s += '/groups/' + params.groups;
-		}
+
 		if (params.surveys != null) {
 			s += '/surveys/' + params.surveys;
 		}
@@ -89,15 +117,18 @@ class SpiderGraph extends Component {
 	}
 
 	getSurveyAnswersREST = function () {
+		// set the spinner to true
+		this.setState({ isLoading: true });
+
 		let component = this;
 		let Answers = [];
 
 
-		fetch(ORIGIN + GET_ANSWERS, {
+		fetch(BACKEND_API.ROOT + GET_ANSWERS, {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',
-				'Authorization': 'Basic ' + btoa('teacher:password')
+				'Authorization': 'Basic ' + this.props.user.hash,
 			}
 		}).then(function (response) {
 			if (response.ok) {
@@ -126,6 +157,8 @@ class SpiderGraph extends Component {
 
 						component.setState({
 							...component.state,
+							isLoading: false,
+							noData: false,
 							data: {
 								...component.state.data,
 								labels: labelsArray,
@@ -139,6 +172,10 @@ class SpiderGraph extends Component {
 						});
 					} else {
 						console.log("problem while parsing json data")
+						component.setState({
+							isLoading: false,
+							noData: true
+						});
 					}
 				});
 			} else {
@@ -182,7 +219,7 @@ class SpiderGraph extends Component {
 
 
 	render() {
-		
+
 		var options = {
 			responsive: true,
 			maintainAspectRatio: true,
@@ -194,10 +231,32 @@ class SpiderGraph extends Component {
 			}
 		};
 
-		return (
-			<Radar data={this.state.data} options={options} />
-		);
+		if (this.state.isLoading) {
+			return (
+				<div className='spinner-container'>
+					<Spinner />
+				</div>
+
+			)
+		} else if (this.state.noData === true) {
+			return (
+				<div className="jumbotron">
+					<h5>{this.props.name}</h5>
+					No Data Found
+				</div>
+
+			);
+		}
+		else {
+			return (
+			    <div className="graph-container">
+				<Radar data={this.state.data} options={options} />
+			    </div>
+			);
+		}
+
 	}
 }
 
-export default SpiderGraph;
+export default connect(mapStateToProps)(SpiderGraph);
+

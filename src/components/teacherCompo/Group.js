@@ -7,9 +7,9 @@ import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
 import AddStudent from "./AddStudent";
 
 
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
+const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi/';
 
-let POST_STUDENT = 'students/1/classes/1/surveys/27/answers/'; //needs one more parameters
+let POST_STUDENT = '';
 
 var compo ;
 
@@ -26,33 +26,35 @@ class Group extends React.Component {
                 password: null,
             }
         };
-        POST_STUDENT = 'teachers/1/' + this.state.survey_id + '/answers/'; //needs one more parameters
+
     }
 
-    addStudent = function (data) {
-        Popup.plugins().addStudent();
-        /**
-        fetch(ORIGIN + POST_STUDENT +this.state.student.id, {
-            method: "POST",
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa('teacher:password')
-            },
-            body: data
-        }).then(function (response) {
-            if (response.ok) {
-                console.log(response.body)
-                console.log("answer put on server")
-            } else {
-                console.log('Network response was not ok.');
-            }
-        }).catch(function (err) {
-            // Error :(
-            console.log(err);
+    addStudent = function () {
+        POST_STUDENT = 'teachers/1/create_student';
+        Popup.plugins().addStudent(function(infoStudent){
+            let data = { "groud_id" : compo.props.idGroup,   "class_id" : 1,   "password" : infoStudent._password,   "student" : {     "username" : infoStudent._username,     "age" : infoStudent._age,     "gender" : infoStudent._gender }}
+            console.log(data);
+            fetch(ORIGIN + POST_STUDENT, {
+                method: "POST",
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + btoa('teacher:password')
+                },
+                body: { "groud_id" : 4,   "class_id" : 1,   "password" : "password",   "student" : { "username" : "username2",     "age" : 12,     "gender" : "male" }}
+            }).then(function (response) {
+                if (response.ok) {
+                    console.log(response.body)
+                    console.log("answer put on server")
+                    compo.props.callback();
+                } else {
+                    console.log('Network response was not ok.');
+                }
+            }).catch(function (err) {
+                // Error :(
+                console.log(err);
+            });
         });
-        console.log('test');
-        compo.props.callbackGM();*/
     }
 
     onClickStudent = (student) => {
@@ -194,7 +196,12 @@ Popup.registerPlugin('addStudent', function (callbackConfirm) {
                  text: 'Confirm',
                  className: 'success', // optional
                  action: function (popup) {
-                     callbackConfirm();
+                     console.log('hello');
+                     console.log(_username);
+                     console.log(_age);
+                     console.log(_gender);
+                     console.log(_password);
+                     callbackConfirm({_username:_username, _age:_age, _gender:_gender, _password:_password});
                      popup.close();
                  }
              }]

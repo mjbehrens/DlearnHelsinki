@@ -1,29 +1,25 @@
 :root {
-	--black-custom: #020202;
-	--brown-dark: #503B31;
-	--brown-light: #705D56;
-	--blue-dark: #9097CO;
-	--blue-light: #A7BBEC;
-	--light-background: #F9F8F8;
+    --black-custom: #020202;
+    --brown-dark: #503B31;
+    --brown-light: #705D56;
+    --blue-dark: #9097CO;
+    --blue-light: #A7BBEC;
+    --light-background: #F9F8F8;
 
-	--footer-height: 60px;
+    --footer-height: 60px;
 }
 
 html, body, header, section, footer, .row {
-	padding: 0;
-	margin: 0;
+    position: relative;
+    padding: 0;
+    margin: 0;
 }
 
-html, body {
+html, body, #root, .App, .routes-container {
     position: relative;
-    min-height: 100vh;
+    min-height: 100%;
 }
     
-body {
-    padding-bottom: var(--footer-height);
-}
-
-
 .footer {
     position: absolute;
     bottom: 0;
@@ -37,7 +33,8 @@ body {
 section {
     text-align: center;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: var(--footer-height);
+    min-height: 50vh;
 }
 
 .Icon {
@@ -51,10 +48,11 @@ section {
 }
 
 .SelectClass {
+    position: relative;
     width: 60vw;
     margin: auto;
     text-align: center;
-
+    min-height: 50vh;
 }
 
 .left-align {
@@ -84,44 +82,42 @@ section {
 
 /* CSS SPINNER */
 .spinner-container{
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    width: 50%;
-    height: 50%;  
+    position: relative;
+    height: 50vh;
 }
 
 .react-spinner {
-  position: relative;
-  width: 100px;
-  height: 20px;  
- 
+    position: relative;
+    width: 100px;
+    height: 20px;  
+    top: 50%;
+    left: 50%;
 }
 
 .react-spinner_bar {
-  -webkit-animation: react-spinner_spin 1.2s linear infinite;
-  -moz-animation: react-spinner_spin 1.2s linear infinite;
-  animation: react-spinner_spin 1.2s linear infinite;
-  border-radius: 5px;
-  background-color: rgb(0, 0, 0);
-  position: absolute;
-  width: 20%;
-  height: 7.8%;
-  top: -3.9%;
-  left: -10%;
+    -webkit-animation: react-spinner_spin 1.2s linear infinite;
+    -moz-animation: react-spinner_spin 1.2s linear infinite;
+    animation: react-spinner_spin 1.2s linear infinite;
+    border-radius: 5px;
+    background-color: rgb(0, 0, 0);
+    position: absolute;
+    width: 20%;
+    height: 7.8%;
+    top: -3.9%;
+    left: -10%;
 }
 
 @keyframes react-spinner_spin {
- 0% { opacity: 1; }
- 100% { opacity: 0.15; }
+    0% { opacity: 1; }
+    100% { opacity: 0.15; }
 }
 
 @-moz-keyframes react-spinner_spin {
- 0% { opacity: 1; }
- 100% { opacity: 0.15; }
+    0% { opacity: 1; }
+    100% { opacity: 0.15; }
 }
 
 @-webkit-keyframes react-spinner_spin {
- 0% { opacity: 1; }
- 100% { opacity: 0.15; }
+    0% { opacity: 1; }
+    100% { opacity: 0.15; }
 }

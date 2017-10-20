@@ -141,7 +141,7 @@ class TeacherDashboard extends Component {
 
         <h1> {this.state.className} </h1>
 
-        <div className="row">
+        <div className="row centered">
           <HeadbandsLastResults survey={this.state.lastSurveyDone} />
         </div>
 

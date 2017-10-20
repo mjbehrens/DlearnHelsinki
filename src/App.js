@@ -40,7 +40,7 @@ class App extends Component {
 		    wildClasses={false}
 		    closeOnOutsideClick={true} />
 		    <Router>
-			<div>
+			<div className="routes-container">
 			    <Header />
 			    <section>
 				<Switch>

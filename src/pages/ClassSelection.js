@@ -49,7 +49,6 @@ class ClassSelection extends Component {
             }
             this.setState({
                 ...this.state,
-                loading: false,
             })
         }).catch((err) => {
             console.log(err);

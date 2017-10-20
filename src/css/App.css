@@ -9,16 +9,26 @@
     --footer-height: 60px;
 }
 
-html, body, header, section, footer, .row {
-    position: relative;
+html {
+}
+
+body {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+html, body, section, .row {
     padding: 0;
     margin: 0;
 }
 
-html, body, #root, .App, .routes-container {
-    position: relative;
-    min-height: 100%;
+#root {
+    height: 100%;
 }
+
     
 .footer {
     position: absolute;

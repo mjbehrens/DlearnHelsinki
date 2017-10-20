@@ -171,12 +171,13 @@ class TeacherGroupManagement extends React.Component {
             return (
                 <div className="container">
                     <h1>Group Management</h1>
-                    <div className="row">
-                        {this.state.groups}
-
-                    </div>
-                    <button onClick={this.onClickAddGroup}>Add a group</button>
-                    <button disabled={true} onClick={this.onClickDeleteGroup}>Delete a group</button>
+			<div className="card-columns">
+			    {this.state.groups}
+			</div>
+		    <div className="btn-grp" role="group">
+                    <button className="btn btn-primary" onClick={this.onClickAddGroup}>Add a group</button>
+                    <button className="btn btn-primary" disabled={true} onClick={this.onClickDeleteGroup}>Delete a group</button>
+		    </div>
                 </div>
             )
         }

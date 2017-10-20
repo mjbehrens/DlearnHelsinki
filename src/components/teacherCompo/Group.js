@@ -92,14 +92,18 @@ class Group extends React.Component {
 
     render() {
         return (
-            <div className="column">
-                {this.props.group_name}
-                <ul className="list-group">
+            <div className="card">
+		<div className="card-body no-padding">
+		<div className="card-text">
+                <div className="list-group">
+		    <button type="button" className="card-title list-group-item list-group-item-action active">{this.props.group_name}</button>
                     {this.props.list.map(function (listValue) {
-                        return <li className="list-group-item"><button onClick={() => compo.onClickStudent(listValue)}>{listValue.username}</button></li>;
+                        return <button type="button" className="list-group-item list-group-item-action" onClick={() => compo.onClickStudent(listValue)}>{listValue.username}</button>;
                     })}
-                    <li className="list-group-item"><button onClick={() => compo.onClickAddStudent(this.props.group_id)}>+</button></li>
-                </ul>
+                    <button type="button" className="list-group-item list-group-item-action no-padding" onClick={() => compo.onClickAddStudent(this.props.group_id)}><div className="card-footer">+</div></button>
+                </div>
+		</div>
+		</div>
             </div>
         )
     }

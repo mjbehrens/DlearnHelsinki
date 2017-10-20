@@ -174,7 +174,7 @@ class TeacherGroupManagement extends React.Component {
 			<div className="card-columns">
 			    {this.state.groups}
 			</div>
-		    <div className="btn-grp" role="group">
+		    <div className="btn-group btn-group-lg" role="group">
                     <button className="btn btn-primary" onClick={this.onClickAddGroup}>Add a group</button>
                     <button className="btn btn-primary" disabled={true} onClick={this.onClickDeleteGroup}>Delete a group</button>
 		    </div>

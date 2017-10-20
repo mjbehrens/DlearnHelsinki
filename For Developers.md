@@ -8,5 +8,6 @@ In order to get started on frontend development, you will need to first install 
 
 ## Unit testing
 Testing is done using mocha and code coverage is tested with coveralls.
-Tests are implemented in the branch "unit_testing" and that branch **must not** be merged with master as Travis will not pass due to the tests hanging after they have finished running. This will change once there's a way to terminate testing on Travis after all tests have run.
+http://mochajs.org/
+Tests are implemented in the branch "unit_testing". At the moment all existing tests are commented out because they became unable to run when the redux store was implemented.
 To run tests on a local machine, go to terminal/command prompt and type "npm test".

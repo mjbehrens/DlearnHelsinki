@@ -43,7 +43,7 @@ class Header extends React.Component {
 		<ul className="navbar-nav mr-auto">
 		    <li className="nav-item">
 			<Link to={ROUTES.TEACHER_DASHBOARD}>
-			    <a className="nav-link" href="">Home</a>
+			    <a className="nav-link" href="">Dashboard</a>
 			</Link>
 		    </li>
 		    <li className="nav-item">
@@ -68,22 +68,12 @@ class Header extends React.Component {
 		<ul className="navbar-nav mr-auto">
 		    <li className="nav-item">
 			<Link to={ROUTES.STUDENT_DASHBOARD}>
-			    <a className="nav-link" href="">Home</a>
+			    <a className="nav-link" href="">Dashboard</a>
 			</Link>
 		    </li>
 		    <li className="nav-item">
 			<Link to={ROUTES.CLASS_SELECTION}>
 			    <a className="nav-link" href="">Classes</a>
-			</Link>
-		    </li>
-		    <li className="nav-item">
-			<Link to={ROUTES.ROOT}>
-			    <a className="nav-link" href="">History</a>
-			</Link>
-		    </li>
-		    <li className="nav-item">
-			<Link to={ROUTES.ROOT}>
-			    <a className="nav-link" href="">Profile</a>
 			</Link>
 		    </li>
 		</ul>

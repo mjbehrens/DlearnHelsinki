@@ -11,3 +11,4 @@ Testing is done using mocha and code coverage is tested with coveralls.
 http://mochajs.org/
 Tests are implemented in the branch "unit_testing". At the moment all existing tests are commented out because they became unable to run when the redux store was implemented.
 To run tests on a local machine, go to terminal/command prompt and type "npm test".
+Make sure that tests are clean and manually close connections or might get [confusing error messages](https://github.com/mochajs/mocha/issues/2879).

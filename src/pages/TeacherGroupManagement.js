@@ -12,7 +12,7 @@ import AddGroup from "../components/teacherCompo/AddGroup";
 
 
 //const groupsJSON = '[{"group_id" : 1, "grpName" : "Grp1", "students" : [{"_id" : 1, "lastname" : "Meikäläinen", "firstname" : "Matti", "username" : "iloinen tanssiva aurinko"},{"_id" : 2, "lastname" : "Jo", "firstname" : "Doe", "username" : "iloinen tanssiva aurinko"}]},{"group_id" : 2, "grpName" : "Grp2", "students" : [{"_id" : 3, "lastname" : "Thomas", "firstname" : "Mimi", "username" : "iloinen tanssiva aurinko"}, {"_id" : 3, "lastname" : "Jean", "firstname" : "Dujardin", "username" : "iloinen tanssiva aurinko"}]}]';
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi';
+const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi/';
 var GET_GROUPS = '';
 var groups = [];
 var listGrps = [];
@@ -39,13 +39,12 @@ class TeacherGroupManagement extends React.Component {
         // Build request here
         // teachers/{teacher_id}/classes/{class_id}/groups/
 
-        s = s + '/teachers/1/classes/1/groups'; // Warning! Hard coded for testing purposes. Also, 404.
-
-        GET_GROUPS = s;
     }
 
     getGroupsREST = function() {
-        console.log(ORIGIN + GET_GROUPS);
+
+        let GET_GROUPS = 'teachers/1/classes/1/groups';
+        
         fetch(ORIGIN + GET_GROUPS, {
             method: "GET",
             headers: {

@@ -11,7 +11,7 @@ const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi/';
 
 let POST_STUDENT = '';
 
-var compo ;
+var compo;
 
 class Group extends React.Component {
 
@@ -30,10 +30,19 @@ class Group extends React.Component {
     }
 
     addStudent = function () {
-        POST_STUDENT = 'teachers/1/create_student';
-        Popup.plugins().addStudent(function(infoStudent){
-            let data = { "groud_id" : compo.props.idGroup,   "class_id" : 1,   "password" : infoStudent._password,   "student" : {     "username" : infoStudent._username,     "age" : infoStudent._age,     "gender" : infoStudent._gender }}
-            console.log(data);
+        Popup.plugins().addStudent(function (infoStudent) {
+            let data = JSON.stringify({
+                "groud_id": compo.props.idGroup,
+                "class_id": 1,
+                "password": infoStudent._password,
+                "student": {
+                    "username": infoStudent._username,
+                    "age": infoStudent._age,
+                    "gender": infoStudent._gender
+                }
+            });
+            let POST_STUDENT = 'teachers/1/create_student';
+
             fetch(ORIGIN + POST_STUDENT, {
                 method: "POST",
                 headers: {
@@ -41,18 +50,19 @@ class Group extends React.Component {
                     'Content-Type': 'application/json',
                     'Authorization': 'Basic ' + btoa('teacher:password')
                 },
-                body: { "groud_id" : 4,   "class_id" : 1,   "password" : "password",   "student" : { "username" : "username2",     "age" : 12,     "gender" : "male" }}
+                body: data,
             }).then(function (response) {
                 if (response.ok) {
                     console.log(response.body)
                     console.log("answer put on server")
-                    compo.props.callback();
+                    compo.props.callbackGM();
                 } else {
                     console.log('Network response was not ok.');
                 }
             }).catch(function (err) {
                 // Error :(
                 console.log(err);
+                alert(err);
             });
         });
     }
@@ -79,17 +89,17 @@ class Group extends React.Component {
     }
     //                 <img src={this.state.picture} width="30" height="30" alt="info"/>
 
-    render(){
+    render() {
         return (
-                <div className="row">
-                    {this.props.name}
-                    <ul className="list-group">
-                        {this.props.list.map(function(listValue){
-                            return <li className="list-group-item"><button onClick={() => compo.onClickStudent(listValue)}>{listValue.username}</button></li>;
-                        })}
-                        <li className="list-group-item"><button onClick={compo.addStudent}>+</button></li>
-                    </ul>
-                </div>
+            <div className="row">
+                {this.props.name}
+                <ul className="list-group">
+                    {this.props.list.map(function (listValue) {
+                        return <li className="list-group-item"><button onClick={() => compo.onClickStudent(listValue)}>{listValue.username}</button></li>;
+                    })}
+                    <li className="list-group-item"><button onClick={compo.addStudent}>+</button></li>
+                </ul>
+            </div>
         )
     }
 }
@@ -118,13 +128,13 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
     this.create({
         title: 'Student information',
         content: <InfoStudent onChangeTitle={getTitle}
-                              onChangeGender={getGender}
-                              onChangeAge={getAge}
-                              title={student.username}
-                              gender={student.gender}
-                              age={student.age}
-                              listGroups={listGroups}
-                              studentId={student._id}/>,
+            onChangeGender={getGender}
+            onChangeAge={getAge}
+            title={student.username}
+            gender={student.gender}
+            age={student.age}
+            listGroups={listGroups}
+            studentId={student._id} />,
         buttons: {
             left: [{
                 text: 'Quit',
@@ -134,14 +144,14 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
                     popup.close();
                 }
             }],
-           /* right: [{
-                text: 'Confirm',
-                className: 'success', // optional
-                action: function (popup) {
-                    callbackConfirm(_title);
-                    popup.close();
-                }
-            }]*/
+            /* right: [{
+                 text: 'Confirm',
+                 className: 'success', // optional
+                 action: function (popup) {
+                     callbackConfirm(_title);
+                     popup.close();
+                 }
+             }]*/
         },
         className: null, // or string
         noOverlay: true, // hide overlay layer (default is false, overlay visible)
@@ -151,7 +161,6 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
 });
 
 Popup.registerPlugin('addStudent', function (callbackConfirm) {
-    console.log('ici');
     let _username = null;
     let _age = null;
     let _gender = null;
@@ -182,7 +191,7 @@ Popup.registerPlugin('addStudent', function (callbackConfirm) {
             onChangePassword={getPassword}
             username={"New student - Username"}
             age={"New student - Age"}
-            password={"New student - Password"}/>,
+            password={"New student - Password"} />,
         buttons: {
             left: [{
                 text: 'Quit',
@@ -192,26 +201,25 @@ Popup.registerPlugin('addStudent', function (callbackConfirm) {
                     popup.close();
                 }
             }],
-             right: [{
-                 text: 'Confirm',
-                 className: 'success', // optional
-                 action: function (popup) {
-                     console.log('hello');
-                     console.log(_username);
-                     console.log(_age);
-                     console.log(_gender);
-                     console.log(_password);
-                     callbackConfirm({_username:_username, _age:_age, _gender:_gender, _password:_password});
-                     popup.close();
-                 }
-             }]
+            right: [{
+                text: 'Confirm',
+                className: 'success', // optional
+                action: function (popup) {
+                    callbackConfirm({
+                        _username: _username,
+                        _age: _age,
+                        _gender: _gender,
+                        _password: _password
+                    });
+                    popup.close();
+                }
+            }]
         },
         className: null, // or string
         noOverlay: true, // hide overlay layer (default is false, overlay visible)
         position: { x: 0, y: 0 }, // or a function, more on this further down
         closeOnOutsideClick: false, // Should a click outside the popup close it? (default is closeOnOutsideClick property on the component)
     });
-    console.log('ici 2');
 });
 
 export default Group;

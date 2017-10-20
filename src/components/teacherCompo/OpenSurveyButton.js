@@ -109,12 +109,13 @@ class OpenSurveyButton extends React.Component {
 
     // send a request to the database to open a new survey
     // get the info of the new survey
-    requestToOpenSurveyREST = (t, d) => {
+    requestToOpenSurveyREST = (t, d, ts) => {
 
         compo.setState({ isLoading: true });
         var data = JSON.stringify({
             title: t,
             description: d,
+            theme_ids : ts,
         });
         console.log(data);
 
@@ -239,7 +240,7 @@ class OpenSurveyButton extends React.Component {
 Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
     let _title = "";
     let _description = "";
-    let _themes = [];
+    let _theme_ids = [];
 
     let getTitle = function (e) {
         _title = e.target.value;
@@ -263,11 +264,11 @@ Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
         let box = e.target;
 
         if (box.checked) {
-            _themes.push(box.value);
+            _theme_ids.push(box.value);
         } else if (box.checked == false) {
-            removeItem(_themes, box.value);
+            removeItem(_theme_ids, box.value);
         }
-        console.log(_themes);
+        console.log(_theme_ids);
     }
 
     this.create({
@@ -292,11 +293,11 @@ Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
                 action: function (popup) {
                     console.log(_title);
                     console.log(_description);
-                    if ((_themes.length > 0)
+                    if ((_theme_ids.length > 0)
                         && (_title.length !== 0)
                         && (_description.length !== 0)) {
-                        //TODO : add the _themes to the callback function 
-                        callbackConfirm(_title, _description);
+                        //TODO : add the _theme_ids to the callback function 
+                        callbackConfirm(_title, _description, _theme_ids);
                         popup.close();
                     } else { // popup if information are missing
                         alert("Make sure every information has been filled before creating the survey.")

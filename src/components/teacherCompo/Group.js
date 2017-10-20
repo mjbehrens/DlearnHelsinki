@@ -1,39 +1,55 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import Popup from 'react-popup';
+import { ROUTES, BACKEND_API } from '../../constants.js';
+
 
 import InfoStudent from "./InfoStudent";
 import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
 import AddStudent from "./AddStudent";
 
+import * as userActions from '../../actions/userActions';
+import { connect } from 'react-redux';
 
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi/';
+function mapStateToProps(store) {
+    return {
+        user: store.user.user,
+        classes: store.user.classes,
+    }
+}
 
-let POST_STUDENT = '';
 
-var compo;
+var compo = null;
 
 class Group extends React.Component {
 
     constructor(props) {
         super(props);
         compo = this;
+        console.log('CONSTRUCTOR');
+        console.log(compo.props);
+
         this.state = {
             picture: null,
+            group_id: props.group_id,
+            group_name: props.group_name,
             student: {
                 id: 0,
                 name: [],
                 password: null,
             }
         };
-
     }
 
-    addStudent = function () {
-        Popup.plugins().addStudent(function (infoStudent) {
+    /*
+    + Requiere the group_id to be pass when the button is render. otherwise it won't work 
+    + this should be investiget
+    */ 
+    onClickAddStudent = function (group_id) {
+        Popup.plugins().addStudent((infoStudent) => {
             let data = JSON.stringify({
-                "groud_id": compo.props.idGroup,
-                "class_id": 1,
+                "group_id": group_id,
+                "class_id": compo.props.user.classid,
                 "password": infoStudent._password,
                 "student": {
                     "username": infoStudent._username,
@@ -41,14 +57,16 @@ class Group extends React.Component {
                     "gender": infoStudent._gender
                 }
             });
-            let POST_STUDENT = 'teachers/1/create_student';
 
-            fetch(ORIGIN + POST_STUDENT, {
+            let POST_STUDENT = 'teachers/' + compo.props.user.id + '/create_student';
+            console.log(data);
+
+            fetch(BACKEND_API.ROOT + POST_STUDENT, {
                 method: "POST",
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Basic ' + btoa('teacher:password')
+                    'Authorization': 'Basic ' + compo.props.user.hash
                 },
                 body: data,
             }).then(function (response) {
@@ -58,6 +76,7 @@ class Group extends React.Component {
                     compo.props.callbackGM();
                 } else {
                     console.log('Network response was not ok.');
+                    alert(response.body);
                 }
             }).catch(function (err) {
                 // Error :(
@@ -69,35 +88,17 @@ class Group extends React.Component {
 
     onClickStudent = (student) => {
         Popup.plugins().studentInformation(this.updateState, student, this.props.listGroups);
-
-        // open a new suvey
-
-        if (this.state.open === true) {
-            Popup.plugins().createSurveyForm(this.updateState);
-
-        } else {
-            //close the previously opened survey
-            if (this.state.open === false) {
-                console.log('Survey close');
-                this.setState({
-                    ...this.state,
-                    open: true,
-                    text: "Open survey"
-                });
-            }
-        }
     }
-    //                 <img src={this.state.picture} width="30" height="30" alt="info"/>
 
     render() {
         return (
-            <div className="row">
-                {this.props.name}
+            <div className="column">
+                {this.props.group_name}
                 <ul className="list-group">
                     {this.props.list.map(function (listValue) {
                         return <li className="list-group-item"><button onClick={() => compo.onClickStudent(listValue)}>{listValue.username}</button></li>;
                     })}
-                    <li className="list-group-item"><button onClick={compo.addStudent}>+</button></li>
+                    <li className="list-group-item"><button onClick={() => compo.onClickAddStudent(this.props.group_id)}>+</button></li>
                 </ul>
             </div>
         )
@@ -109,7 +110,6 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
     let _gender = null;
     let _age = null;
     let _studentId = null;
-    console.log('Hey');
 
     let getTitle = function (e) {
         _title = e.target.value;
@@ -138,20 +138,14 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
         buttons: {
             left: [{
                 text: 'Quit',
-                className: null, // optional
+                className: null, 
                 action: function (popup) {
-                    //do things
+                    //this is bad...
+                    compo.props.callbackGM();
                     popup.close();
                 }
             }],
-            /* right: [{
-                 text: 'Confirm',
-                 className: 'success', // optional
-                 action: function (popup) {
-                     callbackConfirm(_title);
-                     popup.close();
-                 }
-             }]*/
+           
         },
         className: null, // or string
         noOverlay: true, // hide overlay layer (default is false, overlay visible)
@@ -189,9 +183,9 @@ Popup.registerPlugin('addStudent', function (callbackConfirm) {
             onChangeAge={getAge}
             onChangeGender={getGender}
             onChangePassword={getPassword}
-            username={"New student - Username"}
-            age={"New student - Age"}
-            password={"New student - Password"} />,
+            username={"Username"}
+            age={"Age"}
+            password={"Password"} />,
         buttons: {
             left: [{
                 text: 'Quit',
@@ -222,4 +216,4 @@ Popup.registerPlugin('addStudent', function (callbackConfirm) {
     });
 });
 
-export default Group;
+export default connect(mapStateToProps)(Group);

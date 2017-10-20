@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 function mapStateToProps(store) {
     return {
         user: store.user.user,
-        //classes: store.classroom.classes,
+        classes: store.classroom.classes,
     }
 }
 

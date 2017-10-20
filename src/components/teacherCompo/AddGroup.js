@@ -12,7 +12,8 @@ class AddGroup extends React.Component {
 
         return (
             <div>
-                <h6>Name:</h6><input></input>
+                <h6>Name:</h6><input type="text" placeholder={"group name"}
+                    onChange={this.props.onChangeGroupName} />
             </div>
         )
     }

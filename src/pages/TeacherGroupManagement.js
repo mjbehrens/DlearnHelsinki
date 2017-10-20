@@ -1,27 +1,32 @@
 import React from "react";
 import Popup from 'react-popup';
+import { ROUTES, BACKEND_API } from '../constants.js';
+import Spinner from 'react-spinner';
 
 import { Link } from 'react-router-dom';
-//import SurveyCreationForm from './SurveyCreationForm.js'
 
-//import infoGroupManagement from "../res/icons/icon.png";
 import Group from "../components/teacherCompo/Group";
 import InfoStudent from "../components/teacherCompo/InfoStudent";
 import AddGroup from "../components/teacherCompo/AddGroup";
 
+import * as userActions from '../actions/userActions';
+import { connect } from 'react-redux';
 
+function mapStateToProps(store) {
+    return {
+        user: store.user.user,
+        classes: store.user.classes,
+    }
+}
 
-//const groupsJSON = '[{"group_id" : 1, "grpName" : "Grp1", "students" : [{"_id" : 1, "lastname" : "Meikäläinen", "firstname" : "Matti", "username" : "iloinen tanssiva aurinko"},{"_id" : 2, "lastname" : "Jo", "firstname" : "Doe", "username" : "iloinen tanssiva aurinko"}]},{"group_id" : 2, "grpName" : "Grp2", "students" : [{"_id" : 3, "lastname" : "Thomas", "firstname" : "Mimi", "username" : "iloinen tanssiva aurinko"}, {"_id" : 3, "lastname" : "Jean", "firstname" : "Dujardin", "username" : "iloinen tanssiva aurinko"}]}]';
-const ORIGIN = 'https://dlearn-helsinki-backend.herokuapp.com/webapi/';
-var GET_GROUPS = '';
 var groups = [];
 var listGrps = [];
 
-var compo ;
+var compo;
 
 class TeacherGroupManagement extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         compo = this;
         groups = [];
@@ -31,96 +36,101 @@ class TeacherGroupManagement extends React.Component {
             listGrps: [], //id and name
             groups: [], // students in groups
             //picture: infoGroupManagement,
+            isLoading: true,
         };
     }
 
-    buildRequestREST = function() {
-        var s = '';
-        // Build request here
-        // teachers/{teacher_id}/classes/{class_id}/groups/
-
+    componentDidMount() {
+        this.getGroupsREST();
     }
 
-    getGroupsREST = function() {
 
-        let GET_GROUPS = 'teachers/1/classes/1/groups';
-        
-        fetch(ORIGIN + GET_GROUPS, {
+    getGroupsREST = function () {
+        compo.setState({ isLoading: true });
+
+        let GET_GROUPS = 'teachers/' + compo.props.user.id + '/classes/' + compo.props.user.classid + '/groups';
+
+        fetch(BACKEND_API.ROOT + GET_GROUPS, {
             method: "GET",
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Basic ' + btoa('teacher:password') // This needs to be changed in the final version...
+                'Authorization': 'Basic ' + compo.props.user.hash // This needs to be changed in the final version...
             }
-        }).then(function(response) {
-            if(response.ok) {
+        }).then(function (response) {
+            if (response.ok) {
                 response.json().then(data => {
                     groups = data;
-                    compo.loadStudentsGraphs();
-
+                    compo.loadStudentsGroups();
                 });
-            }else {
+            } else {
                 console.log('Network response was not ok.');
             }
+            compo.setState({ isLoading: false });
         }).catch(function (err) {
             // Error
             console.log(err);
         });
     }
 
-    componentDidMount() {
-        this.buildRequestREST();
-        this.getGroupsREST();
-    }
 
-    loadStudentsGraphs = function() {
+    //
+    loadStudentsGroups = function () {
         let listGroups = [];
         //to change and go to students
         this.loadGroups();
-        groups.forEach(function(g) {
-            listGroups.push(<div key = {g._id}><Group list={g.students} name={g.name} listGroups={compo.state.listGrps} callbackGM={compo.getGroupsREST}/></div>);
+        groups.forEach(function (g) {
+            listGroups.push(<div key={g._id}><Group list={g.students} group_name={g.name} group_id={g._id} listGroups={compo.state.listGrps} callbackGM={compo.getGroupsREST} /></div>);
         });
-        console.log('Here');
-        this.setState({groups : listGroups});
+        this.setState({ groups: listGroups });
         console.log(groups);
     }
 
-    loadGroups = function() {
+    loadGroups = function () {
+
         let listGroups = [];
         //to change and go to students
-        groups.forEach(function(g) {
-            listGroups.push({groupId : g._id, groupName: g.name});
+        groups.forEach(function (g) {
+            listGroups.push({ groupId: g._id, groupName: g.name });
         });
-        console.log('Ici');
         console.log(listGroups);
-        this.setState({listGrps : listGroups});
+        this.setState({ listGrps: listGroups });
+
     }
 
-    addGroup = function () {
-        Popup.plugins().addGroup();
+    onClickAddGroup = function () {
+        Popup.plugins().addGroup(function (group_name) {
+            compo.setState({ isLoading: true });
+            let POST_CREATE_GROUPS = 'teachers/' + compo.props.user.id + '/classes/' + compo.props.user.classid + '/groups/';
 
-        /** fetch(ORIGIN + this.state.currentQuestion.id, {
-            method: "POST",
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa('teacher:password')
-            },
-            body: data
-        }).then(function (response) {
-            if (response.ok) {
-                console.log(response.body)
-                console.log("answer put on server")
-            } else {
-                console.log('Network response was not ok.');
-            }
-        }).catch(function (err) {
-            // Error :(
-            console.log(err);
-        }); */
-        console.log("Add a group");
+            let data = JSON.stringify({
+                "name": group_name,
+            });
+
+            fetch(BACKEND_API.ROOT + POST_CREATE_GROUPS, {
+                method: "POST",
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + compo.props.user.hash,
+                },
+                body: data
+            }).then(function (response) {
+                if (response.ok) {
+                    console.log(response.body)
+                    compo.getGroupsREST();
+                } else {
+                    console.log('Network response was not ok.');
+                }
+            }).catch(function (err) {
+                // Error :(
+                console.log(err);
+            });
+        });
+
+
     }
 
-    deleteGroup = function () {
+    onClickDeleteGroup = function () {
         /** fetch(ORIGIN + this.state.currentQuestion.id, {
             method: "POST",
             headers: {
@@ -144,32 +154,46 @@ class TeacherGroupManagement extends React.Component {
 
     }
 
-    render(){
-        return (
-            <div className="container">
-                <h1>Group Management</h1>
-                <div className="row">
-                    {this.state.groups}
+    render() {
 
+        if (this.state.isLoading) {
+            return (
+                <div className="container">
+                    <h1>Group Management</h1>
+                    <br/>
+                    <div className="spinner-container">
+                        <Spinner />
+                    </div>
                 </div>
-                <button onClick={this.addGroup}>Add a group</button>
-                <button onClick={this.deleteGroup}>Delete a group</button>
-            </div>
-        )
+
+            )
+        } else {
+            return (
+                <div className="container">
+                    <h1>Group Management</h1>
+                    <div className="row">
+                        {this.state.groups}
+
+                    </div>
+                    <button onClick={this.onClickAddGroup}>Add a group</button>
+                    <button disabled={true} onClick={this.onClickDeleteGroup}>Delete a group</button>
+                </div>
+            )
+        }
+
     }
 }
 
-Popup.registerPlugin('addGroup', function () {
-    let _username = null;
+Popup.registerPlugin('addGroup', function (callbackConfirm) {
+    let _group_name = '';
 
-    let getUsername = function (e) {
-        _username = e.target.value;
+    let getGroupName = function (e) {
+        _group_name = e.target.value;
     };
 
     this.create({
         title: 'Add group',
-        content: <AddGroup
-            />,
+        content: <AddGroup onChangeGroupName={getGroupName} />,
         buttons: {
             left: [{
                 text: 'Quit',
@@ -183,8 +207,13 @@ Popup.registerPlugin('addGroup', function () {
                 text: 'Confirm',
                 className: 'success', // optional
                 action: function (popup) {
-                    //callbackConfirm(_username);
-                    popup.close();
+                    if (_group_name.length > 0) {
+                        callbackConfirm(_group_name);
+                        popup.close();
+                    } else {
+                        alert("The new group must have a name !")
+                    }
+
                 }
             }]
         },
@@ -196,5 +225,4 @@ Popup.registerPlugin('addGroup', function () {
 });
 
 
-
-export default TeacherGroupManagement;
+export default connect(mapStateToProps)(TeacherGroupManagement);

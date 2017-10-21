@@ -23,6 +23,8 @@ class InfoStudent extends React.Component {
     constructor(props) {
         super(props);
         compo = this;
+        this.props.onChangesToApply(true);
+        
         new_password = '';
         select_value = null;
         this.state = {
@@ -32,6 +34,8 @@ class InfoStudent extends React.Component {
 
     componentDidMount(){
         this.setState();
+        compo.props.onChangesToApply(false);
+        
     }
 
     onClickResetPassword = function (studentId, compo) {
@@ -56,7 +60,7 @@ class InfoStudent extends React.Component {
                 body: data
             }).then(function (response) {
                 if (response.ok) {
-                    alert('Password change with success. New password = \"' + new_password + '\"  (press \'Quit\' to see the changes).');
+                    alert('Password change with success. New password = \"' + new_password + '\"  ');
                 } else {
                     console.log('Network response was not ok.');
                     alert('Problem while updating password.')
@@ -88,6 +92,8 @@ class InfoStudent extends React.Component {
             }).then(function (response) {
                 if (response.ok) {
                     alert('The group\'s student has been change ! (press \'Quit\' to see the changes)');
+                    compo.props.onChangesToApply(true);
+                    
                 } else {
                     console.log('Network response was not ok.');
                     alert('Problem while modifing the group...')
@@ -121,7 +127,6 @@ class InfoStudent extends React.Component {
 
     onChangeSelect = function (e) {
         select_value = e.target.value;
-        console.log(select_value);
     }
 
     onChangePassword = function (e) {
@@ -152,7 +157,7 @@ class InfoStudent extends React.Component {
         else {
             return (
                 <div>
-                    <h6>Name: {this.props.title}</h6>
+                    <h6>Name: {this.props.username}</h6>
                     <h6>Gender: {this.props.gender}</h6>
                     <h6>Age: {this.props.age}</h6>
                     <h6>Change group:</h6>
@@ -162,7 +167,7 @@ class InfoStudent extends React.Component {
                     {
                         /*<br />
                         <div>
-                            <LinearGraph name={this.props.title} parameters={parameters} />
+                            <LinearGraph name={this.props.username} parameters={parameters} />
         
                         </div>
                         */

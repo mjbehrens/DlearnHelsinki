@@ -60,8 +60,7 @@ class InfoStudent extends React.Component {
                 body: data
             }).then(function (response) {
                 if (response.ok) {
-                    alert('Password change with success. New password = \"' + new_password + '\"  (press \'Quit\' to see the changes).');
-                    compo.props.onChangesToApply(true);                    
+                    alert('Password change with success. New password = \"' + new_password + '\"  ');
                 } else {
                     console.log('Network response was not ok.');
                     alert('Problem while updating password.')

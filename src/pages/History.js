@@ -70,26 +70,53 @@ class History extends Component {
         return students;
     }
 
-    // You can narrow down the dates and search by name at the same time, but
-    // the process is buggy and you will have to reset if there is a typo.
     doSearch = function (queryText) {
         this.setState({ warning: "" });
 
-        if (this.state.dateSelected) {
-            tempData = this.state.filteredData;
-        } else {
-            tempData = sampleData;
-        }
+        //if (this.state.dateSelected) {
+        //    tempData = this.state.filteredData;
+        //} else {
+        tempData = sampleData;
+        //}
         var queryResult = [];
-        tempData.forEach(function (i) {
-            if ((i.title == null || i.start_date == null)
-                || (i.title.toLowerCase().indexOf(queryText) != -1)
-                || (i._id.toString().indexOf(queryText) != -1)
-                || (i.start_date.indexOf(queryText) != -1)) {
 
-                queryResult.push(i);
-            }
-        });
+        console.log(tempData);
+        // different research for the different types
+        switch (this.state.researchType) {
+            case 'student':
+                tempData.forEach(function (i) {
+                    if ((i.username == null)
+                        || (i.username.toLowerCase().indexOf(queryText) != -1)
+                        || (i._id.toString().indexOf(queryText) != -1)) {
+                        queryResult.push(i);
+                    }
+                });
+                break;
+            case 'group':
+                tempData.forEach(function (i) {
+                    if ((i.name == null)
+                        || (i.name.toLowerCase().indexOf(queryText) != -1)
+                        || (i._id.toString().indexOf(queryText) != -1)) {
+                        queryResult.push(i);
+                    }
+                });
+                break;
+            case 'survey':
+                tempData.forEach(function (i) {
+                    if ((i.title == null || i.start_date == null)
+                        || (i.title.toLowerCase().indexOf(queryText) != -1)
+                        || (i._id.toString().indexOf(queryText) != -1)
+                        || (i.start_date.indexOf(queryText) != -1)) {
+
+                        queryResult.push(i);
+                    }
+                });
+                break;
+
+            default:
+                break;
+        }
+
         console.log(queryResult);
         this.setState({
             warning: "",
@@ -178,6 +205,7 @@ class History extends Component {
         }
     }
 
+    // Was used for searching with calendar
     selectRange = function (start, end) {
         let narrowDown = [];
         let compo = this;
@@ -211,7 +239,6 @@ class History extends Component {
                 filteredData: narrowDown,
                 dateSelected: true
             });
-
         }
     }
 
@@ -224,7 +251,7 @@ class History extends Component {
                         return s._id === compo.state.selectedItemId;
                     });
                     return (
-                        <GraphRendererForSurveys survey={s[0]} groups={this.state.groups}/>
+                        <GraphRendererForSurveys survey={s[0]} groups={this.state.groups} />
                     )
                     break;
                 case 'group':
@@ -247,12 +274,11 @@ class History extends Component {
                 default:
                     break;
             }
-
-
         }
     }
 
     OnClickSurveys = function () {
+        sampleData = this.state.surveys;
         this.setState({
             filteredData: this.state.surveys,
             researchType: 'survey',
@@ -261,25 +287,24 @@ class History extends Component {
     }
 
     OnClickGroups = function () {
+        sampleData = this.state.groups;
         this.setState({
             filteredData: this.state.groups,
             researchType: 'group',
             selectedItemId: null,
 
         });
-        
+
     }
 
     OnClickStudents = function () {
+        sampleData = this.state.students;
         this.setState({
             filteredData: this.state.students,
             researchType: 'student',
             selectedItemId: null,
         })
     }
-
-
-
 
     render() {
 
@@ -324,9 +349,6 @@ class History extends Component {
 
                         </div>
                         <div className="col-sm-8" hidden={this.state.selectedItemId == null}>
-                            {
-                                // TODO : Give all the information of the survey to GraphRenderer (if possible) 
-                            }
                             {compo.selectGraphRenderer()}
                         </div>
                     </div>

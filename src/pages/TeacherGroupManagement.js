@@ -197,7 +197,7 @@ Popup.registerPlugin('addGroup', function (callbackConfirm) {
         content: <AddGroup onChangeGroupName={getGroupName} />,
         buttons: {
             left: [{
-                text: 'Quit',
+                text: 'Cancel',
                 className: null, // optional
                 action: function (popup) {
                     //do things

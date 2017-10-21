@@ -62,7 +62,7 @@ class HistoryFinder extends Component {
                     <button className="btn btn-primary"
                         style={margins}
                         onClick={this.props.sortData}>
-                        Sort by Date
+                        Sort
                     </button>
                 </div>
                 {

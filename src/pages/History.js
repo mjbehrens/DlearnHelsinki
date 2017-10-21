@@ -267,7 +267,7 @@ class History extends Component {
             selectedItemId: null,
 
         });
-        console.log(this.state.groups);
+        
     }
 
     OnClickStudents = function () {
@@ -296,14 +296,13 @@ class History extends Component {
             )
         }
         else {
-            console.log(this.state);
 
             return (
                 <div className="centered">
                     <h1> History </h1>
                     <div className="row">
                         <div className="left-align col-sm-4">
-                            <div>
+                            <div className="btn-group">
                                 <button className="btn btn-primary" onClick={this.OnClickSurveys.bind(this)}>Surveys</button>
                                 <button className="btn btn-primary" onClick={this.OnClickStudents.bind(this)}>Students</button>
                                 <button className="btn btn-primary" onClick={this.OnClickGroups.bind(this)}>Groups</button>

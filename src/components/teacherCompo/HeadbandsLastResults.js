@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 function mapStateToProps(store) {
     return {
         user: store.user.user,
+        classes: store.classroom.classes,
     }
 }
 
@@ -30,7 +31,6 @@ const styleButton = {
 var GET_GROUPS = '';
 
 //Get unique groups for the teacher from the database
-var groups = [];
 var compo;
 
 class HeadbandsLastResults extends React.Component {
@@ -39,26 +39,32 @@ class HeadbandsLastResults extends React.Component {
         super(props);
 
         compo = this;
-        groups = [];
 
+        let classroom = compo.props.classes.filter(function(c){
+            return c._id === compo.props.user.classid;
+        });
+          
         this.state = {
-            isLoading: true,
-            buttonList: [],
+            class_name : classroom[0].name,
+            isLoading: false,
+            buttonList: compo.createGroupButtons(classroom[0].groups),
             group_id: null,
-            group_name: "Class",
+            group_name: classroom[0].name,
             survey: this.props.survey,
         };
-
-        this.buildRequestREST();
-        this.getGroupsREST();
     }
 
-    tempParsingJson = function () {
+    componentDidMount(){
+       
+    }
+
+    createGroupButtons = function (groups) {
         var buttonList = [];
         groups.forEach(function (element) {
+            console.log(element);
             buttonList.push(
-                <button
-                    onClick={compo.onClickButton()}
+                <button key={element._id}
+                    onClick={compo.onClickGroupButton()}
                     type="button"
                     className="btn btn-primary"
                     value={element._id}>
@@ -66,11 +72,7 @@ class HeadbandsLastResults extends React.Component {
                 </button>)
         });
 
-        this.setState({
-            ...this.state,
-            isLoading: false,
-            buttonList: buttonList
-        });
+        return buttonList;
 
     }
 
@@ -81,47 +83,20 @@ class HeadbandsLastResults extends React.Component {
         }
     }
 
-    buildRequestREST = function () {
-        var s = '';
-        // Build request here
-        // teachers/{teacher_id}/classes/{class_id}/groups/
-        s = s + 'teachers/' + this.props.user.id + '/classes/' + this.props.user.classid + '/groups';
-
-        GET_GROUPS = s;
-    }
-
-    // Get all the current groups of the class
-    // WARNING : if the groups has been modified, the answer from this survey will not appear 
-    getGroupsREST = function () {
-
-        compo.setState({ isLoading: true });
-
-        fetch(BACKEND_API.ROOT + GET_GROUPS, {
-            method: "GET",
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Basic ' + this.props.user.hash,
-            }
-        }).then(function (response) {
-            if (response.ok) {
-                response.json().then(data => {
-                    groups = data;
-                    compo.tempParsingJson();
-                });
-            } else {
-                console.log('Network response was not ok.');
-            }
-        }).catch(function (err) {
-            // Error
-            console.log(err);
-        });
-    }
-
-    onClickButton = () => (e) => {
+    onClickGroupButton = () => (e) => {
         e.preventDefault();
         compo.setState({
             group_id: e.target.value,
             group_name: e.target.innerText
+        });
+    }
+
+    onClickClassButton = () => {
+        //e.preventDefault();
+        console.log("coucou");
+        compo.setState({
+            group_id: null,
+            group_name: this.state.class_name,
         });
     }
 
@@ -131,7 +106,7 @@ class HeadbandsLastResults extends React.Component {
         let parameters = {
             teachers: this.props.user.id,
             students: null,
-            classes: this.props.user.classid, // TODO : UPDATE WITH REAL VALUE !
+            classes: this.props.user.classid, 
             groups: compo.state.group_id,
             surveys: compo.state.survey._id,
         }
@@ -149,11 +124,11 @@ class HeadbandsLastResults extends React.Component {
                 <div className="container">
                     <div className="jumbotron">
                         <div className="text-left">
-                            <div className="row">
+                            <div className="row"> 
                                 <div className="col-sm-3" style={styleButton}>
-                                    <div key={1} className="btn-group-vertical">
+                                    <div className="btn-group-vertical">
                                         {compo.state.buttonList}
-                                        <button type="button" className="btn btn-primary"> Class </button>
+                                        <button type="button" className="btn btn-primary" onClick={this.onClickClassButton.bind(this)}> {this.state.class_name} </button>
                                     </div>
                                 </div>
                                 <div className="col-sm-7">

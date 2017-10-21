@@ -110,14 +110,10 @@ class Group extends React.Component {
 }
 
 Popup.registerPlugin('studentInformation', function (callbackConfirm, student, listGroups) {
-    let _title = null;
     let _gender = null;
     let _age = null;
     let _studentId = null;
-
-    let getTitle = function (e) {
-        _title = e.target.value;
-    };
+    let _applied_changes = false;
 
     let getGender = function (e) {
         _gender = e.target.value;
@@ -128,13 +124,17 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
     let getStudentId = function (e) {
         _studentId = e.target.value;
     };
+    let getChanges = function (hasChanged) {
+        _applied_changes = hasChanged;
+    };
 
     this.create({
         title: 'Student information',
-        content: <InfoStudent onChangeTitle={getTitle}
+        content: <InfoStudent 
             onChangeGender={getGender}
             onChangeAge={getAge}
-            title={student.username}
+            onChangesToApply={getChanges}
+            username={student.username}
             gender={student.gender}
             age={student.age}
             listGroups={listGroups}
@@ -145,7 +145,9 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
                 className: null, 
                 action: function (popup) {
                     //this is bad...
-                    compo.props.callbackGM();
+                    if(_applied_changes){
+                        compo.props.callbackGM();
+                    }
                     popup.close();
                 }
             }],

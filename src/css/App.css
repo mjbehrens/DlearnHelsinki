@@ -86,6 +86,11 @@ section {
     margin: 5px;
 }
 
+.disable-div {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
 /* CSS SPINNER */
 .spinner-container{
     position: absolute;

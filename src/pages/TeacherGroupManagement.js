@@ -19,8 +19,8 @@ function mapStateToProps(store) {
     }
 }
 
-var groups = [];
-var listGrps = [];
+var groups = []; // groups of this class
+var allStudentsList = []; // student of all the school
 
 var compo;
 
@@ -30,11 +30,13 @@ class TeacherGroupManagement extends React.Component {
         super(props);
         compo = this;
         groups = [];
-        listGrps = [];
+        allStudentsList = []; 
+        
 
         this.state = {
             listGrps: [], //id and name
             groups: [], // students in groups
+            allStudentsList : allStudentsList,
             //picture: infoGroupManagement,
             isLoading: true,
         };
@@ -42,6 +44,7 @@ class TeacherGroupManagement extends React.Component {
 
     componentDidMount() {
         this.getGroupsREST();
+        this.getAllStudents();
     }
 
 
@@ -72,6 +75,34 @@ class TeacherGroupManagement extends React.Component {
         });
     }
 
+    getAllStudents = function () {
+        compo.setState({ isLoading: true });
+
+        let GET_GROUPS = 'teachers/' + compo.props.user.id + '/students/';
+
+        fetch(BACKEND_API.ROOT + GET_GROUPS, {
+            method: "GET",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Basic ' + compo.props.user.hash // This needs to be changed in the final version...
+            }
+        }).then(function (response) {
+            if (response.ok) {
+                response.json().then(data => {
+                    allStudentsList = data;
+                    compo.loadStudentsGroups();
+                    
+                });
+            } else {
+                console.log('Network response was not ok.');
+            }
+            compo.setState({ isLoading: false });
+        }).catch(function (err) {
+            // Error
+            console.log(err);
+        });
+    }
+
 
     //
     loadStudentsGroups = function () {
@@ -79,7 +110,7 @@ class TeacherGroupManagement extends React.Component {
         //to change and go to students
         this.loadGroups();
         groups.forEach(function (g) {
-            listGroups.push(<div key={g._id}><Group list={g.students} group_name={g.name} group_id={g._id} listGroups={compo.state.listGrps} callbackGM={compo.getGroupsREST} /></div>);
+            listGroups.push(<div key={g._id}><Group allStudentsList={allStudentsList} list={g.students} group_name={g.name} group_id={g._id} listGroups={compo.state.listGrps} callbackGM={compo.getGroupsREST} /></div>);
         });
         this.setState({ groups: listGroups });
         console.log(groups);
@@ -100,7 +131,7 @@ class TeacherGroupManagement extends React.Component {
     onClickAddGroup = function () {
         Popup.plugins().addGroup(function (group_name) {
             compo.setState({ isLoading: true });
-            let POST_CREATE_GROUPS = 'teachers/' + compo.props.user.id + '/classes/' + compo.props.user.classid + '/groups/';
+            let POST_CREATE_GROUPS = 'teachers/' + compo.props.user.id + '/classes/' + compo.props.user.classid + '/groups?all=false';
 
             let data = JSON.stringify({
                 "name": group_name,
@@ -165,9 +196,9 @@ class TeacherGroupManagement extends React.Component {
                         <Spinner />
                     </div>
                 </div>
-
             )
         } else {
+            
             return (
                 <div className="container">
                     <h1>Group Management</h1>
@@ -197,7 +228,7 @@ Popup.registerPlugin('addGroup', function (callbackConfirm) {
         content: <AddGroup onChangeGroupName={getGroupName} />,
         buttons: {
             left: [{
-                text: 'Cancel',
+                text: 'Quit',
                 className: null, // optional
                 action: function (popup) {
                     //do things

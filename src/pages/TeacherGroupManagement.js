@@ -100,7 +100,7 @@ class TeacherGroupManagement extends React.Component {
     onClickAddGroup = function () {
         Popup.plugins().addGroup(function (group_name) {
             compo.setState({ isLoading: true });
-            let POST_CREATE_GROUPS = 'teachers/' + compo.props.user.id + '/classes/' + compo.props.user.classid + '/groups/';
+            let POST_CREATE_GROUPS = 'teachers/' + compo.props.user.id + '/classes/' + compo.props.user.classid + '/groups?all=false';
 
             let data = JSON.stringify({
                 "name": group_name,
@@ -197,7 +197,7 @@ Popup.registerPlugin('addGroup', function (callbackConfirm) {
         content: <AddGroup onChangeGroupName={getGroupName} />,
         buttons: {
             left: [{
-                text: 'Cancel',
+                text: 'Quit',
                 className: null, // optional
                 action: function (popup) {
                     //do things

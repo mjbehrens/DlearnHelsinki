@@ -161,7 +161,7 @@ class History extends Component {
 
         compo.setState({ isLoading: true });
 
-        let GET_CLASS = 'teachers/' + this.props.user.id + '/classes/' + this.props.user.classid + '/groups/';
+        let GET_CLASS = 'teachers/' + this.props.user.id + '/classes/' + this.props.user.classid + '/groups?all=true';
 
         fetch(BACKEND_API.ROOT + GET_CLASS, {
             method: "GET",

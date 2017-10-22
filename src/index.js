@@ -6,6 +6,14 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import store from "./store";
 
+var $ = require('jquery');
+var Popper = require('popper.js/dist/umd/popper.js');
+
+window.jQuery = window.$ = $;
+window.Popper = Popper;
+
+require('bootstrap');
+
 ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>

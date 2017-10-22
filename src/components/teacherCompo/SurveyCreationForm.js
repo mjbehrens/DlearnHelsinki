@@ -29,7 +29,7 @@ class SurveyCreationFrom extends React.Component {
                 <input type="checkbox" name="Opinions and arguments" value={2} onChange={this.props.onChangeThemes}/> Opinions and arguments <br />
                 <input type="checkbox" name="Persistence" value={3} onChange={this.props.onChangeThemes}/> Persistence <br />
                 <input type="checkbox" name="Responsibility" value={4} onChange={this.props.onChangeThemes}/> Responsibility <br />
-                <input type="checkbox" name="Sutainable work - respect" value={5} onChange={this.props.onChangeThemes}/> Sutainable work - respect <br />
+                <input type="checkbox" name="Sustainable work - respect" value={5} onChange={this.props.onChangeThemes}/> Sutainable work - respect <br />
 
 
             </div>

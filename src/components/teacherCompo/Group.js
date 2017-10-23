@@ -45,11 +45,13 @@ class Group extends React.Component {
     */
     onClickAddStudent = function (group_id, allStudentsList) {
         Popup.plugins().addStudent((infoStudent) => {
+            console.log(infoStudent);
             let data = JSON.stringify({
                 "group_id": group_id,
                 "class_id": compo.props.user.classid,
                 "password": infoStudent._password,
                 "student": {
+                    "_id": infoStudent._id,
                     "username": infoStudent._username,
                     "age": infoStudent._age,
                     "gender": infoStudent._gender
@@ -73,7 +75,7 @@ class Group extends React.Component {
                     compo.props.callbackGM();
                 } else {
                     console.log('Network response was not ok.');
-                    alert(response.body);
+                    alert("Error while creating the account. Please check if this account does not already exist.");
                 }
             }).catch(function (err) {
                 // Error :(
@@ -159,6 +161,7 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
 });
 
 Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
+    let _id = null;
     let _username = '';
     let _age = 0;
     let _gender = '';
@@ -167,12 +170,12 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
     let onSelectStudent = function (e) {
         let id = e.target.value;
 
-
         let student = allStudentsList.filter(function (stud) {
             return stud._id == id;
         })[0];
 
         if (student !== null) {
+            _id = student._id;
             _username = student.username;
             _age = student.age;
             _gender = student.gender;
@@ -200,13 +203,19 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
     };
 
     let checkForm = function () {
-        if ((_username.length < 5)
-            || (_age < 1)
-            || (_password.length < 5)
-            || (_gender < 1)) {
-            return false;
-        }else{
+
+        console.log("student info");        
+        console.log(_username.length);
+        console.log(_password.length);
+        console.log(_gender.length);
+        
+        if ((_username.length > 5)
+            && (_age > 1) 
+            && (_password.length > 5) 
+            && (_gender.length > 1) ) {
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -235,18 +244,28 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
                 text: 'Confirm',
                 className: 'success', // optional
                 action: function (popup) {
-                    if(checkForm){
-                        callbackConfirm({
-                            _username: _username,
-                            _age: _age,
-                            _gender: _gender,
-                            _password: _password
-                        });
+                    if (checkForm()) {
+                        if (_id !== null) {
+                            callbackConfirm({
+                                _id: _id,
+                                _username: _username,
+                                _age: _age,
+                                _gender: _gender,
+                                _password: _password
+                            });
+                        } else {
+                            callbackConfirm({
+                                _username: _username,
+                                _age: _age,
+                                _gender: _gender,
+                                _password: _password
+                            });
+                        }
                         popup.close();
-                    }else{
-                        alert('')
+                    } else {
+                        alert('The information are not filled correctly.')
                     }
-                   
+
                 }
             }]
         },

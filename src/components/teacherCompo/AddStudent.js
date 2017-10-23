@@ -7,13 +7,13 @@ class AddStudent extends React.Component {
         super(props);
 
         this.state = {
-            getStudentSelected : true,
-            createStudentSelected : false,
+            getStudentSelected: false,
+            createStudentSelected: true,
         }
     }
 
-    componentDidMount(){
-        document.getElementById('create').checked = true; 
+    componentDidMount() {
+        document.getElementById('get').checked = true;
     }
 
     renderExistedStudent = function () {
@@ -21,7 +21,7 @@ class AddStudent extends React.Component {
         console.log(lst);
         let options = [];
         if (lst != null) {
-            options.push(<option value={null}> {"default"} </option>);
+            options.push(<option value={-1}> {"select a student..."} </option>);
             lst.forEach(function (s) {
                 options.push(<option value={s._id}> {s.username} </option>)
             });
@@ -53,53 +53,50 @@ class AddStudent extends React.Component {
         )
     }
 
-    renderFrom =  function (e)  {
+    renderFrom = function (e) {
 
-        /*
-        * UNCOMMENT WHEN BACK END READY TO SUPPORT ASS ALREADY EXISTING STUDENTS
-        if(e.target.id==="get"){
-            let checkGet = e.target;            
+
+        // UNCOMMENT WHEN BACK END READY TO SUPPORT ASS ALREADY EXISTING STUDENTS
+        if (e.target.id === "get") {
+            let checkGet = e.target;
             let checkCreate = document.getElementById('create');
-            if(checkGet.checked){
+            if (checkGet.checked) {
                 checkCreate.checked = false;
-            }else{
+            } else {
                 checkCreate.checked = true;
-            }  
-        }else if (e.target.id==="create"){
-            let checkGet = document.getElementById('get');            
+            }
+        } else if (e.target.id === "create") {
+            let checkGet = document.getElementById('get');
             let checkCreate = e.target;
-            if(checkCreate.checked){
+            if (checkCreate.checked) {
                 checkGet.checked = false;
-            }else{
+            } else {
                 checkGet.checked = true;
-            }    
+            }
         }
-        
-        
+
+
         this.setState({
-            getStudentSelected : !document.getElementById('get').checked,
-            createStudentSelected : !document.getElementById('create').checked,
-            
+            getStudentSelected: !document.getElementById('get').checked,
+            createStudentSelected: !document.getElementById('create').checked,
+
         })
-        */
-        
+
+
     }
 
     render() {
         return (
             <div>
-                
-                {
-                /*        * UNCOMMENT WHEN BACK END READY TO SUPPORT ASS ALREADY EXISTING STUDENTS
-                    <input type="checkbox" id="get" value={1} onChange={this.renderFrom.bind(this)} /> Get student <br />
-                   this.renderExistedStudent()
-                
-                <br/> 
-                <hr wight='2px'/>
-                <br/>
-                */
-                }
-                <input type="checkbox" id="create" value={2} onChange={this.renderFrom.bind(this)} /> Create a new student <br />
+
+
+                <input type="checkbox" id="get" value={1} onChange={this.renderFrom.bind(this)} /> Get a existing student <br />
+                {this.renderExistedStudent()}
+
+                <hr wight='2px' />
+
+
+                <input type="checkbox" id="create" value={2} onChange={this.renderFrom.bind(this)} /> Or create a new student <br />
                 {this.renderCreateNewStudent()}
             </div>
         )

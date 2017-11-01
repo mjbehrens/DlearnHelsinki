@@ -7,6 +7,7 @@ import { PersistGate } from 'redux-persist/es/integration/react'
 import { Provider } from "react-redux";
 import { BrowserRouter } from 'react-router-dom'
 
+// Required for bootstrap
 var $ = require('jquery');
 var Popper = require('popper.js/dist/umd/popper.js');
 
@@ -15,12 +16,14 @@ window.Popper = Popper;
 
 require('bootstrap');
 
+// Get persistent Redux store
 const { persistor, store } = configureStore()
 
 const onBeforeLift = () => {
   // take some action before the gate lifts
 }
 
+// Renders the App in the 'root' div of the page
 ReactDOM.render((
   <Provider store={store}>
     <PersistGate 
@@ -28,7 +31,7 @@ ReactDOM.render((
       onBeforeLift={onBeforeLift}
       persistor={persistor}>
       <BrowserRouter>
-	  <App />
+        <App />
       </BrowserRouter>
     </PersistGate>
   </Provider>

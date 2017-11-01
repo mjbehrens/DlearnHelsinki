@@ -19,6 +19,7 @@ import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
 import TeacherDashboard from './pages/TeacherDashboard.js';
 import TeacherGroupManagement from './pages/TeacherGroupManagement.js'
 
+// Bind props to Redux store
 function mapStateToProps(store) {
     return {
 	user: store.user.user,

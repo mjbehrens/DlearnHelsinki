@@ -1,3 +1,7 @@
+export const SETTINGS = {
+    DEBUG: true,
+}
+
 export const ROUTES = {
     ROOT: '/',
     LOGIN: '/login',

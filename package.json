@@ -24,7 +24,7 @@
     "react-spinner": "^0.2.7",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
-    "redux-persist": "^4.10.1",
+    "redux-persist": "^5.2.2",
     "redux-promise-middleware": "^4.4.1",
     "redux-thunk": "^2.2.0",
     "save": "^2.3.1",

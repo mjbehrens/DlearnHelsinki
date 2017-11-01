@@ -217,8 +217,10 @@ class OpenSurveyButton extends React.Component {
 
 	    var dispatchActions = () => {
 		this.props.dispatch(modalActions.setTitle(this.state.modalTitle))
-		this.props.dispatch(modalActions.setBody(this.state.modalBody))
-		this.props.dispatch(modalActions.setFooter(this.state.modalFooter))
+		// this.props.dispatch(modalActions.setBody(this.state.modalBody))
+		this.props.dispatch(modalActions.setBody('test'))
+		// this.props.dispatch(modalActions.setFooter(this.state.modalFooter))
+		this.props.dispatch(modalActions.setFooter('test'))
 		this.props.dispatch(modalActions.showModal())
 	    }
 

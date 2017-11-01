@@ -3,8 +3,8 @@ import $ from 'jquery';
 
 export default function reducer(state={
     title: 'My Modal Title',
-    body: <p>Modal body text goes here.</p>,
-    footer: <button type="button" className="btn btn-primary">OK</button>,
+    body: 'Modal body',
+    footer: 'Modal footer',
   }, action) {
 
     switch (action.type) {

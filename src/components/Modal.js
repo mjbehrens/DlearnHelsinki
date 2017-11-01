@@ -19,7 +19,7 @@ class Modal extends React.Component {
 
     render() {
 	return (
-	<div className="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="mainModalLabel" aria-hidden="true">
+	<div className="modal fade" id="mainModal" tabIndex="-1" role="dialog" aria-labelledby="mainModalLabel" aria-hidden="true">
 	    <div className="modal-dialog" role="document">
 		<div className="modal-content">
 		    <div className="modal-header">

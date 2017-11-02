@@ -173,10 +173,18 @@ class OpenSurveyButton extends React.Component {
         });
     }
 
+    dispatchActions = () => {
+	// this.props.dispatch(modalActions.setTitle(this.state.modalTitle))
+	// this.props.dispatch(modalActions.setBody(this.state.modalBody))
+	// this.props.dispatch(modalActions.setBody('test'))
+	// this.props.dispatch(modalActions.setFooter(this.state.modalFooter))
+	// this.props.dispatch(modalActions.setFooter('test'))
+	this.props.dispatch(modalActions.showModal())
+    }
+
     // executed when the user click on the survey button
     onClickSurvey = () => {
         // open a new suvey
-        console.log(this.state.survey);
         if (this.state.survey.open === false) {
 	    // Popup.plugins().createSurveyForm(this.requestToOpenSurveyREST);
 	    let _title = "";
@@ -215,17 +223,8 @@ class OpenSurveyButton extends React.Component {
 		checkCreateButtonState();
 	    }
 
-	    var dispatchActions = () => {
-		this.props.dispatch(modalActions.setTitle(this.state.modalTitle))
-		// this.props.dispatch(modalActions.setBody(this.state.modalBody))
-		this.props.dispatch(modalActions.setBody('test'))
-		// this.props.dispatch(modalActions.setFooter(this.state.modalFooter))
-		this.props.dispatch(modalActions.setFooter('test'))
-		this.props.dispatch(modalActions.showModal())
-	    }
-
 	    let updateModalFooter = () => {
-		this.props.dispatch(modalActions.setFooter(this.state.modalFooter))
+		// this.props.dispatch(modalActions.setFooter(this.state.modalFooter))
 	    }
 
 	    let checkCreateButtonState = () => {
@@ -246,34 +245,17 @@ class OpenSurveyButton extends React.Component {
 		}
 	    }
 	    
-	    this.setState({
-		...this.state,
-		modalTitle: 'Creation of a new survey',
-		modalBody: <SurveyCreationForm
-		    onChangeTitle={getTitle}
-		    onChangeDescription={getDescription}
-		    onChangeThemes={getThemes}
-		    title={"New Survey"}
-		    description={"new survey for today\'s exercices"} />,
-		modalFooter: <span><button type="button" className="btn btn-primary" data-dismiss="modal" data-target="#mainModal" onClick={() => this.requestToOpenSurveyREST(_title, _description, _theme_ids)} disabled={true}>Create</button>
-		    <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button></span>,
-	    }, dispatchActions)
+	    this.props.dispatch(modalActions.setName('OpenSurveyModal'))
+	    this.props.dispatch(modalActions.showModal())
 
         } else {
             //close the previously opened survey
             if (this.state.survey.open === true) {
-                console.log('Survey Close');
+                console.log('Close survey...');
                 // do the fetch for close
 
-		this.setState({
-		    ...this.state,
-		    modalTitle: 'Closing the current survey',
-		    modalBody: <p>You are about to close the survey.<br />
-                    The students will no longer be able to answer this survey after that.<br />
-			Do you really want to close the survey {this.state.survey.title} from {this.state.survey.start_date} ?</p>,
-		modalFooter: <span><button type="button" className="btn btn-primary" data-dismiss="modal" data-target="#mainModal" onClick={this.requestToCloseSurveyREST}>Close Survey</button>
-		    <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button></span>,
-		}, dispatchActions)
+		this.props.dispatch(modalActions.setName('CloseSurveyModal'))
+		this.props.dispatch(modalActions.showModal())
 
 		/*
                 Popup.create({

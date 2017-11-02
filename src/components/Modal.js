@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
+import ModalContents from './ModalContents';
 
 
 function mapStateToProps(store) {
@@ -18,22 +19,12 @@ class Modal extends React.Component {
     }
 
     render() {
+	let ModalContent = ModalContents[this.props.modal.name]
 	return (
 	<div className="modal fade" id="mainModal" tabIndex="-1" role="dialog" aria-labelledby="mainModalLabel" aria-hidden="true">
 	    <div className="modal-dialog" role="document">
 		<div className="modal-content">
-		    <div className="modal-header">
-		    <h5 className="modal-title" id="mainModalLabel">{this.props.modal.title}</h5>
-			<button type="button" className="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-			</button>
-		    </div>
-		    <div className="modal-body">
-		    {this.props.modal.body}
-		    </div>
-		    <div className="modal-footer">
-		    {this.props.modal.footer}
-		    </div>
+		    <ModalContent {...this.props.modalProps} />
 		</div>
 	    </div>
 	</div>

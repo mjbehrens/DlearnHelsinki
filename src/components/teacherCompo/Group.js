@@ -26,8 +26,6 @@ class Group extends React.Component {
     constructor(props) {
         super(props);
         compo = this;
-        console.log('CONSTRUCTOR');
-        console.log(compo.props);
 
         this.state = {
             picture: null,
@@ -44,14 +42,16 @@ class Group extends React.Component {
     /*
     + Requiere the group_id to be pass when the button is render. otherwise it won't work 
     + this should be investiget
-    */ 
-    onClickAddStudent = function (group_id) {
+    */
+    onClickAddStudent = function (group_id, allStudentsList) {
         Popup.plugins().addStudent((infoStudent) => {
+            console.log(infoStudent);
             let data = JSON.stringify({
                 "group_id": group_id,
                 "class_id": compo.props.user.classid,
                 "password": infoStudent._password,
                 "student": {
+                    "_id": infoStudent._id,
                     "username": infoStudent._username,
                     "age": infoStudent._age,
                     "gender": infoStudent._gender
@@ -71,19 +71,18 @@ class Group extends React.Component {
                 body: data,
             }).then(function (response) {
                 if (response.ok) {
-                    console.log(response.body)
                     console.log("answer put on server")
                     compo.props.callbackGM();
                 } else {
                     console.log('Network response was not ok.');
-                    alert(response.body);
+                    alert("Error while creating the account. Please check if this account does not already exist.");
                 }
             }).catch(function (err) {
                 // Error :(
                 console.log(err);
                 alert(err);
             });
-        });
+        }, allStudentsList);
     }
 
     onClickStudent = (student) => {
@@ -91,19 +90,20 @@ class Group extends React.Component {
     }
 
     render() {
+
         return (
             <div className="card">
-		<div className="card-body no-padding">
-		<div className="card-text">
-                <div className="list-group">
-		    <button type="button" className="card-title list-group-item list-group-item-action active">{this.props.group_name}</button>
-                    {this.props.list.map(function (listValue) {
-                        return <button type="button" className="list-group-item list-group-item-action" onClick={() => compo.onClickStudent(listValue)}>{listValue.username}</button>;
-                    })}
-                    <button type="button" className="list-group-item list-group-item-action no-padding" onClick={() => compo.onClickAddStudent(this.props.group_id)}><div className="card-footer">+</div></button>
+                <div className="card-body no-padding">
+                    <div className="card-text">
+                        <div className="list-group">
+                            <button type="button" className="card-title list-group-item list-group-item-action active">{this.props.group_name}</button>
+                            {this.props.list.map(function (listValue) {
+                                return <button type="button" className="list-group-item list-group-item-action" onClick={() => compo.onClickStudent(listValue)}>{listValue.username}</button>;
+                            })}
+                            <button type="button" className="list-group-item list-group-item-action no-padding" onClick={() => compo.onClickAddStudent(this.props.group_id, this.props.allStudentsList)}><div className="card-footer">+</div></button>
+                        </div>
+                    </div>
                 </div>
-		</div>
-		</div>
             </div>
         )
     }
@@ -130,7 +130,7 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
 
     this.create({
         title: 'Student information',
-        content: <InfoStudent 
+        content: <InfoStudent
             onChangeGender={getGender}
             onChangeAge={getAge}
             onChangesToApply={getChanges}
@@ -142,16 +142,16 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
         buttons: {
             left: [{
                 text: 'Quit',
-                className: null, 
+                className: null,
                 action: function (popup) {
                     //this is bad...
-                    if(_applied_changes){
+                    if (_applied_changes) {
                         compo.props.callbackGM();
                     }
                     popup.close();
                 }
             }],
-           
+
         },
         className: null, // or string
         noOverlay: true, // hide overlay layer (default is false, overlay visible)
@@ -160,11 +160,31 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
     });
 });
 
-Popup.registerPlugin('addStudent', function (callbackConfirm) {
-    let _username = null;
-    let _age = null;
-    let _gender = null;
-    let _password = null;
+Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
+    let _id = null;
+    let _username = '';
+    let _age = 0;
+    let _gender = '';
+    let _password = '';
+
+    let onSelectStudent = function (e) {
+        let id = e.target.value;
+
+        let student = allStudentsList.filter(function (stud) {
+            return stud._id == id;
+        })[0];
+
+        if (student !== null) {
+            _id = student._id;
+            _username = student.username;
+            _age = student.age;
+            _gender = student.gender;
+            _password = "password";
+        }
+
+        console.log(student);
+
+    }
 
     let getUsername = function (e) {
         _username = e.target.value;
@@ -182,16 +202,35 @@ Popup.registerPlugin('addStudent', function (callbackConfirm) {
         _password = e.target.value;
     };
 
+    let checkForm = function () {
+
+        console.log("student info");        
+        console.log(_username.length);
+        console.log(_password.length);
+        console.log(_gender.length);
+        
+        if ((_username.length > 5)
+            && (_age > 1) 
+            && (_password.length > 5) 
+            && (_gender.length > 1) ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     this.create({
         title: 'Add student',
         content: <AddStudent
+            onChangeSelect={onSelectStudent}
             onChangeUsername={getUsername}
             onChangeAge={getAge}
             onChangeGender={getGender}
             onChangePassword={getPassword}
-            username={"Username"}
-            age={"Age"}
-            password={"Password"} />,
+            username={"5 letters min"}
+            age={"7"}
+            password={"5 letters min"}
+            allStudentsList={allStudentsList} />,
         buttons: {
             left: [{
                 text: 'Quit',
@@ -205,13 +244,28 @@ Popup.registerPlugin('addStudent', function (callbackConfirm) {
                 text: 'Confirm',
                 className: 'success', // optional
                 action: function (popup) {
-                    callbackConfirm({
-                        _username: _username,
-                        _age: _age,
-                        _gender: _gender,
-                        _password: _password
-                    });
-                    popup.close();
+                    if (checkForm()) {
+                        if (_id !== null) {
+                            callbackConfirm({
+                                _id: _id,
+                                _username: _username,
+                                _age: _age,
+                                _gender: _gender,
+                                _password: _password
+                            });
+                        } else {
+                            callbackConfirm({
+                                _username: _username,
+                                _age: _age,
+                                _gender: _gender,
+                                _password: _password
+                            });
+                        }
+                        popup.close();
+                    } else {
+                        alert('The information are not filled correctly.')
+                    }
+
                 }
             }]
         },

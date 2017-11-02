@@ -29,7 +29,7 @@ const OpenSurveyModal = React.createClass({
     return (
 	<div className="modal-content">
 	    <div className="modal-header">
-	    <h5 className="modal-title" id="mainModalLabel">Creation of a new survey | {this.props.createButtonEnabled.toString()}</h5>
+	    <h5 className="modal-title" id="mainModalLabel">Creation of a new survey</h5>
 		<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 		    <span aria-hidden="true">&times;</span>
 		</button>
@@ -43,7 +43,7 @@ const OpenSurveyModal = React.createClass({
 		    description={"new survey for today\'s exercices"} />
 	    </div>
 	    <div className="modal-footer">
-		<button type="button" className="btn btn-primary" data-dismiss="modal" data-target="#mainModal" onClick={() => this.props.requestToOpenSurveyREST(this.props.title, this.props.description, this.props.theme_ids)} disabled={!this.props.createButtonEnabled}>Create</button>
+		<button type="button" className="btn btn-primary" data-dismiss="modal" data-target="#mainModal" onClick={() => this.props.requestToOpenSurvey(this.props.title, this.props.description, this.props.theme_ids)} disabled={!this.props.createButtonEnabled}>Create</button>
 	<button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
 	    </div>
 	</div>
@@ -68,7 +68,7 @@ const CloseSurveyModal = React.createClass({
 		Do you really want to close the survey {this.props.survey.title} from {this.props.survey.start_date} ?</p>
 	    </div>
 	    <div className="modal-footer">
-		<button type="button" className="btn btn-primary" data-dismiss="modal" data-target="#mainModal" onClick={this.props.requestToCloseSurveyREST}>Close Survey</button>
+		<button type="button" className="btn btn-primary" data-dismiss="modal" data-target="#mainModal" onClick={this.props.requestToCloseSurvey}>Close Survey</button>
 		<button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
 	    </div>
 	</div>

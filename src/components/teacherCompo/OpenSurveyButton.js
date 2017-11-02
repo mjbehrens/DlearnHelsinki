@@ -30,13 +30,11 @@ let POST_SURVEY = '';
 let POST_CLOSE_SURVEY = '';
 
 var surveys = [];
-var compo = null;
 
 class OpenSurveyButton extends React.Component {
 
     constructor(props) {
         super(props);
-        compo = this;
         surveys = [];
 
         this.state = {
@@ -48,6 +46,9 @@ class OpenSurveyButton extends React.Component {
             classID: this.props.user.classid,     
             survey: this.props.survey,
 	    modalProps: null,
+	    titleInput: "",
+	    descriptionInput: "",
+	    themesIdInput: [],
         }
 
         this.buildRequestRest();
@@ -55,72 +56,61 @@ class OpenSurveyButton extends React.Component {
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        console.log(compo.state.survey);
+        console.log(this.state.survey);
         console.log(nextProps.survey);
 
-        if ((compo.state.survey.open !== nextProps.survey.open)) {
-            compo.updateState(nextProps.survey);
+        if ((this.state.survey.open !== nextProps.survey.open)) {
+            this.updateState(nextProps.survey);
         }
-
-
     }
 
 
-    buildRequestRest = function () {
+    buildRequestRest = () => {
 
         POST_SURVEY = 'teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
         POST_CLOSE_SURVEY = 'teachers/' + this.state.teacherID + '/classes/' + this.state.classID + '/surveys';
-
     }
 
-    // call for update the state with the survey
-    updateState = (s) => {
+    // Call for updating the state with the survey
+    updateState = (survey) => {
 
-        if (s.open !== null) {
-            //if a survey is open
-            if (s.open) {
-                this.setState({
-                    ...this.state,
-                    isLoading: false,
-                    picture: iconSurveyClose,
-                    text: "Close Survey",
-                    survey: {
-                        _id: s._id,
-                        title: s.title,
-                        description: s.description,
-                        open: s.open,
-                        start_date: s.start_date,
-                    }
-                });
-                //else if they are all closed
+        if (survey.open !== null) {
+	    let picture = null
+	    let text = null
+
+            if (survey.open) {
+		picture = iconSurveyClose
+		text = "Close Survey"
             } else {
-                this.setState({
-                    ...this.state,
-                    isLoading: false,
-                    picture: iconSurveyOpen,
-                    text: "Open Survey",
-                    survey: {
-                        _id: s._id,
-                        title: s.title,
-                        description: s.description,
-                        open: s.open,
-                        start_date: s.start_date,
-                    }
-                });
+		picture = iconSurveyOpen
+		text = "Open Survey"
             }
+	    this.setState({
+		...this.state,
+		isLoading: false,
+		picture: picture,
+		text: text,
+		survey: {
+		    _id: survey._id,
+		    title: survey.title,
+		    description: survey.description,
+		    open: survey.open,
+		    start_date: survey.start_date,
+		}
+	    });
         }
     }
 
 
-    // send a request to the database to open a new survey
-    // get the info of the new survey
-    requestToOpenSurveyREST = (t, d, ts) => {
+    // Send a request to the database to open a new survey
+    // Get the info of the new survey
+    requestToOpenSurvey = (title, desc, themeIds) => {
 
-        compo.setState({ isLoading: true });
+        this.setState({...this.state, isLoading: true });
         var data = JSON.stringify({
-            title: t,
-            description: d,
-            theme_ids : ts,
+            title: title,
+            description: desc,
+            theme_ids : themeIds,
         });
         console.log(data);
 
@@ -133,25 +123,25 @@ class OpenSurveyButton extends React.Component {
             },
             body: data
             //TODO !
-        }).then(function (response) {
+        }).then((response) => {
             if (response.ok) {
                 response.json().then(data => {
-                    compo.props.callback();
+                    this.props.callback();
                 });
             } else {
                 console.log('Network response was not ok.');
             }
-        }).catch(function (err) {
+        }).catch((err) => {
             // Error
             console.log(err);
         });
     }
 
-    requestToCloseSurveyREST = (t, d) => {
+    requestToCloseSurvey = () => {
 
-        compo.setState({ isLoading: true });
+        this.setState({...this.state, isLoading: true });
 
-        fetch(BACKEND_API.ROOT + POST_CLOSE_SURVEY + '/' + compo.state.survey._id, {
+        fetch(BACKEND_API.ROOT + POST_CLOSE_SURVEY + '/' + this.state.survey._id, {
             method: 'POST',
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -159,13 +149,13 @@ class OpenSurveyButton extends React.Component {
                 'Authorization': 'Basic ' + this.props.user.hash,
             },
             //TODO !
-        }).then(function (response) {
+        }).then((response) => {
             if (response.ok) {
-                compo.props.callback();
+                this.props.callback();
             } else {
                 console.log('Network response was not ok.');
             }
-        }).catch(function (err) {
+        }).catch((err) => {
             // Error
             console.log(err);
         });
@@ -174,24 +164,24 @@ class OpenSurveyButton extends React.Component {
     // executed when the user click on the survey button
     onClickSurvey = () => {
         // open a new suvey
-        if (this.state.survey.open === false) {
-	    // Popup.plugins().createSurveyForm(this.requestToOpenSurveyREST);
-	    let _title = "";
-	    let _description = "";
-	    let _theme_ids = [];
+        if (!this.state.survey.open) {
+	    // Popup.plugins().createSurveyForm(this.requestToOpenSurvey);
 
-	    let getTitle = function (e) {
-		_title = e.target.value;
-		checkCreateButtonState();
+	    let getTitle = (e) => {
+		this.setState({
+		    ...this.state,
+		    titleInput: e.target.value,
+		}, checkCreateButtonState)
 	    };
 
-	    let getDescription = function (e) {
-		_description = e.target.value;
-		checkCreateButtonState();
+	    let getDescription = (e) => {
+		this.setState({
+		    ...this.state,
+		    descriptionInput: e.target.value,
+		}, checkCreateButtonState)
 	    };
 
-	    let getThemes = function (e) {
-
+	    let getThemes = (e) => {
 		// function to remove item
 		function removeItem(array, item) {
 		    for (var i in array) {
@@ -201,21 +191,27 @@ class OpenSurveyButton extends React.Component {
 			}
 		    }
 		}
+
 		let box = e.target;
+		let tempArray = this.state.themesIdInput.slice()
 
 		if (box.checked) {
-		    _theme_ids.push(box.value);
-		} else if (box.checked == false) {
-		    removeItem(_theme_ids, box.value);
+		    tempArray.push(box.value);
+		} else if (!box.checked) {
+		    removeItem(tempArray, box.value);
 		}
-		checkCreateButtonState();
+		this.setState({
+		    ...this.state,
+		    themesIdInput: tempArray,
+		}, checkCreateButtonState)
 	    }
 
 	    let checkCreateButtonState = () => {
 		let createAllowed = false
-		if ((_theme_ids.length > 0)
-		    && (_title.length !== 0)
-		    && (_description.length !== 0)) {
+		console.log('TITLE STATE: ' + this.state.titleInput)
+		if ((this.state.themesIdInput.length > 0)
+		    && (this.state.titleInput.length !== 0)
+		    && (this.state.descriptionInput.length !== 0)) {
                   createAllowed = true
 		}
 
@@ -223,6 +219,9 @@ class OpenSurveyButton extends React.Component {
 		    ...this.state,
 		    modalProps: {
 			...this.state.modalProps,
+			title: this.state.titleInput,
+			description: this.state.descriptionInput,
+			theme_ids: this.state.themesIdInput,
 			createButtonEnabled: createAllowed, 
 		    }
 		}, () => this.props.dispatch(modalActions.setModal('OpenSurveyModal', this.state.modalProps)));
@@ -231,14 +230,14 @@ class OpenSurveyButton extends React.Component {
 		this.setState({
 		    ...this.state,
 		    modalProps: {
-			'getTitle': getTitle,
-			'getDescription': getDescription,
-			'getThemes': getThemes,
-			'requestToOpenSurveyREST': this.requestToOpenSurveyREST,
-			'title': _title,
-			'description': _description,
-			'theme_ids': _theme_ids,
-			'createButtonEnabled': false,
+			getTitle: getTitle,
+			getDescription: getDescription,
+			getThemes: getThemes,
+			requestToOpenSurvey: this.requestToOpenSurvey,
+			title: this.state.titleInput,
+			description: this.state.descriptionInput,
+			theme_ids: this.state.themesIdInput,
+			createButtonEnabled: false,
 		    }
 		}, () => this.props.dispatch(modalActions.setModal('OpenSurveyModal', this.state.modalProps)))
 
@@ -252,39 +251,11 @@ class OpenSurveyButton extends React.Component {
 		this.setState({
 		    ...this.state,
 		    modalProps: {
-		      'survey': this.state.survey,
-		      'requestToCloseSurveyREST': this.requestToCloseSurveyREST,
+		      survey: this.state.survey,
+		      requestToCloseSurvey: this.requestToCloseSurvey,
 		    }
 		}, () => this.props.dispatch(modalActions.setModal('CloseSurveyModal', this.state.modalProps)))
-
 		this.props.dispatch(modalActions.showModal())
-
-		/*
-                Popup.create({
-                    title: "Closing the current survey",
-                    content: 'You are about to close the survey. \n\
-                    The students will no longer be able to answer this survey after that. \n\
-                    Do you really want to close the survey \"' + compo.state.survey.title + '\" (from ' + compo.state.survey.start_date + ') ?',
-                    buttons: {
-                        left: [{
-                            text: 'Cancel',
-                            className: 'danger',
-                            action: function () {
-                                // Close this popup. Close will always close the current visible one, if one is visible
-                                Popup.close();
-                            }
-                        }],
-                        right: [{
-                            text: 'Confirm',
-                            className: 'success',
-                            action: function () {
-                                compo.requestToCloseSurveyREST();
-                                Popup.close();
-                            }
-                        }]
-                    }
-                });
-		*/
             }
         }
     }
@@ -296,7 +267,6 @@ class OpenSurveyButton extends React.Component {
                     <div className="spinner-container">
                         <Spinner />
                     </div >
-
                 </div>
             )
 
@@ -315,89 +285,5 @@ class OpenSurveyButton extends React.Component {
         }
     }
 }
-
-
-/** Survey Form plugin */
-// create a popup when the user want to open a new survey
-/*
-Popup.registerPlugin('createSurveyForm', function (callbackConfirm) {
-    let _title = "";
-    let _description = "";
-    let _theme_ids = [];
-
-    let getTitle = function (e) {
-        _title = e.target.value;
-    };
-
-    let getDescription = function (e) {
-        _description = e.target.value;
-    };
-
-    let getThemes = function (e) {
-
-        // function to remove item
-        function removeItem(array, item) {
-            for (var i in array) {
-                if (array[i] == item) {
-                    array.splice(i, 1);
-                    break;
-                }
-            }
-        }
-        let box = e.target;
-
-        if (box.checked) {
-            _theme_ids.push(box.value);
-        } else if (box.checked == false) {
-            removeItem(_theme_ids, box.value);
-        }
-        console.log(_theme_ids);
-    }
-
-    this.create({
-        title: 'Creation of a new Survey',
-        content: <SurveyCreationForm
-            onChangeTitle={getTitle}
-            onChangeDescription={getDescription}
-            onChangeThemes={getThemes}
-            title={"New Survey"}
-            description={"new survey for today\'s exercices"} />,
-        buttons: {
-            left: [{
-                text: 'Cancel',
-                className: 'danger', // optional
-                action: function (popup) {
-                    popup.close();
-                }
-            }],
-            right: [{
-                text: 'Create',
-                className: 'success', // optional
-                action: function (popup) {
-                    console.log(_title);
-                    console.log(_description);
-                    if ((_theme_ids.length > 0)
-                        && (_title.length !== 0)
-                        && (_description.length !== 0)) {
-                        //TODO : add the _theme_ids to the callback function 
-                        callbackConfirm(_title, _description, _theme_ids);
-                        popup.close();
-                    } else { // popup if information are missing
-                        alert("Make sure every information has been filled before creating the survey.")
-                    }
-
-
-                }
-            }]
-        },
-        className: null, // or string
-        noOverlay: true, // hide overlay layer (default is false, overlay visible)
-        position: { x: 0, y: 0 }, // or a function, more on this further down
-        closeOnOutsideClick: false, // Should a click outside the popup close it? (default is closeOnOutsideClick property on the component)
-    });
-});
-    */
-
-
 
 export default connect(mapStateToProps)(OpenSurveyButton);

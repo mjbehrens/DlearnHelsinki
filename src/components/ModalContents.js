@@ -25,11 +25,11 @@ const DefaultModal = React.createClass({
 
 
 const OpenSurveyModal = React.createClass({
-  render: function() {
+  render() {
     return (
 	<div className="modal-content">
 	    <div className="modal-header">
-		<h5 className="modal-title" id="mainModalLabel">Creation of a new survey</h5>
+	    <h5 className="modal-title" id="mainModalLabel">Creation of a new survey | {this.props.createButtonEnabled.toString()}</h5>
 		<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 		    <span aria-hidden="true">&times;</span>
 		</button>
@@ -40,11 +40,11 @@ const OpenSurveyModal = React.createClass({
 		    onChangeDescription={this.props.getDescription}
 		    onChangeThemes={this.props.getThemes}
 		    title={"New Survey"}
-		    description={"new survey for today\'s exercices"} />,
+		    description={"new survey for today\'s exercices"} />
 	    </div>
 	    <div className="modal-footer">
-		<button type="button" className="btn btn-primary" data-dismiss="modal" data-target="#mainModal" onClick={() => this.props.requestToOpenSurveyREST(this.props.title, this.props.description, this.props.theme_ids)} disabled={true}>Create</button>
-		<button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		<button type="button" className="btn btn-primary" data-dismiss="modal" data-target="#mainModal" onClick={() => this.props.requestToOpenSurveyREST(this.props.title, this.props.description, this.props.theme_ids)} disabled={!this.props.createButtonEnabled}>Create</button>
+	<button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
 	    </div>
 	</div>
     );

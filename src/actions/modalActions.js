@@ -1,7 +1,10 @@
-export function setName(name) {
+export function setModal(type, props) {
   return {
-    type: "SET_NAME",
-    payload: name, 
+    type: "SET_MODAL",
+      payload: {
+	'type': type,
+	'props': props, 
+      }
   }
 }
 // export function setTitle(title) {
@@ -28,6 +31,5 @@ export function setName(name) {
 export function showModal() {
     return {
 	type: "SHOW_MODAL",
-	payload: null,
     }
 }

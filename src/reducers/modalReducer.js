@@ -2,36 +2,23 @@ import React from "react";
 import $ from 'jquery';
 
 export default function reducer(state={
-    name: 'DefaultModal',
+    modalType: 'DefaultModal',
+    modalProps: {},
   }, action) {
 
     switch (action.type) {
-      case "SET_NAME": {
+      case "SET_MODAL": {
 	return {
 	  ...state,
-	  name: action.payload,
+	  modalType: action.payload.type,
+          modalProps: action.payload.props,
 	}
       }
-      // case "SET_TITLE": {
-      // 	return {
-      // 	  ...state,
-      // 	  title: action.payload,
-      // 	}
-      // }
-      // case "SET_BODY": {
-      // 	return {
-      // 	  ...state,
-      // 	  body: action.payload,
-      // 	}
-      // }
-      // case "SET_FOOTER": {
-      // 	return {
-      // 	  ...state,
-      // 	  footer: action.payload,
-      // 	}
-      // }
       case "SHOW_MODAL": {
 	$("#mainModal").modal('show');
+      }
+      case "HIDE_MODAL": {
+	$("#mainModal").modal('hide');
       }
     }
 

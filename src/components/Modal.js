@@ -19,12 +19,13 @@ class Modal extends React.Component {
     }
 
     render() {
-	let ModalContent = ModalContents[this.props.modal.name]
+	let ModalContent = ModalContents[this.props.modal.modalType]
+	// let ModalContent = ModalContents['DefaultModal']
 	return (
 	<div className="modal fade" id="mainModal" tabIndex="-1" role="dialog" aria-labelledby="mainModalLabel" aria-hidden="true">
 	    <div className="modal-dialog" role="document">
 		<div className="modal-content">
-		    <ModalContent {...this.props.modalProps} />
+		    <ModalContent {...this.props.modal.modalProps} />
 		</div>
 	    </div>
 	</div>

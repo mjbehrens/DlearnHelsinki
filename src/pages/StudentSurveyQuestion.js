@@ -25,9 +25,14 @@ class StudentSurveyQuestion extends Component {
         super(props);
 
         let survey_id = null;
-        if (this.props.location.state.survey_id !== null) {
+        try {
             survey_id = this.props.location.state.survey_id
-        }
+        } catch (err) {
+	    // FIXME
+	    // No survey was passed along. Probably there is no survey opened.
+	    // Temporary fix : Redirect to NoMatch.
+	    this.props.history.replace('/404-error-page')
+	}
 
         this.state = {
             buttonValue: 'Next',

@@ -1,5 +1,4 @@
-export default function reducer(state={
-    user: {
+const userInitState = {
       id: null,
       name: null,
       sex: null,
@@ -10,7 +9,10 @@ export default function reducer(state={
       loggedin: false,
       groupid: null,
       classid: null,
-    },
+    } 
+
+export default function reducer(state={
+    user: userInitState,
     fetching: false,
     fetched: false,
     error: null,
@@ -40,18 +42,7 @@ export default function reducer(state={
       case "LOGOUT_USER": {
 	return {
 	  ...state,
-	  user: {
-	    id: null,
-	    name: null,
-	    sex: null,
-	    age: null,
-	    type: null,
-	    login: null,
-	    hash: null,
-	    loggedin: false,
-	    groupid: [],
-	    classid: [],
-          }
+          user: userInitState,
 	}
       }
       case "SET_USER_ID": {

@@ -44,9 +44,10 @@ section {
     height: 50px;
 }
 
-.Login-form {
+.login-form {
     text-align: center;
-    width: 60vmin;
+    width: 60vw;
+    max-width: 300px;
     margin: auto;
 }
 

@@ -126,7 +126,7 @@ class Login extends Component {
 		    return (<Redirect to={this.state.goTo} />)
 		} else if (this.state.error) {
 		    return (
-			<div className="Login-form">
+			<div className="login-form">
 			<h1>Dlearn</h1>
 			<div className="alert alert-danger alert-dismissible fade show" role="alert">
 			    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
@@ -161,7 +161,7 @@ class Login extends Component {
 		);
 		} else {
 		    return (
-			<div className="Login-form">
+			<div className="login-form">
 
 					<h1>Dlearn</h1>
 

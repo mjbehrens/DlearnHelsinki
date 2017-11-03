@@ -124,6 +124,15 @@ class Login extends Component {
 		    )
 		} else if (this.state.redirect) {
 		    return (<Redirect to={this.state.goTo} />)
+		} else if (this.props.user.loggedin) {
+		    return (
+			<div className="Login-form">
+			    <h1>Dlearn</h1>
+			    <div className="centered">
+				<p>You are already logged in. Log out first to log in again.</p>
+			    </div>
+			</div>
+		    )
 		} else if (this.state.error) {
 		    return (
 			<div className="login-form">

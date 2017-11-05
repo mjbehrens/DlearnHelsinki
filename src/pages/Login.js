@@ -21,32 +21,15 @@ class Login extends Component {
 	    userType: null,
 	    loading: false,
 	    error: false,
-	    goTo: ROUTES.LOGIN,
+	    goTo: ROUTES.CLASS_SELECTION,
 	    redirect: false,
 	};
     }
 
-    onClickStudent = () => {
+    onRadioClick = (e) => {
 	this.setState({
 	    ...this.state,
-	    userType: "student",
-	    goTo: ROUTES.CLASS_SELECTION,
-	})
-    }
-
-    onClickTeacher = () => {
-	this.setState({
-	    ...this.state,
-	    userType: "teacher",
-	    goTo: ROUTES.CLASS_SELECTION,
-	})
-    }
-
-    onClickResearcher = () => {
-	this.setState({
-	    ...this.state,
-	    userType: "researcher",
-	    goTo: ROUTES.HOME,
+	    userType: e.target.value,
 	})
     }
 
@@ -65,7 +48,8 @@ class Login extends Component {
 	this.setState({...this.state,
 		       loading: true,
 		       error: false,
-		       pwdInput: ''})
+		       pwdInput: '',
+		      })
 	let endpoint = '';
 	switch (userType) {
 	    case 'teacher':
@@ -99,22 +83,24 @@ class Login extends Component {
 		    this.props.dispatch(userActions.loginUser());
 		    this.setState({
 			...this.state,
-			redirect: true
+			redirect: true,
 		    });
 		});
 	    } else {
 		console.log('Login failed.');
 		this.setState({
 		    ...this.state,
-		    error: true
+		    error: true,
+		    loading: false,
 		})
 	    }
-	    this.setState({ ...this.state, loading: false})
 	});
     }
 
     render() {
-	if (this.state.loading) {
+	if (this.state.redirect) {
+	    return (<Redirect to={this.state.goTo} />)
+	} else if (this.state.loading) {
 	    return (
 		<div className="Login-form">
 		    <h1>Dlearn</h1>
@@ -123,8 +109,6 @@ class Login extends Component {
 		    </div>
 		</div>
 	    )
-	} else if (this.state.redirect) {
-	    return (<Redirect to={this.state.goTo} />)
 	} else if (this.props.user.loggedin) {
 	    return (
 		<div className="Login-form">
@@ -155,13 +139,13 @@ class Login extends Component {
 			onChange={(event) => this.onPwdInputChange(event)} />
 		</div>
 		<div className="radio">
-		    <label><input type="radio" name="status" onClick={this.onClickStudent} />Student</label>
+		    <label><input type="radio" name="status" value="student" onClick={this.onRadioClick} />Student</label>
 		</div>
 		<div className="radio">
-		    <label><input type="radio" name="status" onClick={this.onClickTeacher} />Teacher</label>
+		    <label><input type="radio" name="status" value="teacher" onClick={this.onRadioClick} />Teacher</label>
 		</div>
 		<div className="radio disabled">
-		    <label><input type="radio" name="status" disabled />Researcher</label>
+		    <label><input type="radio" name="status" value="researcher" disabled />Researcher</label>
 		</div>
 
 		{//<Link style={{display: 'block', height: '100%'}} to={this.state.goTo}><button type="button" className="btn btn-primary">Connection</button></Link>
@@ -183,13 +167,13 @@ class Login extends Component {
 			<input type="password" className="form-control" id="pwd" value={this.state.pwdInput} onChange={(event) => this.onPwdInputChange(event)} />
 		    </div>
 		    <div className="radio">
-			<label><input type="radio" name="status" value={this.state.userType === 'student'} onClick={this.onClickStudent} />Student</label>
+			<label><input type="radio" name="status" value="student" onClick={this.onRadioClick} />Student</label>
 		    </div>
 		    <div className="radio">
-			<label><input type="radio" name="status" value={this.state.userType === 'teacher'} onClick={this.onClickTeacher} />Teacher</label>
+			<label><input type="radio" name="status" value="teacher" onClick={this.onRadioClick} />Teacher</label>
 		    </div>
 		    <div className="radio disabled">
-			<label><input type="radio" name="status" disabled />Researcher</label>
+			<label><input type="radio" name="status" value="researcher" disabled />Researcher</label>
 		    </div>
 		    <button type="button" className="btn btn-primary" onClick={() => this.onConnectionClick(this.state.loginInput, this.state.pwdInput, this.state.userType)}>Connection</button>
 		</div>

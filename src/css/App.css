@@ -40,15 +40,23 @@ section {
     padding-bottom: 20px;
 }
 
+h1 {
+    margin-bottom: 20px;
+}
+
 .Icon {
     height: 50px;
 }
 
 .login-form {
-    text-align: center;
     width: 60vw;
     max-width: 300px;
     margin: auto;
+}
+
+#logInButton {
+    margin-top: 20px;
+    padding: 8px 29px;
 }
 
 .SelectClass {

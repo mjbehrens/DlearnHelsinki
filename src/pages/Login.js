@@ -13,196 +13,150 @@ function mapStateToProps(store) {
 
 class Login extends Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			loginInput: '',
-			pwdInput: '',
-			loading: false,
-			error: false,
-			goTo: ROUTES.LOGIN,
-			redirect: false,
-		};
-	}
+    constructor(props) {
+	super(props);
+	this.state = {
+	    loginInput: '',
+	    pwdInput: '',
+	    userType: "student",
+	    loading: false,
+	    error: false,
+	    goTo: ROUTES.CLASS_SELECTION,
+	    redirect: false,
+	};
+    }
 
-	onClickStudent = () => {
-		this.setState({
-		    ...this.state,
-		    userType: "student",
-		    goTo: ROUTES.CLASS_SELECTION,
-		})
-	}
-
-	onClickTeacher = () => {
-		this.setState({
-		    ...this.state,
-		    userType: "teacher",
-		    goTo: ROUTES.CLASS_SELECTION,
-		})
-	}
-
-	onClickResearcher = () => {
-		this.setState({
-		    ...this.state,
-		    userType: "researcher",
-		    goTo: ROUTES.HOME,
-		})
-	}
-
-	// Triggered when the login text field receives text input
-	onLoginInputChange = (e) => {
+    // Triggered on user input change
+    handleInputChange = (e) => {
+	switch (e.target.type) {
+	    case "text":
 		this.setState({ ...this.state, loginInput: e.target.value })
-	}
-
-	// Triggered when the mdp text field receives text input
-	onPwdInputChange = (e) => {
+		break;
+	    case "password":
 		this.setState({ ...this.state, pwdInput: e.target.value })
+		break;
+	    case "radio":
+		this.setState({ ...this.state, userType: e.target.value	})
+		break;
+	}
+    }
+
+    // Triggered when the Connection button is clicked
+    onConnectionClick = (login, password, userType) => {
+	this.setState({...this.state,
+		       loading: true,
+		       error: false,
+		       pwdInput: '',
+		      })
+	let endpoint = '';
+	switch (userType) {
+	    case 'teacher':
+		endpoint = 'teachers/'
+		break;
+	    case 'researcher':
+		endpoint = 'researcher/'
+		break;
+	    default:
+		endpoint = 'students/'
 	}
 
-	// Triggered when the Connection button is clicked
-	onConnectionClick = (login, password, userType) => {
-		this.setState({loading: true})
-		let endpoint = '';
-		switch (userType) {
-			case 'teacher':
-				endpoint = 'teachers/'
-				break;
-			case 'researcher':
-				endpoint = 'researcher/'
-				break;
-			default:
-				endpoint = 'students/'
-		}
+	fetch(BACKEND_API.ROOT + endpoint, {
+	    method: "GET",
+	    headers: {
+		'Access-Control-Allow-Origin': '*',
+		'Content-Type': 'application/json',
+		'Authorization': 'Basic ' + btoa(login + ':' + password)
+	    },
+	}).then((response) => {
+	    if (response.ok) {
+		response.json().then(data => {
+		    console.log('Login successful!');
+		    console.log(data);
 
-		fetch(BACKEND_API.ROOT + endpoint, {
-			method: "GET",
-			headers: {
-				'Access-Control-Allow-Origin': '*',
-				'Content-Type': 'application/json',
-				'Authorization': 'Basic ' + btoa(login + ':' + password)
-			},
-		}).then((response) => {
-			if (response.ok) {
-				response.json().then(data => {
-					console.log('Login successful!');
-					console.log(data);
-
-					this.props.dispatch(userActions.setUserId(data._id));
-					this.props.dispatch(userActions.setUserType(userType))
-					this.props.dispatch(userActions.setUserLogin(login));
-					this.props.dispatch(userActions.setUserName(data.username));
-					this.props.dispatch(userActions.setUserHash(btoa(login + ':' + password)));
-					this.props.dispatch(userActions.loginUser());
-					this.setState({
-						...this.state,
-						redirect: true
-					});
-
-				});
-
-
-			} else {
-				console.log('Login failed.');
-				this.setState({
-					...this.state,
-					error: true
-				})
-			}
-		    this.setState({ ...this.state, loading: false})
+		    this.props.dispatch(userActions.setUserId(data._id));
+		    this.props.dispatch(userActions.setUserType(userType))
+		    this.props.dispatch(userActions.setUserLogin(login));
+		    this.props.dispatch(userActions.setUserName(data.username));
+		    this.props.dispatch(userActions.setUserHash(btoa(login + ':' + password)));
+		    this.props.dispatch(userActions.loginUser());
+		    this.setState({
+			...this.state,
+			redirect: true,
+		    });
 		});
-	}
+	    } else {
+		console.log('Login failed.');
+		this.setState({
+		    ...this.state,
+		    error: true,
+		    loading: false,
+		})
+	    }
+	});
+    }
 
-	render() {
-		if (this.state.loading) {
-		    return (
-			<div className="Login-form">
-			    <h1>Dlearn</h1>
-			    <div className='spinner-container'>
-				<Spinner />
-			    </div>
-			</div>
-		    )
-		} else if (this.state.redirect) {
-		    return (<Redirect to={this.state.goTo} />)
-		} else if (this.props.user.loggedin) {
-		    return (
-			<div className="Login-form">
-			    <h1>Dlearn</h1>
-			    <div className="centered">
-				<p>You are already logged in. Log out first to log in again.</p>
-			    </div>
-			</div>
-		    )
-		} else if (this.state.error) {
-		    return (
-			<div className="login-form">
-			<h1>Dlearn</h1>
-			<div className="alert alert-danger alert-dismissible fade show" role="alert">
-			    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			    </button>
-			    Invalid login or password.
-			</div>
-			<div className="form-group">
-			    <label for="usr">Login:</label>
-			    <input type="text" className="form-control" id="usr"
-				onChange={(event) => this.onLoginInputChange(event)} value={this.state.loginInput} />
-			</div>
-			<div className="form-group">
-			    <label for="pwd">Password:</label>
-			    <input type="password" className="form-control" id="pwd" value={this.state.pwdInput}
-				onChange={(event) => this.onPwdInputChange(event)} />
-			</div>
-			<div className="radio">
-			    <label><input type="radio" name="status" onClick={this.onClickStudent} />Student</label>
-			</div>
-			<div className="radio">
-			    <label><input type="radio" name="status" onClick={this.onClickTeacher} />Teacher</label>
-			</div>
-			<div className="radio disabled">
-			    <label><input type="radio" name="status" disabled />Researcher</label>
-			</div>
-
-			{//<Link style={{display: 'block', height: '100%'}} to={this.state.goTo}><button type="button" className="btn btn-primary">Connection</button></Link>
-			}
-			<button type="button" className="btn btn-primary" onClick={() => this.onConnectionClick(this.state.loginInput, this.state.pwdInput, this.state.userType)}>Connection</button>
+    render() {
+	console.log(this.state)
+	if (this.state.redirect) {
+	    return (<Redirect to={this.state.goTo} />)
+	} else if (this.state.loading) {
+	    return (
+		<div className="Login-form">
+		    <h1>Dlearn</h1>
+		    <div className='spinner-container'>
+			<Spinner />
 		    </div>
-		);
-		} else {
-		    return (
-			<div className="login-form">
-
-					<h1>Dlearn</h1>
-
-					<div className="form-group">
-						<label for="usr">Login:</label>
-						<input type="text" className="form-control" id="usr"
-							onChange={(event) => this.onLoginInputChange(event)} value={this.state.loginInput} />
-					</div>
-					<div className="form-group">
-						<label for="pwd">Password:</label>
-						<input type="password" className="form-control" id="pwd" value={this.state.pwdInput}
-							onChange={(event) => this.onPwdInputChange(event)} />
-					</div>
-
-					<div className="radio">
-						<label><input type="radio" name="status" onClick={this.onClickStudent} />Student</label>
-					</div>
-					<div className="radio">
-						<label><input type="radio" name="status" onClick={this.onClickTeacher} />Teacher</label>
-					</div>
-					<div className="radio disabled">
-						<label><input type="radio" name="status" disabled />Researcher</label>
-					</div>
-
-					{//<Link style={{display: 'block', height: '100%'}} to={this.state.goTo}><button type="button" className="btn btn-primary">Connection</button></Link>
-					}
-					<button type="button" className="btn btn-primary" onClick={() => this.onConnectionClick(this.state.loginInput, this.state.pwdInput, this.state.userType)}>Connection</button>
-
-				</div>
-			);
-		}
+		</div>
+	    )
+	} else if (this.props.user.loggedin) {
+	    return (
+		<div className="Login-form">
+		    <h1>Dlearn</h1>
+		    <div className="centered">
+			<p>You are already logged in. Log out first to log in again.</p>
+		    </div>
+		</div>
+	    )
+	} else {
+	    return (
+		<form className="login-form" onSubmit={() => this.onConnectionClick(this.state.loginInput, this.state.pwdInput, this.state.userType)}>
+		    <h1>Dlearn</h1>
+		    {this.state.error &&
+		    <div className="alert alert-danger alert-dismissible fade show" role="alert">
+			Invalid login or password.
+		    </div>
+		    }
+		    <div className="form-group left-align">
+			<label for="usernameInput">Login</label>
+			<input type="text" className="form-control" id="usernameInput"
+				onChange={this.handleInputChange} value={this.state.loginInput} required />
+		    </div>
+		    <div className="form-group left-align">
+			<label for="passwordInput">Password</label>
+			<input type="password" className="form-control" id="passwordInput" value={this.state.pwdInput} onChange={this.handleInputChange} required />
+		    </div>
+		    <div className="custom-controls-stacked">
+			<label className="custom-control custom-radio">
+			<input id="radioStudent" className="custom-control-input" name="userType" value="student" type="radio" checked={this.state.userType === 'student'} onChange={this.handleInputChange} />
+			    <span className="custom-control-indicator"></span>
+			    <span className="custom-control-description">Student</span>
+			</label>
+			<label className="custom-control custom-radio">
+			<input id="radioTeacher" className="custom-control-input" name="userType" value="teacher" type="radio" checked={this.state.userType === 'teacher'} onChange={this.handleInputChange} />
+			    <span className="custom-control-indicator"></span>
+			    <span className="custom-control-description">Teacher</span>
+			</label>
+			<label className="custom-control custom-radio">
+			<input id="radioResearcher" className="custom-control-input" name="userType" value="researcher" type="radio" checked={this.state.userType === 'researcher'} onChange={this.handleInputChange} disabled />
+			    <span className="custom-control-indicator"></span>
+			    <span className="custom-control-description">Researcher</span>
+			</label>
+		    </div>
+		    <button id="logInButton" type="submit" className="btn btn-primary" >Log in</button>
+		</form>
+	    );
 	}
+    }
 }
 
 export default connect(mapStateToProps)(Login);

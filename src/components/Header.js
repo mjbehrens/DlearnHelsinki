@@ -21,7 +21,7 @@ class Header extends React.Component {
 		    <button className="btn btn-outline-success my-2 my-sm-0"
 			type="submit"
 			onClick={this.onLogoutClick}>
-		    Logout
+		    Log out
 		    </button>
 		</Link>
 	    )
@@ -30,7 +30,7 @@ class Header extends React.Component {
 		<Link to={ROUTES.LOGIN}>
 		    <button className="btn btn-outline-success my-2 my-sm-0"
 			type="submit">
-		    Login
+		    Log in
 		    </button>
 		</Link>
 	    )

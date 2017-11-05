@@ -23,7 +23,7 @@ class Home extends Component {
   render() {
   
       let buttonRedirect = ROUTES.LOGIN
-      let buttonText = 'Login »'
+      let buttonText = 'Log in »'
       if (this.props.user.loggedin) {
 	  if (this.props.user.type === 'teacher') {
 	      buttonRedirect = ROUTES.TEACHER_DASHBOARD

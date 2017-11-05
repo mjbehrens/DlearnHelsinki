@@ -98,6 +98,7 @@ class Login extends Component {
     }
 
     render() {
+	console.log(this.state)
 	if (this.state.redirect) {
 	    return (<Redirect to={this.state.goTo} />)
 	} else if (this.state.loading) {
@@ -118,45 +119,15 @@ class Login extends Component {
 		    </div>
 		</div>
 	    )
-	} else if (this.state.error) {
-	    return (
-		<div className="login-form">
-		<h1>Dlearn</h1>
-		<div className="alert alert-danger alert-dismissible fade show" role="alert">
-		    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		    </button>
-		    Invalid login or password.
-		</div>
-		<div className="form-group">
-		    <label for="usr">Login:</label>
-		    <input type="text" className="form-control" id="usr"
-			onChange={(event) => this.onLoginInputChange(event)} value={this.state.loginInput} />
-		</div>
-		<div className="form-group">
-		    <label for="pwd">Password:</label>
-		    <input type="password" className="form-control" id="pwd" value={this.state.pwdInput}
-			onChange={(event) => this.onPwdInputChange(event)} />
-		</div>
-		<div className="radio">
-		    <label><input type="radio" name="status" value="student" onClick={this.onRadioClick} />Student</label>
-		</div>
-		<div className="radio">
-		    <label><input type="radio" name="status" value="teacher" onClick={this.onRadioClick} />Teacher</label>
-		</div>
-		<div className="radio disabled">
-		    <label><input type="radio" name="status" value="researcher" disabled />Researcher</label>
-		</div>
-
-		{//<Link style={{display: 'block', height: '100%'}} to={this.state.goTo}><button type="button" className="btn btn-primary">Connection</button></Link>
-		}
-		<button type="button" className="btn btn-primary" onClick={() => this.onConnectionClick(this.state.loginInput, this.state.pwdInput, this.state.userType)}>Connection</button>
-	    </div>
-	);
 	} else {
 	    return (
 		<div className="login-form">
 		    <h1>Dlearn</h1>
+		    {this.state.error &&
+		    <div className="alert alert-danger alert-dismissible fade show" role="alert">
+			Invalid login or password.
+		    </div>
+		    }
 		    <div className="form-group">
 			<label for="usr">Login:</label>
 			<input type="text" className="form-control" id="usr"
@@ -167,7 +138,7 @@ class Login extends Component {
 			<input type="password" className="form-control" id="pwd" value={this.state.pwdInput} onChange={(event) => this.onPwdInputChange(event)} />
 		    </div>
 		    <div className="radio">
-			<label><input type="radio" name="status" value="student" onClick={this.onRadioClick} />Student</label>
+			<label><input type="radio" name="status" value="student" checked onClick={this.onRadioClick} />Student</label>
 		    </div>
 		    <div className="radio">
 			<label><input type="radio" name="status" value="teacher" onClick={this.onRadioClick} />Teacher</label>

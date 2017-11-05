@@ -61,7 +61,10 @@ class Login extends Component {
 
 	// Triggered when the Connection button is clicked
 	onConnectionClick = (login, password, userType) => {
-		this.setState({loading: true})
+	    this.setState({...this.state,
+			   loading: true,
+			   error: false,
+			   pwdInput: ''})
 		let endpoint = '';
 		switch (userType) {
 			case 'teacher':

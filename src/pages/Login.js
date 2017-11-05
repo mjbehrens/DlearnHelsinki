@@ -119,7 +119,7 @@ class Login extends Component {
 	    )
 	} else {
 	    return (
-		<div className="login-form">
+		<form className="login-form" onSubmit={() => this.onConnectionClick(this.state.loginInput, this.state.pwdInput, this.state.userType)}>
 		    <h1>Dlearn</h1>
 		    {this.state.error &&
 		    <div className="alert alert-danger alert-dismissible fade show" role="alert">
@@ -129,11 +129,11 @@ class Login extends Component {
 		    <div className="form-group left-align">
 			<label for="usernameInput">Login</label>
 			<input type="text" className="form-control" id="usernameInput"
-				onChange={this.handleInputChange} value={this.state.loginInput} />
+				onChange={this.handleInputChange} value={this.state.loginInput} required />
 		    </div>
 		    <div className="form-group left-align">
 			<label for="passwordInput">Password</label>
-			<input type="password" className="form-control" id="passwordInput" value={this.state.pwdInput} onChange={this.handleInputChange} />
+			<input type="password" className="form-control" id="passwordInput" value={this.state.pwdInput} onChange={this.handleInputChange} required />
 		    </div>
 		    <div className="custom-controls-stacked">
 			<label className="custom-control custom-radio">
@@ -152,8 +152,8 @@ class Login extends Component {
 			    <span className="custom-control-description">Researcher</span>
 			</label>
 		    </div>
-		    <button id="logInButton" type="submit" className="btn btn-primary" onClick={() => this.onConnectionClick(this.state.loginInput, this.state.pwdInput, this.state.userType)}>Log in</button>
-		</div>
+		    <button id="logInButton" type="submit" className="btn btn-primary" >Log in</button>
+		</form>
 	    );
 	}
     }

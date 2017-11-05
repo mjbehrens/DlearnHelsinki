@@ -18,7 +18,7 @@ class Login extends Component {
 	this.state = {
 	    loginInput: '',
 	    pwdInput: '',
-	    userType: null,
+	    userType: "student",
 	    loading: false,
 	    error: false,
 	    goTo: ROUTES.CLASS_SELECTION,
@@ -26,21 +26,19 @@ class Login extends Component {
 	};
     }
 
-    onRadioClick = (e) => {
-	this.setState({
-	    ...this.state,
-	    userType: e.target.value,
-	})
-    }
-
-    // Triggered when the login text field receives text input
-    onLoginInputChange = (e) => {
-	    this.setState({ ...this.state, loginInput: e.target.value })
-    }
-
-    // Triggered when the mdp text field receives text input
-    onPwdInputChange = (e) => {
-	    this.setState({ ...this.state, pwdInput: e.target.value })
+    // Triggered on user input change
+    handleInputChange = (e) => {
+	switch (e.target.type) {
+	    case "text":
+		this.setState({ ...this.state, loginInput: e.target.value })
+		break;
+	    case "password":
+		this.setState({ ...this.state, pwdInput: e.target.value })
+		break;
+	    case "radio":
+		this.setState({ ...this.state, userType: e.target.value	})
+		break;
+	}
     }
 
     // Triggered when the Connection button is clicked
@@ -128,25 +126,33 @@ class Login extends Component {
 			Invalid login or password.
 		    </div>
 		    }
-		    <div className="form-group">
-			<label for="usr">Login:</label>
-			<input type="text" className="form-control" id="usr"
-				onChange={(event) => this.onLoginInputChange(event)} value={this.state.loginInput} />
+		    <div className="form-group left-align">
+			<label for="usernameInput">Login</label>
+			<input type="text" className="form-control" id="usernameInput"
+				onChange={this.handleInputChange} value={this.state.loginInput} />
 		    </div>
-		    <div className="form-group">
-			<label for="pwd">Password:</label>
-			<input type="password" className="form-control" id="pwd" value={this.state.pwdInput} onChange={(event) => this.onPwdInputChange(event)} />
+		    <div className="form-group left-align">
+			<label for="passwordInput">Password</label>
+			<input type="password" className="form-control" id="passwordInput" value={this.state.pwdInput} onChange={this.handleInputChange} />
 		    </div>
-		    <div className="radio">
-			<label><input type="radio" name="status" value="student" checked onClick={this.onRadioClick} />Student</label>
+		    <div className="custom-controls-stacked">
+			<label className="custom-control custom-radio">
+			<input id="radioStudent" className="custom-control-input" name="userType" value="student" type="radio" checked={this.state.userType === 'student'} onChange={this.handleInputChange} />
+			    <span className="custom-control-indicator"></span>
+			    <span className="custom-control-description">Student</span>
+			</label>
+			<label className="custom-control custom-radio">
+			<input id="radioTeacher" className="custom-control-input" name="userType" value="teacher" type="radio" checked={this.state.userType === 'teacher'} onChange={this.handleInputChange} />
+			    <span className="custom-control-indicator"></span>
+			    <span className="custom-control-description">Teacher</span>
+			</label>
+			<label className="custom-control custom-radio">
+			<input id="radioResearcher" className="custom-control-input" name="userType" value="researcher" type="radio" checked={this.state.userType === 'researcher'} onChange={this.handleInputChange} disabled />
+			    <span className="custom-control-indicator"></span>
+			    <span className="custom-control-description">Researcher</span>
+			</label>
 		    </div>
-		    <div className="radio">
-			<label><input type="radio" name="status" value="teacher" onClick={this.onRadioClick} />Teacher</label>
-		    </div>
-		    <div className="radio disabled">
-			<label><input type="radio" name="status" value="researcher" disabled />Researcher</label>
-		    </div>
-		    <button type="button" className="btn btn-primary" onClick={() => this.onConnectionClick(this.state.loginInput, this.state.pwdInput, this.state.userType)}>Connection</button>
+		    <button id="logInButton" type="submit" className="btn btn-primary" onClick={() => this.onConnectionClick(this.state.loginInput, this.state.pwdInput, this.state.userType)}>Log in</button>
 		</div>
 	    );
 	}

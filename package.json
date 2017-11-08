@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
+    "jest": "^21.2.1",
     "webpack": "^3.6.0"
   },
   "scripts": {

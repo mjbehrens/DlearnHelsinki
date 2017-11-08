@@ -30,9 +30,11 @@ class Login extends Component {
     handleInputChange = (e) => {
 	switch (e.target.type) {
 	    case "text":
+		document.getElementById(e.target.id).classList.add('inputModified')
 		this.setState({ ...this.state, loginInput: e.target.value })
 		break;
 	    case "password":
+		document.getElementById(e.target.id).classList.add('inputModified')
 		this.setState({ ...this.state, pwdInput: e.target.value })
 		break;
 	    case "radio":

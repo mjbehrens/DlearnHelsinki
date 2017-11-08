@@ -59,6 +59,16 @@ h1 {
     padding: 8px 29px;
 }
 
+/* Fix form input validation css on firefox */
+form input {
+    box-shadow: none;
+}
+
+input.inputModified:invalid {
+    box-shadow: 0 0 2px 1px red;
+}
+
+
 .SelectClass {
     width: 60vw;
     margin: auto;

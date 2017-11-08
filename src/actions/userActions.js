@@ -1,15 +1,17 @@
+export const LOGIN_USER = 'LOGIN_USER'
+
 export function loginUser() {
-    return {
-	type: 'LOGIN_USER',
-	payload: null
-    }
+  return {
+	  type: LOGIN_USER,
+	  payload: null
+  }
 }
 
 export function logoutUser() {
-    return {
-	type: 'LOGOUT_USER',
-	payload: null
-    }
+  return {
+	  type: 'LOGOUT_USER',
+	  payload: null
+  }
 }
 
 export function setUserId(id) {

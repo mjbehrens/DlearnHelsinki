@@ -39,8 +39,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage --env=jsdom",
+    "test": "jest",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:watch": "npm test -- --watch"
   }
 }

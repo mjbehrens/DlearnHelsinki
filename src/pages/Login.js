@@ -30,9 +30,11 @@ class Login extends Component {
     handleInputChange = (e) => {
 	switch (e.target.type) {
 	    case "text":
+		document.getElementById(e.target.id).classList.add('inputModified')
 		this.setState({ ...this.state, loginInput: e.target.value })
 		break;
 	    case "password":
+		document.getElementById(e.target.id).classList.add('inputModified')
 		this.setState({ ...this.state, pwdInput: e.target.value })
 		break;
 	    case "radio":
@@ -42,7 +44,8 @@ class Login extends Component {
     }
 
     // Triggered when the Connection button is clicked
-    onConnectionClick = (login, password, userType) => {
+    onConnectionClick = (e, login, password, userType) => {
+	e.preventDefault() // Fix form not being submitted on edge and safari
 	this.setState({...this.state,
 		       loading: true,
 		       error: false,
@@ -119,7 +122,7 @@ class Login extends Component {
 	    )
 	} else {
 	    return (
-		<form className="login-form" onSubmit={() => this.onConnectionClick(this.state.loginInput, this.state.pwdInput, this.state.userType)}>
+		<form className="login-form" onSubmit={(e) => this.onConnectionClick(e, this.state.loginInput, this.state.pwdInput, this.state.userType)}>
 		    <h1>Dlearn</h1>
 		    {this.state.error &&
 		    <div className="alert alert-danger alert-dismissible fade show" role="alert">

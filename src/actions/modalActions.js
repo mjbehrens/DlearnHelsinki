@@ -1,12 +1,21 @@
+import { MODAL_ACTION_TYPES as types } from '../constants'
+
 export function setModal(type, props) {
   return {
-    type: "SET_MODAL",
-      payload: {
-	'type': type,
-	'props': props, 
-      }
+    type: types.SET_MODAL,
+    payload: {
+      'type': type,
+      'props': props,
+    }
   }
 }
+
+export function showModal() {
+  return {
+    type: types.SHOW_MODAL,
+  }
+}
+
 // export function setTitle(title) {
 //   return {
 //     type: "SET_TITLE",
@@ -27,9 +36,3 @@ export function setModal(type, props) {
 //     payload: footer 
 //   }
 // }
-
-export function showModal() {
-    return {
-	type: "SHOW_MODAL",
-    }
-}

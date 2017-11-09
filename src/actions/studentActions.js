@@ -1,6 +1,8 @@
+import { STUDENT_ACTION_TYPES as types } from '../constants'
+
 export function addStudent(student) {
   return {
-    type: "ADD_STUDENT",
+    type: types.ADD_STUDENT,
     payload: student
   }
 }

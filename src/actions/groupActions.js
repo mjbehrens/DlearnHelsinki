@@ -1,6 +1,8 @@
+import { GROUP_ACTION_TYPES as types } from '../constants'
+
 export function fetchGroups() {
   return {
-    type: "FETCH_GROUPS",
+    type: types.FETCH_GROUPS,
     payload: {
 	// Add api call
 	groups:

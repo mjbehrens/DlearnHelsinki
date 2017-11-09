@@ -23,6 +23,7 @@ const buttonStyle = {
 
 
 var compo = null;
+const SELECT_DEFAULT_VALUE = 5;
 
 class GraphRendererForGroups extends Component {
 
@@ -39,14 +40,14 @@ class GraphRendererForGroups extends Component {
 
 
     componentDidMount() {
-        this.loadGraphs(5);
+        this.loadGraphs(SELECT_DEFAULT_VALUE);
     }
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
         if (this.props != nextProps) {
             //this.render();
-            this.loadGraphs(5);
+            this.loadGraphs(SELECT_DEFAULT_VALUE);
         }
     }
 
@@ -93,17 +94,17 @@ class GraphRendererForGroups extends Component {
     renderSelect = function () {
 
         let numSurvey = this.props.surveys.length;
-        let numSelectEntry = Math.round(numSurvey / 5);
+        let numSelectEntry = Math.round(numSurvey / SELECT_DEFAULT_VALUE);
 
         let options = [];
 
         for (let x = 1; x < numSelectEntry; x++) {
-            options.push(<option value={x * 5}>{x * 5}</option>)
+            options.push(<option value={x * SELECT_DEFAULT_VALUE}>{x * SELECT_DEFAULT_VALUE}</option>)
         }
         options.push(<option value={this.props.surveys.length}>{this.props.surveys.length}</option>)
 
         return (
-            <select defaultValue={5} onChange={this.onChangeSelect}>
+            <select defaultValue={SELECT_DEFAULT_VALUE} onChange={this.onChangeSelect}>
                 {options}
             </select>
         )

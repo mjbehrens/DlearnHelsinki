@@ -19,5 +19,8 @@ export const BACKEND_API = {
 }
 
 export const ACTION_TYPES = {
-
+    LOGIN_USER: 'LOGIN_USER',
+    LOGOUT_USER: 'LOGOUT_USER',
+    SET_USER_ID: 'SET_USER_ID',
+    SET_USER_NAME: 'SET_USER_NAME'
 }

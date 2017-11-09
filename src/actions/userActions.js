@@ -1,29 +1,29 @@
-export const LOGIN_USER = 'LOGIN_USER'
+import { ACTION_TYPES as types } from '../constants'
 
 export function loginUser() {
   return {
-	  type: LOGIN_USER,
+	  type: types.LOGIN_USER,
 	  payload: null
   }
 }
 
 export function logoutUser() {
   return {
-	  type: 'LOGOUT_USER',
+	  type: types.LOGOUT_USER,
 	  payload: null
   }
 }
 
 export function setUserId(id) {
   return {
-    type: 'SET_USER_ID',
+    type: types.SET_USER_ID,
     payload: id,
   }
 }
 
 export function setUserName(name) {
   return {
-    type: 'SET_USER_NAME',
+    type: types.SET_USER_NAME,
     payload: name,
   }
 }

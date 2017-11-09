@@ -13,7 +13,6 @@ describe('actions', () => {
 	it('should create an action to delete classes', () => {
 		const expectedAction = {
 			type: types.DELETE_CLASSES,
-			payload: null
 		}
 		expect(actions.deleteClasses()).toEqual(expectedAction)
 	})

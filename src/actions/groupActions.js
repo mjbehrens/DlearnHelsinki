@@ -5,14 +5,11 @@ export function fetchGroups() {
     type: types.FETCH_GROUPS,
     payload: {
 	// Add api call
-	groups:
-	[
-	    {
-		groupid: 12,
-		groupname: "some group name",
-	    }
-	]
-	
+		groups:
+		[{
+			groupid: 12,
+			groupname: "some group name",
+	    }]
     }
   }
 }

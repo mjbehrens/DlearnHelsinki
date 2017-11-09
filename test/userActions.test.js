@@ -5,14 +5,12 @@ describe('actions', () => {
 	it('should create an action for login', () => {
 		const expectedAction = {
 			type: types.LOGIN_USER,
-			payload: null
 		}
 		expect(actions.loginUser()).toEqual(expectedAction)
 	}),
 	it('should create an action for logout', () => {
 		const expectedAction = {
 			type: types.LOGOUT_USER,
-			payload: null
 		}
 		expect(actions.logoutUser()).toEqual(expectedAction)
 	}),

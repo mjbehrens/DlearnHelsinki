@@ -3,14 +3,12 @@ import { USER_ACTION_TYPES as types } from '../constants'
 export function loginUser() {
   return {
 	  type: types.LOGIN_USER,
-	  payload: null
   }
 }
 
 export function logoutUser() {
   return {
 	  type: types.LOGOUT_USER,
-	  payload: null
   }
 }
 

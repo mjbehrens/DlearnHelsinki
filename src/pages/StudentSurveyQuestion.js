@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Spinner from 'react-spinner'
 import { ROUTES, BACKEND_API } from '../constants.js';
 
 import Slider from 'rc-slider';
@@ -37,6 +38,7 @@ class StudentSurveyQuestion extends Component {
         this.state = {
             buttonValue: 'Next',
             redirect: false,
+	    loading: true,
             index: 0,
             survey_id: survey_id,
             survey: [{
@@ -63,7 +65,7 @@ class StudentSurveyQuestion extends Component {
         this.getSurveyQuestionsREST();
     }
 
-    getSurveyQuestionsREST = function () {
+    getSurveyQuestionsREST = () => {
         var component = this;
         var survey = [];
 
@@ -73,10 +75,10 @@ class StudentSurveyQuestion extends Component {
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': 'Basic ' + this.props.user.hash,
             }
-        }).then(function (response) {
+        }).then((response) => {
             if (response.ok) {
                 response.json().then(data => {
-                    data.forEach(function (e) {
+                    data.forEach((e) => {
                         let q = {
                             id: e._id,
                             question: e.question,
@@ -101,6 +103,9 @@ class StudentSurveyQuestion extends Component {
             } else {
                 console.log('Network response was not ok.');
             }
+	    this.setState({...this.state,
+			loading: false,
+			})
         }).catch(function (err) {
             // Error :(
             console.log(err);
@@ -181,8 +186,13 @@ class StudentSurveyQuestion extends Component {
                 state: { survey_id: compo.state.survey_id }
             });
             //return <Redirect to="/student-dashboard" />
-        }
-        else {
+        } else if (this.state.loading) {
+            return (
+                <div className="spinner-container">
+		    <Spinner />
+                </div>
+            );
+	} else {
 
             return (
                 <div className="Login-form">

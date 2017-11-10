@@ -150,16 +150,17 @@ class ClassSelection extends Component {
             }
             return this.renderButton(classroom);
         }, this);
-        console.log(x);
-        // add class button
-        buttons.push(
-            <button style={{ margin: "1vmin" }}
-                key={x + 1}
-                onClick={() => this.createClass()}
-                className="btn btn-info">
-                {"+ new Class"}
-            </button>);
-        console.log(buttons);
+        // 'create new class' button
+	if (this.props.user.type === 'teacher') {
+	    buttons.push(
+		<button style={{ margin: "1vmin" }}
+		    key={x + 1}
+		    onClick={() => this.createClass()}
+		    className="btn btn-info">
+		    {"+ new Class"}
+		</button>);
+	}
+        // console.log(buttons);
 
         if (this.state.loading) {
             return (

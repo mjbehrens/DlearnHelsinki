@@ -25,9 +25,8 @@ class StudentSurveyQuestion extends Component {
     constructor(props) {
         super(props);
 
-        let survey_id = null;
         try {
-            survey_id = this.props.location.state.survey_id
+            console.log(this.props.location.state.survey_id)
         } catch (err) {
 	    // FIXME
 	    // No survey was passed along. Probably there is no survey opened.
@@ -40,7 +39,8 @@ class StudentSurveyQuestion extends Component {
             redirect: false,
 	    loading: true,
             index: 0,
-            survey_id: survey_id,
+            survey_id: this.props.location.state.survey_id,
+            survey_title: this.props.location.state.survey_title,
             survey: [{
                 id: 0,
                 question: 'Loading the survey...',
@@ -188,14 +188,18 @@ class StudentSurveyQuestion extends Component {
             //return <Redirect to="/student-dashboard" />
         } else if (this.state.loading) {
             return (
-                <div className="spinner-container">
-		    <Spinner />
-                </div>
+		<div className="Login-form">
+		    <h1>Survey "{this.state.survey_title}"</h1>
+		    <div className="spinner-container">
+			<Spinner />
+		    </div>
+		</div>
             );
 	} else {
 
             return (
                 <div className="Login-form">
+		    <h1>Survey "{this.state.survey_title}"</h1>
                     <p>{this.state.currentQuestion.question}</p>
                     <Slider
                         min={this.state.currentQuestion.min_answer}

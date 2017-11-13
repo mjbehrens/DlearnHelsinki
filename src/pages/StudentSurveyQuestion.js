@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Spinner from 'react-spinner'
 import { ROUTES, BACKEND_API } from '../constants.js';
 
 import Slider from 'rc-slider';
@@ -24,9 +25,8 @@ class StudentSurveyQuestion extends Component {
     constructor(props) {
         super(props);
 
-        let survey_id = null;
         try {
-            survey_id = this.props.location.state.survey_id
+            console.log(this.props.location.state.survey_id)
         } catch (err) {
 	    // FIXME
 	    // No survey was passed along. Probably there is no survey opened.
@@ -37,8 +37,10 @@ class StudentSurveyQuestion extends Component {
         this.state = {
             buttonValue: 'Next',
             redirect: false,
+	    loading: true,
             index: 0,
-            survey_id: survey_id,
+            survey_id: this.props.location.state.survey_id,
+            survey_title: this.props.location.state.survey_title,
             survey: [{
                 id: 0,
                 question: 'Loading the survey...',
@@ -63,7 +65,7 @@ class StudentSurveyQuestion extends Component {
         this.getSurveyQuestionsREST();
     }
 
-    getSurveyQuestionsREST = function () {
+    getSurveyQuestionsREST = () => {
         var component = this;
         var survey = [];
 
@@ -73,10 +75,10 @@ class StudentSurveyQuestion extends Component {
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': 'Basic ' + this.props.user.hash,
             }
-        }).then(function (response) {
+        }).then((response) => {
             if (response.ok) {
                 response.json().then(data => {
-                    data.forEach(function (e) {
+                    data.forEach((e) => {
                         let q = {
                             id: e._id,
                             question: e.question,
@@ -101,6 +103,9 @@ class StudentSurveyQuestion extends Component {
             } else {
                 console.log('Network response was not ok.');
             }
+	    this.setState({...this.state,
+			loading: false,
+			})
         }).catch(function (err) {
             // Error :(
             console.log(err);
@@ -181,11 +186,20 @@ class StudentSurveyQuestion extends Component {
                 state: { survey_id: compo.state.survey_id }
             });
             //return <Redirect to="/student-dashboard" />
-        }
-        else {
+        } else if (this.state.loading) {
+            return (
+		<div className="Login-form">
+		    <h1>Survey "{this.state.survey_title}"</h1>
+		    <div className="spinner-container">
+			<Spinner />
+		    </div>
+		</div>
+            );
+	} else {
 
             return (
                 <div className="Login-form">
+		    <h1>Survey "{this.state.survey_title}"</h1>
                     <p>{this.state.currentQuestion.question}</p>
                     <Slider
                         min={this.state.currentQuestion.min_answer}

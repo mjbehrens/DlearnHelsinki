@@ -6,7 +6,7 @@ import Popup from 'react-popup';
 import { ROUTES, BACKEND_API } from '../constants.js';
 import * as userActions from '../actions/userActions';
 import * as classActions from '../actions/classActions';
-
+import { withTranslate } from 'react-redux-multilingual'
 
 function mapStateToProps(store) {
     return {
@@ -26,6 +26,7 @@ class ClassSelection extends Component {
             + this.props.user.id + '/classes/',
             loading: false,
         }
+        const translate = this.props;
     }
 
     componentDidMount() {
@@ -62,7 +63,7 @@ class ClassSelection extends Component {
             console.log(err);
         });
     }
-
+    //TODO
     isClassAlreadyExist = (class_name) => {
         let c = this.props.classes.filter(function(classroomm){
             return classroomm.name === class_name;
@@ -75,14 +76,14 @@ class ClassSelection extends Component {
             return false;
         }
     }
-
-    postClass = (class_name) => {
+    //TODO
+    postClass = (class_name_english, class_name_finnish) => {
         this.setState({
             loading: true,
         })
 
         if(this.isClassAlreadyExist(class_name)){
-            alert(class_name + ' Class already exist. Please enter another name.');
+            alert(class_name + ' ' + this.props.translate('error_already'));
             this.setState({
                 loading: false,
             });
@@ -90,9 +91,9 @@ class ClassSelection extends Component {
             let data = JSON.stringify({
                 "name": class_name,
             });
-    
+
             let POST_CREATE_CLASS = 'teachers/' + this.props.user.id + '/classes';
-    
+
             fetch(BACKEND_API.ROOT + POST_CREATE_CLASS, {
                 method: "POST",
                 headers: {
@@ -106,14 +107,14 @@ class ClassSelection extends Component {
                     this.getClasses();
                 } else {
                     console.log('Network response was not ok.');
-                    alert("Error while creating this new class. Please retry");
+                    alert(this.props.translate('error_try_again'));
                     this.setState({
                         ...this.state,
                         loading: false,
                     })
                 }
-    
-    
+
+
             }).catch((err) => {
                 console.log(err);
             });
@@ -128,7 +129,7 @@ class ClassSelection extends Component {
     }
 
     createClass = () => {
-        Popup.plugins().addClass(this.postClass);
+        Popup.plugins().addClass(this.postClass, this.props);
     }
 
     renderButton(classroom) {
@@ -143,6 +144,7 @@ class ClassSelection extends Component {
     }
 
     render() {
+
         let x = 1;
         var buttons = this.props.classes.map(function (classroom, i) {
             if (classroom._id > x) {
@@ -157,7 +159,7 @@ class ClassSelection extends Component {
 		    key={x + 1}
 		    onClick={() => this.createClass()}
 		    className="btn btn-info">
-		    {"+ new Class"}
+		    {this.props.translate('new_class')}
 		</button>);
 	}
         // console.log(buttons);
@@ -165,7 +167,7 @@ class ClassSelection extends Component {
         if (this.state.loading) {
             return (
                 <div className="SelectClass">
-                    <h1>Select a Class</h1>
+                    <h1>{this.props.translate('select_class')}</h1>
                     <div className='spinner-container'>
                         <Spinner />
                     </div>
@@ -174,7 +176,7 @@ class ClassSelection extends Component {
         } else {
             return (
                 <div className="SelectClass">
-                    <h1>Select a Class</h1>
+                    <h1>{this.props.translate('select_class')}</h1>
                     <div>
                         {buttons}
                     </div>
@@ -185,35 +187,48 @@ class ClassSelection extends Component {
 }
 
 
-Popup.registerPlugin('addClass', function (callbackConfirm) {
-    let _class_name = '';
+Popup.registerPlugin('addClass', function ( callbackConfirm, props) {
 
-    let getClassName = function (e) {
-        _class_name = e.target.value;
+    let _class_name_english = '';
+    let _class_name_finnish = '';
+
+    let getClassNameEnglish = function (e) {
+        _class_name_english = e.target.value;
+    };
+    let getClassNameFinnish = function (e) {
+        _class_name_finnish = e.target.value;
     };
 
+//TODO EI TOIMI
+
     this.create({
-        title: 'Create new Class',
+        title: props.translate('create_class'),
         content: (<div>
-            <h6>Name:</h6><input type="text" placeholder={"class name"}
-                onChange={getClassName} />
+             <h6>{props.translate('name')} (english):</h6>
+             <input type="text" placeholder={props.translate('class_name_placeholder')}
+                onChange={getClassNameEnglish} />
+             <h6>{props.translate('name')} (finnish):</h6>
+             <input type="text" placeholder={props.translate('class_name_placeholder')}
+                onChange={getClassNameFinnish} />
         </div>),
         buttons: {
             left: [{
-                text: 'Cancel',
+                text: props.translate('cancel'),
                 className: null, // optional
                 action: function (popup) {
                     popup.close();
                 }
             }],
             right: [{
-                text: 'Confirm',
+                text: props.translate('confirm'),
                 className: 'success', // optional
                 action: function (popup) {
-                    if (_class_name.length > 5) {
-                        callbackConfirm(_class_name);
+                    if ( _class_name_finnish.length > 5 && _class_name_english.length > 5 ) {
+                        callbackConfirm(_class_name_english, _class_name_finnish);
                         popup.close();
                     } else {
+
+                      //TODO translation
                         alert("The new class must have a name !. Please enter a name with more than 5 letters")
                     }
 
@@ -227,4 +242,4 @@ Popup.registerPlugin('addClass', function (callbackConfirm) {
     });
 });
 
-export default connect(mapStateToProps)(ClassSelection);
+export default connect(mapStateToProps)(withTranslate(ClassSelection));

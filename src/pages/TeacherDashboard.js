@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
+import { withTranslate } from 'react-redux-multilingual'
 
 import OpenSurveyButton from '../components/teacherCompo/OpenSurveyButton.js';
 import HistoryButton from '../components/teacherCompo/HistoryButton.js';
@@ -15,7 +16,7 @@ function mapStateToProps(store) {
   return {
     user: store.user.user,
     classes: store.classroom.classes,
-    
+
   }
 }
 
@@ -57,7 +58,7 @@ class TeacherDashboard extends Component {
   getAllSurveyREST = function () {
     this.setState({ isLoading: true });
 
-    let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys';     
+    let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys';
 
     fetch(BACKEND_API.ROOT + GET_SURVEYS, {
       method: "GET",
@@ -83,7 +84,7 @@ class TeacherDashboard extends Component {
     });
   }
 
-  // check if a survey is currently open 
+  // check if a survey is currently open
   checkLastSurveyDone = function () {
 
     let tempSurveys = surveys.filter(function (s) {
@@ -107,7 +108,7 @@ class TeacherDashboard extends Component {
 
   }
 
-  // check if a survey is currently open 
+  // check if a survey is currently open
   checkIfSurveyOpen = function () {
 
     let noSurveyOpen = true;
@@ -159,6 +160,4 @@ class TeacherDashboard extends Component {
   }
 }
 
-export default connect(mapStateToProps)(TeacherDashboard);
-
-
+export default connect(mapStateToProps)(withTranslate(TeacherDashboard));

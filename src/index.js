@@ -6,6 +6,8 @@ import registerServiceWorker from './registerServiceWorker';
 import { PersistGate } from 'redux-persist/es/integration/react'
 import { Provider } from "react-redux";
 import { BrowserRouter } from 'react-router-dom'
+import translations from './translations/translations'
+import { IntlProvider } from 'react-redux-multilingual'
 
 // Required for bootstrap
 var $ = require('jquery');
@@ -26,14 +28,20 @@ const onBeforeLift = () => {
 // Renders the App in the 'root' div of the page
 ReactDOM.render((
   <Provider store={store}>
-    <PersistGate 
-      loading={<div>Loading...</div>}
-      onBeforeLift={onBeforeLift}
-      persistor={persistor}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </PersistGate>
+    <IntlProvider translations={translations} locale='en'>
+
+      <PersistGate
+        loading={<div>Loading...</div>}
+        onBeforeLift={onBeforeLift}
+        persistor={persistor}>
+
+        <BrowserRouter>
+          <App />
+
+        </BrowserRouter>
+
+      </PersistGate>
+    </IntlProvider>
   </Provider>
 ), document.getElementById('root'));
 

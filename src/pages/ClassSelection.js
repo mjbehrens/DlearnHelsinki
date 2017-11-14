@@ -82,14 +82,20 @@ class ClassSelection extends Component {
             loading: true,
         })
 
-        if(this.isClassAlreadyExist(class_name)){
-            alert(class_name + ' ' + this.props.translate('error_already'));
+        if(this.isClassAlreadyExist(class_name_english)){
+            alert(class_name_english + ' ' + this.props.translate('error_already'));
             this.setState({
                 loading: false,
             });
+        }
+        if(this.isClassAlreadyExist(class_name_finnish)){
+                alert(class_name_finnish + ' ' + this.props.translate('error_already'));
+                this.setState({
+                    loading: false,
+                });
         }else{
             let data = JSON.stringify({
-                "name": class_name,
+                "name": class_name_english,
             });
 
             let POST_CREATE_CLASS = 'teachers/' + this.props.user.id + '/classes';

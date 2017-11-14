@@ -6,6 +6,7 @@ import './css/App.css';
 import './css/popup.css';
 import { ROUTES } from './constants.js';
 
+
 import ClassSelection from './pages/ClassSelection.js';
 import Footer from './components/Footer.js';
 import Header from './components/Header.js';
@@ -29,7 +30,7 @@ function mapStateToProps(store) {
 class App extends Component {
 
     // Return the desired component if a correct user is logged in and
-    // a class is selected. Redirect to class selection if a correct 
+    // a class is selected. Redirect to class selection if a correct
     // user is logged in and no class has been selected. Redirect to
     // 404 if the user is not logged or with incorrect userType.
     protectedRoute = (userType, component) => {
@@ -42,7 +43,7 @@ class App extends Component {
 	    }
 	    return <Route component={component} />
 	}
-	return <Route component={NoMatch} /> 
+	return <Route component={NoMatch} />
     }
 
 

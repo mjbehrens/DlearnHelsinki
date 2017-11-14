@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
+import { withTranslate } from 'react-redux-multilingual'
 
 import OpenSurveyButton from '../components/teacherCompo/OpenSurveyButton.js';
 import HistoryButton from '../components/teacherCompo/HistoryButton.js';
@@ -89,7 +90,7 @@ class TeacherDashboard extends Component {
     let lastSurvey = null;
 
     if (surveys.length > 0) {
-      // only look for closed surveys 
+      // only look for closed surveys
       let tempSurveys = surveys.filter(function (s) {
         return s.open == false;
       });
@@ -109,7 +110,7 @@ class TeacherDashboard extends Component {
 
   }
 
-  // check if a survey is currently open 
+  // check if a survey is currently open
   checkIfSurveyOpen = function (surveys) {
 
     let noSurveyOpen = true;
@@ -139,7 +140,7 @@ class TeacherDashboard extends Component {
 
   // Display the  message that a survey is open
   renderInfoOpenSurvey = function (survey_title) {
-    // We assume that if the title is null 
+    // We assume that if the title is null
     // then there is no survey open. With is kind of weak...
     if (survey_title != null) {
       return (
@@ -178,6 +179,4 @@ class TeacherDashboard extends Component {
   }
 }
 
-export default connect(mapStateToProps)(TeacherDashboard);
-
-
+export default connect(mapStateToProps)(withTranslate(TeacherDashboard));

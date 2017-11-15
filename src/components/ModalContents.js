@@ -2,8 +2,8 @@ import React from "react";
 import SurveyCreationForm from './teacherCompo/SurveyCreationForm.js'
 
 
-const DefaultModal = React.createClass({
-  render: function() {
+class DefaultModal extends React.Component {
+  render() {
     return (
 	<div className="modal-content">
 	    <div className="modal-header">
@@ -21,10 +21,10 @@ const DefaultModal = React.createClass({
 	</div>
     );
   }
-});
+}
 
 
-const OpenSurveyModal = React.createClass({
+class OpenSurveyModal extends React.Component {
   render() {
     return (
 	<div className="modal-content">
@@ -49,11 +49,11 @@ const OpenSurveyModal = React.createClass({
 	</div>
     );
   }
-});
+}
 
 
-const CloseSurveyModal = React.createClass({
-  render: function() {
+class CloseSurveyModal extends React.Component {
+  render() {
     return (
 	<div className="modal-content">
 	    <div className="modal-header">
@@ -74,7 +74,7 @@ const CloseSurveyModal = React.createClass({
 	</div>
     );
   }
-});
+}
 
 export default {
     DefaultModal,

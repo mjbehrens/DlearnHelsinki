@@ -25,6 +25,7 @@ class ClassSelection extends Component {
             getClassesEndpoint: (this.props.user.type === 'teacher' ? 'teachers/' : 'students/')
             + this.props.user.id + '/classes/',
             loading: false,
+	    warning: Boolean(this.props.location.state && this.props.location.state.warning),
         }
     }
 
@@ -175,6 +176,12 @@ class ClassSelection extends Component {
             return (
                 <div className="SelectClass">
                     <h1>Select a Class</h1>
+		    {this.state.warning &&
+		    <div className="alert alert-danger alert-dismissible fade show" role="alert">
+		     You must select a class first
+		    </div>
+		    }
+
                     <div>
                         {buttons}
                     </div>

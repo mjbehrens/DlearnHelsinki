@@ -48,6 +48,8 @@ class TeacherDashboard extends Component {
       lastSurveyDone: lastSurveyDone,
       openSurvey: openSurvey,
     };
+
+    const {translate} = this.props
   }
 
   componentDidMount() {
@@ -72,7 +74,10 @@ class TeacherDashboard extends Component {
           surveys = data;
           console.log(surveys);
           compo.checkIfSurveyOpen();
-          compo.checkLastSurveyDone();
+          if (surveys.length != 0) {
+
+            compo.checkLastSurveyDone();
+          }
 
         });
       } else {
@@ -84,7 +89,7 @@ class TeacherDashboard extends Component {
     });
   }
 
-  // check if a survey is currently open
+  // check the last survey made
   checkLastSurveyDone = function () {
 
     let tempSurveys = surveys.filter(function (s) {
@@ -143,7 +148,9 @@ class TeacherDashboard extends Component {
         <h1> {this.state.className} </h1>
 
         <div className="row">
-          <HeadbandsLastResults survey={this.state.lastSurveyDone} />
+
+         <HeadbandsLastResults survey={this.state.lastSurveyDone} />
+
         </div>
 
         <div className="container">

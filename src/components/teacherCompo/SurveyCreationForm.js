@@ -1,17 +1,19 @@
 import React from "react";
 import TextareaAutosize from 'react-autosize-textarea';
+import { withTranslate } from 'react-redux-multilingual';
 
 
 class SurveyCreationFrom extends React.Component {
 
     constructor(props) {
         super(props);
+        const {translate} = this.props;
     }
 
     render() {
         return (
             <div>
-                <h6>Title of the survey</h6>
+                <h6>{this.props.translate('survey_title')}</h6>
                 <input type="text" className="mm-popup__input"
                     placeholder={this.props.title}
                     onChange={this.props.onChangeTitle}
@@ -37,4 +39,4 @@ class SurveyCreationFrom extends React.Component {
     }
 }
 
-export default SurveyCreationFrom;
+export default withTranslate(SurveyCreationFrom);

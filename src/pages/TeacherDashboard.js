@@ -48,6 +48,8 @@ class TeacherDashboard extends Component {
       lastSurveyDone: lastSurveyDone,
       openSurvey: openSurvey,
     };
+
+    const {translate} = this.props
   }
 
   componentDidMount() {
@@ -71,8 +73,11 @@ class TeacherDashboard extends Component {
         response.json().then(data => {
           surveys = data;
           console.log(surveys);
-          compo.checkIfSurveyOpen(surveys);
-          compo.checkLastSurveyDone(surveys);
+          compo.checkIfSurveyOpen();
+          if (surveys.length != 0) {
+
+            compo.checkLastSurveyDone();
+          }
 
         });
       } else {
@@ -160,7 +165,9 @@ class TeacherDashboard extends Component {
         <h1> {this.state.className} </h1>
 
         <div className="row">
-          <HeadbandsLastResults survey={this.state.lastSurveyDone} />
+
+         <HeadbandsLastResults survey={this.state.lastSurveyDone} />
+
         </div>
 
         {this.renderInfoOpenSurvey(this.state.openSurvey.title)}

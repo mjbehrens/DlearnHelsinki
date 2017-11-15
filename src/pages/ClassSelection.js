@@ -66,7 +66,7 @@ class ClassSelection extends Component {
             console.log(err);
         });
     }
-    //TODO
+
     isClassAlreadyExist = (class_name) => {
         let c = this.props.classes.filter(function(classroomm){
             return classroomm.name === class_name;
@@ -79,7 +79,7 @@ class ClassSelection extends Component {
             return false;
         }
     }
-    //TODO
+
     postClass = (class_name_english, class_name_finnish) => {
         this.setState({
             loading: true,
@@ -99,6 +99,7 @@ class ClassSelection extends Component {
         }else{
             let data = JSON.stringify({
                 "name": class_name_english,
+                "name_fi": class_name_finnish,
             });
 
             let POST_CREATE_CLASS = 'teachers/' + this.props.user.id + '/classes';
@@ -214,17 +215,19 @@ Popup.registerPlugin('addClass', function ( callbackConfirm, props) {
         _class_name_finnish = e.target.value;
     };
 
-//TODO EI TOIMI
 
     this.create({
         title: props.translate('create_class'),
         content: (<div>
-             <h6>{props.translate('name')} (english):</h6>
-             <input type="text" placeholder={props.translate('class_name_placeholder')}
-                onChange={getClassNameEnglish} />
-             <h6>{props.translate('name')} (finnish):</h6>
-             <input type="text" placeholder={props.translate('class_name_placeholder')}
-                onChange={getClassNameFinnish} />
+
+            <h6>{props.translate('name')} ({props.translate('finnish')}) :</h6>
+              <input type="text" className='input' placeholder={props.translate('class_name_placeholder')}
+              onChange={getClassNameFinnish} />
+
+             <h6>{props.translate('name')} ({props.translate('english')}) :</h6>
+              <input type="text" className='input' placeholder={props.translate('class_name_placeholder')}
+              onChange={getClassNameEnglish} />
+
         </div>),
         buttons: {
             left: [{
@@ -243,8 +246,7 @@ Popup.registerPlugin('addClass', function ( callbackConfirm, props) {
                         popup.close();
                     } else {
 
-                      //TODO translation
-                        alert("The new class must have a name !. Please enter a name with more than 5 letters")
+                        alert(props.translate('error_class_name'))
                     }
 
                 }

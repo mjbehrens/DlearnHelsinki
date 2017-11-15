@@ -7,6 +7,7 @@ import { ROUTES, BACKEND_API } from '../constants.js';
 import * as userActions from '../actions/userActions';
 import * as classActions from '../actions/classActions';
 
+require('../css/classSelection.css')
 
 function mapStateToProps(store) {
     return {
@@ -174,7 +175,7 @@ class ClassSelection extends Component {
             )
         } else {
             return (
-                <div className="SelectClass">
+                <div className="class-selection">
                     <h1>Select a Class</h1>
 		    {this.state.warning &&
 		    <div className="alert alert-danger alert-dismissible fade show" role="alert">

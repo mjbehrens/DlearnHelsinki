@@ -35,14 +35,17 @@ class App extends Component {
     protectedRoute = (userType, component) => {
 	if (this.props.user.type === userType) {
 	    if (this.props.user.classid == null) {
-		return <Redirect to={ROUTES.CLASS_SELECTION} />
-	    } 
+		return <Redirect to={{
+		    pathname: ROUTES.CLASS_SELECTION,
+		    state: { warning: true },
+		}} />
+	    }
 	    return <Route component={component} />
 	}
 	return <Route component={NoMatch} /> 
     }
 
-	    
+
     render() {
 
 	return (

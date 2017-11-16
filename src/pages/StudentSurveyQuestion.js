@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import Spinner from 'react-spinner'
-import { ROUTES, BACKEND_API } from '../constants.js';
-
-import Slider from 'rc-slider';
-import { Redirect } from 'react-router'
-import 'rc-slider/assets/index.css';
-
-import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router'
+import Slider from 'rc-slider';
+import Spinner from 'react-spinner'
 
+import { ROUTES, BACKEND_API } from '../constants.js';
 import Star from '../components/Star.js';
+import * as userActions from '../actions/userActions';
+
+// use 'require' to ensure the import order is respected
+require('rc-slider/assets/index.css');
+require('../css/studentSurveyQuestion.css');
 
 function mapStateToProps(store) {
     return {
@@ -188,7 +189,7 @@ class StudentSurveyQuestion extends Component {
             //return <Redirect to="/student-dashboard" />
         } else if (this.state.loading) {
             return (
-		<div className="Login-form">
+		<div className="login-form">
 		    <h1>Survey "{this.state.survey_title}"</h1>
 		    <div className="spinner-container">
 			<Spinner />
@@ -198,7 +199,7 @@ class StudentSurveyQuestion extends Component {
 	} else {
 
             return (
-                <div className="Login-form">
+                <div className="container centered">
 		    <h1>Survey "{this.state.survey_title}"</h1>
                     <p>{this.state.currentQuestion.question}</p>
                     <Slider

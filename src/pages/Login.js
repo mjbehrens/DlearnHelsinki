@@ -5,6 +5,8 @@ import Spinner from 'react-spinner'
 import { ROUTES, BACKEND_API } from '../constants.js';
 import * as userActions from '../actions/userActions';
 
+require('../css/login.css')
+
 function mapStateToProps(store) {
     return {
 	user: store.user.user,

@@ -209,9 +209,9 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
         console.log(_password.length);
         console.log(_gender.length);
         
-        if ((_username.length > 5)
+        if ((_username.length >= 5)
             && (_age > 1) 
-            && (_password.length > 5) 
+            && (_password.length >= 5) 
             && (_gender.length > 1) ) {
             return true;
         } else {

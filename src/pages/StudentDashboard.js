@@ -6,6 +6,7 @@ import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
 import LinearGraph from '../components/shared/LinearGraph.js';
 import Spinner from 'react-spinner';
+import StudentProfile from '../components/studentCompo/StudentProfile.js';
 
 import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
@@ -15,6 +16,9 @@ let GET_SURVEYS = '';
 
 var surveys = [];
 let compo;
+const HISTORY = "histroy";
+const PROFILE = "profile";
+const LASTRESULT = "lastResult";
 
 
 function mapStateToProps(store) {
@@ -41,12 +45,11 @@ class StudentDashboard extends Component {
 
 		let survey_id = null;
 		if (this.props.location.state != null) {
-			console.log(this.props.location.state);
 			survey_id = this.props.location.state.survey_id
-			console.log(survey_id);
 		}
 
 		this.state = {
+			toRender: null,
 			disabledSurvey: true,
 			lastSurvey: {
 				_id: survey_id,
@@ -66,7 +69,7 @@ class StudentDashboard extends Component {
 			}
 		}
 
-		console.log(this.props.user);
+		
 	}
 
 	buildRequestRest = function () {
@@ -149,7 +152,7 @@ class StudentDashboard extends Component {
 	checkLastSurveyDone = function () {
 
 		if (this.state.lastSurvey._id == null) {
-			
+
 			let tempSurveys = surveys.filter(function (s) {
 				return s.open === false;
 			});
@@ -237,11 +240,32 @@ class StudentDashboard extends Component {
 		}
 	}
 
+	getButtonValue = function (e) {
+		let value = e.target.value;
+		let item = (<div></div>)
+		
+		switch (value) {
+			case HISTORY:
+				break;
+			case PROFILE:
+				item = <StudentProfile/>
+				break;
+			case LASTRESULT:
+				item = compo.displaySpiderGraph()
+				break;
+
+			default:
+				break;
+		}
+		compo.setState({toRender: item})
+		
+	}
+
 	render() {
 
 		return (
 			<div className="container text-center">
-			    <h1>Welcome {this.props.user.name}</h1>
+				<h1>Welcome {this.props.user.name}</h1>
 				<div className="jumbotron">
 
 
@@ -249,12 +273,14 @@ class StudentDashboard extends Component {
 						<div className="col-sm-3">
 							<div className="btn-group-vertical">
 								<button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">Survey</button>
-								<button type="button" className="btn btn-primary">History</button>
-								<button type="button" className="btn btn-primary">Profile</button>
+								<br/>
+								<button type="button" value="history" onClick={this.getButtonValue} className="btn btn-primary">History</button>
+								<button type="button" value="profile" onClick={this.getButtonValue} className="btn btn-primary">Profile</button>
+								<button type="button" value="lastResult" onClick={this.getButtonValue} className="btn btn-primary">Last Result</button>
 							</div>
 						</div>
 						<div className="col-sm-9">
-							{compo.displaySpiderGraph()}
+							{this.state.toRender}
 						</div>
 					</div>
 

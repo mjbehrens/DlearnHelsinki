@@ -34,7 +34,8 @@ class StudentDashboard extends Component {
 		e.preventDefault();
 		this.props.history.push({
 			pathname: ROUTES.STUDENT_SURVEY,
-			state: { survey_id: compo.state.survey._id }
+			state: { survey_id: compo.state.survey._id,
+				 survey_title: compo.state.survey.title }
 		});
 	}
 

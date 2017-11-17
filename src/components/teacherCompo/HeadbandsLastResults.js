@@ -40,13 +40,12 @@ class HeadbandsLastResults extends React.Component {
 
         compo = this;
 
-        let classroom = compo.props.classes.filter(function(c){
+        let classroom = compo.props.classes.filter(function (c) {
             return c._id === compo.props.user.classid;
         });
-          
+
         this.state = {
-            class_name : classroom[0].name,
-            isLoading: false,
+            class_name: classroom[0].name,
             buttonList: compo.createGroupButtons(classroom[0].groups),
             group_id: null,
             group_name: classroom[0].name,
@@ -54,14 +53,9 @@ class HeadbandsLastResults extends React.Component {
         };
     }
 
-    componentDidMount(){
-       
-    }
-
     createGroupButtons = function (groups) {
         var buttonList = [];
         groups.forEach(function (element) {
-            console.log(element);
             buttonList.push(
                 <button key={element._id}
                     onClick={compo.onClickGroupButton()}
@@ -73,13 +67,13 @@ class HeadbandsLastResults extends React.Component {
         });
 
         return buttonList;
-
     }
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        if (compo.state.survey !== nextProps.survey) {
-            compo.setState({ survey: nextProps.survey });
+
+        if (compo.state.survey != nextProps.survey) {
+            compo.setState({survey: nextProps.survey});
         }
     }
 
@@ -93,7 +87,6 @@ class HeadbandsLastResults extends React.Component {
 
     onClickClassButton = () => {
         //e.preventDefault();
-        console.log("coucou");
         compo.setState({
             group_id: null,
             group_name: this.state.class_name,
@@ -102,33 +95,38 @@ class HeadbandsLastResults extends React.Component {
 
     render() {
 
+        console.log(this.state)
         //requires for spiderGraph
         let parameters = {
             teachers: this.props.user.id,
             students: null,
-            classes: this.props.user.classid, 
+            classes: this.props.user.classid,
             groups: compo.state.group_id,
             surveys: compo.state.survey._id,
         }
 
-        if (this.state.isLoading) {
-            return (
-                <div className="spinner-container">
-                    <Spinner />
-                </div >
-            )
 
-        } else {
+        if (parameters.surveys == null) {
             return (
-
+                <div className="container">
+                </div>
+            );
+        }
+        else {
+            return (
                 <div className="container">
                     <div className="jumbotron">
                         <div className="text-left">
-                            <div className="row"> 
+                            <div className="row">
                                 <div className="col-sm-3" style={styleButton}>
                                     <div className="btn-group-vertical">
                                         {compo.state.buttonList}
-                                        <button type="button" className="btn btn-primary" onClick={this.onClickClassButton.bind(this)}> {this.state.class_name} </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary"
+                                            onClick={this.onClickClassButton.bind(this)}>
+                                            {this.state.class_name}
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="col-sm-7">
@@ -140,13 +138,13 @@ class HeadbandsLastResults extends React.Component {
                     </div>
                 </div>
             );
+
         }
-
-
 
     }
 
-
 }
+
+
 
 export default connect(mapStateToProps)(HeadbandsLastResults);

@@ -15,7 +15,7 @@ function mapStateToProps(store) {
   return {
     user: store.user.user,
     classes: store.classroom.classes,
-    
+
   }
 }
 
@@ -57,7 +57,7 @@ class TeacherDashboard extends Component {
   getAllSurveyREST = function () {
     this.setState({ isLoading: true });
 
-    let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys';     
+    let GET_SURVEYS = 'teachers/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys';
 
     fetch(BACKEND_API.ROOT + GET_SURVEYS, {
       method: "GET",
@@ -70,8 +70,8 @@ class TeacherDashboard extends Component {
         response.json().then(data => {
           surveys = data;
           console.log(surveys);
-          compo.checkIfSurveyOpen();
-          compo.checkLastSurveyDone();
+          compo.checkIfSurveyOpen(surveys);
+          compo.checkLastSurveyDone(surveys);
 
         });
       } else {
@@ -83,32 +83,34 @@ class TeacherDashboard extends Component {
     });
   }
 
-  // check if a survey is currently open 
-  checkLastSurveyDone = function () {
+  // check the last survey that has been done
+  checkLastSurveyDone = function (surveys) {
 
-    let tempSurveys = surveys.filter(function (s) {
-      return s.open === false;
-    });
+    let lastSurvey = null;
 
-    let lastDate = Date.parse(tempSurveys[0].end_date);
-    let lastSurvey = tempSurveys[0];
+    if (surveys.length > 0) {
+      // only look for closed surveys 
+      let tempSurveys = surveys.filter(function (s) {
+        return s.open == false;
+      });
 
-    tempSurveys.forEach(function (s) {
+      if (tempSurveys.length > 0) {
 
-      let tempDate = Date.parse(s.end_date);
+        // find the highest date of all surveys
+        let last_d = tempSurveys.map(function (s) { return s.end_date; }).sort().reverse()[0]
+        // get the survey that match this date
+        lastSurvey = surveys.filter(function (s) {
+          return s.end_date == last_d;
+        })[0];
 
-      if (lastDate < tempDate) {
-        lastDate = tempDate;
-        lastSurvey = s;
       }
-    }, this);
-
+    }
     compo.setState({ lastSurveyDone: lastSurvey });
 
   }
 
   // check if a survey is currently open 
-  checkIfSurveyOpen = function () {
+  checkIfSurveyOpen = function (surveys) {
 
     let noSurveyOpen = true;
     let openSurvey = null;
@@ -135,6 +137,21 @@ class TeacherDashboard extends Component {
 
   }
 
+  // Display the  message that a survey is open
+  renderInfoOpenSurvey = function (survey_title) {
+    // We assume that if the title is null 
+    // then there is no survey open. With is kind of weak...
+    if (survey_title != null) {
+      return (
+        <div className="container">
+          <p className="bg-info">the survey "<b>{survey_title}</b>" is open.</p>
+        </div>
+      );
+    }else{
+      return (null);
+    }
+  }
+
   render() {
     return (
       <div className="text-center">
@@ -144,6 +161,8 @@ class TeacherDashboard extends Component {
         <div className="row">
           <HeadbandsLastResults survey={this.state.lastSurveyDone} />
         </div>
+
+        {this.renderInfoOpenSurvey(this.state.openSurvey.title)}
 
         <div className="container">
           <div className="card-deck">

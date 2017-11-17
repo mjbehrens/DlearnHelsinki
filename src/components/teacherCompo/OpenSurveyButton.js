@@ -56,8 +56,6 @@ class OpenSurveyButton extends React.Component {
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        console.log(this.state.survey);
-        console.log(nextProps.survey);
 
         if ((this.state.survey.open !== nextProps.survey.open)) {
             this.updateState(nextProps.survey);

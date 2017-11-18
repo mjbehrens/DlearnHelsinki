@@ -39,6 +39,7 @@ class StudentSurveyQuestion extends Component {
             buttonValue: 'Next',
             redirect: false,
 	    loading: true,
+	    surveyFinished: false,
             index: 0,
             survey_id: this.props.location.state.survey_id,
             survey_title: this.props.location.state.survey_title,
@@ -158,20 +159,16 @@ class StudentSurveyQuestion extends Component {
                 ...this.state,
                 currentQuestion: this.state.survey[this.state.index]
             });
+
             //for the last click on the button
             if (this.state.index === this.state.survey.length) {
-                //show the quit button to the student
+		// survey is finished
                 this.setState({
                     ... this.state,
-                    buttonValue: 'Quit',
-                    currentQuestion: {
-                        question: 'You have finished the survey',
-                        min_answer: 0,
-                        max_answer: 0,
-                        _id: 0
-                    }
+		    surveyFinished: true,
                 });
             }
+
         } else {
             this.setState({ ...this.state.redirect = true })
         }
@@ -181,12 +178,10 @@ class StudentSurveyQuestion extends Component {
     render() {
         // if survey finish (no more survey)
         if (this.state.redirect) {
-            let compo = this;
             this.props.history.push({
                 pathname: ROUTES.STUDENT_DASHBOARD,
-                state: { survey_id: compo.state.survey_id }
+                state: { survey_id: this.state.survey_id }
             });
-            //return <Redirect to="/student-dashboard" />
         } else if (this.state.loading) {
             return (
 		<div className="login-form">
@@ -201,6 +196,8 @@ class StudentSurveyQuestion extends Component {
             return (
                 <div className="container centered">
 		    <h1>Survey "{this.state.survey_title}"</h1>
+		    { !this.state.surveyFinished &&
+		    <div>
                     <p>{this.state.currentQuestion.question}</p>
                     <Slider
                         min={this.state.currentQuestion.min_answer}
@@ -210,10 +207,17 @@ class StudentSurveyQuestion extends Component {
 
                     <p> <Star actual_size = {this.state.startPoint} max_size = {this.state.currentQuestion.max_answer} />
                         <h5>{this.state.startPoint}/{this.state.currentQuestion.max_answer} </h5>
+                    </p>
+		    </div>
+		    }
+		{ this.state.surveyFinished &&
+		  <div className="alert alert-info" role="alert">
+		  You finished the survey !
+                  </div>
+		}
                         <button type="button"
                             className="btn btn-primary"
-                            onClick={this.onClickNext}>{this.state.buttonValue}</button>
-                    </p>
+                onClick={this.onClickNext}>{this.state.surveyFinished ? 'Quit' : 'Next'}</button>
                 </div>
             );
         }

@@ -1,7 +1,7 @@
 import React from "react";
 import SpiderGraph from '../shared/SpiderGraph.js';
 import Spinner from 'react-spinner'
-
+import { withTranslate } from 'react-redux-multilingual'
 
 import { BACKEND_API } from '../../constants.js';
 import * as userActions from '../../actions/userActions';
@@ -43,7 +43,7 @@ class HeadbandsLastResults extends React.Component {
         let classroom = compo.props.classes.filter(function(c){
             return c._id === compo.props.user.classid;
         });
-          
+
         this.state = {
             class_name : classroom[0].name,
             isLoading: false,
@@ -52,10 +52,11 @@ class HeadbandsLastResults extends React.Component {
             group_name: classroom[0].name,
             survey: this.props.survey,
         };
+        const { translate } = this.props;
     }
 
     componentDidMount(){
-       
+
     }
 
     createGroupButtons = function (groups) {
@@ -106,7 +107,7 @@ class HeadbandsLastResults extends React.Component {
         let parameters = {
             teachers: this.props.user.id,
             students: null,
-            classes: this.props.user.classid, 
+            classes: this.props.user.classid,
             groups: compo.state.group_id,
             surveys: compo.state.survey._id,
         }
@@ -124,7 +125,7 @@ class HeadbandsLastResults extends React.Component {
                 <div className="container">
                     <div className="jumbotron">
                         <div className="text-left">
-                            <div className="row"> 
+                            <div className="row">
                                 <div className="col-sm-3" style={styleButton}>
                                     <div className="btn-group-vertical">
                                         {compo.state.buttonList}
@@ -132,7 +133,7 @@ class HeadbandsLastResults extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-sm-7">
-                                    <h6>Results from survey "{compo.state.survey.title}"</h6>
+                                    <h6> {this.props.translate('survsurvey_results')} "{compo.state.survey.title}"</h6>
                                     <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
                                 </div>
                             </div>
@@ -149,4 +150,4 @@ class HeadbandsLastResults extends React.Component {
 
 }
 
-export default connect(mapStateToProps)(HeadbandsLastResults);
+export default connect(mapStateToProps)(withTranslate(HeadbandsLastResults));

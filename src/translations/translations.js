@@ -30,7 +30,7 @@ module.exports = {
       //ClassSelection
       error_already: 'Class already exist. Please enter another name.',
       error_try_again: 'Error while creating this new class. Please retry',
-      error_class_name: 'The new class must have a name ! Please enter a name with more than 5 letters',
+      error_class_name: 'The new class must have a name ! Please enter a name with more than 6 letters',
 
       new_class: 'Add new class',
       select_class: 'Select a class',
@@ -50,8 +50,19 @@ module.exports = {
       //SurveyCreationFrom
       survey_title: 'Title of the survey',
       no_surveys_yet: 'There is no surveys yet',
+      survey_description: 'Description of the survey',
+      select_themes: 'Select Themes of the survey',
+      idea_problem_solving: 'Ideas and problem solving',
+      opinions_arguments: 'Opinions and arguments',
+      persistence: 'Persistence',
+      responsibility: 'Responsibility',
+      suitanable_work_resperct: 'Sutainable work - respect',
 
 
+      //GraphRendererForGroups
+      number_shown: 'Number of surveys shown',
+
+      survey_results: 'Results from survey',
 
 
 /*------------- Student ---------------*/
@@ -94,7 +105,7 @@ module.exports = {
       //ClassSelection
       error_already: 'Kyseinen luokka on jo olemassa. Ole hyvä ja valitse toinen nimi.',
       error_try_again: 'Ongelmia luokan luomisess. Ole hyvä ja kokeile uudestaan.',
-      error_class_name: 'Uuden luokan nimi täytyy olla vähintään 5 merkkiä.',
+      error_class_name: 'Uuden luokan nimi täytyy olla vähintään 6 merkkiä.',
 
       new_class: 'Lisää luokka',
       select_class: 'Valitse luokka',
@@ -108,11 +119,23 @@ module.exports = {
  /*------------- Teacher ---------------*/
 
       //Dashboard
-      no_surveys_yet: 'Vielä ei ole valmiita kyselyjä',
 
       //SurveyCreationFrom
       survey_title: 'Kyselyn nimi',
+      no_surveys_yet: 'Kyselyjä ei ole vielä tehtynä',
+      survey_description: 'Kyselyn kuvaus',
+      select_themes: 'Valitse kyselyn aihealueet',
+      idea_problem_solving: 'Ideointi ja ',
+      opinions_arguments: 'Mielipiteitä ja perusteluita',
+      persistence: 'Päättäväisyys',
+      responsibility: 'Vastuulisuus',
+      sustainable_work_resperct: 'Kestävä kehitys - kunnioittaminen',
 
+
+      //GraphRendererForGroups
+      number_shown: 'Number of surveys shown',
+
+      survey_results: 'Results from survey',
 
   /*------------- Student ---------------*/
 

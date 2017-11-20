@@ -2,6 +2,7 @@ import React from "react";
 import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
 import LinearGraph from "../shared/LinearGraph";
 import Spinner from 'react-spinner';
+import { withTranslate } from 'react-redux-multilingual';
 
 import { BACKEND_API } from '../../constants.js';
 import * as userActions from '../../actions/userActions';
@@ -24,7 +25,7 @@ class InfoStudent extends React.Component {
         super(props);
         compo = this;
         this.props.onChangesToApply(true);
-        
+        const {translate} = this.props;
         new_password = '';
         select_value = null;
         this.state = {
@@ -35,14 +36,16 @@ class InfoStudent extends React.Component {
     componentDidMount(){
         this.setState();
         compo.props.onChangesToApply(false);
-        
+
     }
+
+
 
     onClickResetPassword = function (studentId, compo) {
 
         if (new_password.length > 5) {
             compo.setState({isLoading:true});
-            
+
             let POST_RESET_PASSWORD = 'teachers/' + compo.props.user.id + '/change_student_password';
 
             let data = JSON.stringify({
@@ -60,10 +63,10 @@ class InfoStudent extends React.Component {
                 body: data
             }).then(function (response) {
                 if (response.ok) {
-                    alert('Password change with success. New password = \"' + new_password + '\"  ');
+                    alert(this.props.translate('alert_password_ok',  {password: new_password }))
                 } else {
                     console.log('Network response was not ok.');
-                    alert('Problem while updating password.')
+                    alert(this.props.translate('error_update_password'))
                 }
                 compo.setState({isLoading:false});
             }).catch(function (err) {
@@ -72,7 +75,7 @@ class InfoStudent extends React.Component {
             });
         }
         else {
-            alert('Please make sure that the password is more than 5 letters long.')
+            alert(this.props.translate('error_too_short'))
         }
     }
 
@@ -93,7 +96,7 @@ class InfoStudent extends React.Component {
                 if (response.ok) {
                     alert('The group\'s student has been change ! (press \'Quit\' to see the changes)');
                     compo.props.onChangesToApply(true);
-                    
+
                 } else {
                     console.log('Network response was not ok.');
                     alert('Problem while modifing the group...')
@@ -155,6 +158,7 @@ class InfoStudent extends React.Component {
             )
         }
         else {
+
             return (
                 <div>
                     <h6>Name: {this.props.username}</h6>
@@ -168,7 +172,7 @@ class InfoStudent extends React.Component {
                         /*<br />
                         <div>
                             <LinearGraph name={this.props.username} parameters={parameters} />
-        
+
                         </div>
                         */
                     }
@@ -179,4 +183,4 @@ class InfoStudent extends React.Component {
 }
 
 
-export default connect(mapStateToProps)(InfoStudent);
+export default connect(mapStateToProps)(withTranslate(InfoStudent));

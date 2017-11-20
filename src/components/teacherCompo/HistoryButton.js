@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import { withTranslate } from 'react-redux-multilingual';
 
 import iconHistory from "../../res/icons/history.svg";
 
@@ -15,8 +16,9 @@ class HistoryButton extends React.Component {
 
     constructor(props) {
         super(props);
+        const { translate } = this.props;
         this.state = {
-            text: "History",
+            text: this.props.translate('history'),
             picture: iconHistory,
         }
     }
@@ -47,4 +49,4 @@ class HistoryButton extends React.Component {
 
 }
 
-export default HistoryButton;
+export default withTranslate(HistoryButton);

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import './css/App.css';
 import './css/popup.css';
 import { ROUTES } from './constants.js';
+import { withTranslate } from 'react-redux-multilingual';
 
 
 import ClassSelection from './pages/ClassSelection.js';
@@ -36,7 +37,10 @@ class App extends Component {
     protectedRoute = (userType, component) => {
 	if (this.props.user.type === userType) {
 	    if (this.props.user.classid == null) {
-		return <Redirect to={ROUTES.CLASS_SELECTION} />
+		return <Redirect to={{
+		    pathname: ROUTES.CLASS_SELECTION,
+		    state: { warning: true },
+		}} />
 	    }
 	    return <Route component={component} />
 	}
@@ -83,4 +87,4 @@ class App extends Component {
     }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(withTranslate(App));

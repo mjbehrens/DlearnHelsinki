@@ -1,0 +1,11 @@
+.rc-slider {
+    width: 30%;
+    min-width: 120px;
+    margin: auto;
+}
+
+.alert-info {
+    max-width: 300px;
+    margin: auto;
+    margin-bottom: 20px;
+}

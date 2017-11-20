@@ -97,3 +97,5 @@ nbactions.xml
 # NodeJS specific
 node_modules
 /react-web-app/nbproject/private/
+
+nohup.out

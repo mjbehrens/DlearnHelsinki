@@ -23,7 +23,6 @@ body {
     padding-bottom: var(--footer-height);
 }
 
-
 .footer {
     position: absolute;
     bottom: 0;
@@ -44,10 +43,11 @@ h1 {
     margin-bottom: 20px;
 }
 
-.Icon {
+.footer-icon {
     height: 50px;
 }
 
+<<<<<<< HEAD
 .login-form {
     width: 60vw;
     max-width: 300px;
@@ -63,6 +63,8 @@ h1 {
     margin-right: 5px;
 }
 
+=======
+>>>>>>> origin/master
 /* Fix form input validation css on firefox */
 form input {
     box-shadow: none;
@@ -70,14 +72,6 @@ form input {
 
 input.inputModified:invalid {
     box-shadow: 0 0 2px 1px red;
-}
-
-
-.SelectClass {
-    width: 60vw;
-    margin: auto;
-    text-align: center;
-
 }
 
 .left-align {
@@ -94,6 +88,10 @@ input.inputModified:invalid {
 
 .no-padding {
     padding: 0;
+}
+
+.no-margin {
+    margin: 0;
 }
 
 .teacher-card-img {

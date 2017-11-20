@@ -7,6 +7,7 @@ function mapStateToProps(store) {
     return {
 	modal: store.modal,
     }
+
 }
 
 

@@ -19,11 +19,12 @@ class Home extends Component {
 	    goTo: ROUTES.ROOT
 
 	};
+  const { translate } = this.props;
     }
 
 
   render() {
-    const { translate } = this.props;
+
       let buttonRedirect = ROUTES.LOGIN
       let buttonText = this.props.translate('log_in')
       if (this.props.user.loggedin) {

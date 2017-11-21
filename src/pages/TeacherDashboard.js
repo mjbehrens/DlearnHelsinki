@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import OpenSurveyButton from '../components/teacherCompo/OpenSurveyButton.js';
 import HistoryButton from '../components/teacherCompo/HistoryButton.js';
 import GroupManagmentButton from '../components/teacherCompo/GroupManagmentButton.js';
+import CompetenceWallButton from '../components/teacherCompo/CompetenceWallButton.js';
 import HeadbandsLastResults from '../components/teacherCompo/HeadbandsLastResults.js';
 
 import { BACKEND_API } from '../constants.js';
@@ -168,6 +169,7 @@ class TeacherDashboard extends Component {
           <div className="card-deck">
             <OpenSurveyButton survey={this.state.openSurvey} callback={this.getAllSurveyREST.bind(this)} />
             <GroupManagmentButton />
+            <CompetenceWallButton />
             <HistoryButton />
           </div>
         </div>

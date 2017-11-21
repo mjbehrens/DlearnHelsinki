@@ -46,5 +46,4 @@ class GroupManagmentButton extends React.Component {
 }
 
 
-export default withTranslate(GroupManagmentButon);
-
+export default withTranslate(GroupManagmentButton);

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 import iconGrpManagment from "../../res/icons/manage_groups.svg";
+import { ROUTES } from '../../constants.js';
 
 const style = {
     padding: 50,
@@ -29,7 +30,7 @@ class GroupManagmentButton extends React.Component {
     render() {
         return (
             <div className="card">
-                <Link to="/groups-management">
+                <Link to={ROUTES.GROUP_MANAGEMENT}>
                     <img className="card-img-top teacher-card-img" src={this.state.picture} width="100" height="100"
                         onClick={this.onClickSurvey}
                         alt="survey icon" />

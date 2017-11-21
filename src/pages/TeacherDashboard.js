@@ -152,7 +152,9 @@ class TeacherDashboard extends Component {
     if (survey_title != null) {
       return (
         <div className="container">
-          <p className="bg-info">the survey "<b>{survey_title}</b>" is open.</p>
+          <p className="bg-info">
+           {this.props.translate('survey_open', {title: survey_title})}
+          </p>
         </div>
       );
     }else{

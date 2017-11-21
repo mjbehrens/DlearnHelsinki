@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import './css/App.css';
 import './css/popup.css';
 import { ROUTES } from './constants.js';
+import { withTranslate } from 'react-redux-multilingual';
+
 
 
 import ClassSelection from './pages/ClassSelection.js';
@@ -86,4 +88,4 @@ class App extends Component {
     }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(withTranslate(App));

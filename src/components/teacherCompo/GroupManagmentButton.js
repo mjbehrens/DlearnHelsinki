@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-
+import { withTranslate } from 'react-redux-multilingual';
 
 import iconGrpManagment from "../../res/icons/manage_groups.svg";
 
@@ -16,8 +16,9 @@ class GroupManagmentButon extends React.Component {
 
     constructor(props) {
         super(props);
+        const { translate } = this.props;
         this.state = {
-            text: "Group Managment",
+            text: this.props.translate('group_management'),
             picture: iconGrpManagment,
         }
     }
@@ -43,4 +44,4 @@ class GroupManagmentButon extends React.Component {
 
 }
 
-export default GroupManagmentButon;
+export default withTranslate(GroupManagmentButon);

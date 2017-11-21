@@ -19,7 +19,7 @@ class SurveyCreationFrom extends React.Component {
                     onChange={this.props.onChangeTitle}
                 />
                 <br />
-                <h6>Description of the survey</h6>
+                <h6>{this.props.title}</h6>
                 <TextareaAutosize type="text" className="mm-popup__input"
                     rows={3}
                     placeholder={this.props.description}

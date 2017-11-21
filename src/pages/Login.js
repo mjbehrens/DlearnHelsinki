@@ -27,6 +27,7 @@ class Login extends Component {
 	    goTo: ROUTES.CLASS_SELECTION,
 	    redirect: false,
 	};
+  const {translate} = this.props;
     }
 
     // Triggered on user input change
@@ -102,7 +103,6 @@ class Login extends Component {
     }
 
     render() {
-    const {translate} = this.props;
 
 	console.log(this.state)
 	if (this.state.redirect) {

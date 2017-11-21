@@ -6,7 +6,7 @@ import Popup from 'react-popup';
 import { ROUTES, BACKEND_API } from '../constants.js';
 import * as userActions from '../actions/userActions';
 import * as classActions from '../actions/classActions';
-import { withTranslate } from 'react-redux-multilingual';
+import { withTranslate } from 'react-redux-multilingual'
 
 require('../css/classSelection.css')
 
@@ -80,26 +80,20 @@ class ClassSelection extends Component {
         }
     }
 
-    postClass = (class_name_english, class_name_finnish) => {
+    postClass = (class_name) => {
         this.setState({
             loading: true,
         })
 
-        if(this.isClassAlreadyExist(class_name_english)){
-            alert(class_name_english + ' ' + this.props.translate('error_already'));
+        if(this.isClassAlreadyExist(class_name)){
+            alert(class_name + ' ' + this.props.translate('error_already'));
             this.setState({
                 loading: false,
             });
-        }
-        if(this.isClassAlreadyExist(class_name_finnish)){
-                alert(class_name_finnish + ' ' + this.props.translate('error_already'));
-                this.setState({
-                    loading: false,
-                });
+
         }else{
             let data = JSON.stringify({
-                "name": class_name_english,
-                "name_fi": class_name_finnish,
+                "name": class_name,
             });
 
             let POST_CREATE_CLASS = 'teachers/' + this.props.user.id + '/classes';
@@ -186,10 +180,10 @@ class ClassSelection extends Component {
         } else {
             return (
                 <div className="class-selection">
-                    <h1>this.props.translate('select_class')}</h1>
+                    <h1>{this.props.translate('select_class')}</h1>
 		    {this.state.warning &&
 		    <div className="alert alert-danger alert-dismissible fade show" role="alert">
-		     this.props.translate('error_select_class')}
+		     {this.props.translate('error_select_class')}
 		    </div>
 		    }
 
@@ -205,14 +199,11 @@ class ClassSelection extends Component {
 
 Popup.registerPlugin('addClass', function ( callbackConfirm, props) {
 
-    let _class_name_english = '';
-    let _class_name_finnish = '';
+    let _class_name = '';
 
-    let getClassNameEnglish = function (e) {
-        _class_name_english = e.target.value;
-    };
-    let getClassNameFinnish = function (e) {
-        _class_name_finnish = e.target.value;
+
+    let getClassName = function (e) {
+        _class_name = e.target.value;
     };
 
 
@@ -220,13 +211,9 @@ Popup.registerPlugin('addClass', function ( callbackConfirm, props) {
         title: props.translate('create_class'),
         content: (<div>
 
-            <h6>{props.translate('name')} ({props.translate('finnish')}) :</h6>
+            <h6>{props.translate('name')}  :</h6>
               <input type="text" className='input' placeholder={props.translate('class_name_placeholder')}
-              onChange={getClassNameFinnish} />
-
-             <h6>{props.translate('name')} ({props.translate('english')}) :</h6>
-              <input type="text" className='input' placeholder={props.translate('class_name_placeholder')}
-              onChange={getClassNameEnglish} />
+              onChange={getClassName} />
 
         </div>),
         buttons: {
@@ -241,8 +228,8 @@ Popup.registerPlugin('addClass', function ( callbackConfirm, props) {
                 text: props.translate('confirm'),
                 className: 'success', // optional
                 action: function (popup) {
-                    if ( _class_name_finnish.length > 5 && _class_name_english.length > 5 ) {
-                        callbackConfirm(_class_name_english, _class_name_finnish);
+                    if ( _class_name.length > 5  ) {
+                        callbackConfirm(_class_name);
                         popup.close();
                     } else {
 

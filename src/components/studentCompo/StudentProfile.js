@@ -24,6 +24,7 @@ class StudentProfile extends Component {
 
     render() {
         return (
+            <div>
                 <div className="container" id="studentProfile">
                     <ul className="list-group">
                         <li className="list-group-item active">
@@ -31,26 +32,29 @@ class StudentProfile extends Component {
                                 <div className="col">User information</div>
                             </div>
                         </li>
-                        <li className="list-group-item" style={{margin: 0, padding:  0}}>
+                        <li className="list-group-item" style={{ margin: 0, padding: 0 }}>
                             <div className="row">
-                                <div className="col right-align border border-top-0 border-bottom-0" style={{margin: 0, padding:  10}}>Username</div>
-                                <div className="col left-align border border-top-0 border-bottom-0" style={{margin: 0, padding:  10}}>{this.props.user.name}</div>
+                                <div className="col right-align border border-top-0 border-bottom-0" style={{ margin: 0, padding: 10 }}>Username</div>
+                                <div className="col left-align border border-top-0 border-bottom-0" style={{ margin: 0, padding: 10 }}>{this.props.user.name}</div>
                             </div>
                         </li>
-                        <li className="list-group-item" style={{margin: 0, padding:  0}}>
+                        <li className="list-group-item" style={{ margin: 0, padding: 0 }}>
                             <div className="row">
-                                <div className="col right-align border border-top-0 border-bottom-0" style={{margin: 0, padding:  10}}>Gender</div>
-                                <div className="col left-align border border-top-0 border-bottom-0" style={{margin: 0, padding:  10}}>{this.props.user.sex}F</div>
+                                <div className="col right-align border border-top-0 border-bottom-0" style={{ margin: 0, padding: 10 }}>Gender</div>
+                                <div className="col left-align border border-top-0 border-bottom-0" style={{ margin: 0, padding: 10 }}>{this.props.user.sex}F</div>
                             </div>
                         </li>
-                        <li className="list-group-item" style={{margin: 0, padding:  0}}>
+                        <li className="list-group-item" style={{ margin: 0, padding: 0 }}>
                             <div className="row">
-                                <div className="col right-align border border-top-0 border-bottom-0" style={{margin: 0, padding:  10}}>Age</div>
-                                <div className="col left-align border border-top-0 border-bottom-0" style={{margin: 0, padding:  10}}>{this.props.user.age}8</div>
+                                <div className="col right-align border border-top-0 border-bottom-0" style={{ margin: 0, padding: 10 }}>Age</div>
+                                <div className="col left-align border border-top-0 border-bottom-0" style={{ margin: 0, padding: 10 }}>{this.props.user.age}8</div>
                             </div>
                         </li>
                     </ul>
                 </div>
+                <br/>
+                Strengths and weaknesses:
+            </div>
         )
     }
 }

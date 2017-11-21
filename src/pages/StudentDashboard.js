@@ -34,8 +34,10 @@ class StudentDashboard extends Component {
 		e.preventDefault();
 		this.props.history.push({
 			pathname: ROUTES.STUDENT_SURVEY,
-			state: { survey_id: compo.state.survey._id,
-				 survey_title: compo.state.survey.title }
+			state: {
+				survey_id: compo.state.survey._id,
+				survey_title: compo.state.survey.title
+			}
 		});
 	}
 
@@ -70,7 +72,7 @@ class StudentDashboard extends Component {
 			}
 		}
 
-		
+
 	}
 
 	buildRequestRest = function () {
@@ -244,12 +246,12 @@ class StudentDashboard extends Component {
 	getButtonValue = function (e) {
 		let value = e.target.value;
 		let item = (<div></div>)
-		
+
 		switch (value) {
 			case HISTORY:
 				break;
 			case PROFILE:
-				item = <StudentProfile/>
+				item = <StudentProfile />
 				break;
 			case LASTRESULT:
 				item = compo.displaySpiderGraph()
@@ -258,34 +260,52 @@ class StudentDashboard extends Component {
 			default:
 				break;
 		}
-		compo.setState({toRender: item})
-		
+		compo.setState({ toRender: item })
+
+	}
+
+	changeSurveyButton = function () {
+		if (this.state.disabledSurvey) {
+			return <button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">No Survey</button>
+		} else {
+			return <button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">Survey</button>
+		}
 	}
 
 	render() {
 
 		return (
-			<div className="container text-center">
-				<h1>Welcome {this.props.user.name}</h1>
-				<div className="jumbotron">
+			<div>
+				<div className="container text-center">
+					<h1>Welcome {this.props.user.name}</h1>
+					<div className="jumbotron">
 
 
-					<div className="row">
-						<div className="col-sm-3">
-							<div className="btn-group-vertical">
-								<button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">Survey</button>
-								<br/>
-								<button type="button" value="history" onClick={this.getButtonValue} className="btn btn-primary">History</button>
-								<button type="button" value="profile" onClick={this.getButtonValue} className="btn btn-primary">Profile</button>
-								<button type="button" value="lastResult" onClick={this.getButtonValue} className="btn btn-primary">Last Result</button>
+						<div className="row">
+
+							<div className="col-sm-3">
+								<div class="btn-group" role="group">
+									<div className="btn-group-vertical">
+										{this.changeSurveyButton()}
+									</div>
+									<br />
+									<br />
+									<div className="btn-group-vertical">
+										<button type="button" value="history" onClick={this.getButtonValue} className="btn btn-primary">History</button>
+										<button type="button" value="profile" onClick={this.getButtonValue} className="btn btn-primary">Profile</button>
+										<button type="button" value="lastResult" onClick={this.getButtonValue} className="btn btn-primary">Last Result</button>
+									</div>
+								</div>
+							</div>
+							<div className="col-sm-9">
+								{this.state.toRender}
 							</div>
 						</div>
-						<div className="col-sm-9">
-							{this.state.toRender}
-						</div>
+
 					</div>
 
 				</div>
+
 			</div>
 		);
 	}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SpiderGraph from './SpiderGraph.js';
 import LinearGraph from './LinearGraph.js';
 import Spinner from 'react-spinner'
-
+import { withTranslate } from 'react-redux-multilingual'
 
 import { BACKEND_API } from '../../constants.js';
 import * as userActions from '../../actions/userActions';
@@ -36,6 +36,7 @@ class GraphRendererForGroups extends Component {
             spiderGraphs: [],
             progressionGraph: [],
         }
+        const { translate } = this.props;
     }
 
 
@@ -129,7 +130,7 @@ class GraphRendererForGroups extends Component {
                 <div>
                     <h3>{this.props.group.name}</h3>
                     <br />
-                    Number of surveys shown: <nbsp /><nbsp />
+                    {this.props.translate('number_shown')}: <nbsp /><nbsp />
                     {this.renderSelect()}
                     <hr wight='1px' />
                     {this.state.progressionGraph}
@@ -142,4 +143,4 @@ class GraphRendererForGroups extends Component {
     }
 
 }
-export default connect(mapStateToProps)(GraphRendererForGroups);
+export default connect(mapStateToProps)(withTranslate(GraphRendererForGroups));

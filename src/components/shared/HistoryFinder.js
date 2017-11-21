@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import Calendar from 'react-input-calendar';
-import 'react-input-calendar/style/index.css'
-
+import 'react-input-calendar/style/index.css';
+import { withTranslate } from 'react-redux-multilingual';
 // http://voidcanvas.com/react-tutorial-understanding-and-making-the-first-application/
 // Pick one: https://react.rocks/tag/DatePicker
 // https://github.com/Rudeg/react-input-calendar
@@ -26,6 +26,7 @@ class HistoryFinder extends Component {
         var rangeStart = null;
         var rangeEnd = null;
         super(props);
+        const {translate} = this.props;
         this.changeStart = this.changeStart.bind(this);
         this.changeEnd = this.changeEnd.bind(this);
     }
@@ -42,11 +43,11 @@ class HistoryFinder extends Component {
     changeEnd(date) {
         rangeEnd = date;
     }
-    
+
     selectRange = function (event) {
         this.props.selectRange(rangeStart, rangeEnd);
     }
-    
+
 
 
     render() {
@@ -56,35 +57,35 @@ class HistoryFinder extends Component {
                 <div className="searchBar">
                     <input type="text"
                         style={margins}
-                        placeholder="Search"
+                        placeholder={this.props.translate('search')}
                         value={this.props.query}
                         onChange={this.searchHistory.bind(this)} />
                     <button className="btn btn-primary"
                         style={margins}
                         onClick={this.props.sortData}>
-                        Sort
+                        {this.props.translate('sort')}
                     </button>
                 </div>
                 {
                 /**
                  *  REMOVE FOR THIS VERSION
                 <div className = "row" style = {pickDate}>
-                    <Calendar 
-                        format='DD-MM-YYYY' 
+                    <Calendar
+                        format='DD-MM-YYYY'
                         computableFormat = 'YYYY-MM-DD'
                         date = {rangeStart}
                         onChange = {this.changeStart} />
-                    <Calendar 
-                        format='DD-MM-YYYY' 
+                    <Calendar
+                        format='DD-MM-YYYY'
                         computableFormat = 'YYYY-MM-DD'
                         date = {rangeEnd}
                         onChange = {this.changeEnd} />
-                    <button className="btn btn-primary" 
+                    <button className="btn btn-primary"
                         style = {margins}
-                        onClick = {this.selectRange.bind(this)}> 
-                            Go 
+                        onClick = {this.selectRange.bind(this)}>
+                            Go
                     </button>
-                </div>                     
+                </div>
                  */
 
                 }
@@ -93,4 +94,4 @@ class HistoryFinder extends Component {
         );
 
     }
-} export default HistoryFinder;
+} export default withTranslate(HistoryFinder);

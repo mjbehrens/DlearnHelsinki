@@ -3,13 +3,13 @@ export default function reducer(state={
   }, action) {
 
     switch (action.type) {
-      case "SET_CLASSES": {
+      case "SET_ALL_CLASSES": {
 	return {
 	  ...state,
 	  classes: action.payload,
 	}
       }
-      case "DELETE_CLASSES": {
+      case "DELETE_ALL_CLASSES": {
         return {
           ...state,
           classes: [],
@@ -25,6 +25,16 @@ export default function reducer(state={
         return {
           ...state,
           classes: state.classes.filter(classroom => classroom.id !== action.payload),
+        }
+      }
+      case "UPDATE_CLASS": {
+        const newClasses = [...state.classes]
+        const classToUpdate = newClasses.findIndex(classroom => classroom.id === action.payload.id)
+        newClasses[classToUpdate] = action.payload;
+
+        return {
+          ...state,
+          classes: newClasses,
         }
       }
     }

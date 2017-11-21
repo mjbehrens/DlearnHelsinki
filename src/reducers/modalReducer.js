@@ -1,5 +1,6 @@
 import React from "react";
 import $ from 'jquery';
+import { ACTION_TYPES } from '../constants.js'
 
 const modalInitState = {
     modalType: 'DefaultModal',
@@ -9,17 +10,17 @@ const modalInitState = {
 export default function reducer(state=modalInitState, action) {
 
     switch (action.type) {
-      case "SET_MODAL": {
+      case ACTION_TYPES.SET_MODAL: {
 	return {
 	  ...state,
 	  modalType: action.payload.type,
           modalProps: action.payload.props,
 	}
       }
-      case "SHOW_MODAL": {
+      case ACTION_TYPES.SHOW_MODAL: {
 	$("#mainModal").modal('show');
       }
-      case "HIDE_MODAL": {
+      case ACTION_TYPES.HIDE_MODAL: {
 	$("#mainModal").modal('hide');
       }
     }

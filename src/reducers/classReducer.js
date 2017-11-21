@@ -1,3 +1,5 @@
+import { ACTION_TYPES } from '../constants.js'
+
 const classInitState = {
     classes: [],
 }
@@ -5,28 +7,28 @@ const classInitState = {
 export default function reducer(state=classInitState, action) {
 
     switch (action.type) {
-      case "SET_ALL_CLASSES": {
+      case ACTION_TYPES.SET_ALL_CLASSES: {
 	return {
 	  ...state,
 	  classes: action.payload,
 	}
       }
-      case "DELETE_ALL_CLASSES": {
+      case ACTION_TYPES.DELETE_ALL_CLASSES: {
         return classInitState
       }
-      case "ADD_CLASS": {
+      case ACTION_TYPES.ADD_CLASS: {
         return {
           ...state,
           classes: [...state.classes, action.payload],
         }
       }
-      case "DELETE_CLASS": {
+      case ACTION_TYPES.DELETE_CLASS: {
         return {
           ...state,
           classes: state.classes.filter(classroom => classroom.id !== action.payload),
         }
       }
-      case "UPDATE_CLASS": {
+      case ACTION_TYPES.UPDATE_CLASS: {
         const newClasses = [...state.classes]
         const classToUpdate = newClasses.findIndex(classroom => classroom.id === action.payload.id)
         newClasses[classToUpdate] = action.payload;

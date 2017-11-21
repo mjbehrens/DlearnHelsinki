@@ -1,3 +1,5 @@
+import { ACTION_TYPES } from '../constants.js'
+
 const userInitState = {
       id: null,
       name: null,
@@ -19,13 +21,13 @@ export default function reducer(state={
   }, action) {
 
     switch (action.type) {
-      case "FETCH_USER": {
+      case ACTION_TYPES.FETCH_USER: {
         return {...state, fetching: true}
       }
-      case "FETCH_USER_REJECTED": {
+      case ACTION_TYPES.FETCH_USER_REJECTED: {
         return {...state, fetching: false, error: action.payload}
       }
-      case "FETCH_USER_FULFILLED": {
+      case ACTION_TYPES.FETCH_USER_FULFILLED: {
         return {
           ...state,
           fetching: false,
@@ -33,55 +35,55 @@ export default function reducer(state={
           user: action.payload,
         }
       }
-      case "LOGIN_USER": {
+      case ACTION_TYPES.LOGIN_USER: {
 	return {
 	  ...state,
 	  user: {...state.user, loggedin: true},
 	}
       }
-      case "LOGOUT_USER": {
+      case ACTION_TYPES.LOGOUT_USER: {
 	return {
 	  ...state,
           user: userInitState,
 	}
       }
-      case "SET_USER_ID": {
+      case ACTION_TYPES.SET_USER_ID: {
         return {
           ...state,
           user: {...state.user, id: action.payload},
         }
       }
-      case "SET_USER_NAME": {
+      case ACTION_TYPES.SET_USER_NAME: {
         return {
           ...state,
           user: {...state.user, name: action.payload},
         }
       }
-      case "SET_USER_TYPE": {
+      case ACTION_TYPES.SET_USER_TYPE: {
         return {
           ...state,
           user: {...state.user, type: action.payload},
         }
       }
-      case "SET_USER_LOGIN": {
+      case ACTION_TYPES.SET_USER_LOGIN: {
         return {
           ...state,
           user: {...state.user, login: action.payload},
         }
       }
-      case "SET_USER_HASH": {
+      case ACTION_TYPES.SET_USER_HASH: {
         return {
           ...state,
           user: {...state.user, hash: action.payload},
         }
       }
-      case "SET_USER_CLASS_ID": {
+      case ACTION_TYPES.SET_USER_CLASS_ID: {
         return {
           ...state,
           user: {...state.user, classid: action.payload},
         }
       }
-      case "SET_USER_GROUP_ID": {
+      case ACTION_TYPES.SET_USER_GROUP_ID: {
         return {
           ...state,
           user: {...state.user, groupid: action.payload},

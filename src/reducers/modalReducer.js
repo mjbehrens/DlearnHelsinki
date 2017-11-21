@@ -1,10 +1,12 @@
 import React from "react";
 import $ from 'jquery';
 
-export default function reducer(state={
+const modalInitState = {
     modalType: 'DefaultModal',
     modalProps: {},
-  }, action) {
+}
+
+export default function reducer(state=modalInitState, action) {
 
     switch (action.type) {
       case "SET_MODAL": {

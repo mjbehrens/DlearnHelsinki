@@ -98,6 +98,7 @@ class Header extends React.Component {
 	    )
 
 	}
+    }
 
 	onLogoutClick = () => {
 		this.props.dispatch(userActions.logoutUser())
@@ -128,11 +129,8 @@ class Header extends React.Component {
     render() {
       const {translate, dispatch} = this.props;
 
-
 	return (
 	<header>
-
-
 				<nav className="navbar navbar-expand-md navbar-dark bg-dark navbar-static-top">
 					<Link to={ROUTES.ROOT}><a className="navbar-brand" href="">Dlearn</a></Link>
 					<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,9 +143,6 @@ class Header extends React.Component {
 		{this.loginLogoutButton()}
 	    </div>
 	    </nav>
-
-
-
 			</header>
 		);
 	}

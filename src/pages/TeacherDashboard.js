@@ -84,6 +84,7 @@ class TeacherDashboard extends Component {
   }
 
   // check the last survey that has been done
+  // Warning : if end_date is not return by the backend, return null.
   checkLastSurveyDone = function (surveys) {
 
     let lastSurvey = null;
@@ -97,12 +98,13 @@ class TeacherDashboard extends Component {
       if (tempSurveys.length > 0) {
 
         // find the highest date of all surveys
-        let last_d = tempSurveys.map(function (s) { return s.end_date; }).sort().reverse()[0]
+        let last_d = tempSurveys.map(function (s) { return new Date(s.end_date);}).sort(function(a, b){return b - a;})[0]
         // get the survey that match this date
         lastSurvey = surveys.filter(function (s) {
-          return s.end_date == last_d;
+          let d = new Date(s.end_date)
+          return d.toString() === last_d.toString();
         })[0];
-
+        console.log("Last survey closed : ", lastSurvey)
       }
     }
     compo.setState({ lastSurveyDone: lastSurvey });

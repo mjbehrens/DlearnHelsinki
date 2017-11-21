@@ -8,14 +8,13 @@ import * as classActions from '../actions/classActions';
 import { withTranslate, IntlActions } from 'react-redux-multilingual'
 
 function mapStateToProps(store) {
-    return {
-	user: store.user.user,
-	classes: store.classroom.classes,
-    }
-}﻿
+	return {
+		user: store.user.user,
+		classes: store.classroom.classes,
+	}
+}
 
 class Header extends React.Component {
-
 
     loginLogoutButton = () => {
         if (this.props.user.loggedin) {
@@ -35,13 +34,12 @@ class Header extends React.Component {
 		    <button className="btn btn-outline-success my-2 my-sm-0"
 			type="submit">
 		    {this.props.translate('log_in')}
+
 		    </button>
-		</Link>
-	    )
+				</Link>
+			)
+		}
 	}
-    }
-
-
 
     headerLinks = () => {
 	if (this.props.user.type === 'teacher') {
@@ -98,13 +96,13 @@ class Header extends React.Component {
 		</li>
 		</ul>
 	    )
-	}
-    }
 
-    onLogoutClick = () => {
-	this.props.dispatch(userActions.logoutUser())
-	this.props.dispatch(classActions.deleteClasses())
-    }
+	}
+
+	onLogoutClick = () => {
+		this.props.dispatch(userActions.logoutUser())
+		this.props.dispatch(classActions.deleteClasses())
+	}
 
     translationButton = () => {
       return (
@@ -134,11 +132,12 @@ class Header extends React.Component {
 	return (
 	<header>
 
-	    <nav className="navbar navbar-expand-md navbar-dark bg-dark navbar-static-top">
-		<Link to={ROUTES.ROOT}><a className="navbar-brand" href="">Dlearn</a></Link>
-	    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-		<span className="navbar-toggler-icon"></span>
-	    </button>
+
+				<nav className="navbar navbar-expand-md navbar-dark bg-dark navbar-static-top">
+					<Link to={ROUTES.ROOT}><a className="navbar-brand" href="">Dlearn</a></Link>
+					<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+						<span className="navbar-toggler-icon"></span>
+					</button>
 
 	    <div className="collapse navbar-collapse" id="navbarsExampleDefault">
 		{this.headerLinks()}
@@ -148,9 +147,10 @@ class Header extends React.Component {
 	    </nav>
 
 
-	</header>
-    );
-  }
+
+			</header>
+		);
+	}
 }
 
 export default connect(mapStateToProps)(withTranslate(Header));

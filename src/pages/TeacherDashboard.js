@@ -6,6 +6,7 @@ import { withTranslate } from 'react-redux-multilingual'
 import OpenSurveyButton from '../components/teacherCompo/OpenSurveyButton.js';
 import HistoryButton from '../components/teacherCompo/HistoryButton.js';
 import GroupManagmentButton from '../components/teacherCompo/GroupManagmentButton.js';
+import CompetenceWallButton from '../components/teacherCompo/CompetenceWallButton.js';
 import HeadbandsLastResults from '../components/teacherCompo/HeadbandsLastResults.js';
 
 import { BACKEND_API } from '../constants.js';
@@ -90,6 +91,7 @@ class TeacherDashboard extends Component {
   }
 
   // check the last survey that has been done
+  // Warning : if end_date is not return by the backend, return null.
   checkLastSurveyDone = function (surveys) {
 
     let lastSurvey = null;
@@ -180,6 +182,7 @@ class TeacherDashboard extends Component {
           <div className="card-deck">
             <OpenSurveyButton survey={this.state.openSurvey} callback={this.getAllSurveyREST.bind(this)} />
             <GroupManagmentButton />
+            <CompetenceWallButton />
             <HistoryButton />
           </div>
         </div>

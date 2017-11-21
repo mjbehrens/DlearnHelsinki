@@ -21,6 +21,7 @@ import StudentDashboard from './pages/StudentDashboard.js';
 import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
 import TeacherDashboard from './pages/TeacherDashboard.js';
 import TeacherGroupManagement from './pages/TeacherGroupManagement.js'
+import CompetenceWall from './pages/CompetenceWall.js'
 
 // Bind props to Redux store
 function mapStateToProps(store) {
@@ -77,6 +78,7 @@ class App extends Component {
 				<Route path={ROUTES.STUDENT_SURVEY} render={() => this.protectedRoute('student', StudentSurveyQuestion)} />
 				<Route path={ROUTES.HISTORY} render={() => this.protectedRoute('teacher', History)} />
 				<Route path={ROUTES.GROUP_MANAGEMENT} render={() => this.protectedRoute('teacher', TeacherGroupManagement)} />
+				<Route path={ROUTES.COMPETENCE_WALL} render={() => this.protectedRoute('teacher', CompetenceWall)} />
 				<Route path="*" component={NoMatch} status={404}/>
 			    </Switch>
 			</section>

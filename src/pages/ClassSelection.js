@@ -51,7 +51,7 @@ class ClassSelection extends Component {
         }).then((response) => {
             if (response.ok) {
                 response.json().then(data => {
-                    this.props.dispatch(classActions.setClasses(data));
+                    this.props.dispatch(classActions.setAllClasses(data));
                 });
             } else {
                 console.log('Network response was not ok.');

@@ -102,7 +102,7 @@ class Header extends React.Component {
 
 	onLogoutClick = () => {
 		this.props.dispatch(userActions.logoutUser())
-		this.props.dispatch(classActions.deleteClasses())
+		this.props.dispatch(classActions.deleteAllClasses())
 	}
 
 	render() {

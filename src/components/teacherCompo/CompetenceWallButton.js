@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 
 
-import iconGrpManagment from "../../res/icons/manage_groups.svg";
+import iconCompetenceWall from "../../res/icons/competence_wall.png";
 import { ROUTES } from '../../constants.js';
 
 const style = {
@@ -19,7 +19,7 @@ class CompetenceWallButton extends React.Component {
         super(props);
         this.state = {
             text: "Competence Wall",
-            picture: iconGrpManagment,
+            picture: iconCompetenceWall,
         }
     }
 

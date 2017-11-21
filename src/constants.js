@@ -11,6 +11,7 @@ export const ROUTES = {
     STUDENT_SURVEY: '/student-survey',
     HISTORY: '/history',
     GROUP_MANAGEMENT: '/groups-management',
+    COMPETENCE_WALL: '/competence-wall',
 }
 
 export const BACKEND_API = {

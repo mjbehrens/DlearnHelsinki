@@ -1,6 +1,8 @@
-export default function reducer(state={
+const classInitState = {
     classes: [],
-  }, action) {
+}
+
+export default function reducer(state=classInitState, action) {
 
     switch (action.type) {
       case "SET_ALL_CLASSES": {
@@ -10,10 +12,7 @@ export default function reducer(state={
 	}
       }
       case "DELETE_ALL_CLASSES": {
-        return {
-          ...state,
-          classes: [],
-        }
+        return classInitState
       }
       case "ADD_CLASS": {
         return {

@@ -12,7 +12,7 @@ const style = {
 };
 
 
-class GroupManagmentButon extends React.Component {
+class GroupManagmentButton extends React.Component {
 
     constructor(props) {
         super(props);
@@ -43,4 +43,4 @@ class GroupManagmentButon extends React.Component {
 
 }
 
-export default GroupManagmentButon;
+export default GroupManagmentButton;

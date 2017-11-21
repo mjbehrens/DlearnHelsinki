@@ -82,6 +82,8 @@ export default {
     CloseSurveyModal,
 };
 
+//TODO working tralation
+
 // import React from "react";
 // import SurveyCreationForm from './teacherCompo/SurveyCreationForm.js'
 // import { withTranslate } from 'react-redux-multilingual';

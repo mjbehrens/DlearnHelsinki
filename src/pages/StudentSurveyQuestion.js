@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router'
 import Slider from 'rc-slider';
 import Spinner from 'react-spinner'
+import { withTranslate } from 'react-redux-multilingual';
 
 import { ROUTES, BACKEND_API } from '../constants.js';
 import Star from '../components/Star.js';
@@ -21,11 +22,15 @@ function mapStateToProps(store) {
 let GET_QUESTIONS_FOR_SURVEY = '';
 let PUT_QUESTION_ANSWER = ''; //needs one more parameters
 
+
+//TODO translation for questions, how to check wich language is now using and then taking that json option?
+
 class StudentSurveyQuestion extends Component {
 
     constructor(props) {
         super(props);
 
+        const {translate} = this.props;
         try {
             console.log(this.props.location.state.survey_id)
         } catch (err) {
@@ -36,7 +41,7 @@ class StudentSurveyQuestion extends Component {
 	}
 
         this.state = {
-            buttonValue: 'Next',
+            buttonValue: this.props.translate('next'),
             redirect: false,
 	    loading: true,
 	    surveyFinished: false,
@@ -45,13 +50,13 @@ class StudentSurveyQuestion extends Component {
             survey_title: this.props.location.state.survey_title,
             survey: [{
                 id: 0,
-                question: 'Loading the survey...',
+                question: this.props.translate('loading_survey'),
                 min_answer: 0,
                 max_answer: 0,
             },],
             currentQuestion: {
                 id: 0,
-                question: 'Loading the survey...',
+                question: this.props.translate('loading_survey'),
                 min_answer: 0,
                 max_answer: 0,
             },
@@ -84,10 +89,12 @@ class StudentSurveyQuestion extends Component {
                         let q = {
                             id: e._id,
                             question: e.question,
+                            question_fi: e.question_fi,
                             min_answer: e.min_answer,
                             max_answer: e.max_answer,
                         }
                         survey.push(q);
+
                     }, this);
 
 
@@ -125,7 +132,7 @@ class StudentSurveyQuestion extends Component {
             body: data
         }).then(function (response) {
             if (response.ok) {
-                console.log("answer put on server")
+                console.log("Answer put on server")
             } else {
                 console.log('Network response was not ok.');
             }
@@ -173,7 +180,7 @@ class StudentSurveyQuestion extends Component {
             this.setState({ ...this.state.redirect = true })
         }
     }
-    
+
 
     render() {
         // if survey finish (no more survey)
@@ -185,7 +192,7 @@ class StudentSurveyQuestion extends Component {
         } else if (this.state.loading) {
             return (
 		<div className="login-form">
-		    <h1>Survey "{this.state.survey_title}"</h1>
+		    <h1>{this.props.translate('survey')}  "{this.state.survey_title}"</h1>
 		    <div className="spinner-container">
 			<Spinner />
 		    </div>
@@ -195,7 +202,7 @@ class StudentSurveyQuestion extends Component {
 
             return (
                 <div className="container centered">
-		    <h1>Survey "{this.state.survey_title}"</h1>
+		    <h1>{this.props.translate('survey')} "{this.state.survey_title}"</h1>
 		    { !this.state.surveyFinished &&
 		    <div>
                     <p>{this.state.currentQuestion.question}</p>
@@ -212,16 +219,16 @@ class StudentSurveyQuestion extends Component {
 		    }
 		{ this.state.surveyFinished &&
 		  <div className="alert alert-info" role="alert">
-		  You finished the survey !
+		    {this.props.translate('finish_survey')}
                   </div>
 		}
                         <button type="button"
                             className="btn btn-primary"
-                onClick={this.onClickNext}>{this.state.surveyFinished ? 'Quit' : 'Next'}</button>
+                onClick={this.onClickNext}>{this.state.surveyFinished ? this.props.translate('quit') : this.props.translate('next')}</button>
                 </div>
             );
         }
     }
 }
 
-export default connect(mapStateToProps)(StudentSurveyQuestion);
+export default connect(mapStateToProps)(withTranslate(StudentSurveyQuestion));

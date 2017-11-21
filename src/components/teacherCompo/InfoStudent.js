@@ -94,12 +94,12 @@ class InfoStudent extends React.Component {
                 },
             }).then(function (response) {
                 if (response.ok) {
-                    alert('The group\'s student has been change ! (press \'Quit\' to see the changes)');
+                    alert(this.props.translate('alert_student_changed'));
                     compo.props.onChangesToApply(true);
 
                 } else {
                     console.log('Network response was not ok.');
-                    alert('Problem while modifing the group...')
+                    alert(this.props.translate('error_groups_change'))
                 }
                 compo.setState({isLoading:false});
             }).catch(function (err) {
@@ -108,7 +108,7 @@ class InfoStudent extends React.Component {
             });
         }
         else {
-            alert('Please make sure we have select a group first.')
+            alert(this.props.translate('error_group_first'))
         }
     }
 
@@ -116,7 +116,7 @@ class InfoStudent extends React.Component {
         let lst = this.props.listGroups;
         let options = [];
         if (lst != null) {
-            options.push(<option value={null}> {"default"} </option>);
+            options.push(<option value={null}> {this.props.translate('select')} </option>);
             lst.forEach(function (g) {
                 options.push(<option value={g.groupId}> {g.groupName} </option>)
             });
@@ -161,13 +161,13 @@ class InfoStudent extends React.Component {
 
             return (
                 <div>
-                    <h6>Name: {this.props.username}</h6>
-                    <h6>Gender: {this.props.gender}</h6>
-                    <h6>Age: {this.props.age}</h6>
-                    <h6>Change group:</h6>
+                    <h6>{this.props.translate('name')} : {this.props.username}</h6>
+                    <h6>{this.props.translate('gender')} : {this.props.gender}</h6>
+                    <h6>{this.props.translate('age')} : {this.props.age}</h6>
+                    <h6>{this.props.translate('change_group')} :</h6>
                         {this.createSelect()}
-                    <button onClick={this.onClickChangeGroup.bind(this, this.props.studentId, this)}>Change group</button>
-                    <h6>Password:</h6><input type="text" onChange={this.onChangePassword}></input><button onClick={this.onClickResetPassword.bind(this, this.props.studentId, this)}>Reset password</button>
+                    <button onClick={this.onClickChangeGroup.bind(this, this.props.studentId, this)}>{this.props.translate('change_group')}</button>
+                    <h6>{this.props.translate('password')} :</h6><input type="text" onChange={this.onChangePassword}></input><button onClick={this.onClickResetPassword.bind(this, this.props.studentId, this)}>{this.props.translate('reset_password')}</button>
                     {
                         /*<br />
                         <div>

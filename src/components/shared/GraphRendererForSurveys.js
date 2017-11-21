@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SpiderGraph from './SpiderGraph.js';
 import Spinner from 'react-spinner'
-
+import { withTranslate } from 'react-redux-multilingual';
 
 import { BACKEND_API } from '../../constants.js';
 import * as userActions from '../../actions/userActions';
@@ -31,15 +31,16 @@ class GraphRendererForSurveys extends Component {
         groups = this.props.groups;
         compo = this;
 
+        const {translate} = this.props;
         this.state = {
             isLoading: false,
             graphs: []
         }
     }
 
-   
+
     componentDidMount() {
-      
+
     }
 
     // Called everytime a props value change
@@ -117,9 +118,9 @@ class GraphRendererForSurveys extends Component {
                 <div>
                     <h3>{compo.props.survey.title}</h3>
                     <div>
-                        <button style={buttonStyle} className="btn btn-primary" onClick={this.loadClassGraphs.bind(this)}>Class</button>
-                        <button style={buttonStyle} className="btn btn-primary" onClick={this.loadGroupsGraphs.bind(this)}>Groups</button>
-                        <button style={buttonStyle} className="btn btn-primary" onClick={this.loadStudentsGraphs.bind(this)}>Students</button>
+                        <button style={buttonStyle} className="btn btn-primary" onClick={this.loadClassGraphs.bind(this)}>{this.props.translate('class')}</button>
+                        <button style={buttonStyle} className="btn btn-primary" onClick={this.loadGroupsGraphs.bind(this)}>{this.props.translate('groups')}</button>
+                        <button style={buttonStyle} className="btn btn-primary" onClick={this.loadStudentsGraphs.bind(this)}>{this.props.translate('students')}</button>
                     </div>
                     <div>
                         <br />
@@ -133,4 +134,4 @@ class GraphRendererForSurveys extends Component {
     }
 
 }
-export default connect(mapStateToProps)(GraphRendererForSurveys);
+export default connect(mapStateToProps)(withTranslate(GraphRendererForSurveys));

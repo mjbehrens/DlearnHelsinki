@@ -53,6 +53,26 @@ module.exports = {
 
 
 
+      //History
+      surveys: 'Surveys',
+      students: 'Students',
+      groups: 'Groups',
+
+      //HistoryFinder
+      search: 'Search',
+      sort: 'Sort',
+
+      //StudentSurveyQuestion
+      next: 'Next',
+      loading_survey: 'Loading the survey...',
+      finish_survey: 'You finished the survey !',
+
+      //LinearGraph
+      data_no_found: 'No Data Found',
+      class: 'Class',
+
+
+
 /*------------- Teacher ---------------*/
 
 
@@ -65,11 +85,11 @@ module.exports = {
       no_surveys_yet: 'There is no surveys yet',
       survey_description: 'Description of the survey',
       select_themes: 'Select Themes of the survey',
-      idea_problem_solving: 'Ideas and problem solving',
-      opinions_arguments: 'Opinions and arguments',
+      problem_solving: 'Problem solving',
+      opinions: 'Opinions',
       persistence: 'Persistence',
       responsibility: 'Responsibility',
-      suitanable_work_resperct: 'Sutainable work - respect',
+      suitanable_work: 'Sutainable work',
 
       //OpenSurveyButton
       close_survey: 'Close survey',
@@ -101,9 +121,12 @@ module.exports = {
       alert_password_ok: 'Password change with success. New password = {password}',
       error_update_password: 'Problem while updating password.',
       error_too_short: 'Please make sure that the password is more than 5 letters long.',
-      alert_student_changed: '',
-      error_groups_change: '',
-      error_group_first: '',
+      alert_student_changed: 'The group\'s student has been change ! (press \'Quit\' to see the changes',
+      error_groups_change: 'Problem while modifing the group...',
+      error_group_first: 'Please make sure you have select a group first.',
+      select: 'select',
+      change_group: 'Change group',
+      resert_password: 'Resert password',
 
 
       //Group
@@ -115,10 +138,6 @@ module.exports = {
       min_5_char: '5 letters min',
       error_info_not_right: 'The information are not filled correctly.',
 
-      //InfoStudent
-
-
-
       //GraphRendererForGroups
       number_shown: 'Number of surveys shown',
       survey_results: 'Results from survey {title}',
@@ -127,7 +146,10 @@ module.exports = {
 /*------------- Student ---------------*/
 
       //Dashboard
-
+      check_open_survey: 'Checking for open survey',
+      welcome: 'Welcome',
+      profile: 'Profile',
+      survey: 'Survey',
 
     }
   },
@@ -143,7 +165,7 @@ module.exports = {
       dashboard: 'Hallinta',
       classes: 'Luokat',
       groups: 'Ryhmät',
-      history: 'Historia',
+      history: 'Tulokset',
       home: 'Aloitus',
       about: 'Tietoja meistä',
       contact: 'Yhteystiedot',
@@ -186,6 +208,11 @@ module.exports = {
       confirmation_text_close_survey: 'Olet sulkemassa nykyistä auki olevaa kyselyä.\n Sulkemisen jälkeen, oppilaat eivät voi enää vastata kyselyyn.\n Haluatko varmasti sulkea kyselyn {title}, joka luotiin  {start_date} ?',
 
 
+      //History
+      surveys: 'Kyselyt',
+      students: 'Oppilaat',
+      groups: 'Ryhmät',
+
  /*------------- Teacher ---------------*/
 
       //Dashboard
@@ -197,11 +224,11 @@ module.exports = {
       no_surveys_yet: 'Kyselyjä ei ole vielä tehtynä',
       survey_description: 'Kyselyn kuvaus',
       select_themes: 'Valitse kyselyn aihealueet',
-      idea_problem_solving: 'Ideointi',
-      opinions_arguments: 'Mielipiteitä ja perusteluita',
-      persistence: 'Päättäväisyys',
+      problem_solving: 'Ongelmanratkaisu',
+      opinions: 'Mielipiteet',
+      persistence: 'Sinnikkyys',
       responsibility: 'Vastuulisuus',
-      sustainable_work_resperct: 'Kestävä kehitys - kunnioittaminen',
+      sustainable_work: 'Kestävä kehitys',
 
       //OpenSurveyButton
       close_survey: 'Sulje kysely',
@@ -229,14 +256,25 @@ module.exports = {
       existing_student: 'Valitse oppilas listasta',
       make_a_student: 'Tai luo uusi oppilas',
 
+      //InfoStudent
+      alert_password_ok: 'Salasanan vaihto onnistui. Uusi salasana on {password}',
+      error_update_password: 'Ongelmia salasanan päivityksen yhteydessä.',
+      error_too_short: 'Varmista, että salasana on vähintään 5 merkkiä. ',
+      alert_student_changed: 'Ryhmä vaihto onnitui ! (Nähdäksesi muutoksen paina \'Lopeta\'',
+      error_groups_change: 'Vaihdon yhteydessä ilmeni ongelmia...',
+      error_group_first: 'Varmista, että olet valinnut ryhmän ensiksi.',
+      select: 'valitse',
+      change_group: 'Vaihda ryhmä',
+      reset_password: 'Päivitä salasana',
+
       //Group
-      error_check_username: 'Error while creating the account. Please check if this account does not already exist.',
+      error_check_username: 'Vihre uuden käyttäjän luonnissa. Varmista, ettei käyttäjää ole jo olemassa.',
       student_info: 'Oppilastiedot',
       quit: 'Sulje',
 
       add_student: 'Lisää oppilas',
       min_5_char: 'vähintään 5 kirjainta',
-      error_info_not_right: 'The information are not filled correctly.',
+      error_info_not_right: 'Annetut tiedot eivät ole oikeassa muodossa.',
 
       //GraphRendererForGroups
       number_shown: 'Näytettävien kyselyjen määrä',
@@ -244,8 +282,11 @@ module.exports = {
 
   /*------------- Student ---------------*/
 
-      //Dashboard
-
+  //Dashboard
+  check_open_survey: 'Ladataan kyselyjä',
+  welcome: 'Tervetuloa',
+  profile: 'Profiili',
+  survey: 'Kysely',
 
     }
   }

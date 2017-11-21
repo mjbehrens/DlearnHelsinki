@@ -96,23 +96,24 @@ class HeadbandsLastResults extends React.Component {
     render() {
 
         console.log(this.state)
-        //requires for spiderGraph
-        let parameters = {
-            teachers: this.props.user.id,
-            students: null,
-            classes: this.props.user.classid,
-            groups: compo.state.group_id,
-            surveys: compo.state.survey._id,
-        }
 
-
-        if (parameters.surveys == null) {
+        if (compo.state.survey == null) {
             return (
                 <div className="container">
                 </div>
             );
         }
         else {
+          
+          //requires for spiderGraph
+          let parameters = {
+              teachers: this.props.user.id,
+              students: null,
+              classes: this.props.user.classid,
+              groups: compo.state.group_id,
+              surveys: compo.state.survey._id,
+            }
+
             return (
                 <div className="container">
                     <div className="jumbotron">

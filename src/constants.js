@@ -14,7 +14,7 @@ export const ROUTES = {
 }
 
 export const BACKEND_API = {
-    ROOT: 'http://localhost:8080/webapi/',
+    ROOT: 'https://dlearn-helsinki-backend.herokuapp.com/webapi/',
     GET_STUDENT: ''
 }
 

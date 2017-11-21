@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'underscore';
 import Spinner from 'react-spinner'
+import { withTranslate } from 'react-redux-multilingual';
 
 
 import HistoryFinder from '../components/shared/HistoryFinder.js';
@@ -37,6 +38,7 @@ class History extends Component {
         tempData = [];
         compo = this;
 
+        const {translate} = this.props;
 
         this.state = {
             isLoading: true,
@@ -188,12 +190,12 @@ class History extends Component {
     }
 
 
-    // Final function will alter the value that is passed to the GraphRenderer. 
+    // Final function will alter the value that is passed to the GraphRenderer.
     loadResult = (surveyID) => {
         compo.setState({ selectedItemId: surveyID });
     }
 
-    // As SQL's Date-datatype ends up parsed into a conveniently structured string, 
+    // As SQL's Date-datatype ends up parsed into a conveniently structured string,
     // we just sort things alphabetically
     sortData = function () {
         this.setState({ warning: "" })
@@ -311,7 +313,7 @@ class History extends Component {
         if (compo.state.isLoading) {
             return (
                 <div className="centered">
-                    <h1> History </h1>
+                    <h1> {this.props.translate('history')} </h1>
                     <div className="row">
                         <div className="spinner-container">
                             <Spinner />
@@ -324,13 +326,13 @@ class History extends Component {
 
             return (
                 <div className="centered">
-                    <h1> History </h1>
+                    <h1> {this.props.translate('history')} </h1>
                     <div className="row">
                         <div className="left-align col-sm-4">
                             <div className="btn-group">
-                                <button className="btn btn-primary" onClick={this.OnClickSurveys.bind(this)}>Surveys</button>
-                                <button className="btn btn-primary" onClick={this.OnClickStudents.bind(this)}>Students</button>
-                                <button className="btn btn-primary" onClick={this.OnClickGroups.bind(this)}>Groups</button>
+                                <button className="btn btn-primary" onClick={this.OnClickSurveys.bind(this)}>{this.props.translate('surveys')}</button>
+                                <button className="btn btn-primary" onClick={this.OnClickStudents.bind(this)}>{this.props.translate('students')}</button>
+                                <button className="btn btn-primary" onClick={this.OnClickGroups.bind(this)}>{this.props.translate('groups')}</button>
                             </div>
 
                             <HistoryFinder query={this.state.query}
@@ -359,4 +361,4 @@ class History extends Component {
     }
 }
 
-export default connect(mapStateToProps)(History);
+export default connect(mapStateToProps)(withTranslate(History));

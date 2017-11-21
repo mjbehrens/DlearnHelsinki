@@ -26,11 +26,11 @@ class SurveyCreationFrom extends React.Component {
                 </TextareaAutosize>
                 <br />
                 <h6>{this.props.translate('select_themes')}</h6>
-                <input type="checkbox" name="Ideas and problem solving" value={1} onChange={this.props.onChangeThemes} /> {this.props.translate('idea_problem_solving')} <br />
-                <input type="checkbox" name="Opinions and arguments" value={2} onChange={this.props.onChangeThemes}/> {this.props.translate('opinions_arguments')} <br />
+                <input type="checkbox" name="Ideas and problem solving" value={1} onChange={this.props.onChangeThemes} /> {this.props.translate('problem_solving')} <br />
+                <input type="checkbox" name="Opinions and arguments" value={2} onChange={this.props.onChangeThemes}/> {this.props.translate('opinions')} <br />
                 <input type="checkbox" name="Persistence" value={3} onChange={this.props.onChangeThemes}/> {this.props.translate('persistence')}<br />
                 <input type="checkbox" name="Responsibility" value={4} onChange={this.props.onChangeThemes}/> {this.props.translate('responsibility')} <br />
-                <input type="checkbox" name="Sustainable work - respect" value={5} onChange={this.props.onChangeThemes}/> {this.props.translate('sustainable_work_resperct')} <br />
+                <input type="checkbox" name="Sustainable work - respect" value={5} onChange={this.props.onChangeThemes}/> {this.props.translate('sustainable_work')} <br />
 
 
             </div>

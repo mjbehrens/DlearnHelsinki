@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { ROUTES, BACKEND_API } from '../constants.js';
+import { withTranslate } from 'react-redux-multilingual';
 
 import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
@@ -38,6 +39,7 @@ class StudentDashboard extends Component {
 	constructor(props) {
 		super(props);
 
+		const {translate} = this.props;
 		compo = this;
 
 		let survey_id = null;
@@ -109,7 +111,7 @@ class StudentDashboard extends Component {
 		});
 	}
 
-	// check if a survey is currently open 
+	// check if a survey is currently open
 	checkIfSurveyOpen = function () {
 
 		let noSurveyOpen = true;
@@ -146,11 +148,11 @@ class StudentDashboard extends Component {
 	}
 
 
-	// check if a survey is currently open 
+	// check if a survey is currently open
 	checkLastSurveyDone = function () {
 
 		if (this.state.lastSurvey._id == null) {
-			
+
 			let tempSurveys = surveys.filter(function (s) {
 				return s.open === false;
 			});
@@ -232,7 +234,7 @@ class StudentDashboard extends Component {
 					<div className='spinner-container'>
 						<Spinner />
 					</div>
-					Check for open survey ...
+					{this.props.translate('check_open_survey')} ...
 				</div>
 			)
 		}
@@ -242,16 +244,16 @@ class StudentDashboard extends Component {
 
 		return (
 			<div className="container text-center">
-			    <h1>Welcome {this.props.user.name}</h1>
+			    <h1>{this.props.translate('welcome')} {this.props.user.name}</h1>
 				<div className="jumbotron">
 
 
 					<div className="row">
 						<div className="col-sm-3">
 							<div className="btn-group-vertical">
-								<button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">Survey</button>
-								<button type="button" className="btn btn-primary">History</button>
-								<button type="button" className="btn btn-primary">Profile</button>
+								<button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">{this.props.translate('survey')}</button>
+								<button type="button" className="btn btn-primary">{this.props.translate('history')}</button>
+								<button type="button" className="btn btn-primary">{this.props.translate('profile')}</button>
 							</div>
 						</div>
 						<div className="col-sm-9">
@@ -265,5 +267,4 @@ class StudentDashboard extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(StudentDashboard);
-
+export default connect(mapStateToProps)(withTranslate(StudentDashboard));

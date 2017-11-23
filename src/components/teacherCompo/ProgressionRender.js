@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../constants.js';
 import CompetenceWallLog from './CompetenceWallLog.js';
+import LinearGraph from '../shared/LinearGraph.js';
 
 function mapStateToProps(store) {
     return {
@@ -23,11 +24,19 @@ class ProgressionRender extends Component {
 
     render() {
 
+        let p = {
+            teachers: this.props.user.id,
+            students: null,
+            classes: 1,
+            groups: 1,
+            progression: 5,
+        }
+
         return (
             <div className="container">
                 <div className="row">
                     <div className="left-align col-sm-3"><CompetenceWallLog /></div>
-                    <div className="col-sm-9">Graph / Progression here...</div>
+                    <div className="col-sm-9"><LinearGraph parameters = {p}/></div>
                 </div>
             </div>
         );

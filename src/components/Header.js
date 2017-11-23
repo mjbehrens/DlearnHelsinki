@@ -61,6 +61,11 @@ class Header extends React.Component {
 			</Link>
 		    </li>
 		    <li className="nav-item">
+			<Link to={ROUTES.COMPETENCE_WALL}>
+			    <a className="nav-link" href="">Competence Wall</a>
+			</Link>
+		    </li>
+		    <li className="nav-item">
 			<Link to={ROUTES.HISTORY}>
 			    <a className="nav-link" href="">{this.props.translate('history')}</a>
 			</Link>

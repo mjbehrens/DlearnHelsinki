@@ -74,11 +74,8 @@ class TeacherDashboard extends Component {
         response.json().then(data => {
           surveys = data;
           console.log(surveys);
-          compo.checkIfSurveyOpen();
-          if (surveys.length != 0) {
-
-            compo.checkLastSurveyDone();
-          }
+          compo.checkIfSurveyOpen(surveys);
+          compo.checkLastSurveyDone(surveys);
 
         });
       } else {

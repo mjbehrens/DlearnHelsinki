@@ -47,32 +47,9 @@ h1 {
     height: 50px;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 086c95a9ee747092cd1985df395a9ac21182ef9e
-.login-form {
-    width: 60vw;
-    max-width: 300px;
-    margin: auto;
-}
-
-#logInButton {
-    margin-top: 20px;
-    padding: 8px 29px;
-}
-
 .btn {
     margin-right: 5px;
 }
-
-<<<<<<< HEAD
->>>>>>> Translation on progress
-=======
-=======
->>>>>>> origin/master
->>>>>>> 086c95a9ee747092cd1985df395a9ac21182ef9e
 /* Fix form input validation css on firefox */
 form input {
     box-shadow: none;

@@ -56,7 +56,6 @@ module.exports = {
       //History
       surveys: 'Surveys',
       students: 'Students',
-      groups: 'Groups',
 
       //HistoryFinder
       search: 'Search',
@@ -89,7 +88,7 @@ module.exports = {
       opinions: 'Opinions',
       persistence: 'Persistence',
       responsibility: 'Responsibility',
-      suitanable_work: 'Sutainable work',
+      sustainable_work: 'Sustainable work',
 
       //OpenSurveyButton
       close_survey: 'Close survey',
@@ -97,9 +96,6 @@ module.exports = {
 
       //GroupManagmentButton
       group_management: 'Group management',
-
-      //HistoryButton
-      history: 'History',
 
       //TeacherGroupManagement
       add_group: 'Add a group',
@@ -150,6 +146,7 @@ module.exports = {
       welcome: 'Welcome',
       profile: 'Profile',
       survey: 'Survey',
+      latest_result: 'Last Result Survey',
 
     }
   },
@@ -211,7 +208,20 @@ module.exports = {
       //History
       surveys: 'Kyselyt',
       students: 'Oppilaat',
-      groups: 'Ryhmät',
+
+      //HistoryFinder
+      search: 'Etsi',
+      sort: 'Lajittele',
+
+      //StudentSurveyQuestion
+      next: 'Seuraava',
+      loading_survey: 'Ladataan kyselyä...',
+      finish_survey: 'Olet suorittanut kyselyn !',
+
+      //LinearGraph
+      data_no_found: 'Tietoja ei löydy',
+      class: 'Luokka',
+
 
  /*------------- Teacher ---------------*/
 
@@ -227,7 +237,7 @@ module.exports = {
       problem_solving: 'Ongelmanratkaisu',
       opinions: 'Mielipiteet',
       persistence: 'Sinnikkyys',
-      responsibility: 'Vastuulisuus',
+      responsibility: 'Vastuullisuus',
       sustainable_work: 'Kestävä kehitys',
 
       //OpenSurveyButton
@@ -235,10 +245,8 @@ module.exports = {
       create_survey: 'Luo kysely',
 
       //GroupManagmentButton
-      group_management: 'Ryhmän hallinta',
+      group_management: 'Ryhmien hallinta',
 
-      //HistoryButton
-      history: 'Tulokset',
 
       //TeacherGroupManagement
       add_group: 'Lisää ryhmä',
@@ -287,6 +295,7 @@ module.exports = {
   welcome: 'Tervetuloa',
   profile: 'Profiili',
   survey: 'Kysely',
+  latest_result: 'Viimeisimmän kyselyn tulokset',
 
     }
   }

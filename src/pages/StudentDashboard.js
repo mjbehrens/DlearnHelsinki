@@ -177,7 +177,8 @@ class StudentDashboard extends Component {
 			// update the last survey id.
 			this.setState({
 				...this.state,
-				lastSurvey: lastSurvey
+				lastSurvey: lastSurvey,
+				toRender: compo.displaySpiderGraph()
 			});
 		}
 	}
@@ -278,26 +279,27 @@ class StudentDashboard extends Component {
 			<div>
 				<div className="container text-center">
 					<h1>Welcome {this.props.user.name}</h1>
-					<div className="jumbotron">
+					<br/>
 
+					<div className="row">
 
-						<div className="row">
-
-							<div className="col-sm-3">
-								<div class="btn-group" role="group">
-									<div className="btn-group-vertical">
-										{this.changeSurveyButton()}
-									</div>
-									<br />
-									<br />
-									<div className="btn-group-vertical">
-										<button type="button" value="history" onClick={this.getButtonValue} className="btn btn-primary">History</button>
-										<button type="button" value="profile" onClick={this.getButtonValue} className="btn btn-primary">Profile</button>
-										<button type="button" value="lastResult" onClick={this.getButtonValue} className="btn btn-primary">Last Result</button>
-									</div>
+						<div className="col-sm-3">
+							<div class="btn-group" role="group">
+								<div className="btn-group-vertical">
+									{this.changeSurveyButton()}
+								</div>
+								<br />
+								<br />
+								<div className="btn-group-vertical">
+									<button type="button" value="history" onClick={this.getButtonValue} className="btn btn-primary">History</button>
+									<button type="button" value="profile" onClick={this.getButtonValue} className="btn btn-primary">Profile</button>
+									<button type="button" value="lastResult" onClick={this.getButtonValue} className="btn btn-primary">Last Result</button>
 								</div>
 							</div>
-							<div className="col-sm-9">
+						</div>
+
+						<div className="col-sm-9">
+							<div className="jumbotron">
 								{this.state.toRender}
 							</div>
 						</div>

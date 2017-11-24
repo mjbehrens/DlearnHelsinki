@@ -1,13 +1,15 @@
-export function setClasses(classes) {
+import { ACTION_TYPES } from '../constants.js'
+
+export function setAllClasses(classes) {
     return {
-	type: "SET_CLASSES",
+	type: ACTION_TYPES.SET_ALL_CLASSES,
 	payload: classes,
     }
 }
 
-export function deleteClasses() {
+export function deleteAllClasses() {
     return {
-	type: "DELETE_CLASSES",
+	type: ACTION_TYPES.DELETE_ALL_CLASSES,
 	payload: null,
     }
 }

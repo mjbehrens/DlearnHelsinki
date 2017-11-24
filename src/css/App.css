@@ -47,9 +47,6 @@ h1 {
     height: 50px;
 }
 
-.btn {
-    margin-right: 5px;
-}
 /* Fix form input validation css on firefox */
 form input {
     box-shadow: none;

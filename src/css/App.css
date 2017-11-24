@@ -18,7 +18,7 @@ html, body {
     position: relative;
     min-height: 100vh;
 }
-    
+
 body {
     padding-bottom: var(--footer-height);
 }
@@ -47,6 +47,9 @@ h1 {
     height: 50px;
 }
 
+.btn {
+    margin-right: 5px;
+}
 /* Fix form input validation css on firefox */
 form input {
     box-shadow: none;
@@ -100,14 +103,14 @@ input.inputModified:invalid {
     bottom: 0px;
     right: 0px;
     width: 50%;
-    height: 50%;  
+    height: 50%;
 }
 
 .react-spinner {
   position: relative;
   width: 100px;
-  height: 20px;  
- 
+  height: 20px;
+
 }
 
 .react-spinner_bar {

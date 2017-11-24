@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import Spinner from 'react-spinner'
 import { ROUTES, BACKEND_API } from '../constants.js';
 import * as userActions from '../actions/userActions';
+import { withTranslate } from 'react-redux-multilingual'
 
 require('../css/login.css')
 
@@ -26,6 +27,7 @@ class Login extends Component {
 	    goTo: ROUTES.CLASS_SELECTION,
 	    redirect: false,
 	};
+  const {translate} = this.props;
     }
 
     // Triggered on user input change
@@ -101,6 +103,7 @@ class Login extends Component {
     }
 
     render() {
+
 	console.log(this.state)
 	if (this.state.redirect) {
 	    return (<Redirect to={this.state.goTo} />)
@@ -118,7 +121,7 @@ class Login extends Component {
 		<div className="Login-form">
 		    <h1>Dlearn</h1>
 		    <div className="centered">
-			<p>You are already logged in. Log out first to log in again.</p>
+			<p>{this.props.translate('already_logged_in')}</p>
 		    </div>
 		</div>
 	    )
@@ -128,40 +131,40 @@ class Login extends Component {
 		    <h1>Dlearn</h1>
 		    {this.state.error &&
 		    <div className="alert alert-danger alert-dismissible fade show" role="alert">
-			Invalid login or password.
+			{this.props.translate('invalid_login')}
 		    </div>
 		    }
 		    <div className="form-group left-align">
-			<label for="usernameInput">Login</label>
+			<label for="usernameInput">{this.props.translate('username')}</label>
 			<input type="text" className="form-control" id="usernameInput"
 				onChange={this.handleInputChange} value={this.state.loginInput} required />
 		    </div>
 		    <div className="form-group left-align">
-			<label for="passwordInput">Password</label>
+			<label for="passwordInput">{this.props.translate('password')}</label>
 			<input type="password" className="form-control" id="passwordInput" value={this.state.pwdInput} onChange={this.handleInputChange} required />
 		    </div>
 		    <div className="custom-controls-stacked">
 			<label className="custom-control custom-radio">
 			<input id="radioStudent" className="custom-control-input" name="userType" value="student" type="radio" checked={this.state.userType === 'student'} onChange={this.handleInputChange} />
 			    <span className="custom-control-indicator"></span>
-			    <span className="custom-control-description">Student</span>
+			    <span className="custom-control-description">{this.props.translate('student')}</span>
 			</label>
 			<label className="custom-control custom-radio">
 			<input id="radioTeacher" className="custom-control-input" name="userType" value="teacher" type="radio" checked={this.state.userType === 'teacher'} onChange={this.handleInputChange} />
 			    <span className="custom-control-indicator"></span>
-			    <span className="custom-control-description">Teacher</span>
+			    <span className="custom-control-description">{this.props.translate('teacher')}</span>
 			</label>
 			<label className="custom-control custom-radio">
 			<input id="radioResearcher" className="custom-control-input" name="userType" value="researcher" type="radio" checked={this.state.userType === 'researcher'} onChange={this.handleInputChange} disabled />
 			    <span className="custom-control-indicator"></span>
-			    <span className="custom-control-description">Researcher</span>
+			    <span className="custom-control-description">{this.props.translate('researcher')}</span>
 			</label>
 		    </div>
-		    <button id="logInButton" type="submit" className="btn btn-primary" >Log in</button>
+		    <button id="logInButton" type="submit" className="btn btn-primary" >{this.props.translate('log_in')}</button>
 		</form>
 	    );
 	}
     }
 }
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(withTranslate(Login));

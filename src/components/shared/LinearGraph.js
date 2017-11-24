@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 import Spinner from 'react-spinner'
-
+import { withTranslate } from 'react-redux-multilingual';
 
 //redux setup
 import { ROUTES, BACKEND_API } from '../../constants.js';
@@ -26,10 +26,9 @@ class LinearGraph extends Component {
 
     constructor(props) {
         super(props);
-
+        const {translate} = this.props;
         params = this.props.parameters;
         compo = this;
-
 
         this.state = {
             data: {
@@ -151,7 +150,7 @@ class LinearGraph extends Component {
         progression.forEach(function (survey) {
 
             let lisThemes = [];
-  
+
             survey.themes.forEach(function (theme) {
 
                 lisThemes.push({
@@ -187,7 +186,7 @@ class LinearGraph extends Component {
             // table of answer for this theme
             let values = [];
             let title = "";
-            // we create a new dataset for the theme  
+            // we create a new dataset for the theme
             newDatasets[i - 1] = {
                 label: 'Theme ' + i,
                 fill: false,
@@ -252,7 +251,7 @@ class LinearGraph extends Component {
         })
     }
 
-    //take a string and create a original color 
+    //take a string and create a original color
     stringToColour = function (str) {
 
         // default value if props null
@@ -318,7 +317,7 @@ class LinearGraph extends Component {
             return (
                 <div className="jumbotron">
                     <h5>{this.props.name}</h5>
-                    No Data Found
+                    {this.props.translate('data_no_found')};
 				</div>
             );
         }
@@ -333,4 +332,4 @@ class LinearGraph extends Component {
     }
 }
 
-export default connect(mapStateToProps)(LinearGraph);
+export default connect(mapStateToProps)(withTranslate(LinearGraph));

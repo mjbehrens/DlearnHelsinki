@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
 import Spinner from 'react-spinner'
+import { withTranslate } from 'react-redux-multilingual';
 
 //redux setup
 import { ROUTES, BACKEND_API } from '../../constants.js';
@@ -28,6 +29,7 @@ class SpiderGraph extends Component {
 	constructor(props) {
 		super(props);
 
+		const {translate} = this.props;
 		params = this.props.parameters;
 
 		this.state = {
@@ -35,7 +37,7 @@ class SpiderGraph extends Component {
 			noData: true,
 			cpt: 0,
 			data: {
-				labels: [], //label of the themes 
+				labels: [], //label of the themes
 				datasets: [{
 					label: this.props.name, // name of the graph
 					lineTension: .05,
@@ -54,7 +56,7 @@ class SpiderGraph extends Component {
 		if(params.surveys != null){
 			this.getDataForGraph();
 		}
-		
+
 	}
 
 	componentDidMount() {
@@ -187,7 +189,7 @@ class SpiderGraph extends Component {
 		});
 	}
 
-	//take a string and create a original color 
+	//take a string and create a original color
 	stringToColour = function (str) {
 
 		// default value if props null
@@ -242,7 +244,7 @@ class SpiderGraph extends Component {
 			return (
 				<div className="jumbotron">
 					<h5>{this.props.name}</h5>
-					No Data Found
+					{this.props.translate('data_no_found')}
 				</div>
 
 			);
@@ -258,5 +260,4 @@ class SpiderGraph extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(SpiderGraph);
-
+export default connect(mapStateToProps)(withTranslate(SpiderGraph));

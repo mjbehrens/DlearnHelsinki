@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { ROUTES, BACKEND_API } from '../constants.js';
+import { withTranslate } from 'react-redux-multilingual';
 
 import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
@@ -38,6 +39,7 @@ class StudentDashboard extends Component {
 	constructor(props) {
 		super(props);
 
+		const {translate} = this.props;
 		compo = this;
 
 		let survey_id = null;
@@ -48,11 +50,12 @@ class StudentDashboard extends Component {
 		}
 
 		this.state = {
+			isLoading: true,
 			disabledSurvey: true,
 			lastSurvey: {
 				_id: survey_id,
 				open: false,
-				title: "Last Result Survey",
+				title: this.props.translate('latest_result'),
 				description: null,
 				start_date: null,
 				end_date: null,
@@ -97,8 +100,9 @@ class StudentDashboard extends Component {
 					console.log(surveys);
 
 					// check if a survey is open & check the last survey done
-					compo.checkIfSurveyOpen();
-					compo.checkLastSurveyDone();
+					compo.checkIfSurveyOpen(surveys);
+					compo.checkLastSurveyDone(surveys);
+
 				});
 			} else {
 				console.log('Network response was not ok.');
@@ -108,74 +112,65 @@ class StudentDashboard extends Component {
 			console.log(err);
 		});
 	}
-
-	// check if a survey is currently open 
-	checkIfSurveyOpen = function () {
+	// check if a survey is currently open
+	checkIfSurveyOpen = function (surveys) {
 
 		let noSurveyOpen = true;
-
-		let lastDate = Date.parse(surveys[0].end_date);
-		let lastSurveyId = surveys[0]._id;
-
+		let openSurvey = null;
 		surveys.forEach(function (s) {
-
-			let tempDate = Date.parse(s.end_date);
-
-			if (lastDate < tempDate) {
-				lastDate = tempDate;
-				lastSurveyId = s._id;
-			}
-
 			if (s.open) {
 				noSurveyOpen = false;
 				this.updateState(s);
 			}
-
 		}, this);
 
 		// if no survey open then do nothing.
 		if (noSurveyOpen) {
-			compo.updateState({
-				_id: lastSurveyId,
+			openSurvey = {
+				_id: null,
 				open: false,
 				title: null,
 				description: null,
 				start_date: null,
-			});
+				end_date: null,
+			};
 		}
+
 	}
 
+  checkLastSurveyDone = function (surveys) {
 
-	// check if a survey is currently open 
-	checkLastSurveyDone = function () {
+    let lastSurvey = null;
 
-		if (this.state.lastSurvey._id == null) {
-			
-			let tempSurveys = surveys.filter(function (s) {
-				return s.open === false;
-			});
+    if (surveys.length > 0) {
+      // only look for closed surveys
+      let tempSurveys = surveys.filter(function (s) {
+        return s.open == false;
+      });
 
-			let lastDate = Date.parse(tempSurveys[0].end_date);
-			let lastSurvey = tempSurveys[0];
+      if (tempSurveys.length > 0) {
 
-
-			tempSurveys.forEach(function (s) {
-
-				let tempDate = Date.parse(s.end_date);
-
-				if (lastDate < tempDate) {
-					lastDate = tempDate;
-					lastSurvey = s;
-				}
-			}, this);
-
-			// update the last survey id.
+        // find the highest date of all surveys
+        let last_d = tempSurveys.map(function (s) { return new Date(s.end_date);}).sort(function(a, b){return b - a;})[0]
+        // get the survey that match this date
+        lastSurvey = surveys.filter(function (s) {
+          let d = new Date(s.end_date)
+          return d.toString() === last_d.toString();
+        })[0];
+				// update the last survey id.
+						this.setState({
+							...this.state,
+							lastSurvey: lastSurvey,
+							isLoading: false,
+						});
+      }
+    }
 			this.setState({
 				...this.state,
-				lastSurvey: lastSurvey
+				isLoading: false,
 			});
-		}
-	}
+
+  }
 
 	// call for update the state with the survey
 	updateState = (s) => {
@@ -225,14 +220,22 @@ class StudentDashboard extends Component {
 			return (
 				<SpiderGraph name={this.state.lastSurvey.title} parameters={parameters} />
 			)
-		}
-		else {
+		} else if (this.state.isLoading) {
+
 			return (
 				<div>
 					<div className='spinner-container'>
 						<Spinner />
 					</div>
-					Check for open survey ...
+					{this.props.translate('check_open_survey')} ...
+				</div>
+			)
+		}
+		else {
+			return (
+				<div>
+
+				{this.props.translate('data_no_found')} ...
 				</div>
 			)
 		}
@@ -242,16 +245,16 @@ class StudentDashboard extends Component {
 
 		return (
 			<div className="container text-center">
-			    <h1>Welcome {this.props.user.name}</h1>
+			    <h1>{this.props.translate('welcome')} {this.props.user.name}</h1>
 				<div className="jumbotron">
 
 
 					<div className="row">
 						<div className="col-sm-3">
 							<div className="btn-group-vertical">
-								<button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">Survey</button>
-								<button type="button" className="btn btn-primary">History</button>
-								<button type="button" className="btn btn-primary">Profile</button>
+								<button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">{this.props.translate('survey')}</button>
+								<button type="button" className="btn btn-primary">{this.props.translate('history')}</button>
+								<button type="button" className="btn btn-primary">{this.props.translate('profile')}</button>
 							</div>
 						</div>
 						<div className="col-sm-9">
@@ -265,5 +268,4 @@ class StudentDashboard extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(StudentDashboard);
-
+export default connect(mapStateToProps)(withTranslate(StudentDashboard));

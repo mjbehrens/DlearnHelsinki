@@ -7,6 +7,8 @@ import SpiderGraph from '../components/shared/SpiderGraph.js';
 import LinearGraph from '../components/shared/LinearGraph.js';
 import Spinner from 'react-spinner';
 import StudentProfile from '../components/studentCompo/StudentProfile.js';
+import StudentProfileButton from '../components/studentCompo/StudentProfileButton.js';
+import StudentCWButton from '../components/studentCompo/StudentCWButton.js';
 
 import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
@@ -271,7 +273,7 @@ class StudentDashboard extends Component {
 	renderAccessSurveyButton = function () {
 		if (this.state.disabledSurvey) {
 			return (
-				<div className="card card-inverse">
+				<div className="card card-inverse w-100">
 					<img className="card-img-top teacher-card-img" src={"http://www.swissfruit.ch/sites/default/files/styles/sf_matrix/public/fruechte/pink_lady_0.jpg?itok=JfpYtcrT&c=80aed0c096c1765c9fefc5ff39e840df"} width="100" height="100"
 						
 						alt="profil icon" />
@@ -284,7 +286,7 @@ class StudentDashboard extends Component {
 			//return <button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">No Survey</button>
 		} else {
 			return (
-				<div className="card card-inverse">
+				<div className="card card-inverse w-100">
 					<img className="card-img-top teacher-card-img" src={"http://thumb1.shutterstock.com/photos/thumb_large/676765/132109130.jpg"} width="100" height="100"
 						onClick={this.startSurvey}
 						alt="profil icon" />
@@ -304,7 +306,7 @@ class StudentDashboard extends Component {
 
 	renderProfileButton = function () {
 		return (
-			<div className="card card-inverse" >
+			<div className="card card-inverse w-100" >
 				<img className="card-img-top teacher-card-img" src={"http://www.swissfruit.ch/sites/default/files/styles/sf_matrix/public/fruechte/pink_lady_0.jpg?itok=JfpYtcrT&c=80aed0c096c1765c9fefc5ff39e840df"} width="100" height="100"
 					onClick={this.showProfile}
 					alt="profil icon"
@@ -319,7 +321,7 @@ class StudentDashboard extends Component {
 
 	renderCompetenceWallButton = function () {
 		return (
-			<div className="card card-inverse" >
+			<div className="card card-inverse w-100" >
 				<img className="card-img-top teacher-card-img" src={"http://www.swissfruit.ch/sites/default/files/styles/sf_matrix/public/fruechte/pink_lady_0.jpg?itok=JfpYtcrT&c=80aed0c096c1765c9fefc5ff39e840df"} width="100" height="100"
 					onClick={this.showCompetenceWall}
 					alt="competence wall icon"
@@ -332,7 +334,7 @@ class StudentDashboard extends Component {
 	}
 
 	showProfile = function (){
-		let item = (<div>coucou</div>)
+		let item = (<div></div>)
 		item = <StudentProfile />
 		compo.setState({ toRender: item })
 	}
@@ -362,6 +364,9 @@ class StudentDashboard extends Component {
 									{this.renderProfileButton()}
 									<br/>
 									{this.renderCompetenceWallButton()}
+									<br />
+									<StudentProfileButton onClick={this.showProfile}/>
+									<br />
 								</div>
 							</div>
 

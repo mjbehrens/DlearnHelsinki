@@ -26,6 +26,7 @@ class Login extends Component {
 	    error: false,
 	    goTo: ROUTES.CLASS_SELECTION,
 	    redirect: false,
+
 	};
   const {translate} = this.props;
     }

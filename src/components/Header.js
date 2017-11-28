@@ -5,7 +5,7 @@ import { ROUTES } from '../constants.js';
 import logo from '../res/icons/dlearn_logo.svg';
 import * as userActions from '../actions/userActions';
 import * as classActions from '../actions/classActions';
-import { withTranslate, IntlActions } from 'react-redux-multilingual'
+import { withTranslate, IntlActions } from 'react-redux-multilingual';
 
 function mapStateToProps(store) {
 	return {
@@ -111,24 +111,31 @@ class Header extends React.Component {
 	}
 
     translationButton = () => {
+			if (this.props.translate('dashboard') == 'Dashboard') {
+
+
       return (
       //translate buttons
-<ul className="navbar-nav mr-right">
-      <li>
-      <button className="btn"
-        onClick={() => {
-          this.props.dispatch(IntlActions.setLocale('en'))
-        }}>English</button>
-</li>
-<li>
-      <button className="btn"
+			<ul className="navbar-nav mr-right">
+			<li>
+				<button className="btn" id="button-translate"
         onClick={() => {
           this.props.dispatch(IntlActions.setLocale('fi'))
         }}>Suomeksi</button>
-        </li>
-
-</ul>
+						</li>
+				</ul>)
+		} else {
+			return (
+				<ul className="navbar-nav mr-right">
+	      <li>
+				<button className="btn" id="button-translate"
+			onClick={() => {
+				this.props.dispatch(IntlActions.setLocale('en'))
+			}}>English</button>
+							</li>
+							</ul>
       )
+		}
     }
 
     render() {

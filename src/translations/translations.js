@@ -122,7 +122,7 @@ module.exports = {
       error_group_first: 'Please make sure you have select a group first.',
       select: 'select',
       change_group: 'Change group',
-      resert_password: 'Resert password',
+      reset_password: 'Change password',
 
 
       //Group

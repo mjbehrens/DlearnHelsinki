@@ -28,7 +28,7 @@ const onBeforeLift = () => {
 // Renders the App in the 'root' div of the page
 ReactDOM.render((
   <Provider store={store}>
-    <IntlProvider translations={translations} locale='en'>
+    <IntlProvider translations={translations} locale='fi'>
 
       <PersistGate
         loading={<div>Loading...</div>}

@@ -35,22 +35,22 @@ class CompetenceWallLog extends React.Component {
                 <ul className="list-group">
                     <li className="list-group-item active">Log</li>
                     <li className="list-group-item">
-                        Student 1 &nbsp;
-                        <input className="form-check-input" type="checkbox" value="" />
+                        Student 1
+                        <input className="form-check-input float-right" type="checkbox" value="" />
                     </li>
                     <li className="list-group-item">
-                        Student 2 &nbsp;
-                        <input className="form-check-input" type="checkbox" value="" />
+                        Student 2
+                        <input className="form-check-input float-right" type="checkbox" value="" />
                     </li>
                     <li className="list-group-item">
-                        Student 3 &nbsp;
-                        <input className="form-check-input" type="checkbox" value=""/>
+                        Student 3
+                        <input className="form-check-input float-right" type="checkbox" value=""/>
                     </li>
                     <li className="list-group-item">
-                        Student 4 &nbsp;
-                        <input className="form-check-input" type="checkbox" value=""/>
+                        Student 4
+                        <input className="form-check-input float-right" type="checkbox" value=""/>
                     </li>
-                            <button type="button" className="list-group-item list-group-item-secondary list-group-item-action" onClick={this.addToLog}>Add an item</button>
+		    <button type="button" className="list-group-item list-group-item-secondary list-group-item-action" onClick={this.addToLog}>Add an item</button>
                 </ul>
             </div>
         )

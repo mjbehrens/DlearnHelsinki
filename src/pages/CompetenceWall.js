@@ -28,7 +28,6 @@ class CompetenceWall extends Component {
         })
     }
 
-
     render() {
 
         return (

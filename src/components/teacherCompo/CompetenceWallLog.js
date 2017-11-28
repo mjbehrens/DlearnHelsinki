@@ -1,12 +1,32 @@
 import React from "react";
+import { connect } from 'react-redux';
 import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
+import * as modalActions from '../../actions/modalActions';
+
+function mapStateToProps(store) {
+    return {
+	modal: store.modal,
+    }
+}
 
 class CompetenceWallLog extends React.Component {
 
     constructor(props) {
         super(props);
+	this.state = {
+	    modalProps: {},
+	}
     }
 
+    addToLog = () => {
+	this.setState({
+	    ...this.state,
+	    modalProps: {
+		...this.state.modalProps,
+	    }
+	}, () => this.props.dispatch(modalActions.setModal('CompetenceWallLogModal', this.state.modalProps)));
+	this.props.dispatch(modalActions.showModal())
+    }
 
     render() {
 
@@ -30,7 +50,7 @@ class CompetenceWallLog extends React.Component {
                         Student 4 &nbsp;
                         <input class="form-check-input" type="checkbox" value=""/>
                     </li>
-                    <button className="btn btn-primary">Add stuff</button>
+                <button className="btn btn-primary" onClick={this.addToLog}>Add stuff</button>
                 </ul>
             </div>
         )
@@ -38,4 +58,4 @@ class CompetenceWallLog extends React.Component {
 }
 
 
-export default CompetenceWallLog;
+export default connect(mapStateToProps)(CompetenceWallLog);

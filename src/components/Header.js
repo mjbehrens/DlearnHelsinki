@@ -105,38 +105,27 @@ class Header extends React.Component {
 	}
     }
 
-	onLogoutClick = () => {
-		this.props.dispatch(userActions.logoutUser())
-		this.props.dispatch(classActions.deleteAllClasses())
-	}
+    onLogoutClick = () => {
+	    this.props.dispatch(userActions.logoutUser())
+	    this.props.dispatch(classActions.deleteAllClasses())
+    }
 
     translationButton = () => {
-			if (this.props.translate('dashboard') == 'Dashboard') {
-
-
-      return (
-      //translate buttons
-			<ul className="navbar-nav mr-right">
-			<li>
-				<button className="btn" id="button-translate"
-        onClick={() => {
-          this.props.dispatch(IntlActions.setLocale('fi'))
-        }}>Suomeksi</button>
-						</li>
-				</ul>)
-		} else {
-			return (
-				<ul className="navbar-nav mr-right">
-	      <li>
-				<button className="btn" id="button-translate"
-			onClick={() => {
-				this.props.dispatch(IntlActions.setLocale('en'))
-			}}>English</button>
-							</li>
-							</ul>
-      )
-		}
-    }
+	let newLocale =  this.props.translate('locale') === 'English' ? 'fi' : 'en'
+	return (
+	    <ul className="navbar-nav mr-right">
+		<li className="nav-item dropdown">
+		    <a className="nav-link dropdown-toggle" href="" id="translationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.props.translate('locale')}</a>
+		    <div className="dropdown-menu" aria-labelledby="translationDropdown">
+		    <button className="dropdown-item" onClick={() => {
+			this.props.dispatch(IntlActions.setLocale(newLocale))
+		    }}>
+		    {newLocale === 'en' ? 'English' : 'Suomeksi'}
+		    </button>
+		    </div>
+		</li>
+	    </ul>
+	)}
 
     render() {
       const {translate, dispatch} = this.props;
@@ -151,7 +140,7 @@ class Header extends React.Component {
 
 	    <div className="collapse navbar-collapse" id="navbarsExampleDefault">
 		{this.headerLinks()}
-    {this.translationButton()}
+		{this.translationButton()}
 		{this.loginLogoutButton()}
 	    </div>
 	    </nav>

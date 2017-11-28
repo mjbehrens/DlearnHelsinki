@@ -14,6 +14,7 @@ module.exports = {
       home: 'Home',
       about: 'About',
       contact: 'Contact',
+      locale: 'English',
 
       //Home
       slogan: 'Learning global competencies with new pedagogical tools',
@@ -166,6 +167,7 @@ module.exports = {
       home: 'Aloitus',
       about: 'Tietoja meistä',
       contact: 'Yhteystiedot',
+      locale: 'Suomeksi',
 
       //Home
       slogan: 'Uutta pedagogiikkaa globaalien kompetenssien oppimiseen',

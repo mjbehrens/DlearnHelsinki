@@ -7,16 +7,13 @@ export default class Footer extends React.Component {
   
     return (
         <footer className="footer">
-
-	    <div className="row">
-		<div className="col-md-4 left-align">
-
+	    <div className="d-flex justify-content-between">
+		<div />
+		<div className="d-flex justify-content-center">
+		    <span>&copy; Dlearn 2017</span>
 		</div>
-		<div className="col-md-4 centered">
-		<span>&copy; Dlearn 2017</span>
-		</div>
-		<div className="col-md-4 right-align">
-		    <a href = "http://www.un.org/sustainabledevelopment/sustainable-development-goals/"><img src={icon} className="footer-icon" alt="Sustainable development goals" /></a>
+		<div className="d-flex justify-content-right">
+		<a href="http://www.un.org/sustainabledevelopment/sustainable-development-goals/"><img src={icon} id="footer-icon" alt="Sustainable development goals" /></a>
 		</div>
 	    </div>
         </footer>

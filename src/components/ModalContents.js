@@ -2,7 +2,7 @@ import React from "react";
 import SurveyCreationForm from './teacherCompo/SurveyCreationForm.js'
 import { withTranslate } from 'react-redux-multilingual';
 
-class DefaultM extends React.Component {
+class Default extends React.Component {
   render() {
     const { translate } = this.props;
     return (
@@ -77,12 +77,43 @@ class CloseSurvey extends React.Component {
   }
 }
 
-const DefaultModal = withTranslate(DefaultM);
+
+class CompetenceWallLog extends React.Component {
+  render() {
+    const { translate } = this.props;
+    return (
+	<div className="modal-content">
+	    <div className="modal-header">
+		<h5 className="modal-title" id="mainModalLabel">Add an item</h5>
+		<button type="button" className="close" data-dismiss="modal" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		</button>
+	    </div>
+	    <div className="modal-body">
+		<p>Choose a type of item to add to the comparaison</p>
+		<div className="btn-group-vertical">
+		    <button type="button" className="btn btn-primary">Class</button>
+		    <button type="button" className="btn btn-primary">Group</button>
+		    <button type="button" className="btn btn-primary">Student</button>
+		</div>
+	    </div>
+	    <div className="modal-footer">
+		<button type="button" className="btn btn-secondary" data-dismiss="modal">{this.props.translate('cancel')}</button>
+	    </div>
+	</div>
+    );
+  }
+}
+
+
+const DefaultModal = withTranslate(Default);
 const OpenSurveyModal = withTranslate(OpenSurvey);
 const CloseSurveyModal = withTranslate(CloseSurvey);
+const CompetenceWallLogModal = withTranslate(CompetenceWallLog);
 
 export default {
   DefaultModal,
   OpenSurveyModal,
   CloseSurveyModal,
+  CompetenceWallLogModal,
 };

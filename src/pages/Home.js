@@ -39,7 +39,7 @@ class Home extends Component {
 	    <div className="jumbotron">
 		<h1>Dlearn.Helsinki</h1>
 		<p>{translate('slogan')}</p>
-	    <Link to={buttonRedirect}><button className="btn btn-lg btn-primary" role="button">{buttonText} »</button></Link>
+	    <Link to={buttonRedirect}><button className="btn btn-lg btn-primary">{buttonText} »</button></Link>
 	    </div>
 	</div>
           );

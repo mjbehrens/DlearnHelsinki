@@ -5,13 +5,6 @@ import { withTranslate } from 'react-redux-multilingual';
 import iconHistory from "../../res/icons/history.svg";
 import { ROUTES } from '../../constants.js';
 
-const style = {
-    padding: 50,
-    margin: 50,
-    textAlign: 'center',
-    background: 'orange'
-};
-
 
 class HistoryButton extends React.Component {
 

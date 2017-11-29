@@ -5,13 +5,6 @@ import { withTranslate } from 'react-redux-multilingual';
 import iconGrpManagment from "../../res/icons/manage_groups.svg";
 import { ROUTES } from '../../constants.js';
 
-const style = {
-    padding: 50,
-    margin: 50,
-    textAlign: 'center',
-    background: 'green'
-};
-
 
 class GroupManagmentButton extends React.Component {
 

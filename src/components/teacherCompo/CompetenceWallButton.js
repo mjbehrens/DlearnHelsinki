@@ -5,13 +5,6 @@ import { Link } from 'react-router-dom';
 import iconCompetenceWall from "../../res/icons/competence_wall.png";
 import { ROUTES } from '../../constants.js';
 
-const style = {
-    padding: 50,
-    margin: 50,
-    textAlign: 'center',
-    background: 'green'
-};
-
 
 class CompetenceWallButton extends React.Component {
 

@@ -5,10 +5,6 @@ import { withTranslate } from 'react-redux-multilingual';
 
 class SurveyCreationFrom extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const { translate } = this.props;
         return (

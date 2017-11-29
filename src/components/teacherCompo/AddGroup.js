@@ -4,11 +4,6 @@ import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
 
 class AddGroup extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
-
     render() {
         const { translate } = this.props;
         return (

@@ -59,7 +59,7 @@ class HeadbandsLastResults extends React.Component {
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
 
-        if (compo.state.survey != nextProps.survey) {
+        if (compo.state.survey !== nextProps.survey) {
             compo.setState({survey: nextProps.survey});
         }
     }

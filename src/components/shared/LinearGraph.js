@@ -46,7 +46,7 @@ class LinearGraph extends Component {
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        if ((params != nextProps.parameters) && (nextProps.parameters.progression !== null)) {
+        if ((params !== nextProps.parameters) && (nextProps.parameters.progression !== null)) {
             params = nextProps.parameters;
             //console.log(params);
             this.getDataForGraph();

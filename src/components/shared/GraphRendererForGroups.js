@@ -38,7 +38,7 @@ class GraphRendererForGroups extends Component {
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        if (this.props != nextProps) {
+        if (this.props !== nextProps) {
             //this.render();
             this.loadGraphs(SELECT_DEFAULT_VALUE);
         }

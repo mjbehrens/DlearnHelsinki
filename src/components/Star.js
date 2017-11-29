@@ -14,7 +14,7 @@ class Star extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props != nextProps) {
+        if (this.props !== nextProps) {
             this.setState({
                 size: (nextProps.actual_size/nextProps.max_size)*70
             });

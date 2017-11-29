@@ -42,7 +42,7 @@ class GraphRendererForSurveys extends Component {
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        if (this.props != nextProps) {
+        if (this.props !== nextProps) {
            groups = nextProps.groups;
         }
     }

@@ -22,7 +22,7 @@ class HistoryDisplay extends Component {
     //    }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props != nextProps) {
+        if (this.props !== nextProps) {
             this.setState({
                 //...this.state,
                 searchData: nextProps.searchData

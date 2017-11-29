@@ -62,7 +62,7 @@ class SpiderGraph extends Component {
 
 	// Called everytime a props value change
 	componentWillReceiveProps(nextProps) {
-		if ( (params != nextProps.parameters) && (nextProps.parameters.surveys != null) ) {
+		if ( (params !== nextProps.parameters) && (nextProps.parameters.surveys != null) ) {
 			params = nextProps.parameters;
 			console.log(params);
 			this.getDataForGraph();

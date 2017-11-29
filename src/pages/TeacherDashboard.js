@@ -93,7 +93,7 @@ class TeacherDashboard extends Component {
     if (surveys.length > 0) {
       // only look for closed surveys
       let tempSurveys = surveys.filter(function (s) {
-        return s.open == false;
+        return s.open === false;
       });
 
       if (tempSurveys.length > 0) {

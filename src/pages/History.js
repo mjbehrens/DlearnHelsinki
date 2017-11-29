@@ -85,8 +85,8 @@ class History extends Component {
             case 'student':
                 tempData.forEach(function (i) {
                     if ((i.username == null)
-                        || (i.username.toLowerCase().indexOf(queryText) != -1)
-                        || (i._id.toString().indexOf(queryText) != -1)) {
+                        || (i.username.toLowerCase().indexOf(queryText) !== -1)
+                        || (i._id.toString().indexOf(queryText) !== -1)) {
                         queryResult.push(i);
                     }
                 });
@@ -94,8 +94,8 @@ class History extends Component {
             case 'group':
                 tempData.forEach(function (i) {
                     if ((i.name == null)
-                        || (i.name.toLowerCase().indexOf(queryText) != -1)
-                        || (i._id.toString().indexOf(queryText) != -1)) {
+                        || (i.name.toLowerCase().indexOf(queryText) !== -1)
+                        || (i._id.toString().indexOf(queryText) !== -1)) {
                         queryResult.push(i);
                     }
                 });
@@ -103,9 +103,9 @@ class History extends Component {
             case 'survey':
                 tempData.forEach(function (i) {
                     if ((i.title == null || i.start_date == null)
-                        || (i.title.toLowerCase().indexOf(queryText) != -1)
-                        || (i._id.toString().indexOf(queryText) != -1)
-                        || (i.start_date.indexOf(queryText) != -1)) {
+                        || (i.title.toLowerCase().indexOf(queryText) !== -1)
+                        || (i._id.toString().indexOf(queryText) !== -1)
+                        || (i.start_date.indexOf(queryText) !== -1)) {
 
                         queryResult.push(i);
                     }
@@ -197,7 +197,7 @@ class History extends Component {
     sortData = function () {
         this.setState({ warning: "" })
         let sortThis = this.state.filteredData;
-        if (this.state.sorter == 1) {
+        if (this.state.sorter === 1) {
             this.setState({ sorter: 2, filteredData: _.sortBy(sortThis, 'start_date').reverse() });
         } else {
             this.setState({ sorter: 1, filteredData: _.sortBy(sortThis, 'start_date') });
@@ -209,7 +209,7 @@ class History extends Component {
         let narrowDown = [];
         let compo = this;
         this.setState({ warning: "" });
-        if (this.state.query != "" && start != null && end != null) {
+        if (this.state.query !== "" && start != null && end != null) {
             tempData = this.state.filteredData
         }
         else {

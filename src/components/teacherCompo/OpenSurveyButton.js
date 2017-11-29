@@ -175,7 +175,7 @@ class OpenSurveyButton extends React.Component {
 		// function to remove item
 		function removeItem(array, item) {
 		    for (var i in array) {
-			if (array[i] == item) {
+			if (array[i] === item) {
 			    array.splice(i, 1);
 			    break;
 			}

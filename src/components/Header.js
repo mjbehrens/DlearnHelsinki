@@ -95,10 +95,10 @@ class Header extends React.Component {
 		<Link to={ROUTES.ROOT}><a className="nav-link" href="">{translate('home')}</a></Link>
 		</li>
 		<li className="nav-item">
-		    <a className="nav-link" href="#">{translate('about')}</a>
+		    <a className="nav-link" href="">{translate('about')}</a>
 		</li>
 		<li className="nav-item">
-		    <a className="nav-link" href="#">{translate('contact')}</a>
+		    <a className="nav-link" href="">{translate('contact')}</a>
 		</li>
 		</ul>
 	    )

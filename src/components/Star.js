@@ -23,7 +23,7 @@ class Star extends Component {
 
     render() {
         return (
-            <img src = {star} height = {_.min([this.state.size, 70])+'px'} />
+            <img src={star} alt="star" height={_.min([this.state.size, 70])+'px'} />
         )
     }
 } export default Star;

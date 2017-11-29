@@ -252,7 +252,6 @@ class History extends Component {
                     return (
                         <GraphRendererForSurveys survey={s[0]} groups={this.state.groups} />
                     )
-                    break;
                 case 'group':
                     let grp = this.state.groups.filter(function (g) {
                         return g._id === compo.state.selectedItemId;
@@ -260,7 +259,6 @@ class History extends Component {
                     return (
                         <GraphRendererForGroups group={grp[0]} surveys={this.state.surveys} />
                     )
-                    break;
                 case 'student':
                     let std = this.state.students.filter(function (s) {
                         return s._id === compo.state.selectedItemId;
@@ -268,8 +266,6 @@ class History extends Component {
                     return (
                         <GraphRendererForStudents student={std[0]} surveys={this.state.surveys} />
                     )
-                    break;
-
                 default:
                     break;
             }

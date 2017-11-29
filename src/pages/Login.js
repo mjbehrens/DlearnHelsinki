@@ -44,6 +44,8 @@ class Login extends Component {
 	    case "radio":
 		this.setState({ ...this.state, userType: e.target.value	})
 		break;
+	default:
+	    break;
 	}
     }
 

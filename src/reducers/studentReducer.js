@@ -38,6 +38,8 @@ export default function reducer(state=studentInitState, action) {
           students: newStudents,
         }
       }
+	default:
+	    break;
     }
       
     return state

@@ -22,6 +22,8 @@ export default function reducer(state=modalInitState, action) {
       case ACTION_TYPES.HIDE_MODAL: {
 	$("#mainModal").modal('hide');
       }
+	default:
+	    break;
     }
 
     return state

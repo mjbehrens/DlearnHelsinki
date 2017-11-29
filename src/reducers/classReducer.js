@@ -38,6 +38,8 @@ export default function reducer(state=classInitState, action) {
           classes: newClasses,
         }
       }
+	default:
+	    break;
     }
 
     return state

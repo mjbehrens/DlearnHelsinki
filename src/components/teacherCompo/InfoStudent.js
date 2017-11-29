@@ -1,11 +1,8 @@
 import React from "react";
-import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
-import LinearGraph from "../shared/LinearGraph";
 import Spinner from 'react-spinner';
 import { withTranslate } from 'react-redux-multilingual';
 
 import { BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
 
@@ -25,7 +22,6 @@ class InfoStudent extends React.Component {
         super(props);
         compo = this;
         this.props.onChangesToApply(true);
-        const {translate} = this.props;
         new_password = '';
         select_value = null;
         this.state = {
@@ -42,7 +38,7 @@ class InfoStudent extends React.Component {
 
 
     onClickResetPassword = function (studentId, compo) {
-
+        const { translate } = this.props;
         if (new_password.length > 5) {
             compo.setState({isLoading:true});
 
@@ -63,10 +59,10 @@ class InfoStudent extends React.Component {
                 body: data
             }).then(function (response) {
                 if (response.ok) {
-                    alert(this.props.translate('alert_password_ok',  {password: new_password }))
+                    alert(translate('alert_password_ok',  {password: new_password }))
                 } else {
                     console.log('Network response was not ok.');
-                    alert(this.props.translate('error_update_password'))
+                    alert(translate('error_update_password'))
                 }
                 compo.setState({isLoading:false});
             }).catch(function (err) {
@@ -75,11 +71,12 @@ class InfoStudent extends React.Component {
             });
         }
         else {
-            alert(this.props.translate('error_too_short'))
+            alert(translate('error_too_short'))
         }
     }
 
     onClickChangeGroup = function (studentId, compo) {
+        const { translate } = this.props;
 
         if (select_value !== null) {
             compo.setState({isLoading:true});
@@ -94,12 +91,12 @@ class InfoStudent extends React.Component {
                 },
             }).then(function (response) {
                 if (response.ok) {
-                    alert(this.props.translate('alert_student_changed'));
+                    alert(translate('alert_student_changed'));
                     compo.props.onChangesToApply(true);
 
                 } else {
                     console.log('Network response was not ok.');
-                    alert(this.props.translate('error_groups_change'))
+                    alert(translate('error_groups_change'))
                 }
                 compo.setState({isLoading:false});
             }).catch(function (err) {
@@ -108,15 +105,16 @@ class InfoStudent extends React.Component {
             });
         }
         else {
-            alert(this.props.translate('error_group_first'))
+            alert(translate('error_group_first'))
         }
     }
 
     createSelect = function () {
+        const { translate } = this.props;
         let lst = this.props.listGroups;
         let options = [];
         if (lst != null) {
-            options.push(<option value={null}> {this.props.translate('select')} </option>);
+            options.push(<option value={null}> {translate('select')} </option>);
             lst.forEach(function (g) {
                 options.push(<option value={g.groupId}> {g.groupName} </option>)
             });
@@ -140,6 +138,7 @@ class InfoStudent extends React.Component {
     }
 
     render() {
+        const { translate } = this.props;
 
         //requires for linearGraph
         /*let parameters = {
@@ -161,13 +160,13 @@ class InfoStudent extends React.Component {
 
             return (
                 <div>
-                    <h6>{this.props.translate('name')} : {this.props.username}</h6>
-                    <h6>{this.props.translate('gender')} : {this.props.gender}</h6>
-                    <h6>{this.props.translate('age')} : {this.props.age}</h6>
-                    <h6>{this.props.translate('change_group')} :</h6>
+                    <h6>{translate('name')} : {this.props.username}</h6>
+                    <h6>{translate('gender')} : {this.props.gender}</h6>
+                    <h6>{translate('age')} : {this.props.age}</h6>
+                    <h6>{translate('change_group')} :</h6>
                         {this.createSelect()}
-                    <button onClick={this.onClickChangeGroup.bind(this, this.props.studentId, this)}>{this.props.translate('change_group')}</button>
-                    <h6>{this.props.translate('password')} :</h6><input type="text" onChange={this.onChangePassword}></input><button onClick={this.onClickResetPassword.bind(this, this.props.studentId, this)}>{this.props.translate('reset_password')}</button>
+                    <button onClick={this.onClickChangeGroup.bind(this, this.props.studentId, this)}>{translate('change_group')}</button>
+                    <h6>{translate('password')} :</h6><input type="text" onChange={this.onChangePassword}></input><button onClick={this.onClickResetPassword.bind(this, this.props.studentId, this)}>{translate('reset_password')}</button>
                     {
                         /*<br />
                         <div>

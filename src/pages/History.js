@@ -12,7 +12,6 @@ import GraphRendererForGroups from '../components/shared/GraphRendererForGroups.
 
 
 import { BACKEND_API } from '../constants.js';
-import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
 
@@ -37,8 +36,6 @@ class History extends Component {
         sampleData = [];
         tempData = [];
         compo = this;
-
-        const {translate} = this.props;
 
         this.state = {
             isLoading: true,
@@ -88,8 +85,8 @@ class History extends Component {
             case 'student':
                 tempData.forEach(function (i) {
                     if ((i.username == null)
-                        || (i.username.toLowerCase().indexOf(queryText) != -1)
-                        || (i._id.toString().indexOf(queryText) != -1)) {
+                        || (i.username.toLowerCase().indexOf(queryText) !== -1)
+                        || (i._id.toString().indexOf(queryText) !== -1)) {
                         queryResult.push(i);
                     }
                 });
@@ -97,8 +94,8 @@ class History extends Component {
             case 'group':
                 tempData.forEach(function (i) {
                     if ((i.name == null)
-                        || (i.name.toLowerCase().indexOf(queryText) != -1)
-                        || (i._id.toString().indexOf(queryText) != -1)) {
+                        || (i.name.toLowerCase().indexOf(queryText) !== -1)
+                        || (i._id.toString().indexOf(queryText) !== -1)) {
                         queryResult.push(i);
                     }
                 });
@@ -106,9 +103,9 @@ class History extends Component {
             case 'survey':
                 tempData.forEach(function (i) {
                     if ((i.title == null || i.start_date == null)
-                        || (i.title.toLowerCase().indexOf(queryText) != -1)
-                        || (i._id.toString().indexOf(queryText) != -1)
-                        || (i.start_date.indexOf(queryText) != -1)) {
+                        || (i.title.toLowerCase().indexOf(queryText) !== -1)
+                        || (i._id.toString().indexOf(queryText) !== -1)
+                        || (i.start_date.indexOf(queryText) !== -1)) {
 
                         queryResult.push(i);
                     }
@@ -200,7 +197,7 @@ class History extends Component {
     sortData = function () {
         this.setState({ warning: "" })
         let sortThis = this.state.filteredData;
-        if (this.state.sorter == 1) {
+        if (this.state.sorter === 1) {
             this.setState({ sorter: 2, filteredData: _.sortBy(sortThis, 'start_date').reverse() });
         } else {
             this.setState({ sorter: 1, filteredData: _.sortBy(sortThis, 'start_date') });
@@ -212,7 +209,7 @@ class History extends Component {
         let narrowDown = [];
         let compo = this;
         this.setState({ warning: "" });
-        if (this.state.query != "" && start != null && end != null) {
+        if (this.state.query !== "" && start != null && end != null) {
             tempData = this.state.filteredData
         }
         else {
@@ -255,7 +252,6 @@ class History extends Component {
                     return (
                         <GraphRendererForSurveys survey={s[0]} groups={this.state.groups} />
                     )
-                    break;
                 case 'group':
                     let grp = this.state.groups.filter(function (g) {
                         return g._id === compo.state.selectedItemId;
@@ -263,7 +259,6 @@ class History extends Component {
                     return (
                         <GraphRendererForGroups group={grp[0]} surveys={this.state.surveys} />
                     )
-                    break;
                 case 'student':
                     let std = this.state.students.filter(function (s) {
                         return s._id === compo.state.selectedItemId;
@@ -271,8 +266,6 @@ class History extends Component {
                     return (
                         <GraphRendererForStudents student={std[0]} surveys={this.state.surveys} />
                     )
-                    break;
-
                 default:
                     break;
             }
@@ -309,11 +302,12 @@ class History extends Component {
     }
 
     render() {
+        const { translate } = this.props;
 
         if (compo.state.isLoading) {
             return (
                 <div className="centered">
-                    <h1> {this.props.translate('history')} </h1>
+                    <h1> {translate('history')} </h1>
                     <div className="row">
                         <div className="spinner-container">
                             <Spinner />
@@ -326,13 +320,13 @@ class History extends Component {
 
             return (
                 <div className="centered">
-                    <h1> {this.props.translate('history')} </h1>
+                    <h1> {translate('history')} </h1>
                     <div className="row">
                         <div className="left-align col-sm-4">
                             <div className="btn-group">
-                                <button className="btn btn-primary" onClick={this.OnClickSurveys.bind(this)}>{this.props.translate('surveys')}</button>
-                                <button className="btn btn-primary" onClick={this.OnClickStudents.bind(this)}>{this.props.translate('students')}</button>
-                                <button className="btn btn-primary" onClick={this.OnClickGroups.bind(this)}>{this.props.translate('groups')}</button>
+                                <button className="btn btn-primary" onClick={this.OnClickSurveys.bind(this)}>{translate('surveys')}</button>
+                                <button className="btn btn-primary" onClick={this.OnClickStudents.bind(this)}>{translate('students')}</button>
+                                <button className="btn btn-primary" onClick={this.OnClickGroups.bind(this)}>{translate('groups')}</button>
                             </div>
 
                             <HistoryFinder query={this.state.query}

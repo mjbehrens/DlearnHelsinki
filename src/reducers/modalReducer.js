@@ -1,4 +1,3 @@
-import React from "react";
 import $ from 'jquery';
 import { ACTION_TYPES } from '../constants.js'
 
@@ -19,10 +18,14 @@ export default function reducer(state=modalInitState, action) {
       }
       case ACTION_TYPES.SHOW_MODAL: {
 	$("#mainModal").modal('show');
+	break;
       }
       case ACTION_TYPES.HIDE_MODAL: {
 	$("#mainModal").modal('hide');
+	break;
       }
+	default:
+	    break;
     }
 
     return state

@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ROUTES } from '../constants.js';
-import logo from '../res/icons/dlearn_logo.svg';
 import * as userActions from '../actions/userActions';
 import * as classActions from '../actions/classActions';
 import { withTranslate, IntlActions } from 'react-redux-multilingual';
@@ -17,6 +16,7 @@ function mapStateToProps(store) {
 class Header extends React.Component {
 
     loginLogoutButton = () => {
+	const { translate } = this.props
         if (this.props.user.loggedin) {
 	    return (
 		<Link to={ROUTES.ROOT}>
@@ -24,7 +24,7 @@ class Header extends React.Component {
 			type="submit"
 			onClick={this.onLogoutClick}>
 
-		    {this.props.translate('log_out')}
+		    {translate('log_out')}
 		    </button>
 		</Link>
 	    )
@@ -33,7 +33,7 @@ class Header extends React.Component {
 		<Link to={ROUTES.LOGIN}>
 		    <button className="btn btn-outline-success my-2 my-sm-0"
 			type="submit">
-		    {this.props.translate('log_in')}
+		    {translate('log_in')}
 
 		    </button>
 				</Link>
@@ -42,22 +42,23 @@ class Header extends React.Component {
 	}
 
     headerLinks = () => {
+	const { translate } = this.props
 	if (this.props.user.type === 'teacher') {
 	    return (
 		<ul className="navbar-nav mr-auto">
 		    <li className="nav-item">
 			<Link to={ROUTES.TEACHER_DASHBOARD}>
-			    <a className="nav-link" href="">{this.props.translate('dashboard')}</a>
+			    <a className="nav-link" href="">{translate('dashboard')}</a>
 			</Link>
 		    </li>
 		    <li className="nav-item">
 			<Link to={ROUTES.CLASS_SELECTION}>
-			    <a className="nav-link" href="">{this.props.translate('classes')}</a>
+			    <a className="nav-link" href="">{translate('classes')}</a>
 			</Link>
 		    </li>
 		    <li className="nav-item">
 			<Link to={ROUTES.GROUP_MANAGEMENT}>
-			    <a className="nav-link" href="">{this.props.translate('groups')}</a>
+			    <a className="nav-link" href="">{translate('groups')}</a>
 			</Link>
 		    </li>
 		    <li className="nav-item">
@@ -67,7 +68,7 @@ class Header extends React.Component {
 		    </li>
 		    <li className="nav-item">
 			<Link to={ROUTES.HISTORY}>
-			    <a className="nav-link" href="">{this.props.translate('history')}</a>
+			    <a className="nav-link" href="">{translate('history')}</a>
 			</Link>
 		    </li>
 		</ul>
@@ -77,12 +78,12 @@ class Header extends React.Component {
 		<ul className="navbar-nav mr-auto">
 		    <li className="nav-item">
 			<Link to={ROUTES.STUDENT_DASHBOARD}>
-			    <a className="nav-link" href="">{this.props.translate('dashboard')}</a>
+			    <a className="nav-link" href="">{translate('dashboard')}</a>
 			</Link>
 		    </li>
 		    <li className="nav-item">
 			<Link to={ROUTES.CLASS_SELECTION}>
-			    <a className="nav-link" href="">{this.props.translate('classes')}</a>
+			    <a className="nav-link" href="">{translate('classes')}</a>
 			</Link>
 		    </li>
 		</ul>
@@ -91,13 +92,13 @@ class Header extends React.Component {
 	    return (
 		<ul className="navbar-nav mr-auto">
 		<li className="nav-item">
-		<Link to={ROUTES.ROOT}><a className="nav-link" href="">{this.props.translate('home')}</a></Link>
+		<Link to={ROUTES.ROOT}><a className="nav-link" href="">{translate('home')}</a></Link>
 		</li>
 		<li className="nav-item">
-		    <a className="nav-link" href="#">{this.props.translate('about')}</a>
+		    <a className="nav-link" href="">{translate('about')}</a>
 		</li>
 		<li className="nav-item">
-		    <a className="nav-link" href="#">{this.props.translate('contact')}</a>
+		    <a className="nav-link" href="">{translate('contact')}</a>
 		</li>
 		</ul>
 	    )
@@ -111,11 +112,12 @@ class Header extends React.Component {
     }
 
     translationButton = () => {
-	let newLocale =  this.props.translate('locale') === 'English' ? 'fi' : 'en'
+	const { translate } = this.props
+	let newLocale =  translate('locale') === 'English' ? 'fi' : 'en'
 	return (
 	    <ul className="navbar-nav mr-right">
 		<li className="nav-item dropdown">
-		    <a className="nav-link dropdown-toggle" href="" id="translationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.props.translate('locale')}</a>
+		    <a className="nav-link dropdown-toggle" href="" id="translationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{translate('locale')}</a>
 		    <div className="dropdown-menu" aria-labelledby="translationDropdown">
 		    <button className="dropdown-item" onClick={() => {
 			this.props.dispatch(IntlActions.setLocale(newLocale))
@@ -128,8 +130,6 @@ class Header extends React.Component {
 	)}
 
     render() {
-      const {translate, dispatch} = this.props;
-
 	return (
 	<header>
 				<nav className="navbar navbar-expand-md navbar-dark bg-dark navbar-static-top">

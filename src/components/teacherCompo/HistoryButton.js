@@ -5,13 +5,6 @@ import { withTranslate } from 'react-redux-multilingual';
 import iconHistory from "../../res/icons/history.svg";
 import { ROUTES } from '../../constants.js';
 
-const style = {
-    padding: 50,
-    margin: 50,
-    textAlign: 'center',
-    background: 'orange'
-};
-
 
 class HistoryButton extends React.Component {
 
@@ -19,7 +12,7 @@ class HistoryButton extends React.Component {
         super(props);
         const { translate } = this.props;
         this.state = {
-            text: this.props.translate('history'),
+            text: translate('history'),
             picture: iconHistory,
         }
     }

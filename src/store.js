@@ -1,4 +1,4 @@
-import { applyMiddleware, createStore, combineReducers } from "redux"
+import { applyMiddleware, createStore } from "redux"
 import { persistStore, persistCombineReducers } from 'redux-persist'
 import { SETTINGS } from './constants'
 import logger from "redux-logger"
@@ -15,6 +15,7 @@ const config = {
   storage,
   debug: SETTINGS.DEBUG,
 }
+
 const allReducers = Object.assign({}, reducers, {Intl})
 
 const reducer = persistCombineReducers(config, allReducers)

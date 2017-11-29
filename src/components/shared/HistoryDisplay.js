@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withTranslate } from 'react-redux-multilingual';
 
 const buttonStyle = {
     margin: '5px'
@@ -13,7 +12,6 @@ class HistoryDisplay extends Component {
 
         compo = this;
 
-        const {translate} = this.props;
         this.state = {
             searchData: [],
         }
@@ -24,7 +22,7 @@ class HistoryDisplay extends Component {
     //    }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props != nextProps) {
+        if (this.props !== nextProps) {
             this.setState({
                 //...this.state,
                 searchData: nextProps.searchData

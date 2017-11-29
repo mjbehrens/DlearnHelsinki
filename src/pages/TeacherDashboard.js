@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import { Link } from 'react-router-dom';
 import { withTranslate } from 'react-redux-multilingual'
 
 import OpenSurveyButton from '../components/teacherCompo/OpenSurveyButton.js';
@@ -10,7 +9,6 @@ import CompetenceWallButton from '../components/teacherCompo/CompetenceWallButto
 import HeadbandsLastResults from '../components/teacherCompo/HeadbandsLastResults.js';
 
 import { BACKEND_API } from '../constants.js';
-import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
 function mapStateToProps(store) {
@@ -50,7 +48,6 @@ class TeacherDashboard extends Component {
       openSurvey: openSurvey,
     };
 
-    const {translate} = this.props
   }
 
   componentDidMount() {
@@ -96,7 +93,7 @@ class TeacherDashboard extends Component {
     if (surveys.length > 0) {
       // only look for closed surveys
       let tempSurveys = surveys.filter(function (s) {
-        return s.open == false;
+        return s.open === false;
       });
 
       if (tempSurveys.length > 0) {
@@ -146,13 +143,14 @@ class TeacherDashboard extends Component {
 
   // Display the  message that a survey is open
   renderInfoOpenSurvey = function (survey_title) {
+    const { translate } = this.props;
     // We assume that if the title is null
     // then there is no survey open. With is kind of weak...
     if (survey_title != null) {
       return (
         <div className="container">
           <p className="bg-info">
-           {this.props.translate('survey_open', {title: survey_title})}
+           {translate('survey_open', {title: survey_title})}
           </p>
         </div>
       );

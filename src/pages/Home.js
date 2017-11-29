@@ -14,26 +14,23 @@ class Home extends Component {
 
     constructor(props){
 	super(props);
-
 	this.state = {
 	    goTo: ROUTES.ROOT
-
 	};
-  const { translate } = this.props;
     }
 
 
   render() {
-
+    const { translate } = this.props;
       let buttonRedirect = ROUTES.LOGIN
-      let buttonText = this.props.translate('log_in')
+      let buttonText = translate('log_in')
       if (this.props.user.loggedin) {
 	  if (this.props.user.type === 'teacher') {
 	      buttonRedirect = ROUTES.TEACHER_DASHBOARD
 	  } else {
 	      buttonRedirect = ROUTES.STUDENT_DASHBOARD
 	  }
-	  buttonText = this.props.translate('dashboard')
+	  buttonText = translate('dashboard')
       }
 
     return (
@@ -41,8 +38,8 @@ class Home extends Component {
 	<div className="container">
 	    <div className="jumbotron">
 		<h1>Dlearn.Helsinki</h1>
-		<p>{this.props.translate('slogan')}</p>
-	    <Link to={buttonRedirect}><button className="btn btn-lg btn-primary" role="button">{buttonText} »</button></Link>
+		<p>{translate('slogan')}</p>
+	    <Link to={buttonRedirect}><button className="btn btn-lg btn-primary">{buttonText} »</button></Link>
 	    </div>
 	</div>
           );

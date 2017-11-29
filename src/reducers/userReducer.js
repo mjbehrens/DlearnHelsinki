@@ -89,6 +89,8 @@ export default function reducer(state={
           user: {...state.user, groupid: action.payload},
         }
       }
+	default:
+	    break;
     }
 
     return state

@@ -4,9 +4,9 @@ import { withTranslate } from 'react-redux-multilingual';
 
 class AddStudent extends React.Component {
 
+
     constructor(props) {
         super(props);
-        const { translate } = this.props;
         this.state = {
             getStudentSelected: false,
             createStudentSelected: true,
@@ -18,11 +18,12 @@ class AddStudent extends React.Component {
     }
 
     renderExistedStudent = function () {
+	const { translate } = this.props;
         let lst = this.props.allStudentsList;
         console.log(lst);
         let options = [];
         if (lst != null) {
-            options.push(<option value={-1}> {this.props.translate('select_student')} </option>);
+            options.push(<option value={-1}> {translate('select_student')} </option>);
             lst.forEach(function (s) {
                 options.push(<option value={s._id}> {s.username} </option>)
             });
@@ -35,31 +36,32 @@ class AddStudent extends React.Component {
     }
 
     renderCreateNewStudent = function () {
+	const { translate } = this.props;
         return (
             <div hidden={this.state.createStudentSelected}>
 
-                <h6>{this.props.translate('username')} :</h6>
+                <h6>{translate('username')} :</h6>
                 <p>
                   <input type="text" placeholder={this.props.username}
                     onChange={this.props.onChangeUsername} />
                 </p>
-                <h6>{this.props.translate('gender')} :</h6>
+                <h6>{translate('gender')} :</h6>
                 <p>
                 <select onChange={this.props.onChangeGender}>
-                    <option>{this.props.translate('gender')} </option>
-                    <option>{this.props.translate('male')}</option>
-                    <option>{this.props.translate('female')}</option>
+                    <option>{translate('gender')} </option>
+                    <option>{translate('male')}</option>
+                    <option>{translate('female')}</option>
                 </select>
                 </p>
                 <p>
-                <h6>{this.props.translate('age')} :</h6><input type="number" min={1} max={99} placeholder={this.props.age}
+                <h6>{translate('age')} :</h6><input type="number" min={1} max={99} placeholder={this.props.age}
                     onChange={this.props.onChangeAge} />
                 </p>
                 <p>
-                <h6>{this.props.translate('password')} :</h6><input type="text" placeholder={this.props.password}
+                <h6>{translate('password')} :</h6><input type="text" placeholder={this.props.password}
                     onChange={this.props.onChangePassword} />
                   </p>
-                <p className="bg-warning"> {this.props.translate('warning_password')}</p>
+                <p className="bg-warning"> {translate('warning_password')}</p>
             </div>
         )
     }
@@ -97,17 +99,18 @@ class AddStudent extends React.Component {
     }
 
     render() {
+	const { translate } = this.props;
         return (
             <div>
 
 
-                <input type="checkbox" id="get" value={1} onChange={this.renderFrom.bind(this)} /> {this.props.translate('existing_student')} <br />
+                <input type="checkbox" id="get" value={1} onChange={this.renderFrom.bind(this)} /> {translate('existing_student')} <br />
                 {this.renderExistedStudent()}
 
                 <hr wight='2px' />
 
 
-                <input type="checkbox" id="create" value={2} onChange={this.renderFrom.bind(this)} /> {this.props.translate('make_a_student')}<br />
+                <input type="checkbox" id="create" value={2} onChange={this.renderFrom.bind(this)} /> {translate('make_a_student')}<br />
                 {this.renderCreateNewStudent()}
             </div>
         )

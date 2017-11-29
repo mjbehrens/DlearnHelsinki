@@ -38,6 +38,8 @@ export default function reducer(state=surveyInitState, action) {
 	  surveys: newSurveys,
         }
       }
+	default:
+	    break;
     }
 
     return state

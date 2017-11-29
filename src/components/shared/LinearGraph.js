@@ -4,13 +4,11 @@ import Spinner from 'react-spinner'
 import { withTranslate } from 'react-redux-multilingual';
 
 //redux setup
-import { ROUTES, BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
+import { BACKEND_API } from '../../constants.js';
 import { connect } from 'react-redux';
 
 
 let GET_ANSWERS = '';
-let GET_QUESTIONS_FOR_SURVEY = '';
 
 // VERY IMPORTANT !
 let params;
@@ -26,7 +24,6 @@ class LinearGraph extends Component {
 
     constructor(props) {
         super(props);
-        const {translate} = this.props;
         params = this.props.parameters;
         compo = this;
 
@@ -49,7 +46,7 @@ class LinearGraph extends Component {
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        if ((params != nextProps.parameters) && (nextProps.parameters.progression !== null)) {
+        if ((params !== nextProps.parameters) && (nextProps.parameters.progression !== null)) {
             params = nextProps.parameters;
             //console.log(params);
             this.getDataForGraph();
@@ -283,6 +280,7 @@ class LinearGraph extends Component {
 
 
     render() {
+        const { translate } = this.props;
 
         // TODO : Scale for this graph
         // THIS DOES NOT WORK
@@ -317,7 +315,7 @@ class LinearGraph extends Component {
             return (
                 <div className="jumbotron">
                     <h5>{this.props.name}</h5>
-                    {this.props.translate('data_no_found')};
+                    {translate('data_no_found')};
 				</div>
             );
         }

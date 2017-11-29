@@ -163,7 +163,7 @@ class StudentSurveyQuestion extends Component {
             this.setState({
                 ...this.state,
 		index: this.state.index + 1,
-                currentQuestion: this.state.survey[this.state.index + 1],
+                currentQuestion: this.state.survey[this.state.index],
             });
 
             //for the last click on the button

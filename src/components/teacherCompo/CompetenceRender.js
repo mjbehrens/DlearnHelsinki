@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ROUTES } from '../../constants.js';
 import CompetenceWallLog from './CompetenceWallLog.js';
 
 function mapStateToProps(store) {

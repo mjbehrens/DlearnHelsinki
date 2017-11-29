@@ -1,10 +1,8 @@
 import React from "react";
-import LinearGraph from "../shared/LinearGraph";
 import Spinner from 'react-spinner';
 import { withTranslate } from 'react-redux-multilingual';
 
 import { BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
 

@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import { ROUTES, BACKEND_API } from '../constants.js';
 import { withTranslate } from 'react-redux-multilingual';
 
-import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
-import LinearGraph from '../components/shared/LinearGraph.js';
 import Spinner from 'react-spinner';
 
-import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
 
@@ -116,7 +112,6 @@ class StudentDashboard extends Component {
 	checkIfSurveyOpen = function (surveys) {
 
 		let noSurveyOpen = true;
-		let openSurvey = null;
 		surveys.forEach(function (s) {
 			if (s.open) {
 				noSurveyOpen = false;
@@ -126,14 +121,6 @@ class StudentDashboard extends Component {
 
 		// if no survey open then do nothing.
 		if (noSurveyOpen) {
-			openSurvey = {
-				_id: null,
-				open: false,
-				title: null,
-				description: null,
-				start_date: null,
-				end_date: null,
-			};
 		}
 
 	}

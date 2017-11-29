@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ROUTES } from '../constants.js';
-import CompetenceWallLog from '../components/teacherCompo/CompetenceWallLog.js';
 import CompetenceRender from '../components/teacherCompo/CompetenceRender.js';
 import ProgressionRender from '../components/teacherCompo/ProgressionRender.js';
 

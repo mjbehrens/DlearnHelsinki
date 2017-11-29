@@ -4,13 +4,11 @@ import Spinner from 'react-spinner'
 import { withTranslate } from 'react-redux-multilingual';
 
 //redux setup
-import { ROUTES, BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
+import { BACKEND_API } from '../../constants.js';
 import { connect } from 'react-redux';
 
 
 let GET_ANSWERS = '';
-let GET_QUESTIONS_FOR_SURVEY = '';
 
 // VERY IMPORTANT !
 let params;

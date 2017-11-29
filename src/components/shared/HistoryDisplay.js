@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withTranslate } from 'react-redux-multilingual';
 
 const buttonStyle = {
     margin: '5px'

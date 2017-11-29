@@ -1,12 +1,11 @@
 import React from "react";
 import Popup from 'react-popup';
-import { ROUTES, BACKEND_API } from '../../constants.js';
+import { BACKEND_API } from '../../constants.js';
 import { withTranslate } from 'react-redux-multilingual';
 
 import InfoStudent from "./InfoStudent";
 import AddStudent from "./AddStudent";
 
-import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
 function mapStateToProps(store) {
@@ -115,7 +114,7 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
     let _applied_changes = false;
 
     let getGender = function (e) {
-        if (e.target.value == 'male') {
+        if (e.target.value === 'male') {
           _gender = props.translate('male');
         } else {
           _gender = props.translate('female');
@@ -123,9 +122,6 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
     };
     let getAge = function (e) {
         _age = e.target.value;
-    };
-    let getStudentId = function (e) {
-        _studentId = e.target.value;
     };
     let getChanges = function (hasChanged) {
         _applied_changes = hasChanged;
@@ -176,7 +172,7 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList, p
         let id = e.target.value;
 
         let student = allStudentsList.filter(function (stud) {
-            return stud._id == id;
+            return stud._id === id;
         })[0];
 
         if (student !== null) {
@@ -200,7 +196,7 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList, p
     };
 
     let getGender = function (e) {
-      if (e.target.value == props.translate('male')) {
+      if (e.target.value === props.translate('male')) {
         _gender = 'male';
       } else {
         _gender = 'female';

@@ -4,13 +4,11 @@ import Spinner from 'react-spinner'
 import { withTranslate } from 'react-redux-multilingual';
 
 //redux setup
-import { ROUTES, BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
+import { BACKEND_API } from '../../constants.js';
 import { connect } from 'react-redux';
 
 
 let GET_ANSWERS = '';
-let GET_QUESTIONS_FOR_SURVEY = '';
 
 
 
@@ -113,7 +111,6 @@ class SpiderGraph extends Component {
 		}
 
 		GET_ANSWERS = s + '/answers';
-		GET_QUESTIONS_FOR_SURVEY = s + '/questions';
 
 	}
 
@@ -135,15 +132,7 @@ class SpiderGraph extends Component {
 			if (response.ok) {
 				response.json().then(data => {
 					data.forEach(function (a) {
-						let answer = {
-							theme_id: a.theme_id,
-							answer: a.answer,
-							theme_title: a.theme_title,
-							description: a.description,
-							start_date: a.start_date,
-						}
 						Answers.push(a);
-
 					}, this);
 
 					if (Answers.length > 0) {

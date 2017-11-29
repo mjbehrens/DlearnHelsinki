@@ -1,10 +1,7 @@
 import React from "react";
 import SpiderGraph from '../shared/SpiderGraph.js';
-import Spinner from 'react-spinner'
 import { withTranslate } from 'react-redux-multilingual';
 
-import { BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
 
@@ -16,19 +13,10 @@ function mapStateToProps(store) {
 }
 
 
-const style = {
-    marginLeft: "100px",
-    marginRight: "100px",
-    border: "2px solid black",
-    borderColor: "black"
-};
-
 const styleButton = {
     marginLeft: "15px",
     marginTop: "15px"
 }
-
-var GET_GROUPS = '';
 
 //Get unique groups for the teacher from the database
 var compo;

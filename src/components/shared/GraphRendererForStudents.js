@@ -4,8 +4,6 @@ import LinearGraph from './LinearGraph.js';
 import Spinner from 'react-spinner'
 
 
-import { BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
 
@@ -16,10 +14,6 @@ function mapStateToProps(store) {
     }
 }
 
-
-const buttonStyle = {
-    margin: '5px'
-}
 
 var compo = null;
 

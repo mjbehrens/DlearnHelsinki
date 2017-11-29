@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ROUTES } from '../constants.js';
-import logo from '../res/icons/dlearn_logo.svg';
 import * as userActions from '../actions/userActions';
 import * as classActions from '../actions/classActions';
 import { withTranslate, IntlActions } from 'react-redux-multilingual';

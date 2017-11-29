@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import moment from 'moment';
-import Calendar from 'react-input-calendar';
 import 'react-input-calendar/style/index.css';
 import { withTranslate } from 'react-redux-multilingual';
 // http://voidcanvas.com/react-tutorial-understanding-and-making-the-first-application/
@@ -14,17 +12,9 @@ const margins = {
     margin: '5px'
 }
 
-const pickDate = {
-    margin: '5px',
-    position: 'relative',
-    zIndex: '30'
-}
-
 class HistoryFinder extends Component {
 
     constructor(props) {
-        var rangeStart = null;
-        var rangeEnd = null;
         super(props);
         this.changeStart = this.changeStart.bind(this);
         this.changeEnd = this.changeEnd.bind(this);

@@ -12,7 +12,6 @@ import GraphRendererForGroups from '../components/shared/GraphRendererForGroups.
 
 
 import { BACKEND_API } from '../constants.js';
-import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
 

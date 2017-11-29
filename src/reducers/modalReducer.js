@@ -1,4 +1,3 @@
-import React from "react";
 import $ from 'jquery';
 import { ACTION_TYPES } from '../constants.js'
 

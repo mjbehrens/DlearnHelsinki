@@ -4,8 +4,6 @@ import LinearGraph from './LinearGraph.js';
 import Spinner from 'react-spinner'
 import { withTranslate } from 'react-redux-multilingual'
 
-import { BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
 
@@ -14,11 +12,6 @@ function mapStateToProps(store) {
         user: store.user.user,
         classes: store.classroom.classes,
     }
-}
-
-
-const buttonStyle = {
-    margin: '5px'
 }
 
 

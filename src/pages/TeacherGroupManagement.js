@@ -1,14 +1,12 @@
 import React from "react";
 import Popup from 'react-popup';
-import { ROUTES, BACKEND_API } from '../constants.js';
+import { BACKEND_API } from '../constants.js';
 import Spinner from 'react-spinner';
 import { withTranslate } from 'react-redux-multilingual'
 
 import Group from "../components/teacherCompo/Group";
-import InfoStudent from "../components/teacherCompo/InfoStudent";
 import AddGroup from "../components/teacherCompo/AddGroup";
 
-import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
 function mapStateToProps(store) {

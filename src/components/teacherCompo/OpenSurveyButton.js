@@ -1,12 +1,6 @@
 import React from "react";
-import jquery from 'jquery';
-import jQuery from 'jquery';
-import Popup from 'react-popup';
 import Spinner from 'react-spinner';
 import { withTranslate } from 'react-redux-multilingual';
-
-// Popup form
-import SurveyCreationForm from './SurveyCreationForm.js'
 
 // icons for the page
 import iconSurveyOpen from "../../res/icons/survey.svg";
@@ -14,7 +8,6 @@ import iconSurveyClose from "../../res/icons/close_survey.svg";
 
 import { connect } from 'react-redux';
 import { BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
 import * as modalActions from '../../actions/modalActions';
 
 
@@ -26,18 +19,14 @@ function mapStateToProps(store) {
 }
 
 
-let GET_SURVEYS = '';
 let POST_SURVEY = '';
 let POST_CLOSE_SURVEY = '';
-
-var surveys = [];
 
 class OpenSurveyButton extends React.Component {
 
     constructor(props) {
         super(props);
         const { translate } = this.props;
-        surveys = [];
 
         this.state = {
             isLoading: true,

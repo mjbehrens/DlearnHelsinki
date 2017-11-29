@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router'
 import Slider from 'rc-slider';
 import Spinner from 'react-spinner'
 import { withTranslate } from 'react-redux-multilingual';
 
 import { ROUTES, BACKEND_API } from '../constants.js';
 import Star from '../components/Star.js';
-import * as userActions from '../actions/userActions';
 
 // use 'require' to ensure the import order is respected
 require('rc-slider/assets/index.css');

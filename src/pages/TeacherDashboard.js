@@ -9,7 +9,6 @@ import CompetenceWallButton from '../components/teacherCompo/CompetenceWallButto
 import HeadbandsLastResults from '../components/teacherCompo/HeadbandsLastResults.js';
 
 import { BACKEND_API } from '../constants.js';
-import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
 function mapStateToProps(store) {

@@ -42,7 +42,7 @@ class OpenSurveyButton extends React.Component {
         this.state = {
             isLoading: true,
             disable: true,
-            text: this.props.translate('create_survey'),
+            text: translate('create_survey'),
             picture: iconSurveyOpen,
             teacherID: this.props.user.id,
             classID: this.props.user.classid,
@@ -73,6 +73,7 @@ class OpenSurveyButton extends React.Component {
 
     // Call for updating the state with the survey
     updateState = (survey) => {
+        const { translate } = this.props;
 
         if (survey.open !== null) {
 	    let picture = null
@@ -80,10 +81,10 @@ class OpenSurveyButton extends React.Component {
 
             if (survey.open) {
 		picture = iconSurveyClose
-		text = this.props.translate('close_survey')
+		text = translate('close_survey')
             } else {
 		picture = iconSurveyOpen
-		text = this.props.translate('create_survey')
+		text = translate('create_survey')
             }
 	    this.setState({
 		...this.state,

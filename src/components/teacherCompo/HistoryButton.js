@@ -19,7 +19,7 @@ class HistoryButton extends React.Component {
         super(props);
         const { translate } = this.props;
         this.state = {
-            text: this.props.translate('history'),
+            text: translate('history'),
             picture: iconHistory,
         }
     }

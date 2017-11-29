@@ -6,15 +6,14 @@ class AddGroup extends React.Component {
 
     constructor(props) {
         super(props);
-        const { translate } = this.props;
     }
 
 
     render() {
-
+        const { translate } = this.props;
         return (
             <div>
-                <h6>{this.props.translate('name')}  :</h6><input type="text" placeholder={this.props.translate('group_name_placeholder')}
+                <h6>{translate('name')}  :</h6><input type="text" placeholder={translate('group_name_placeholder')}
                     onChange={this.props.onChangeGroupName} />
             </div>
         )

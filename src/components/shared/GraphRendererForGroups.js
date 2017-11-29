@@ -36,7 +36,6 @@ class GraphRendererForGroups extends Component {
             spiderGraphs: [],
             progressionGraph: [],
         }
-        const { translate } = this.props;
     }
 
 
@@ -118,6 +117,7 @@ class GraphRendererForGroups extends Component {
 
 
     render() {
+        const { translate } = this.props;
 
         if (this.state.isLoading) {
             return (
@@ -130,7 +130,7 @@ class GraphRendererForGroups extends Component {
                 <div>
                     <h3>{this.props.group.name}</h3>
                     <br />
-                    {this.props.translate('number_shown')}: <nbsp /><nbsp />
+                    {translate('number_shown')}: <nbsp /><nbsp />
                     {this.renderSelect()}
                     <hr wight='1px' />
                     {this.state.progressionGraph}

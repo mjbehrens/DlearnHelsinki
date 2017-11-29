@@ -28,7 +28,6 @@ class Login extends Component {
 	    redirect: false,
 
 	};
-  const {translate} = this.props;
     }
 
     // Triggered on user input change
@@ -104,6 +103,7 @@ class Login extends Component {
     }
 
     render() {
+        const { translate } = this.props;
 
 	console.log(this.state)
 	if (this.state.redirect) {
@@ -122,7 +122,7 @@ class Login extends Component {
 		<div className="Login-form">
 		    <h1>Dlearn</h1>
 		    <div className="centered">
-			<p>{this.props.translate('already_logged_in')}</p>
+			<p>{translate('already_logged_in')}</p>
 		    </div>
 		</div>
 	    )
@@ -132,36 +132,36 @@ class Login extends Component {
 		    <h1>Dlearn</h1>
 		    {this.state.error &&
 		    <div className="alert alert-danger alert-dismissible fade show" role="alert">
-			{this.props.translate('invalid_login')}
+			{translate('invalid_login')}
 		    </div>
 		    }
 		    <div className="form-group left-align">
-			<label for="usernameInput">{this.props.translate('username')}</label>
+			<label for="usernameInput">{translate('username')}</label>
 			<input type="text" className="form-control" id="usernameInput"
 				onChange={this.handleInputChange} value={this.state.loginInput} required />
 		    </div>
 		    <div className="form-group left-align">
-			<label for="passwordInput">{this.props.translate('password')}</label>
+			<label for="passwordInput">{translate('password')}</label>
 			<input type="password" className="form-control" id="passwordInput" value={this.state.pwdInput} onChange={this.handleInputChange} required />
 		    </div>
 		    <div className="custom-controls-stacked">
 			<label className="custom-control custom-radio">
 			<input id="radioStudent" className="custom-control-input" name="userType" value="student" type="radio" checked={this.state.userType === 'student'} onChange={this.handleInputChange} />
 			    <span className="custom-control-indicator"></span>
-			    <span className="custom-control-description">{this.props.translate('student')}</span>
+			    <span className="custom-control-description">{translate('student')}</span>
 			</label>
 			<label className="custom-control custom-radio">
 			<input id="radioTeacher" className="custom-control-input" name="userType" value="teacher" type="radio" checked={this.state.userType === 'teacher'} onChange={this.handleInputChange} />
 			    <span className="custom-control-indicator"></span>
-			    <span className="custom-control-description">{this.props.translate('teacher')}</span>
+			    <span className="custom-control-description">{translate('teacher')}</span>
 			</label>
 			<label className="custom-control custom-radio">
 			<input id="radioResearcher" className="custom-control-input" name="userType" value="researcher" type="radio" checked={this.state.userType === 'researcher'} onChange={this.handleInputChange} disabled />
 			    <span className="custom-control-indicator"></span>
-			    <span className="custom-control-description">{this.props.translate('researcher')}</span>
+			    <span className="custom-control-description">{translate('researcher')}</span>
 			</label>
 		    </div>
-		    <button id="logInButton" type="submit" className="btn btn-primary" >{this.props.translate('log_in')}</button>
+		    <button id="logInButton" type="submit" className="btn btn-primary" >{translate('log_in')}</button>
 		</form>
 	    );
 	}

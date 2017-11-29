@@ -39,7 +39,7 @@ class StudentDashboard extends Component {
 	constructor(props) {
 		super(props);
 
-		const {translate} = this.props;
+		const { translate } = this.props;
 		compo = this;
 
 		let survey_id = null;
@@ -55,7 +55,7 @@ class StudentDashboard extends Component {
 			lastSurvey: {
 				_id: survey_id,
 				open: false,
-				title: this.props.translate('latest_result'),
+				title: translate('latest_result'),
 				description: null,
 				start_date: null,
 				end_date: null,
@@ -206,6 +206,7 @@ class StudentDashboard extends Component {
 	}
 
 	displaySpiderGraph = function () {
+		const { translate } = this.props;
 
 		let parameters = {
 			teachers: null,
@@ -227,7 +228,7 @@ class StudentDashboard extends Component {
 					<div className='spinner-container'>
 						<Spinner />
 					</div>
-					{this.props.translate('check_open_survey')} ...
+					{translate('check_open_survey')} ...
 				</div>
 			)
 		}
@@ -235,26 +236,27 @@ class StudentDashboard extends Component {
 			return (
 				<div>
 
-				{this.props.translate('data_no_found')} ...
+				{translate('data_no_found')} ...
 				</div>
 			)
 		}
 	}
 
 	render() {
+	    const { translate } = this.props;
 
 		return (
 			<div className="container text-center">
-			    <h1>{this.props.translate('welcome')} {this.props.user.name}</h1>
+			    <h1>{translate('welcome')} {this.props.user.name}</h1>
 				<div className="jumbotron">
 
 
 					<div className="row">
 						<div className="col-sm-3">
 							<div className="btn-group-vertical">
-								<button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">{this.props.translate('survey')}</button>
-								<button type="button" className="btn btn-primary">{this.props.translate('history')}</button>
-								<button type="button" className="btn btn-primary">{this.props.translate('profile')}</button>
+								<button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">{translate('survey')}</button>
+								<button type="button" className="btn btn-primary">{translate('history')}</button>
+								<button type="button" className="btn btn-primary">{translate('profile')}</button>
 							</div>
 						</div>
 						<div className="col-sm-9">

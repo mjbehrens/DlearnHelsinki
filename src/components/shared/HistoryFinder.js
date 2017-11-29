@@ -26,7 +26,6 @@ class HistoryFinder extends Component {
         var rangeStart = null;
         var rangeEnd = null;
         super(props);
-        const {translate} = this.props;
         this.changeStart = this.changeStart.bind(this);
         this.changeEnd = this.changeEnd.bind(this);
     }
@@ -51,19 +50,20 @@ class HistoryFinder extends Component {
 
 
     render() {
+        const { translate } = this.props;
 
         return (
             <div>
                 <div className="searchBar">
                     <input type="text"
                         style={margins}
-                        placeholder={this.props.translate('search')}
+                        placeholder={translate('search')}
                         value={this.props.query}
                         onChange={this.searchHistory.bind(this)} />
                     <button className="btn btn-primary"
                         style={margins}
                         onClick={this.props.sortData}>
-                        {this.props.translate('sort')}
+                        {translate('sort')}
                     </button>
                 </div>
                 {

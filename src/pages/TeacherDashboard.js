@@ -50,7 +50,6 @@ class TeacherDashboard extends Component {
       openSurvey: openSurvey,
     };
 
-    const {translate} = this.props
   }
 
   componentDidMount() {
@@ -146,13 +145,14 @@ class TeacherDashboard extends Component {
 
   // Display the  message that a survey is open
   renderInfoOpenSurvey = function (survey_title) {
+    const { translate } = this.props;
     // We assume that if the title is null
     // then there is no survey open. With is kind of weak...
     if (survey_title != null) {
       return (
         <div className="container">
           <p className="bg-info">
-           {this.props.translate('survey_open', {title: survey_title})}
+           {translate('survey_open', {title: survey_title})}
           </p>
         </div>
       );

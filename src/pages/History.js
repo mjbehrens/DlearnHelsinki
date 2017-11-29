@@ -38,8 +38,6 @@ class History extends Component {
         tempData = [];
         compo = this;
 
-        const {translate} = this.props;
-
         this.state = {
             isLoading: true,
             query: "",
@@ -309,11 +307,12 @@ class History extends Component {
     }
 
     render() {
+        const { translate } = this.props;
 
         if (compo.state.isLoading) {
             return (
                 <div className="centered">
-                    <h1> {this.props.translate('history')} </h1>
+                    <h1> {translate('history')} </h1>
                     <div className="row">
                         <div className="spinner-container">
                             <Spinner />
@@ -326,13 +325,13 @@ class History extends Component {
 
             return (
                 <div className="centered">
-                    <h1> {this.props.translate('history')} </h1>
+                    <h1> {translate('history')} </h1>
                     <div className="row">
                         <div className="left-align col-sm-4">
                             <div className="btn-group">
-                                <button className="btn btn-primary" onClick={this.OnClickSurveys.bind(this)}>{this.props.translate('surveys')}</button>
-                                <button className="btn btn-primary" onClick={this.OnClickStudents.bind(this)}>{this.props.translate('students')}</button>
-                                <button className="btn btn-primary" onClick={this.OnClickGroups.bind(this)}>{this.props.translate('groups')}</button>
+                                <button className="btn btn-primary" onClick={this.OnClickSurveys.bind(this)}>{translate('surveys')}</button>
+                                <button className="btn btn-primary" onClick={this.OnClickStudents.bind(this)}>{translate('students')}</button>
+                                <button className="btn btn-primary" onClick={this.OnClickGroups.bind(this)}>{translate('groups')}</button>
                             </div>
 
                             <HistoryFinder query={this.state.query}

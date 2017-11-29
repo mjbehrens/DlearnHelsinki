@@ -50,7 +50,6 @@ class HeadbandsLastResults extends React.Component {
             group_name: classroom[0].name,
             survey: this.props.survey,
         };
-        const { translate } = this.props;
     }
 
     createGroupButtons = function (groups) {
@@ -94,8 +93,7 @@ class HeadbandsLastResults extends React.Component {
     }
 
     render() {
-
-        console.log(this.state)
+        const { translate } = this.props;
 
         if (compo.state.survey == null) {
             return (
@@ -131,7 +129,7 @@ class HeadbandsLastResults extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-sm-7">
-                                    <h6> {this.props.translate('survey_results', {title: compo.state.survey.title})}</h6>
+                                    <h6> {translate('survey_results', {title: compo.state.survey.title})}</h6>
                                     <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
                                 </div>
                             </div>

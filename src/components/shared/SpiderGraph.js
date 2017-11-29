@@ -29,7 +29,6 @@ class SpiderGraph extends Component {
 	constructor(props) {
 		super(props);
 
-		const {translate} = this.props;
 		params = this.props.parameters;
 
 		this.state = {
@@ -221,6 +220,7 @@ class SpiderGraph extends Component {
 
 
 	render() {
+		const { translate } = this.props;
 
 		var options = {
 			responsive: true,
@@ -244,7 +244,7 @@ class SpiderGraph extends Component {
 			return (
 				<div className="jumbotron">
 					<h5>{this.props.name}</h5>
-					{this.props.translate('data_no_found')}
+					{translate('data_no_found')}
 				</div>
 
 			);

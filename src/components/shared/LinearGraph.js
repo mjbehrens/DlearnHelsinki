@@ -26,7 +26,6 @@ class LinearGraph extends Component {
 
     constructor(props) {
         super(props);
-        const {translate} = this.props;
         params = this.props.parameters;
         compo = this;
 
@@ -283,6 +282,7 @@ class LinearGraph extends Component {
 
 
     render() {
+        const { translate } = this.props;
 
         // TODO : Scale for this graph
         // THIS DOES NOT WORK
@@ -317,7 +317,7 @@ class LinearGraph extends Component {
             return (
                 <div className="jumbotron">
                     <h5>{this.props.name}</h5>
-                    {this.props.translate('data_no_found')};
+                    {translate('data_no_found')};
 				</div>
             );
         }

@@ -19,7 +19,7 @@ class GroupManagmentButton extends React.Component {
         super(props);
         const { translate } = this.props;
         this.state = {
-            text: this.props.translate('group_management'),
+            text: translate('group_management'),
             picture: iconGrpManagment,
         }
     }

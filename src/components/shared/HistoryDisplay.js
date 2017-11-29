@@ -13,7 +13,6 @@ class HistoryDisplay extends Component {
 
         compo = this;
 
-        const {translate} = this.props;
         this.state = {
             searchData: [],
         }

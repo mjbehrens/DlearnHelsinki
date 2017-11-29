@@ -32,7 +32,6 @@ class TeacherGroupManagement extends React.Component {
         compo = this;
         groups = [];
         allStudentsList = [];
-        const { translate } = this.props;
 
         this.state = {
             listGrps: [], //id and name
@@ -189,11 +188,12 @@ class TeacherGroupManagement extends React.Component {
     }
 
     render() {
+        const { translate } = this.props;
 
         if (this.state.isLoading) {
             return (
                 <div className="container">
-                    <h1>{this.props.translate('group_management')}</h1>
+                    <h1>{translate('group_management')}</h1>
                     <br/>
                     <div className="spinner-container">
                         <Spinner />
@@ -204,13 +204,13 @@ class TeacherGroupManagement extends React.Component {
 
             return (
                 <div className="container">
-                    <h1>{this.props.translate('group_management')}</h1>
+                    <h1>{translate('group_management')}</h1>
 			<div className="card-columns">
 			    {this.state.groups}
 			</div>
 		    <div className="btn-group btn-group-lg" role="group">
-                    <button className="btn btn-primary" onClick={this.onClickAddGroup}>{this.props.translate('add_group')}</button>
-                    <button className="btn btn-primary" disabled={true} onClick={this.onClickDeleteGroup}>{this.props.translate('delete_group')}</button>
+                    <button className="btn btn-primary" onClick={this.onClickAddGroup}>{translate('add_group')}</button>
+                    <button className="btn btn-primary" disabled={true} onClick={this.onClickDeleteGroup}>{translate('delete_group')}</button>
 		    </div>
                 </div>
             )

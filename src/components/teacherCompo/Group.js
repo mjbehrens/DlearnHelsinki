@@ -26,7 +26,6 @@ class Group extends React.Component {
     constructor(props) {
         super(props);
         compo = this;
-        const { translate } = this.props;
 
         this.state = {
             picture: null,
@@ -45,6 +44,7 @@ class Group extends React.Component {
     + this should be investiget
     */
     onClickAddStudent = function (group_id, allStudentsList) {
+        const { translate } = this.props;
         Popup.plugins().addStudent((infoStudent) => {
             console.log(infoStudent);
             let data = JSON.stringify({
@@ -76,7 +76,7 @@ class Group extends React.Component {
                     compo.props.callbackGM();
                 } else {
                     console.log('Network response was not ok.');
-                    alert(this.props.translate('error_check_username'));
+                    alert(translate('error_check_username'));
                 }
             }).catch(function (err) {
                 // Error :(

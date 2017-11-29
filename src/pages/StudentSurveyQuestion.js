@@ -30,7 +30,7 @@ class StudentSurveyQuestion extends Component {
     constructor(props) {
         super(props);
 
-        const {translate} = this.props;
+        const { translate } = this.props;
         try {
             console.log(this.props.location.state.survey_id)
         } catch (err) {
@@ -41,7 +41,7 @@ class StudentSurveyQuestion extends Component {
 	}
 
         this.state = {
-            buttonValue: this.props.translate('next'),
+            buttonValue: translate('next'),
             redirect: false,
 	    loading: true,
 	    surveyFinished: false,
@@ -50,13 +50,13 @@ class StudentSurveyQuestion extends Component {
             survey_title: this.props.location.state.survey_title,
             survey: [{
                 id: 0,
-                question: this.props.translate('loading_survey'),
+                question: translate('loading_survey'),
                 min_answer: 0,
                 max_answer: 0,
             },],
             currentQuestion: {
                 id: 0,
-                question: this.props.translate('loading_survey'),
+                question: translate('loading_survey'),
                 min_answer: 0,
                 max_answer: 0,
             },
@@ -183,6 +183,7 @@ class StudentSurveyQuestion extends Component {
 
 
     render() {
+        const { translate } = this.props;
         // if survey finish (no more survey)
         if (this.state.redirect) {
             this.props.history.push({
@@ -192,7 +193,7 @@ class StudentSurveyQuestion extends Component {
         } else if (this.state.loading) {
             return (
 		<div className="login-form">
-		    <h1>{this.props.translate('survey')}  "{this.state.survey_title}"</h1>
+		    <h1>{translate('survey')}  "{this.state.survey_title}"</h1>
 		    <div className="spinner-container">
 			<Spinner />
 		    </div>
@@ -202,7 +203,7 @@ class StudentSurveyQuestion extends Component {
 
             return (
                 <div className="container centered">
-		    <h1>{this.props.translate('survey')} "{this.state.survey_title}"</h1>
+		    <h1>{translate('survey')} "{this.state.survey_title}"</h1>
 		    { !this.state.surveyFinished &&
 		    <div>
                     <p>{this.state.currentQuestion.question}</p>
@@ -219,12 +220,12 @@ class StudentSurveyQuestion extends Component {
 		    }
 		{ this.state.surveyFinished &&
 		  <div className="alert alert-info" role="alert">
-		    {this.props.translate('finish_survey')}
+		    {translate('finish_survey')}
                   </div>
 		}
                         <button type="button"
                             className="btn btn-primary"
-                onClick={this.onClickNext}>{this.state.surveyFinished ? this.props.translate('quit') : this.props.translate('next')}</button>
+                onClick={this.onClickNext}>{this.state.surveyFinished ? translate('quit') : translate('next')}</button>
                 </div>
             );
         }

@@ -5,7 +5,6 @@ import { ROUTES, BACKEND_API } from '../../constants.js';
 import { withTranslate } from 'react-redux-multilingual';
 
 import InfoStudent from "./InfoStudent";
-import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
 import AddStudent from "./AddStudent";
 
 import * as userActions from '../../actions/userActions';

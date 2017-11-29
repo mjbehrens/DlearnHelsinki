@@ -1,5 +1,4 @@
 import React from "react";
-import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
 import LinearGraph from "../shared/LinearGraph";
 import Spinner from 'react-spinner';
 import { withTranslate } from 'react-redux-multilingual';

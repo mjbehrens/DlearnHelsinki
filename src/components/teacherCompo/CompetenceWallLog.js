@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from 'react-redux';
-import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
 import * as modalActions from '../../actions/modalActions';
 
 function mapStateToProps(store) {

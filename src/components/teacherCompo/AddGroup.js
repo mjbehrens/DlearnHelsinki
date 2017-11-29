@@ -1,6 +1,5 @@
 import React from "react";
 import { withTranslate } from 'react-redux-multilingual';
-import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
 
 class AddGroup extends React.Component {
 

@@ -4,8 +4,6 @@ import { ROUTES, BACKEND_API } from '../constants.js';
 import Spinner from 'react-spinner';
 import { withTranslate } from 'react-redux-multilingual'
 
-import { Link } from 'react-router-dom';
-
 import Group from "../components/teacherCompo/Group";
 import InfoStudent from "../components/teacherCompo/InfoStudent";
 import AddGroup from "../components/teacherCompo/AddGroup";

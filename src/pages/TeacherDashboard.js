@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import { Link } from 'react-router-dom';
 import { withTranslate } from 'react-redux-multilingual'
 
 import OpenSurveyButton from '../components/teacherCompo/OpenSurveyButton.js';

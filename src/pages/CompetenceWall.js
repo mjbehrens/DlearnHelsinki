@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { ROUTES } from '../constants.js';
 import CompetenceWallLog from '../components/teacherCompo/CompetenceWallLog.js';
 import CompetenceRender from '../components/teacherCompo/CompetenceRender.js';

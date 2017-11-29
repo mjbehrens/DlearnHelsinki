@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Spinner from 'react-spinner'
 import { ROUTES, BACKEND_API } from '../constants.js';
 import * as userActions from '../actions/userActions';

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from 'react-router-dom';
 import Popup from 'react-popup';
 import { ROUTES, BACKEND_API } from '../../constants.js';
 import { withTranslate } from 'react-redux-multilingual';

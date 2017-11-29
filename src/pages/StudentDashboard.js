@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { ROUTES, BACKEND_API } from '../constants.js';
 import { withTranslate } from 'react-redux-multilingual';
 

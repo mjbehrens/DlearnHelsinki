@@ -144,7 +144,8 @@ class StudentSurveyQuestion extends Component {
     // update the state
     onSliderChange = (value) => {
         this.setState({
-            ...this.state.startPoint = value,
+            ...this.state,
+	    startPoint: value,
         });
     }
 
@@ -159,23 +160,26 @@ class StudentSurveyQuestion extends Component {
             this.postQuestionsAnswerREST(data);
             //check if message send correctly
 
-            this.state.index = this.state.index + 1;
             this.setState({
                 ...this.state,
-                currentQuestion: this.state.survey[this.state.index]
+		index: this.state.index + 1,
+                currentQuestion: this.state.survey[this.state.index + 1],
             });
 
             //for the last click on the button
             if (this.state.index === this.state.survey.length) {
 		// survey is finished
                 this.setState({
-                    ... this.state,
+                    ...this.state,
 		    surveyFinished: true,
                 });
             }
 
         } else {
-            this.setState({ ...this.state.redirect = true })
+            this.setState({
+		...this.state,
+		redirect: true,
+	    })
         }
     }
 

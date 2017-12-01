@@ -291,9 +291,8 @@ class StudentDashboard extends Component {
 			//return <button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">No Survey</button>
 		} else {
 			return (
-				<div className="card card-inverse w-100">
+				<div className="card card-inverse w-100" onClick={this.startSurvey}>
 					<img className="card-img-top teacher-card-img" src={iconSurveyOpen} width="100" height="100"
-						onClick={this.startSurvey}
 						alt="profil icon" />
 					<div className="card-body">
 						<h4 className="card-title">{"Survey"}</h4>
@@ -311,9 +310,8 @@ class StudentDashboard extends Component {
 
 	renderProfileButton = function () {
 		return (
-			<div className="card card-inverse w-100" >
+			<div className="card card-inverse w-100" onClick={this.showProfile}>
 				<img className="card-img-top teacher-card-img" src={iconGrpManagment} width="100" height="100"
-					onClick={this.showProfile}
 					alt="profil icon"
 					 />
 				<div className="card-body">
@@ -326,9 +324,8 @@ class StudentDashboard extends Component {
 
 	renderCompetenceWallButton = function () {
 		return (
-			<div className="card card-inverse w-100">
+			<div className="card card-inverse w-100" onClick={this.showCompetenceWall}>
 				<img className="card-img-top teacher-card-img" src={iconMyCompetenceWall} width="100" height="100"
-					onClick={this.showCompetenceWall}
 					alt="competence wall icon"
 					 />
 				<div className="card-body">

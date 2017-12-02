@@ -115,6 +115,7 @@ class SpiderGraph extends Component {
 	}
 
 	getSurveyAnswersREST = function () {
+		const { translate } = this.props;
 		// set the spinner to true
 		this.setState({ isLoading: true });
 
@@ -135,12 +136,18 @@ class SpiderGraph extends Component {
 						Answers.push(a);
 					}, this);
 
+
 					if (Answers.length > 0) {
+
 
 						let labelsArray = [];
 						let answerArray = [];
 						Answers.forEach(function (e) {
-							labelsArray.push(e.theme_title);
+							if (translate('dashboard') == 'Dashboard') {
+								labelsArray.push(e.theme_title);
+							} else {
+								labelsArray.push(e.theme_title_fi);
+							}
 							answerArray.push((e.answer).toFixed(1));
 							// if description supported, added here
 						}, this);

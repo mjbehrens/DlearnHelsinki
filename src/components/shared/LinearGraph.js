@@ -139,24 +139,31 @@ class LinearGraph extends Component {
 
 
     collectData = function (progression) {
+        const { translate } = this.props;
 
         let max_theme_id = 0;
         let surveys = [];
 
         // extract the survey
         progression.forEach(function (survey) {
-
             let lisThemes = [];
 
             survey.themes.forEach(function (theme) {
-
+              if (translate('dashboard') == 'Dashboard') {
                 lisThemes.push({
                     theme_id: theme.theme_id,
                     theme_title: theme.theme_title,
                     description: theme.description,
                     answer: (theme.answer).toFixed(1),
                 });
-
+                } else {
+                  lisThemes.push({
+                      theme_id: theme.theme_id,
+                      theme_title: theme.theme_title_fi,
+                      description: theme.description,
+                      answer: (theme.answer).toFixed(1),
+                  });
+                }
                 if (max_theme_id < theme.theme_id) {
                     max_theme_id = theme.theme_id;
                 }
@@ -288,7 +295,7 @@ class LinearGraph extends Component {
             title: {
                 display: true,
                 position: 'top',
-                text: 'progression',
+                text: translate('progression'),
             },
             responsive: true,
             maintainAspectRatio: true,

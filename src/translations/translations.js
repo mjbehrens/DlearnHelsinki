@@ -70,6 +70,7 @@ module.exports = {
       //LinearGraph
       data_no_found: 'No Data Found',
       class: 'Class',
+      progression: 'Progression',
 
 
 
@@ -148,6 +149,7 @@ module.exports = {
       profile: 'Profile',
       survey: 'Survey',
       latest_result: 'Last Result Survey',
+      no_surveys_done: 'You haven\'t done any surveys yet',
 
     }
   },
@@ -223,6 +225,7 @@ module.exports = {
       //LinearGraph
       data_no_found: 'Tietoja ei löydy',
       class: 'Luokka',
+      progression: 'Edistyminen',
 
 
  /*------------- Teacher ---------------*/
@@ -298,6 +301,7 @@ module.exports = {
   profile: 'Profiili',
   survey: 'Kysely',
   latest_result: 'Viimeisimmän kyselyn tulokset',
+  no_surveys_done: 'Et ole vielä tehnyt kyselyjä',
 
     }
   }

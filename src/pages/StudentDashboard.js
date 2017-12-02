@@ -223,7 +223,7 @@ class StudentDashboard extends Component {
 			return (
 				<div>
 
-				{translate('data_no_found')} ...
+				{translate('no_surveys_done')} ...
 				</div>
 			)
 		}

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Radar } from 'react-chartjs-2';
-import Spinner from 'react-spinner'
 import { withTranslate } from 'react-redux-multilingual';
 
 //redux setup
@@ -10,9 +8,6 @@ import { connect } from 'react-redux';
 
 
 let GET_ANSWERS = '';
-let GET_QUESTIONS_FOR_SURVEY = '';
-
-
 
 
 function mapStateToProps(store) {
@@ -23,14 +18,16 @@ function mapStateToProps(store) {
 
 // VERY IMPORTANT !
 let params;
+let component;
 
-class SpiderGraph extends Component {
+class DataCollector extends Component {
 
 	constructor(props) {
 		super(props);
 
 		const {translate} = this.props;
-		params = this.props.parameters;
+       
+        component = this;
 
 		this.state = {
 			isLoading: true,
@@ -38,29 +35,14 @@ class SpiderGraph extends Component {
 			cpt: 0,
 			data: {
 				labels: [], //label of the themes
-				datasets: [{
-					label: this.props.name, // name of the graph
-					lineTension: .05,
-					backgroundColor: this.stringToColour(this.props.color),
-					borderColor: 'rgba(179,181,198,1)',
-					pointBackgroundColor: 'rgba(179,181,198,1)',
-					pointBorderColor: '#fff',
-					pointHoverBackgroundColor: '#fff',
-					pointHoverBorderColor: 'rgba(179,181,198,1)',
-					data: [] // answers
-				}
-				]
+				datasets: []
 			}
 		};
-
-		if(params.surveys != null){
-			this.getDataForGraph();
-		}
 
 	}
 
 	componentDidMount() {
-		//this.getDataForGraph();
+		this.getDataForGraph2();
 	}
 
 	// Called everytime a props value change
@@ -68,19 +50,26 @@ class SpiderGraph extends Component {
 		if ( (params != nextProps.parameters) && (nextProps.parameters.surveys != null) ) {
 			params = nextProps.parameters;
 			console.log(params);
-			this.getDataForGraph();
+			this.getDataForGraph2();
 		}
 	}
 
 	// Fetch resquest for questions and answer
 	getDataForGraph = function () {
-		this.buildRequestRest();
-		this.getSurveyAnswersREST();
-	}
+		//this.buildRequestRest();
+		//this.getSurveyAnswersREST();
+    }
+    
+    getDataForGraph2 = function (){
+        this.props.parameters.forEach(params => {
+            let request = component.buildRequestRest(params);
+            component.getSurveyAnswersREST(request);
+        });
+    }
 
 	// Build request from props send to the component
 	// ( looks ugly but it's a propotype :) )
-	buildRequestRest = function () {
+	buildRequestRest = function (params) {
 
 		let s = "";
 
@@ -113,20 +102,19 @@ class SpiderGraph extends Component {
 			s += '/surveys/' + params.surveys;
 		}
 
-		GET_ANSWERS = s + '/answers';
-		GET_QUESTIONS_FOR_SURVEY = s + '/questions';
+        GET_ANSWERS = s + '/answers';
+        
+        return GET_ANSWERS;
 
 	}
 
-	getSurveyAnswersREST = function () {
+	getSurveyAnswersREST = function (request) {
 		// set the spinner to true
 		this.setState({ isLoading: true });
 
-		let component = this;
 		let Answers = [];
 
-
-		fetch(BACKEND_API.ROOT + GET_ANSWERS, {
+		fetch(BACKEND_API.ROOT + request, {
 			method: "GET",
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -145,10 +133,13 @@ class SpiderGraph extends Component {
 						}
 						Answers.push(a);
 
-					}, this);
-
+                    }, this);
+                    
+                    
 					if (Answers.length > 0) {
 
+                        console.log('REP OK')
+                        
 						let labelsArray = [];
 						let answerArray = [];
 						Answers.forEach(function (e) {
@@ -156,6 +147,20 @@ class SpiderGraph extends Component {
 							answerArray.push((e.answer).toFixed(1));
 							// if description supported, added here
 						}, this);
+                        
+                        let new_datasets = component.state.data.datasets;
+
+                        new_datasets.push({
+                            label: component.props.name,
+                            lineTension: .05,
+                            backgroundColor: component.stringToColour(component.props.color),
+                            borderColor: 'rgba(179,181,198,1)',
+                            pointBackgroundColor: 'rgba(179,181,198,1)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgba(179,181,198,1)',
+                            data: answerArray,
+                        })
 
 						component.setState({
 							...component.state,
@@ -164,12 +169,7 @@ class SpiderGraph extends Component {
 							data: {
 								...component.state.data,
 								labels: labelsArray,
-								datasets: [{
-									...component.state.data.datasets,
-									label: component.props.name,
-									data: answerArray,
-									backgroundColor: component.stringToColour(component.props.color),
-								}]
+								datasets: new_datasets,
 							}
 						});
 					} else {
@@ -222,42 +222,8 @@ class SpiderGraph extends Component {
 
 	render() {
 
-		var options = {
-			responsive: true,
-			maintainAspectRatio: true,
-			scale: {
-				ticks: {
-					beginAtZero: true,
-					max: 5
-				}
-			}
-		};
-
-		if (this.state.isLoading) {
-			return (
-				<div className='spinner-container'>
-					<Spinner />
-				</div>
-
-			)
-		} else if (this.state.noData === true) {
-			return (
-				<div className="jumbotron">
-					<h5>{this.props.name}</h5>
-					{this.props.translate('data_no_found')}
-				</div>
-
-			);
-		}
-		else {
-			return (
-			    <div className="graph-container">
-				<Radar data={this.state.data} options={options} />
-			    </div>
-			);
-		}
-
+		return (<div> {console.log(this.state.data)} </div>)
 	}
 }
 
-export default connect(mapStateToProps)(withTranslate(SpiderGraph));
+export default connect(mapStateToProps)(withTranslate(DataCollector));

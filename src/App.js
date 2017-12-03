@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import './css/App.css';
 import './css/popup.css';
 import { ROUTES } from './constants.js';
+import { withTranslate } from 'react-redux-multilingual';
+
+
 
 import ClassSelection from './pages/ClassSelection.js';
 import Footer from './components/Footer.js';
@@ -18,6 +21,7 @@ import StudentDashboard from './pages/StudentDashboard.js';
 import StudentSurveyQuestion from './pages/StudentSurveyQuestion.js'
 import TeacherDashboard from './pages/TeacherDashboard.js';
 import TeacherGroupManagement from './pages/TeacherGroupManagement.js'
+import CompetenceWall from './pages/CompetenceWall.js'
 
 // Bind props to Redux store
 function mapStateToProps(store) {
@@ -29,20 +33,23 @@ function mapStateToProps(store) {
 class App extends Component {
 
     // Return the desired component if a correct user is logged in and
-    // a class is selected. Redirect to class selection if a correct 
+    // a class is selected. Redirect to class selection if a correct
     // user is logged in and no class has been selected. Redirect to
     // 404 if the user is not logged or with incorrect userType.
     protectedRoute = (userType, component) => {
 	if (this.props.user.type === userType) {
 	    if (this.props.user.classid == null) {
-		return <Redirect to={ROUTES.CLASS_SELECTION} />
-	    } 
+		return <Redirect to={{
+		    pathname: ROUTES.CLASS_SELECTION,
+		    state: { warning: true },
+		}} />
+	    }
 	    return <Route component={component} />
 	}
-	return <Route component={NoMatch} /> 
+	return <Route component={NoMatch} />
     }
 
-	    
+
     render() {
 
 	return (
@@ -71,6 +78,7 @@ class App extends Component {
 				<Route path={ROUTES.STUDENT_SURVEY} render={() => this.protectedRoute('student', StudentSurveyQuestion)} />
 				<Route path={ROUTES.HISTORY} render={() => this.protectedRoute('teacher', History)} />
 				<Route path={ROUTES.GROUP_MANAGEMENT} render={() => this.protectedRoute('teacher', TeacherGroupManagement)} />
+				<Route path={ROUTES.COMPETENCE_WALL} render={() => this.protectedRoute('teacher', CompetenceWall)} />
 				<Route path="*" component={NoMatch} status={404}/>
 			    </Switch>
 			</section>
@@ -82,4 +90,4 @@ class App extends Component {
     }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(withTranslate(App));

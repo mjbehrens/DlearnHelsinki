@@ -18,11 +18,10 @@ html, body {
     position: relative;
     min-height: 100vh;
 }
-    
+
 body {
     padding-bottom: var(--footer-height);
 }
-
 
 .footer {
     position: absolute;
@@ -44,19 +43,8 @@ h1 {
     margin-bottom: 20px;
 }
 
-.Icon {
+.footer-icon {
     height: 50px;
-}
-
-.login-form {
-    width: 60vw;
-    max-width: 300px;
-    margin: auto;
-}
-
-#logInButton {
-    margin-top: 20px;
-    padding: 8px 29px;
 }
 
 /* Fix form input validation css on firefox */
@@ -66,14 +54,6 @@ form input {
 
 input.inputModified:invalid {
     box-shadow: 0 0 2px 1px red;
-}
-
-
-.SelectClass {
-    width: 60vw;
-    margin: auto;
-    text-align: center;
-
 }
 
 .left-align {
@@ -90,6 +70,10 @@ input.inputModified:invalid {
 
 .no-padding {
     padding: 0;
+}
+
+.no-margin {
+    margin: 0;
 }
 
 .teacher-card-img {
@@ -109,6 +93,9 @@ input.inputModified:invalid {
     pointer-events: none;
     opacity: 0.4;
 }
+#button-translate {
+	 margin-right: 10px;
+}
 
 #studentProfile {
     max-width: 400px;
@@ -120,14 +107,14 @@ input.inputModified:invalid {
     bottom: 0px;
     right: 0px;
     width: 50%;
-    height: 50%;  
+    height: 50%;
 }
 
 .react-spinner {
   position: relative;
   width: 100px;
-  height: 20px;  
- 
+  height: 20px;
+
 }
 
 .react-spinner_bar {

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { ROUTES, BACKEND_API } from '../constants.js';
+import { withTranslate } from 'react-redux-multilingual';
 
 import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
+import SpiderGraph2 from '../components/shared/SpiderGraph2.js';
 import LinearGraph from '../components/shared/LinearGraph.js';
 import Spinner from 'react-spinner';
 import StudentProfile from '../components/studentCompo/StudentProfile.js';
@@ -51,6 +53,7 @@ class StudentDashboard extends Component {
 	constructor(props) {
 		super(props);
 
+		const { translate } = this.props;
 		compo = this;
 
 		let survey_id = null;
@@ -60,11 +63,12 @@ class StudentDashboard extends Component {
 
 		this.state = {
 			toRender: null,
+			isLoading: true,
 			disabledSurvey: true,
 			lastSurvey: {
 				_id: survey_id,
 				open: false,
-				title: "Last Result Survey",
+				title: this.props.translate('latest_result'),
 				description: null,
 				start_date: null,
 				end_date: null,
@@ -109,8 +113,9 @@ class StudentDashboard extends Component {
 					console.log(surveys);
 
 					// check if a survey is open & check the last survey done
-					compo.checkIfSurveyOpen();
-					compo.checkLastSurveyDone();
+					compo.checkIfSurveyOpen(surveys);
+					compo.checkLastSurveyDone(surveys);
+
 				});
 			} else {
 				console.log('Network response was not ok.');
@@ -120,40 +125,28 @@ class StudentDashboard extends Component {
 			console.log(err);
 		});
 	}
-
-	// check if a survey is currently open 
-	checkIfSurveyOpen = function () {
+	// check if a survey is currently open
+	checkIfSurveyOpen = function (surveys) {
 
 		let noSurveyOpen = true;
-
-		let lastDate = Date.parse(surveys[0].end_date);
-		let lastSurveyId = surveys[0]._id;
-
+		let openSurvey = null;
 		surveys.forEach(function (s) {
-
-			let tempDate = Date.parse(s.end_date);
-
-			if (lastDate < tempDate) {
-				lastDate = tempDate;
-				lastSurveyId = s._id;
-			}
-
 			if (s.open) {
 				noSurveyOpen = false;
 				this.updateState(s);
 			}
-
 		}, this);
 
 		// if no survey open then do nothing.
 		if (noSurveyOpen) {
-			compo.updateState({
-				_id: lastSurveyId,
+			openSurvey = {
+				_id: null,
 				open: false,
 				title: null,
 				description: null,
 				start_date: null,
-			});
+				end_date: null,
+			};
 		}
 	}
 
@@ -171,22 +164,41 @@ class StudentDashboard extends Component {
 			let lastSurvey = tempSurveys[0];
 
 
-			tempSurveys.forEach(function (s) {
-
-				let tempDate = Date.parse(s.end_date);
-
-				if (lastDate < tempDate) {
-					lastDate = tempDate;
-					lastSurvey = s;
-				}
-			}, this);
-
-			// update the last survey id.
-			this.setState({
-				...this.state,
-				lastSurvey: lastSurvey,
-			});
 		}
+	}
+
+	checkLastSurveyDone = function (surveys) {
+
+		let lastSurvey = null;
+
+		if (surveys.length > 0) {
+			// only look for closed surveys
+			let tempSurveys = surveys.filter(function (s) {
+				return s.open == false;
+			});
+
+			if (tempSurveys.length > 0) {
+
+				// find the highest date of all surveys
+				let last_d = tempSurveys.map(function (s) { return new Date(s.end_date); }).sort(function (a, b) { return b - a; })[0]
+				// get the survey that match this date
+				lastSurvey = surveys.filter(function (s) {
+					let d = new Date(s.end_date)
+					return d.toString() === last_d.toString();
+				})[0];
+				// update the last survey id.
+				this.setState({
+					...this.state,
+					lastSurvey: lastSurvey,
+					isLoading: false,
+				});
+			}
+		}
+		this.setState({
+			...this.state,
+			isLoading: false,
+		});
+
 	}
 
 	// call for update the state with the survey
@@ -240,27 +252,36 @@ class StudentDashboard extends Component {
 			classes: this.props.user.classid,
 			groups: null,
 			surveys: compo.state.lastSurvey._id,
-
+	
 		}
 		*/
 
 		if (parametersStudent.surveys) {
 			return (
 				<div>
-				<SpiderGraph name={this.state.lastSurvey.title} parameters={parametersStudent} />
-				{
-				//<SpiderGraph name={this.state.lastSurvey.title} parameters={parametersClass} />
-				}
-				
+					<SpiderGraph name={this.state.lastSurvey.title} parameters={parametersStudent} />
+					{
+						//<SpiderGraph name={this.state.lastSurvey.title} parameters={parametersClass} />
+					}
+
+				</div>
+			)
+		} else if (this.state.isLoading) {
+
+			return (
+				<div>
+					<div className='spinner-container'>
+						<Spinner />
+					</div>
+					{this.props.translate('check_open_survey')} ...
 				</div>
 			)
 		}
 		else {
 			return (
 				<div>
-					<div className='spinner-container'>
-						<Spinner />
-					</div>
+
+					{this.props.translate('data_no_found')} ...
 				</div>
 			)
 		}
@@ -280,7 +301,7 @@ class StudentDashboard extends Component {
 			return (
 				<div className="card card-inverse w-100">
 					<img className="card-img-top teacher-card-img" src={iconSurveyClose} width="100" height="100"
-						
+
 						alt="profil icon" />
 					<div className="card-body">
 						<h4 className="card-title">{"Survey"}</h4>
@@ -302,10 +323,10 @@ class StudentDashboard extends Component {
 
 			//return <button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">Survey</button>
 		}
-		
-		
-		
-		
+
+
+
+
 	}
 
 	renderProfileButton = function () {
@@ -313,7 +334,7 @@ class StudentDashboard extends Component {
 			<div className="card card-inverse w-100" onClick={this.showProfile}>
 				<img className="card-img-top teacher-card-img" src={iconGrpManagment} width="100" height="100"
 					alt="profil icon"
-					 />
+				/>
 				<div className="card-body">
 					<h4 className="card-title">{"My Profile"}</h4>
 				</div>
@@ -327,7 +348,7 @@ class StudentDashboard extends Component {
 			<div className="card card-inverse w-100" onClick={this.showCompetenceWall}>
 				<img className="card-img-top teacher-card-img" src={iconMyCompetenceWall} width="100" height="100"
 					alt="competence wall icon"
-					 />
+				/>
 				<div className="card-body">
 					<h4 className="card-title">{"My Competence Wall"}</h4>
 				</div>
@@ -335,20 +356,20 @@ class StudentDashboard extends Component {
 		)
 	}
 
-	showProfile = function (){
+	showProfile = function () {
 		let item = (<div></div>)
 		item = <StudentProfile />
 		compo.setState({ toRender: item })
 	}
 
-	showCompetenceWall = function (){
+	showCompetenceWall = function () {
 		let item = (<div></div>)
 		item = compo.displaySpiderGraph()
 		compo.setState({ toRender: item })
 	}
 
-	render() {
 
+	render() {
 		return (
 			<div>
 				<div className="container text-center">
@@ -362,9 +383,9 @@ class StudentDashboard extends Component {
 							<div class="btn-group" role="group">
 								<div className="btn-group-vertical">
 									{this.renderAccessSurveyButton()}
-									<br/>
+									<br />
 									{this.renderProfileButton()}
-									<br/>
+									<br />
 									{this.renderCompetenceWallButton()}
 								</div>
 							</div>
@@ -386,5 +407,4 @@ class StudentDashboard extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(StudentDashboard);
-
+export default connect(mapStateToProps)(withTranslate(StudentDashboard));

@@ -236,30 +236,42 @@ class StudentDashboard extends Component {
 
 	displaySpiderGraph = function () {
 
-		let parametersStudent = {
-			teachers: null,
-			students: this.props.user.id,
-			classes: null,
-			groups: null,
-			surveys: compo.state.lastSurvey._id,
-
-		}
-
-		/*
-		let parametersClass = {
+		// get all 
+		let parametersStudent = [{
 			teachers: null,
 			students: this.props.user.id,
 			classes: this.props.user.classid,
 			groups: null,
-			surveys: compo.state.lastSurvey._id,
-	
-		}
-		*/
+			surveys: 27,
+			name: "student result",
+			request : "students/1/survey_averages",
 
-		if (parametersStudent.surveys) {
+		},
+		{
+			teachers: null,
+			students: this.props.user.id,
+			classes: this.props.user.classid,
+			groups: null,
+			surveys: 27,
+			name: "(Fake) class result",
+			request : "students/1/classes/1/class_averages",
+		},
+		{
+			teachers: null,
+			students: this.props.user.id,
+			classes: this.props.user.classid,
+			groups: null,
+			surveys: 27,
+			name: "(Fake) group result",
+			request : "students/1/classes/1/group_averages",
+		}
+		];
+
+
+		if (parametersStudent[0].surveys) {
 			return (
 				<div>
-					<SpiderGraph name={this.state.lastSurvey.title} parameters={parametersStudent} />
+					<SpiderGraph2 parameters={parametersStudent} name="toto" color="black" />
 					{
 						//<SpiderGraph name={this.state.lastSurvey.title} parameters={parametersClass} />
 					}

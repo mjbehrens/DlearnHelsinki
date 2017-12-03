@@ -135,6 +135,10 @@ class SpiderGraph2 extends Component {
 
         GET_ANSWERS = s + '/answers';
 
+        if(params.request != null){
+            return params.request;
+        }
+
         return GET_ANSWERS;
 
     }

@@ -49,12 +49,14 @@ class StudentSurveyQuestion extends Component {
             survey: [{
                 id: 0,
                 question: translate('loading_survey'),
+                question_fi: null,
                 min_answer: 0,
                 max_answer: 0,
             },],
             currentQuestion: {
                 id: 0,
                 question: translate('loading_survey'),
+                question_fi: null,
                 min_answer: 0,
                 max_answer: 0,
             },
@@ -202,19 +204,23 @@ class StudentSurveyQuestion extends Component {
 		</div>
             );
 	} else {
-
-            return (
-                <div className="container centered">
-		    <h1>{translate('survey')} "{this.state.survey_title}"</h1>
-		    { !this.state.surveyFinished &&
-		    <div>
-                    <p>{this.state.currentQuestion.question}</p>
-                    <Slider
-                        min={this.state.currentQuestion.min_answer}
-                        max={this.state.currentQuestion.max_answer} dots={true}
-                        value={this.state.startPoint}
-                        onChange={this.onSliderChange} />
-
+    let questionNow = this.state.currentQuestion.question_fi;
+       if (this.props.translate('survey') === 'Survey') {
+         questionNow = this.state.currentQuestion.question;
+       }
+               return (
+                   <div className="container centered">
+          <h1>{this.props.translate('survey')} "{this.state.survey_title}"</h1>
+          { !this.state.surveyFinished &&
+          <div>
+                       <p>{questionNow}</p>
+                       <p>
+                       <Slider
+                           min={this.state.currentQuestion.min_answer}
+                           max={this.state.currentQuestion.max_answer} dots={true}
+                           value={this.state.startPoint}
+                           onChange={this.onSliderChange} />
+                       </p>
                     <p> <Star actual_size = {this.state.startPoint} max_size = {this.state.currentQuestion.max_answer} />
                         <h5>{this.state.startPoint}/{this.state.currentQuestion.max_answer} </h5>
                     </p>

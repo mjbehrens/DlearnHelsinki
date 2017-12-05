@@ -1,15 +1,12 @@
 import React from "react";
 import Popup from 'react-popup';
-import { ROUTES, BACKEND_API } from '../constants.js';
+import { BACKEND_API } from '../constants.js';
 import Spinner from 'react-spinner';
-
-import { Link } from 'react-router-dom';
+import { withTranslate } from 'react-redux-multilingual'
 
 import Group from "../components/teacherCompo/Group";
-import InfoStudent from "../components/teacherCompo/InfoStudent";
 import AddGroup from "../components/teacherCompo/AddGroup";
 
-import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
 function mapStateToProps(store) {
@@ -30,8 +27,7 @@ class TeacherGroupManagement extends React.Component {
         super(props);
         compo = this;
         groups = [];
-        allStudentsList = []; 
-        
+        allStudentsList = [];
 
         this.state = {
             listGrps: [], //id and name
@@ -91,7 +87,7 @@ class TeacherGroupManagement extends React.Component {
                 response.json().then(data => {
                     allStudentsList = data;
                     compo.loadStudentsGroups();
-                    
+
                 });
             } else {
                 console.log('Network response was not ok.');
@@ -128,35 +124,37 @@ class TeacherGroupManagement extends React.Component {
 
     }
 
-    onClickAddGroup = function () {
-        Popup.plugins().addGroup(function (group_name) {
-            compo.setState({ isLoading: true });
-            let POST_CREATE_GROUPS = 'teachers/' + compo.props.user.id + '/classes/' + compo.props.user.classid + '/groups?all=false';
+    postGroup = (group_name) => {
+        compo.setState({ isLoading: true });
+        let POST_CREATE_GROUPS = 'teachers/' + compo.props.user.id + '/classes/' + compo.props.user.classid + '/groups?all=false';
 
-            let data = JSON.stringify({
-                "name": group_name,
-            });
-
-            fetch(BACKEND_API.ROOT + POST_CREATE_GROUPS, {
-                method: "POST",
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Basic ' + compo.props.user.hash,
-                },
-                body: data
-            }).then(function (response) {
-                if (response.ok) {
-                    console.log(response.body)
-                    compo.getGroupsREST();
-                } else {
-                    console.log('Network response was not ok.');
-                }
-            }).catch(function (err) {
-                // Error :(
-                console.log(err);
-            });
+        let data = JSON.stringify({
+            "name": group_name,
         });
+
+        fetch(BACKEND_API.ROOT + POST_CREATE_GROUPS, {
+            method: "POST",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + compo.props.user.hash,
+            },
+            body: data
+        }).then(function (response) {
+            if (response.ok) {
+                console.log(response.body)
+                compo.getGroupsREST();
+            } else {
+                console.log('Network response was not ok.');
+            }
+        }).catch(function (err) {
+            // Error :(
+            console.log(err);
+        });
+    }
+
+    onClickAddGroup = () => {
+        Popup.plugins().addGroup(this.props, this.postGroup);
 
 
     }
@@ -186,11 +184,12 @@ class TeacherGroupManagement extends React.Component {
     }
 
     render() {
+        const { translate } = this.props;
 
         if (this.state.isLoading) {
             return (
                 <div className="container">
-                    <h1>Group Management</h1>
+                    <h1>{translate('group_management')}</h1>
                     <br/>
                     <div className="spinner-container">
                         <Spinner />
@@ -198,16 +197,16 @@ class TeacherGroupManagement extends React.Component {
                 </div>
             )
         } else {
-            
+
             return (
                 <div className="container">
-                    <h1>Group Management</h1>
+                    <h1>{translate('group_management')}</h1>
 			<div className="card-columns">
 			    {this.state.groups}
 			</div>
 		    <div className="btn-group btn-group-lg" role="group">
-                    <button className="btn btn-primary" onClick={this.onClickAddGroup}>Add a group</button>
-                    <button className="btn btn-primary" disabled={true} onClick={this.onClickDeleteGroup}>Delete a group</button>
+                    <button className="btn btn-primary" onClick={this.onClickAddGroup}>{translate('add_group')}</button>
+                    <button className="btn btn-primary" disabled={true} onClick={this.onClickDeleteGroup}>{translate('delete_group')}</button>
 		    </div>
                 </div>
             )
@@ -216,7 +215,7 @@ class TeacherGroupManagement extends React.Component {
     }
 }
 
-Popup.registerPlugin('addGroup', function (callbackConfirm) {
+Popup.registerPlugin('addGroup', function (props, callbackConfirm) {
     let _group_name = '';
 
     let getGroupName = function (e) {
@@ -224,11 +223,11 @@ Popup.registerPlugin('addGroup', function (callbackConfirm) {
     };
 
     this.create({
-        title: 'Add group',
+        title: props.translate('add_group'),
         content: <AddGroup onChangeGroupName={getGroupName} />,
         buttons: {
             left: [{
-                text: 'Quit',
+                text: props.translate('cancel'),
                 className: null, // optional
                 action: function (popup) {
                     //do things
@@ -236,14 +235,14 @@ Popup.registerPlugin('addGroup', function (callbackConfirm) {
                 }
             }],
             right: [{
-                text: 'Confirm',
+                text: props.translate('confirm'),
                 className: 'success', // optional
                 action: function (popup) {
                     if (_group_name.length > 0) {
                         callbackConfirm(_group_name);
                         popup.close();
                     } else {
-                        alert("The new group must have a name !")
+                        alert(props.translate('error_group_name'))
                     }
 
                 }
@@ -257,4 +256,4 @@ Popup.registerPlugin('addGroup', function (callbackConfirm) {
 });
 
 
-export default connect(mapStateToProps)(TeacherGroupManagement);
+export default connect(mapStateToProps)(withTranslate(TeacherGroupManagement));

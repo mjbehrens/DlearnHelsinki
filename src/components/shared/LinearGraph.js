@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 import Spinner from 'react-spinner'
-
+import { withTranslate } from 'react-redux-multilingual';
 
 //redux setup
-import { ROUTES, BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
+import { BACKEND_API } from '../../constants.js';
 import { connect } from 'react-redux';
 
 
 let GET_ANSWERS = '';
-let GET_QUESTIONS_FOR_SURVEY = '';
 
 // VERY IMPORTANT !
 let params;
@@ -26,10 +24,8 @@ class LinearGraph extends Component {
 
     constructor(props) {
         super(props);
-
         params = this.props.parameters;
         compo = this;
-
 
         this.state = {
             data: {
@@ -50,7 +46,7 @@ class LinearGraph extends Component {
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        if ((params != nextProps.parameters) && (nextProps.parameters.progression !== null)) {
+        if ((params !== nextProps.parameters) && (nextProps.parameters.progression !== null)) {
             params = nextProps.parameters;
             //console.log(params);
             this.getDataForGraph();
@@ -143,24 +139,31 @@ class LinearGraph extends Component {
 
 
     collectData = function (progression) {
+        const { translate } = this.props;
 
         let max_theme_id = 0;
         let surveys = [];
 
         // extract the survey
         progression.forEach(function (survey) {
-
             let lisThemes = [];
-  
-            survey.themes.forEach(function (theme) {
 
+            survey.themes.forEach(function (theme) {
+              if (translate('dashboard') == 'Dashboard') {
                 lisThemes.push({
                     theme_id: theme.theme_id,
                     theme_title: theme.theme_title,
                     description: theme.description,
                     answer: (theme.answer).toFixed(1),
                 });
-
+                } else {
+                  lisThemes.push({
+                      theme_id: theme.theme_id,
+                      theme_title: theme.theme_title_fi,
+                      description: theme.description,
+                      answer: (theme.answer).toFixed(1),
+                  });
+                }
                 if (max_theme_id < theme.theme_id) {
                     max_theme_id = theme.theme_id;
                 }
@@ -187,7 +190,7 @@ class LinearGraph extends Component {
             // table of answer for this theme
             let values = [];
             let title = "";
-            // we create a new dataset for the theme  
+            // we create a new dataset for the theme
             newDatasets[i - 1] = {
                 label: 'Theme ' + i,
                 fill: false,
@@ -252,7 +255,7 @@ class LinearGraph extends Component {
         })
     }
 
-    //take a string and create a original color 
+    //take a string and create a original color
     stringToColour = function (str) {
 
         // default value if props null
@@ -284,6 +287,7 @@ class LinearGraph extends Component {
 
 
     render() {
+        const { translate } = this.props;
 
         // TODO : Scale for this graph
         // THIS DOES NOT WORK
@@ -291,7 +295,7 @@ class LinearGraph extends Component {
             title: {
                 display: true,
                 position: 'top',
-                text: 'progression',
+                text: translate('progression'),
             },
             responsive: true,
             maintainAspectRatio: true,
@@ -318,7 +322,7 @@ class LinearGraph extends Component {
             return (
                 <div className="jumbotron">
                     <h5>{this.props.name}</h5>
-                    No Data Found
+                    {translate('data_no_found')};
 				</div>
             );
         }
@@ -333,4 +337,4 @@ class LinearGraph extends Component {
     }
 }
 
-export default connect(mapStateToProps)(LinearGraph);
+export default connect(mapStateToProps)(withTranslate(LinearGraph));

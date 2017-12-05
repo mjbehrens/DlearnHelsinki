@@ -1,11 +1,12 @@
 import React from "react";
+import { withTranslate } from 'react-redux-multilingual';
 
 
 class AddStudent extends React.Component {
 
+
     constructor(props) {
         super(props);
-
         this.state = {
             getStudentSelected: false,
             createStudentSelected: true,
@@ -17,11 +18,12 @@ class AddStudent extends React.Component {
     }
 
     renderExistedStudent = function () {
+	const { translate } = this.props;
         let lst = this.props.allStudentsList;
         console.log(lst);
         let options = [];
         if (lst != null) {
-            options.push(<option value={-1}> {"select a student..."} </option>);
+            options.push(<option value={-1}> {translate('select_student')} </option>);
             lst.forEach(function (s) {
                 options.push(<option value={s._id}> {s.username} </option>)
             });
@@ -34,21 +36,32 @@ class AddStudent extends React.Component {
     }
 
     renderCreateNewStudent = function () {
+	const { translate } = this.props;
         return (
             <div hidden={this.state.createStudentSelected}>
-                <h6>Username:</h6><input type="text" placeholder={this.props.username}
+
+                <h6>{translate('username')} :</h6>
+                <p>
+                  <input type="text" placeholder={this.props.username}
                     onChange={this.props.onChangeUsername} />
-                <h6>Gender:</h6>
+                </p>
+                <h6>{translate('gender')} :</h6>
+                <p>
                 <select onChange={this.props.onChangeGender}>
-                    <option>Gender</option>
-                    <option>Male</option>
-                    <option>Female</option>
+                    <option>{translate('gender')} </option>
+                    <option>{translate('male')}</option>
+                    <option>{translate('female')}</option>
                 </select>
-                <h6>Age:</h6><input type="number" min={1} max={99} placeholder={this.props.age}
+                </p>
+                <p>
+                <h6>{translate('age')} :</h6><input type="number" min={1} max={99} placeholder={this.props.age}
                     onChange={this.props.onChangeAge} />
-                <h6>Password:</h6><input type="text" placeholder={this.props.password}
+                </p>
+                <p>
+                <h6>{translate('password')} :</h6><input type="text" placeholder={this.props.password}
                     onChange={this.props.onChangePassword} />
-                <p className="bg-warning">Please make sure you give the password to the student before closing this windows</p>
+                  </p>
+                <p className="bg-warning"> {translate('warning_password')}</p>
             </div>
         )
     }
@@ -86,17 +99,18 @@ class AddStudent extends React.Component {
     }
 
     render() {
+	const { translate } = this.props;
         return (
             <div>
 
 
-                <input type="checkbox" id="get" value={1} onChange={this.renderFrom.bind(this)} /> Get a existing student <br />
+                <input type="checkbox" id="get" value={1} onChange={this.renderFrom.bind(this)} /> {translate('existing_student')} <br />
                 {this.renderExistedStudent()}
 
                 <hr wight='2px' />
 
 
-                <input type="checkbox" id="create" value={2} onChange={this.renderFrom.bind(this)} /> Or create a new student <br />
+                <input type="checkbox" id="create" value={2} onChange={this.renderFrom.bind(this)} /> {translate('make_a_student')}<br />
                 {this.renderCreateNewStudent()}
             </div>
         )
@@ -106,4 +120,4 @@ class AddStudent extends React.Component {
 }
 
 
-export default AddStudent;
+export default withTranslate(AddStudent);

@@ -1,8 +1,8 @@
 import React from "react";
 import SurveyCreationForm from './teacherCompo/SurveyCreationForm.js'
+import { withTranslate } from 'react-redux-multilingual';
 
-
-class DefaultModal extends React.Component {
+class Default extends React.Component {
   render() {
     return (
 	<div className="modal-content">
@@ -24,12 +24,13 @@ class DefaultModal extends React.Component {
 }
 
 
-class OpenSurveyModal extends React.Component {
+class OpenSurvey extends React.Component {
   render() {
+    const { translate } = this.props;
     return (
 	<div className="modal-content">
 	    <div className="modal-header">
-	    <h5 className="modal-title" id="mainModalLabel">Creation of a new survey</h5>
+	    <h5 className="modal-title" id="mainModalLabel">{translate('creation_new_survey')}</h5>
 		<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 		    <span aria-hidden="true">&times;</span>
 		</button>
@@ -39,12 +40,12 @@ class OpenSurveyModal extends React.Component {
 		    onChangeTitle={this.props.getTitle}
 		    onChangeDescription={this.props.getDescription}
 		    onChangeThemes={this.props.getThemes}
-		    title={"New Survey"}
-		    description={"new survey for today\'s exercices"} />
+		    title={translate('new_survey')}
+		    description={translate('new_survey_descpription')} />
 	    </div>
 	    <div className="modal-footer">
-		<button type="button" className="btn btn-primary" data-dismiss="modal" data-target="#mainModal" onClick={() => this.props.requestToOpenSurvey(this.props.title, this.props.description, this.props.theme_ids)} disabled={!this.props.createButtonEnabled}>Create</button>
-	<button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		<button type="button" className="btn btn-primary" data-dismiss="modal" data-target="#mainModal" onClick={() => this.props.requestToOpenSurvey(this.props.title, this.props.description, this.props.theme_ids)} disabled={!this.props.createButtonEnabled}>{translate('create')}</button>
+	<button type="button" className="btn btn-secondary" data-dismiss="modal">{translate('cancel')}</button>
 	    </div>
 	</div>
     );
@@ -52,32 +53,66 @@ class OpenSurveyModal extends React.Component {
 }
 
 
-class CloseSurveyModal extends React.Component {
+class CloseSurvey extends React.Component {
   render() {
+    const { translate } = this.props;
     return (
 	<div className="modal-content">
 	    <div className="modal-header">
-		<h5 className="modal-title" id="mainModalLabel">Closing the current survey</h5>
+		<h5 className="modal-title" id="mainModalLabel">{translate('closing_survey')}</h5>
 		<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 		    <span aria-hidden="true">&times;</span>
 		</button>
 	    </div>
 	    <div className="modal-body">
-		<p>You are about to close the survey.<br />
-		The students will no longer be able to answer this survey after that.<br />
-		Do you really want to close the survey {this.props.survey.title} from {this.props.survey.start_date} ?</p>
+		<p>{translate('confirmation_text_close_survey', {title: this.props.survey.title}, {start_date: this.props.survey.start_date})}</p>
 	    </div>
 	    <div className="modal-footer">
-		<button type="button" className="btn btn-primary" data-dismiss="modal" data-target="#mainModal" onClick={this.props.requestToCloseSurvey}>Close Survey</button>
-		<button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		<button type="button" className="btn btn-primary" data-dismiss="modal" data-target="#mainModal" onClick={this.props.requestToCloseSurvey}>{translate('close_survey')}</button>
+		<button type="button" className="btn btn-secondary" data-dismiss="modal">{translate('cancel')}</button>
 	    </div>
 	</div>
     );
   }
 }
 
+
+class CompetenceWallLog extends React.Component {
+  render() {
+    const { translate } = this.props;
+    return (
+	<div className="modal-content">
+	    <div className="modal-header">
+		<h5 className="modal-title" id="mainModalLabel">Add an item</h5>
+		<button type="button" className="close" data-dismiss="modal" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		</button>
+	    </div>
+	    <div className="modal-body">
+		<p>Choose a type of item to add to the comparaison</p>
+		<div className="btn-group-vertical">
+		    <button type="button" className="btn btn-primary">Class</button>
+		    <button type="button" className="btn btn-primary">Group</button>
+		    <button type="button" className="btn btn-primary">Student</button>
+		</div>
+	    </div>
+	    <div className="modal-footer">
+		<button type="button" className="btn btn-secondary" data-dismiss="modal">{translate('cancel')}</button>
+	    </div>
+	</div>
+    );
+  }
+}
+
+
+const DefaultModal = withTranslate(Default);
+const OpenSurveyModal = withTranslate(OpenSurvey);
+const CloseSurveyModal = withTranslate(CloseSurvey);
+const CompetenceWallLogModal = withTranslate(CompetenceWallLog);
+
 export default {
-    DefaultModal,
-    OpenSurveyModal,
-    CloseSurveyModal,
+  DefaultModal,
+  OpenSurveyModal,
+  CloseSurveyModal,
+  CompetenceWallLogModal,
 };

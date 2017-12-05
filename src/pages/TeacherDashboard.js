@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-import { Link } from 'react-router-dom';
+import { withTranslate } from 'react-redux-multilingual'
 
 import OpenSurveyButton from '../components/teacherCompo/OpenSurveyButton.js';
 import HistoryButton from '../components/teacherCompo/HistoryButton.js';
 import GroupManagmentButton from '../components/teacherCompo/GroupManagmentButton.js';
+import CompetenceWallButton from '../components/teacherCompo/CompetenceWallButton.js';
 import HeadbandsLastResults from '../components/teacherCompo/HeadbandsLastResults.js';
 
 import { BACKEND_API } from '../constants.js';
-import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
 function mapStateToProps(store) {
@@ -47,6 +47,7 @@ class TeacherDashboard extends Component {
       lastSurveyDone: lastSurveyDone,
       openSurvey: openSurvey,
     };
+
   }
 
   componentDidMount() {
@@ -84,32 +85,35 @@ class TeacherDashboard extends Component {
   }
 
   // check the last survey that has been done
+  // Warning : if end_date is not return by the backend, return null.
   checkLastSurveyDone = function (surveys) {
 
     let lastSurvey = null;
 
     if (surveys.length > 0) {
-      // only look for closed surveys 
+      // only look for closed surveys
       let tempSurveys = surveys.filter(function (s) {
-        return s.open == false;
+        return s.open === false;
       });
 
       if (tempSurveys.length > 0) {
 
         // find the highest date of all surveys
-        let last_d = tempSurveys.map(function (s) { return s.end_date; }).sort().reverse()[0]
+        let last_d = tempSurveys.map(function (s) { return new Date(s.end_date);}).sort(function(a, b){return b - a;})[0]
         // get the survey that match this date
         lastSurvey = surveys.filter(function (s) {
-          return s.end_date == last_d;
+          let d = new Date(s.end_date)
+          return d.toString() === last_d.toString();
         })[0];
-
+        console.log("Last survey closed : ", lastSurvey)
       }
+
     }
     compo.setState({ lastSurveyDone: lastSurvey });
 
   }
 
-  // check if a survey is currently open 
+  // check if a survey is currently open
   checkIfSurveyOpen = function (surveys) {
 
     let noSurveyOpen = true;
@@ -139,12 +143,15 @@ class TeacherDashboard extends Component {
 
   // Display the  message that a survey is open
   renderInfoOpenSurvey = function (survey_title) {
-    // We assume that if the title is null 
+    const { translate } = this.props;
+    // We assume that if the title is null
     // then there is no survey open. With is kind of weak...
     if (survey_title != null) {
       return (
         <div className="container">
-          <p className="bg-info">the survey "<b>{survey_title}</b>" is open.</p>
+          <p className="bg-info">
+           {translate('survey_open', {title: survey_title})}
+          </p>
         </div>
       );
     }else{
@@ -159,7 +166,9 @@ class TeacherDashboard extends Component {
         <h1> {this.state.className} </h1>
 
         <div className="row">
-          <HeadbandsLastResults survey={this.state.lastSurveyDone} />
+
+         <HeadbandsLastResults survey={this.state.lastSurveyDone} />
+
         </div>
 
         {this.renderInfoOpenSurvey(this.state.openSurvey.title)}
@@ -168,6 +177,7 @@ class TeacherDashboard extends Component {
           <div className="card-deck">
             <OpenSurveyButton survey={this.state.openSurvey} callback={this.getAllSurveyREST.bind(this)} />
             <GroupManagmentButton />
+            <CompetenceWallButton />
             <HistoryButton />
           </div>
         </div>
@@ -178,6 +188,4 @@ class TeacherDashboard extends Component {
   }
 }
 
-export default connect(mapStateToProps)(TeacherDashboard);
-
-
+export default connect(mapStateToProps)(withTranslate(TeacherDashboard));

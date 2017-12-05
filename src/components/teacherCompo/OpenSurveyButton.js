@@ -1,11 +1,6 @@
 import React from "react";
-import jquery from 'jquery';
-import jQuery from 'jquery';
-import Popup from 'react-popup';
 import Spinner from 'react-spinner';
-
-// Popup form
-import SurveyCreationForm from './SurveyCreationForm.js'
+import { withTranslate } from 'react-redux-multilingual';
 
 // icons for the page
 import iconSurveyOpen from "../../res/icons/survey.svg";
@@ -13,7 +8,6 @@ import iconSurveyClose from "../../res/icons/close_survey.svg";
 
 import { connect } from 'react-redux';
 import { BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
 import * as modalActions from '../../actions/modalActions';
 
 
@@ -25,25 +19,22 @@ function mapStateToProps(store) {
 }
 
 
-let GET_SURVEYS = '';
 let POST_SURVEY = '';
 let POST_CLOSE_SURVEY = '';
-
-var surveys = [];
 
 class OpenSurveyButton extends React.Component {
 
     constructor(props) {
         super(props);
-        surveys = [];
+        const { translate } = this.props;
 
         this.state = {
             isLoading: true,
             disable: true,
-            text: "Open Survey",
+            text: translate('create_survey'),
             picture: iconSurveyOpen,
             teacherID: this.props.user.id,
-            classID: this.props.user.classid,     
+            classID: this.props.user.classid,
             survey: this.props.survey,
 	    modalProps: null,
 	    titleInput: "",
@@ -71,6 +62,7 @@ class OpenSurveyButton extends React.Component {
 
     // Call for updating the state with the survey
     updateState = (survey) => {
+        const { translate } = this.props;
 
         if (survey.open !== null) {
 	    let picture = null
@@ -78,10 +70,10 @@ class OpenSurveyButton extends React.Component {
 
             if (survey.open) {
 		picture = iconSurveyClose
-		text = "Close Survey"
+		text = translate('close_survey')
             } else {
 		picture = iconSurveyOpen
-		text = "Open Survey"
+		text = translate('create_survey')
             }
 	    this.setState({
 		...this.state,
@@ -183,7 +175,7 @@ class OpenSurveyButton extends React.Component {
 		// function to remove item
 		function removeItem(array, item) {
 		    for (var i in array) {
-			if (array[i] == item) {
+			if (array[i] === item) {
 			    array.splice(i, 1);
 			    break;
 			}
@@ -220,11 +212,11 @@ class OpenSurveyButton extends React.Component {
 			title: this.state.titleInput,
 			description: this.state.descriptionInput,
 			theme_ids: this.state.themesIdInput,
-			createButtonEnabled: createAllowed, 
+			createButtonEnabled: createAllowed,
 		    }
 		}, () => this.props.dispatch(modalActions.setModal('OpenSurveyModal', this.state.modalProps)));
 	    }
-	    
+
 		this.setState({
 		    ...this.state,
 		    modalProps: {
@@ -284,4 +276,4 @@ class OpenSurveyButton extends React.Component {
     }
 }
 
-export default connect(mapStateToProps)(OpenSurveyButton);
+export default connect(mapStateToProps)(withTranslate(OpenSurveyButton));

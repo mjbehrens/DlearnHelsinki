@@ -6,6 +6,7 @@ import promise from "redux-promise-middleware"
 import reducers from "./reducers"
 import storage from 'redux-persist/es/storage' // localStorage
 import thunk from "redux-thunk"
+import { IntlReducer as Intl } from 'react-redux-multilingual'
 
 // Configure Redux store
 
@@ -15,7 +16,9 @@ const config = {
   debug: SETTINGS.DEBUG,
 }
 
-const reducer = persistCombineReducers(config, reducers)
+const allReducers = Object.assign({}, reducers, {Intl})
+
+const reducer = persistCombineReducers(config, allReducers)
 const middleware = applyMiddleware(promise(), thunk, logger)
 
 function configureStore () {

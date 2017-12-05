@@ -1,25 +1,31 @@
-import React from "react";
 import $ from 'jquery';
+import { ACTION_TYPES } from '../constants.js'
 
-export default function reducer(state={
+const modalInitState = {
     modalType: 'DefaultModal',
     modalProps: {},
-  }, action) {
+}
+
+export default function reducer(state=modalInitState, action) {
 
     switch (action.type) {
-      case "SET_MODAL": {
+      case ACTION_TYPES.SET_MODAL: {
 	return {
 	  ...state,
 	  modalType: action.payload.type,
           modalProps: action.payload.props,
 	}
       }
-      case "SHOW_MODAL": {
+      case ACTION_TYPES.SHOW_MODAL: {
 	$("#mainModal").modal('show');
+	break;
       }
-      case "HIDE_MODAL": {
+      case ACTION_TYPES.HIDE_MODAL: {
 	$("#mainModal").modal('hide');
+	break;
       }
+	default:
+	    break;
     }
 
     return state

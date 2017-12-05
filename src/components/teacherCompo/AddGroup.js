@@ -1,18 +1,13 @@
 import React from "react";
-import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
+import { withTranslate } from 'react-redux-multilingual';
 
 class AddGroup extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
-
     render() {
-
+        const { translate } = this.props;
         return (
             <div>
-                <h6>Name:</h6><input type="text" placeholder={"group name"}
+                <h6>{translate('name')}  :</h6><input type="text" placeholder={translate('group_name_placeholder')}
                     onChange={this.props.onChangeGroupName} />
             </div>
         )
@@ -20,4 +15,4 @@ class AddGroup extends React.Component {
 }
 
 
-export default AddGroup;
+export default withTranslate(AddGroup);

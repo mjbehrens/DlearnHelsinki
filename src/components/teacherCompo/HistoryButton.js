@@ -1,22 +1,18 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import { withTranslate } from 'react-redux-multilingual';
 
 import iconHistory from "../../res/icons/history.svg";
-
-const style = {
-    padding: 50,
-    margin: 50,
-    textAlign: 'center',
-    background: 'orange'
-};
+import { ROUTES } from '../../constants.js';
 
 
 class HistoryButton extends React.Component {
 
     constructor(props) {
         super(props);
+        const { translate } = this.props;
         this.state = {
-            text: "History",
+            text: translate('history'),
             picture: iconHistory,
         }
     }
@@ -30,7 +26,7 @@ class HistoryButton extends React.Component {
 
 
             <div className="card">
-                <Link to="/history">
+                <Link to={ROUTES.HISTORY}>
                     <img className="card-img-top teacher-card-img" src={this.state.picture} width="100" height="100"
                         onClick={this.onClickHistory}
                         alt="survey icon" />
@@ -47,4 +43,4 @@ class HistoryButton extends React.Component {
 
 }
 
-export default HistoryButton;
+export default withTranslate(HistoryButton);

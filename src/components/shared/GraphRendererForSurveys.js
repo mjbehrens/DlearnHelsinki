@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import SpiderGraph from './SpiderGraph.js';
 import Spinner from 'react-spinner'
+import { withTranslate } from 'react-redux-multilingual';
 
-
-import { BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
 
@@ -37,14 +35,14 @@ class GraphRendererForSurveys extends Component {
         }
     }
 
-   
+
     componentDidMount() {
-      
+
     }
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        if (this.props != nextProps) {
+        if (this.props !== nextProps) {
            groups = nextProps.groups;
         }
     }
@@ -105,6 +103,7 @@ class GraphRendererForSurveys extends Component {
     }
 
     render() {
+        const { translate } = this.props;
 
         if (this.state.isLoading) {
             return (
@@ -117,9 +116,9 @@ class GraphRendererForSurveys extends Component {
                 <div>
                     <h3>{compo.props.survey.title}</h3>
                     <div>
-                        <button style={buttonStyle} className="btn btn-primary" onClick={this.loadClassGraphs.bind(this)}>Class</button>
-                        <button style={buttonStyle} className="btn btn-primary" onClick={this.loadGroupsGraphs.bind(this)}>Groups</button>
-                        <button style={buttonStyle} className="btn btn-primary" onClick={this.loadStudentsGraphs.bind(this)}>Students</button>
+                        <button style={buttonStyle} className="btn btn-primary" onClick={this.loadClassGraphs.bind(this)}>{translate('class')}</button>
+                        <button style={buttonStyle} className="btn btn-primary" onClick={this.loadGroupsGraphs.bind(this)}>{translate('groups')}</button>
+                        <button style={buttonStyle} className="btn btn-primary" onClick={this.loadStudentsGraphs.bind(this)}>{translate('students')}</button>
                     </div>
                     <div>
                         <br />
@@ -133,4 +132,4 @@ class GraphRendererForSurveys extends Component {
     }
 
 }
-export default connect(mapStateToProps)(GraphRendererForSurveys);
+export default connect(mapStateToProps)(withTranslate(GraphRendererForSurveys));

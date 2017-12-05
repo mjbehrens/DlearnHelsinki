@@ -16,13 +16,13 @@ class HistoryDisplay extends Component {
             searchData: [],
         }
     }
-    //    
-    //    shouldComponentUpdate(nextProps, nextState) {       
-    //        return nextProps.searchData !== this.props.searchData; 
-    //    } 
+    //
+    //    shouldComponentUpdate(nextProps, nextState) {
+    //        return nextProps.searchData !== this.props.searchData;
+    //    }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props != nextProps) {
+        if (this.props !== nextProps) {
             this.setState({
                 //...this.state,
                 searchData: nextProps.searchData
@@ -42,7 +42,7 @@ class HistoryDisplay extends Component {
     }
 
     onClickItem = function (id) {
-        // TODO : change color of the button 
+        // TODO : change color of the button
         this.props.loadResult(id);
     }
 

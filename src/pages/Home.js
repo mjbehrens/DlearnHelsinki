@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../constants.js';
+import { withTranslate } from 'react-redux-multilingual'
 
 function mapStateToProps(store) {
     return {
@@ -15,34 +16,34 @@ class Home extends Component {
 	super(props);
 	this.state = {
 	    goTo: ROUTES.ROOT
-
 	};
     }
 
-	
+
   render() {
-  
+    const { translate } = this.props;
       let buttonRedirect = ROUTES.LOGIN
-      let buttonText = 'Log in »'
+      let buttonText = translate('log_in')
       if (this.props.user.loggedin) {
 	  if (this.props.user.type === 'teacher') {
 	      buttonRedirect = ROUTES.TEACHER_DASHBOARD
 	  } else {
 	      buttonRedirect = ROUTES.STUDENT_DASHBOARD
 	  }
-	  buttonText = 'Dashboard »'
+	  buttonText = translate('dashboard')
       }
-	  
+
     return (
+
 	<div className="container">
 	    <div className="jumbotron">
 		<h1>Dlearn.Helsinki</h1>
-		<p>Learning global competencies with new pedagogical tools</p>
-	    <Link to={buttonRedirect}><button className="btn btn-lg btn-primary" role="button">{buttonText}</button></Link>
+		<p>{translate('slogan')}</p>
+	    <Link to={buttonRedirect}><button className="btn btn-lg btn-primary">{buttonText} »</button></Link>
 	    </div>
 	</div>
           );
   }
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(withTranslate(Home));

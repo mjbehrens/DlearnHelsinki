@@ -18,7 +18,7 @@ html, body {
     position: relative;
     min-height: 100vh;
 }
-    
+
 body {
     padding-bottom: var(--footer-height);
 }
@@ -43,8 +43,9 @@ h1 {
     margin-bottom: 20px;
 }
 
-.footer-icon {
+#footer-icon {
     height: 50px;
+    margin-right: 10px;
 }
 
 /* Fix form input validation css on firefox */
@@ -93,6 +94,9 @@ input.inputModified:invalid {
     pointer-events: none;
     opacity: 0.4;
 }
+#button-translate {
+	 margin-right: 10px;
+}
 
 /* CSS SPINNER */
 .spinner-container{
@@ -100,14 +104,14 @@ input.inputModified:invalid {
     bottom: 0px;
     right: 0px;
     width: 50%;
-    height: 50%;  
+    height: 50%;
 }
 
 .react-spinner {
   position: relative;
   width: 100px;
-  height: 20px;  
- 
+  height: 20px;
+
 }
 
 .react-spinner_bar {

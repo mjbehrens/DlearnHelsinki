@@ -1,19 +1,18 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { withTranslate } from 'react-redux-multilingual';
 
-import iconGrpManagment from "../../res/icons/manage_groups.svg";
+
+import iconCompetenceWall from "../../res/icons/competence_wall.png";
 import { ROUTES } from '../../constants.js';
 
 
-class GroupManagmentButton extends React.Component {
+class CompetenceWallButton extends React.Component {
 
     constructor(props) {
         super(props);
-        const { translate } = this.props;
         this.state = {
-            text: translate('group_management'),
-            picture: iconGrpManagment,
+            text: "Competence Wall",
+            picture: iconCompetenceWall,
         }
     }
 
@@ -24,7 +23,7 @@ class GroupManagmentButton extends React.Component {
     render() {
         return (
             <div className="card">
-                <Link to={ROUTES.GROUP_MANAGEMENT}>
+                <Link to={ROUTES.COMPETENCE_WALL}>
                     <img className="card-img-top teacher-card-img" src={this.state.picture} width="100" height="100"
                         onClick={this.onClickSurvey}
                         alt="survey icon" />
@@ -38,5 +37,4 @@ class GroupManagmentButton extends React.Component {
 
 }
 
-
-export default withTranslate(GroupManagmentButton);
+export default CompetenceWallButton;

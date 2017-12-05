@@ -1,14 +1,11 @@
 import React from "react";
-import { Link } from 'react-router-dom';
 import Popup from 'react-popup';
-import { ROUTES, BACKEND_API } from '../../constants.js';
-
+import { BACKEND_API } from '../../constants.js';
+import { withTranslate } from 'react-redux-multilingual';
 
 import InfoStudent from "./InfoStudent";
-import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
 import AddStudent from "./AddStudent";
 
-import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
 function mapStateToProps(store) {
@@ -40,10 +37,11 @@ class Group extends React.Component {
     }
 
     /*
-    + Requiere the group_id to be pass when the button is render. otherwise it won't work 
+    + Requiere the group_id to be pass when the button is render. otherwise it won't work
     + this should be investiget
     */
     onClickAddStudent = function (group_id, allStudentsList) {
+        const { translate } = this.props;
         Popup.plugins().addStudent((infoStudent) => {
             console.log(infoStudent);
             let data = JSON.stringify({
@@ -75,18 +73,18 @@ class Group extends React.Component {
                     compo.props.callbackGM();
                 } else {
                     console.log('Network response was not ok.');
-                    alert("Error while creating the account. Please check if this account does not already exist.");
+                    alert(translate('error_check_username'));
                 }
             }).catch(function (err) {
                 // Error :(
                 console.log(err);
                 alert(err);
             });
-        }, allStudentsList);
+        }, allStudentsList, this.props);
     }
 
     onClickStudent = (student) => {
-        Popup.plugins().studentInformation(this.updateState, student, this.props.listGroups);
+        Popup.plugins().studentInformation(this.updateState, student, this.props.listGroups, this.props);
     }
 
     render() {
@@ -109,39 +107,42 @@ class Group extends React.Component {
     }
 }
 
-Popup.registerPlugin('studentInformation', function (callbackConfirm, student, listGroups) {
+Popup.registerPlugin('studentInformation', function (callbackConfirm, student, listGroups, props) {
     let _gender = null;
     let _age = null;
     let _studentId = null;
     let _applied_changes = false;
 
     let getGender = function (e) {
-        _gender = e.target.value;
+        if (e.target.value === 'male') {
+          _gender = props.translate('male');
+        } else {
+          _gender = props.translate('female');
+        }
     };
     let getAge = function (e) {
         _age = e.target.value;
-    };
-    let getStudentId = function (e) {
-        _studentId = e.target.value;
     };
     let getChanges = function (hasChanged) {
         _applied_changes = hasChanged;
     };
 
+
+
     this.create({
-        title: 'Student information',
+        title: props.translate('student_info'),
         content: <InfoStudent
             onChangeGender={getGender}
             onChangeAge={getAge}
             onChangesToApply={getChanges}
             username={student.username}
-            gender={student.gender}
+            gender={props.translate(student.gender)}
             age={student.age}
             listGroups={listGroups}
             studentId={student._id} />,
         buttons: {
             left: [{
-                text: 'Quit',
+                text: props.translate('quit'),
                 className: null,
                 action: function (popup) {
                     //this is bad...
@@ -160,7 +161,7 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
     });
 });
 
-Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
+Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList, props) {
     let _id = null;
     let _username = '';
     let _age = 0;
@@ -171,7 +172,7 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
         let id = e.target.value;
 
         let student = allStudentsList.filter(function (stud) {
-            return stud._id == id;
+            return stud._id === id;
         })[0];
 
         if (student !== null) {
@@ -195,7 +196,11 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
     };
 
     let getGender = function (e) {
-        _gender = e.target.value;
+      if (e.target.value === props.translate('male')) {
+        _gender = 'male';
+      } else {
+        _gender = 'female';
+      }
     };
 
     let getPassword = function (e) {
@@ -204,14 +209,14 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
 
     let checkForm = function () {
 
-        console.log("student info");        
+        console.log("student info");
         console.log(_username.length);
         console.log(_password.length);
         console.log(_gender.length);
-        
+
         if ((_username.length >= 5)
-            && (_age > 1) 
-            && (_password.length >= 5) 
+            && (_age > 1)
+            && (_password.length >= 5)
             && (_gender.length > 1) ) {
             return true;
         } else {
@@ -220,20 +225,20 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
     }
 
     this.create({
-        title: 'Add student',
+        title: props.translate('add_student'),
         content: <AddStudent
             onChangeSelect={onSelectStudent}
             onChangeUsername={getUsername}
             onChangeAge={getAge}
             onChangeGender={getGender}
             onChangePassword={getPassword}
-            username={"5 letters min"}
+            username={props.translate('min_5_char')}
             age={"7"}
-            password={"5 letters min"}
+            password={props.translate('min_5_char')}
             allStudentsList={allStudentsList} />,
         buttons: {
             left: [{
-                text: 'Quit',
+                text: props.translate('cancel'),
                 className: null, // optional
                 action: function (popup) {
                     //do things
@@ -241,7 +246,7 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
                 }
             }],
             right: [{
-                text: 'Confirm',
+                text: props.translate('confirm'),
                 className: 'success', // optional
                 action: function (popup) {
                     if (checkForm()) {
@@ -263,7 +268,7 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
                         }
                         popup.close();
                     } else {
-                        alert('The information are not filled correctly.')
+                        alert(props.translate('error_info_not_right'))
                     }
 
                 }
@@ -276,4 +281,4 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList) {
     });
 });
 
-export default connect(mapStateToProps)(Group);
+export default connect(mapStateToProps)(withTranslate(Group));

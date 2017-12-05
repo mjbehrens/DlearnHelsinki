@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router'
 import Slider from 'rc-slider';
 import Spinner from 'react-spinner'
+import { withTranslate } from 'react-redux-multilingual';
 
 import { ROUTES, BACKEND_API } from '../constants.js';
 import Star from '../components/Star.js';
-import * as userActions from '../actions/userActions';
 
 // use 'require' to ensure the import order is respected
 require('rc-slider/assets/index.css');
@@ -21,11 +20,15 @@ function mapStateToProps(store) {
 let GET_QUESTIONS_FOR_SURVEY = '';
 let PUT_QUESTION_ANSWER = ''; //needs one more parameters
 
+
+//TODO translation for questions, how to check wich language is now using and then taking that json option?
+
 class StudentSurveyQuestion extends Component {
 
     constructor(props) {
         super(props);
 
+        const { translate } = this.props;
         try {
             console.log(this.props.location.state.survey_id)
         } catch (err) {
@@ -36,7 +39,7 @@ class StudentSurveyQuestion extends Component {
 	}
 
         this.state = {
-            buttonValue: 'Next',
+            buttonValue: translate('next'),
             redirect: false,
 	    loading: true,
 	    surveyFinished: false,
@@ -45,13 +48,15 @@ class StudentSurveyQuestion extends Component {
             survey_title: this.props.location.state.survey_title,
             survey: [{
                 id: 0,
-                question: 'Loading the survey...',
+                question: translate('loading_survey'),
+                question_fi: null,
                 min_answer: 0,
                 max_answer: 0,
             },],
             currentQuestion: {
                 id: 0,
-                question: 'Loading the survey...',
+                question: translate('loading_survey'),
+                question_fi: null,
                 min_answer: 0,
                 max_answer: 0,
             },
@@ -84,10 +89,12 @@ class StudentSurveyQuestion extends Component {
                         let q = {
                             id: e._id,
                             question: e.question,
+                            question_fi: e.question_fi,
                             min_answer: e.min_answer,
                             max_answer: e.max_answer,
                         }
                         survey.push(q);
+
                     }, this);
 
 
@@ -125,7 +132,7 @@ class StudentSurveyQuestion extends Component {
             body: data
         }).then(function (response) {
             if (response.ok) {
-                console.log("answer put on server")
+                console.log("Answer put on server")
             } else {
                 console.log('Network response was not ok.');
             }
@@ -139,7 +146,8 @@ class StudentSurveyQuestion extends Component {
     // update the state
     onSliderChange = (value) => {
         this.setState({
-            ...this.state.startPoint = value,
+            ...this.state,
+	    startPoint: value,
         });
     }
 
@@ -154,28 +162,32 @@ class StudentSurveyQuestion extends Component {
             this.postQuestionsAnswerREST(data);
             //check if message send correctly
 
-            this.state.index = this.state.index + 1;
             this.setState({
                 ...this.state,
-                currentQuestion: this.state.survey[this.state.index]
+		index: this.state.index + 1,
+                currentQuestion: this.state.survey[this.state.index],
             });
 
             //for the last click on the button
             if (this.state.index === this.state.survey.length) {
 		// survey is finished
                 this.setState({
-                    ... this.state,
+                    ...this.state,
 		    surveyFinished: true,
                 });
             }
 
         } else {
-            this.setState({ ...this.state.redirect = true })
+            this.setState({
+		...this.state,
+		redirect: true,
+	    })
         }
     }
-    
+
 
     render() {
+        const { translate } = this.props;
         // if survey finish (no more survey)
         if (this.state.redirect) {
             this.props.history.push({
@@ -185,26 +197,30 @@ class StudentSurveyQuestion extends Component {
         } else if (this.state.loading) {
             return (
 		<div className="login-form">
-		    <h1>Survey "{this.state.survey_title}"</h1>
+		    <h1>{translate('survey')}  "{this.state.survey_title}"</h1>
 		    <div className="spinner-container">
 			<Spinner />
 		    </div>
 		</div>
             );
 	} else {
-
-            return (
-                <div className="container centered">
-		    <h1>Survey "{this.state.survey_title}"</h1>
-		    { !this.state.surveyFinished &&
-		    <div>
-                    <p>{this.state.currentQuestion.question}</p>
-                    <Slider
-                        min={this.state.currentQuestion.min_answer}
-                        max={this.state.currentQuestion.max_answer} dots={true}
-                        value={this.state.startPoint}
-                        onChange={this.onSliderChange} />
-
+    let questionNow = this.state.currentQuestion.question_fi;
+       if (this.props.translate('survey') === 'Survey') {
+         questionNow = this.state.currentQuestion.question;
+       }
+               return (
+                   <div className="container centered">
+          <h1>{this.props.translate('survey')} "{this.state.survey_title}"</h1>
+          { !this.state.surveyFinished &&
+          <div>
+                       <p>{questionNow}</p>
+                       <p>
+                       <Slider
+                           min={this.state.currentQuestion.min_answer}
+                           max={this.state.currentQuestion.max_answer} dots={true}
+                           value={this.state.startPoint}
+                           onChange={this.onSliderChange} />
+                       </p>
                     <p> <Star actual_size = {this.state.startPoint} max_size = {this.state.currentQuestion.max_answer} />
                         <h5>{this.state.startPoint}/{this.state.currentQuestion.max_answer} </h5>
                     </p>
@@ -212,16 +228,16 @@ class StudentSurveyQuestion extends Component {
 		    }
 		{ this.state.surveyFinished &&
 		  <div className="alert alert-info" role="alert">
-		  You finished the survey !
+		    {translate('finish_survey')}
                   </div>
 		}
                         <button type="button"
                             className="btn btn-primary"
-                onClick={this.onClickNext}>{this.state.surveyFinished ? 'Quit' : 'Next'}</button>
+                onClick={this.onClickNext}>{this.state.surveyFinished ? translate('quit') : translate('next')}</button>
                 </div>
             );
         }
     }
 }
 
-export default connect(mapStateToProps)(StudentSurveyQuestion);
+export default connect(mapStateToProps)(withTranslate(StudentSurveyQuestion));

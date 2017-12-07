@@ -130,6 +130,14 @@ input.inputModified:invalid {
   left: -10%;
 }
 
+.hoverCard {
+    color: #507CBA;
+}
+.hoverCard:hover {
+    color: #44618C;
+    text-decoration: underline;
+}
+
 @keyframes react-spinner_spin {
  0% { opacity: 1; }
  100% { opacity: 0.15; }

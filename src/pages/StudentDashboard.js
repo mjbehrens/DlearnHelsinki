@@ -244,7 +244,7 @@ class StudentDashboard extends Component {
 			groups: null,
 			surveys: 27,
 			name: "student result",
-			request : "students/1/survey_averages",
+			request: "students/1/survey_averages",
 
 		},
 		{
@@ -254,7 +254,7 @@ class StudentDashboard extends Component {
 			groups: null,
 			surveys: 27,
 			name: "(Fake) class result",
-			request : "students/1/classes/1/class_averages",
+			request: "students/1/classes/1/class_averages",
 		},
 		{
 			teachers: null,
@@ -263,7 +263,7 @@ class StudentDashboard extends Component {
 			groups: null,
 			surveys: 27,
 			name: "(Fake) group result",
-			request : "students/1/classes/1/group_averages",
+			request: "students/1/classes/1/group_averages",
 		}
 		];
 
@@ -312,11 +312,13 @@ class StudentDashboard extends Component {
 		if (this.state.disabledSurvey) {
 			return (
 				<div className="card card-inverse w-100">
-					<img className="card-img-top teacher-card-img" src={iconSurveyClose} width="100" height="100"
+					<div className="hoverCard">
+						<img className="card-img-top teacher-card-img" src={iconSurveyClose} width="100" height="100"
 
-						alt="profil icon" />
-					<div className="card-body">
-						<h4 className="card-title">{"Survey"}</h4>
+							alt="profil icon" />
+						<div className="card-body">
+							<h4 className="card-title">{"Survey"}</h4>
+						</div>
 					</div>
 				</div>
 			)
@@ -325,10 +327,12 @@ class StudentDashboard extends Component {
 		} else {
 			return (
 				<div className="card card-inverse w-100" onClick={this.startSurvey}>
-					<img className="card-img-top teacher-card-img" src={iconSurveyOpen} width="100" height="100"
-						alt="profil icon" />
-					<div className="card-body">
-						<h4 className="card-title">{"Survey"}</h4>
+					<div className="hoverCard">
+						<img className="card-img-top teacher-card-img" src={iconSurveyOpen} width="100" height="100"
+							alt="profil icon" />
+						<div className="card-body">
+							<h4 className="card-title">{"Survey"}</h4>
+						</div>
 					</div>
 				</div>
 			)
@@ -343,12 +347,16 @@ class StudentDashboard extends Component {
 
 	renderProfileButton = function () {
 		return (
+
 			<div className="card card-inverse w-100" onClick={this.showProfile}>
-				<img className="card-img-top teacher-card-img" src={iconGrpManagment} width="100" height="100"
-					alt="profil icon"
-				/>
-				<div className="card-body">
-					<h4 className="card-title">{"My Profile"}</h4>
+				<div className="hoverCard">
+					<img className="card-img-top teacher-card-img" src={iconGrpManagment} width="100" height="100"
+						alt="profil icon"
+					/>
+					<div className="card-body">
+
+						<h4 className="card-title">{"My Profile"}</h4>
+					</div>
 				</div>
 			</div >
 		)
@@ -358,11 +366,13 @@ class StudentDashboard extends Component {
 	renderCompetenceWallButton = function () {
 		return (
 			<div className="card card-inverse w-100" onClick={this.showCompetenceWall}>
-				<img className="card-img-top teacher-card-img" src={iconMyCompetenceWall} width="100" height="100"
-					alt="competence wall icon"
-				/>
-				<div className="card-body">
-					<h4 className="card-title">{"My Competence Wall"}</h4>
+				<div className="hoverCard">
+					<img className="card-img-top teacher-card-img" src={iconMyCompetenceWall} width="100" height="100"
+						alt="competence wall icon"
+					/>
+					<div className="card-body">
+						<h4 className="card-title">{"My Competence Wall"}</h4>
+					</div>
 				</div>
 			</div>
 		)

@@ -20,14 +20,28 @@ class CompetenceWall extends Component {
         super(props);
         this.state = {
             view: "competence",
+            buttonState1: "btn btn-primary",
+            buttonState2: "btn btn-secondary"
         };
     }
 
     selectView = (newView) => {
-        this.setState({
-            ...this.state,
-            view: newView,
-        })
+
+        if(newView=="competence"){
+            this.setState({
+                ...this.state,
+                buttonState1: "btn btn-primary",
+                buttonState2: "btn btn-secondary",
+                view: newView,
+            })
+        }else {
+            this.setState({
+                ...this.state,
+                buttonState1: "btn btn-secondary",
+                buttonState2: "btn btn-primary",
+                view: newView,
+            })
+        }
     }
 
 
@@ -54,12 +68,13 @@ class CompetenceWall extends Component {
                 <h1>Competence Wall</h1>
                 <br />
                 <div className="btn-group btn-group-lg" role="group">
-                    <button className="btn btn-primary" onClick={() => this.selectView('competence')}>Competence</button>
-                    <button className="btn btn-primary" onClick={() => this.selectView('progression')}>Progression</button>
+                    <button className={this.state.buttonState1} onClick={() => this.selectView('competence')}>Competence</button>
+                    <button className={this.state.buttonState2} onClick={() => this.selectView('progression')}>Progression</button>
                 </div>
                 <br /><br /><br />
                 {this.state.view === 'competence' ? <CompetenceRender /> : <ProgressionRender />}
-                {//<DataCollector parameters={parameters} name="toto" color="black"/>
+                {
+                    
                 }
                 <br />
             </div>

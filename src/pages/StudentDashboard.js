@@ -244,7 +244,7 @@ class StudentDashboard extends Component {
 			groups: null,
 			surveys: 27,
 			name: "student result",
-			request: "students/1/survey_averages",
+			request: "students/"+this.props.user.id+"/survey_averages",
 
 		},
 		{
@@ -254,7 +254,7 @@ class StudentDashboard extends Component {
 			groups: null,
 			surveys: 27,
 			name: "(Fake) class result",
-			request: "students/1/classes/1/class_averages",
+			request: "students/"+this.props.user.id+"/classes/"+this.props.user.classid+"/class_averages",
 		},
 		{
 			teachers: null,
@@ -263,7 +263,7 @@ class StudentDashboard extends Component {
 			groups: null,
 			surveys: 27,
 			name: "(Fake) group result",
-			request: "students/1/classes/1/group_averages",
+			request: "students/"+this.props.user.id+"/classes/"+this.props.user.classid+"/group_averages",
 		}
 		];
 
@@ -312,14 +312,12 @@ class StudentDashboard extends Component {
 		if (this.state.disabledSurvey) {
 			return (
 				<div className="card card-inverse w-100">
-					<div className="hoverCard">
 						<img className="card-img-top teacher-card-img" src={iconSurveyClose} width="100" height="100"
 
 							alt="profil icon" />
 						<div className="card-body">
 							<h4 className="card-title">{"Survey"}</h4>
 						</div>
-					</div>
 				</div>
 			)
 

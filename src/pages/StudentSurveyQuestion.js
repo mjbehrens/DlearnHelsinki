@@ -153,6 +153,20 @@ class StudentSurveyQuestion extends Component {
   }
   // todo add go back functionality
   onClickBack = () => {
+    answers.splice(-1,1)
+    var index = this.state.index
+    if (!this.state.surveyFinished) {
+      var index = this.state.index - 1
+    }
+    //check if message send correctly
+    this.setState({
+      ...this.state,
+      index: index,
+      currentQuestion: this.state.survey[index],
+      startPoint: 1,
+      progress: (this.state.progress - 100/this.state.survey.length ),
+      surveyFinished: false,
+    });
   }
 
   onClickNext = () => {
@@ -223,25 +237,24 @@ class StudentSurveyQuestion extends Component {
       }
       return (
         <div className="container centered">
-          <p>
             <div>
               <Progress id="progressbar" completed={this.state.progress} />
             </div>
-          </p>
           <h1>{this.props.translate('survey')} "{this.state.survey_title}"</h1>
           { !this.state.surveyFinished &&
             <div>
               <p>{questionNow}</p>
-              <p>
+              <div id="slide">
                 <Slider
                   min={this.state.currentQuestion.min_answer}
                   max={this.state.currentQuestion.max_answer} dots={true}
                   value={this.state.startPoint}
                   onChange={this.onSliderChange} />
-              </p>
-              <p> <Star actual_size = {this.state.startPoint} max_size = {this.state.currentQuestion.max_answer} />
+              </div>
+              <div id="star"> <Star actual_size = {this.state.startPoint} max_size = {this.state.currentQuestion.max_answer} />
+              </div>
               <h5>{this.state.startPoint}/{this.state.currentQuestion.max_answer} </h5>
-            </p>
+
           </div>
         }
         { this.state.surveyFinished &&
@@ -249,14 +262,18 @@ class StudentSurveyQuestion extends Component {
             {translate('finish_survey')}
           </div>
         }
-        <button type="button" id="back-button"
-          className="btn btn-primary"
-          onClick={this.onClickBack}>{ translate('back') }
-        </button>
+        <div className="container centered" id="buttons">
+        { this.state.index > 0 &&
+          <button type="button" id="back-button"
+            className="btn btn-primary"
+            onClick={this.onClickBack}>{ translate('back') }
+          </button>
+        }
         <button type="button" id="next-button"
           className="btn btn-primary"
           onClick={this.onClickNext}>{this.state.surveyFinished ? translate('quit') : translate('next')}
         </button>
+        </div>
       </div>
     );
   }

@@ -64,6 +64,7 @@ module.exports = {
 
       //StudentSurveyQuestion
       next: 'Next',
+      back: 'Back',
       loading_survey: 'Loading the survey...',
       finish_survey: 'You finished the survey !',
 
@@ -219,6 +220,7 @@ module.exports = {
 
       //StudentSurveyQuestion
       next: 'Seuraava',
+      back: 'Takaisin',
       loading_survey: 'Ladataan kyselyä...',
       finish_survey: 'Olet suorittanut kyselyn !',
 
@@ -281,7 +283,7 @@ module.exports = {
       reset_password: 'Päivitä salasana',
 
       //Group
-      error_check_username: 'Vihre uuden käyttäjän luonnissa. Varmista, ettei käyttäjää ole jo olemassa.',
+      error_check_username: 'Virhe uuden käyttäjän luonnissa. Varmista, ettei käyttäjää ole jo olemassa.',
       student_info: 'Oppilastiedot',
       quit: 'Sulje',
 

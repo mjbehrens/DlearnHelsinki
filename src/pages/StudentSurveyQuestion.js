@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Slider from 'rc-slider';
 import Spinner from 'react-spinner'
 import { withTranslate } from 'react-redux-multilingual';
-
+import Progress from 'react-progressbar';
 import { ROUTES, BACKEND_API } from '../constants.js';
 import Star from '../components/Star.js';
 
@@ -60,7 +60,8 @@ class StudentSurveyQuestion extends Component {
         min_answer: 0,
         max_answer: 0,
       },
-      startPoint: 1
+      startPoint: 1,
+      progress: 1
     }
 
     GET_QUESTIONS_FOR_SURVEY = 'students/' + this.props.user.id + '/classes/' + this.props.user.classid + '/surveys/' + this.state.survey_id + '/questions';
@@ -173,7 +174,8 @@ class StudentSurveyQuestion extends Component {
         ...this.state,
         index: index,
         currentQuestion: this.state.survey[index],
-        startPoint: 1
+        startPoint: 1,
+        progress: (this.state.progress + 100/this.state.survey.length ),
       });
       //for the last click on the button
       if (index === this.state.survey.length) {
@@ -182,6 +184,7 @@ class StudentSurveyQuestion extends Component {
         this.setState({
           ...this.state,
           surveyFinished: true,
+          progress: 100,
         });
       }
 
@@ -220,11 +223,15 @@ class StudentSurveyQuestion extends Component {
       }
       return (
         <div className="container centered">
+          <p>
+            <div>
+              <Progress id="progressbar" completed={this.state.progress} />
+            </div>
+          </p>
           <h1>{this.props.translate('survey')} "{this.state.survey_title}"</h1>
           { !this.state.surveyFinished &&
             <div>
               <p>{questionNow}</p>
-              <p>{this.state.index}</p>
               <p>
                 <Slider
                   min={this.state.currentQuestion.min_answer}
@@ -242,11 +249,11 @@ class StudentSurveyQuestion extends Component {
             {translate('finish_survey')}
           </div>
         }
-        <button type="button"
+        <button type="button" id="back-button"
           className="btn btn-primary"
-          onClick={this.onClickBack}>{ 'back' }
+          onClick={this.onClickBack}>{ translate('back') }
         </button>
-        <button type="button"
+        <button type="button" id="next-button"
           className="btn btn-primary"
           onClick={this.onClickNext}>{this.state.surveyFinished ? translate('quit') : translate('next')}
         </button>

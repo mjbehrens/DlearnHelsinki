@@ -52,8 +52,6 @@ class StudentProfile extends Component {
                         </li>
                     </ul>
                 </div>
-                <br/>
-                Strengths and weaknesses:
             </div>
         )
     }

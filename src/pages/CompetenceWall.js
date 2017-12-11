@@ -39,14 +39,14 @@ class CompetenceWall extends Component {
             classes: 1,
             groups: null,
             surveys: 27,
-          },
-          {
+        },
+        {
             teachers: this.props.user.id,
             students: 12,
             classes: 1,
             groups: null,
             surveys: 27,
-          }
+        }
         ]
 
         return (

@@ -14,12 +14,32 @@
     width: 35%;
     min-width: 120px;
     margin: auto;
+    margin-bottom: 20px;
+}
+
+#slide {
+    margin: 20px;
+}
+
+#star {
+    height: 75px;
+    align-self: center;
+    display: inline-block;
+    float: center;
+}
+
+#buttons {
+    margin-top: 20px;
+    overflow: auto;
+    max-width: 300px;
 }
 
 #back-button {
-    margin-right: 40px;
+    display: inline-block;
+    float: left;
 }
 
 #next-button {
-    margin-left: 40px;
+    display: inline-block;
+    float: right;
 }

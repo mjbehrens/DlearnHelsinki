@@ -98,6 +98,10 @@ input.inputModified:invalid {
 	 margin-right: 10px;
 }
 
+#studentProfile {
+    max-width: 400px;
+}
+
 /* CSS SPINNER */
 .spinner-container{
     position: absolute;
@@ -125,6 +129,14 @@ input.inputModified:invalid {
   height: 7.8%;
   top: -3.9%;
   left: -10%;
+}
+
+.hoverCard {
+    color: #507CBA;
+}
+.hoverCard:hover {
+    color: #44618C;
+    text-decoration: underline;
 }
 
 @keyframes react-spinner_spin {

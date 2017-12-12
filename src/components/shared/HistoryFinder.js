@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import moment from 'moment';
-import Calendar from 'react-input-calendar';
 import 'react-input-calendar/style/index.css';
 import { withTranslate } from 'react-redux-multilingual';
 // http://voidcanvas.com/react-tutorial-understanding-and-making-the-first-application/
@@ -14,19 +12,10 @@ const margins = {
     margin: '5px'
 }
 
-const pickDate = {
-    margin: '5px',
-    position: 'relative',
-    zIndex: '30'
-}
-
 class HistoryFinder extends Component {
 
     constructor(props) {
-        var rangeStart = null;
-        var rangeEnd = null;
         super(props);
-        const {translate} = this.props;
         this.changeStart = this.changeStart.bind(this);
         this.changeEnd = this.changeEnd.bind(this);
     }
@@ -51,19 +40,20 @@ class HistoryFinder extends Component {
 
 
     render() {
+        const { translate } = this.props;
 
         return (
             <div>
                 <div className="searchBar">
                     <input type="text"
                         style={margins}
-                        placeholder={this.props.translate('search')}
+                        placeholder={translate('search')}
                         value={this.props.query}
                         onChange={this.searchHistory.bind(this)} />
                     <button className="btn btn-primary"
                         style={margins}
                         onClick={this.props.sortData}>
-                        {this.props.translate('sort')}
+                        {translate('sort')}
                     </button>
                 </div>
                 {

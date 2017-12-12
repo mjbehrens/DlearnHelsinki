@@ -38,6 +38,8 @@ export default function reducer(state=groupInitState, action) {
           groups: newGroups,
         }
       }
+	default:
+	    break;
     }
       
     return state

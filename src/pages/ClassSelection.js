@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
 import Spinner from 'react-spinner'
 import Popup from 'react-popup';
 import { ROUTES, BACKEND_API } from '../constants.js';
@@ -29,7 +28,6 @@ class ClassSelection extends Component {
             loading: false,
 	    warning: Boolean(this.props.location.state && this.props.location.state.warning),
         }
-        const translate = this.props;
     }
 
     componentDidMount() {
@@ -81,12 +79,13 @@ class ClassSelection extends Component {
     }
 
     postClass = (class_name) => {
+        const { translate } = this.props;
         this.setState({
             loading: true,
         })
 
         if(this.isClassAlreadyExist(class_name)){
-            alert(class_name + ' ' + this.props.translate('error_already'));
+            alert(class_name + ' ' + translate('error_already'));
             this.setState({
                 loading: false,
             });
@@ -111,7 +110,7 @@ class ClassSelection extends Component {
                     this.getClasses();
                 } else {
                     console.log('Network response was not ok.');
-                    alert(this.props.translate('error_try_again'));
+                    alert(translate('error_try_again'));
                     this.setState({
                         ...this.state,
                         loading: false,
@@ -148,7 +147,7 @@ class ClassSelection extends Component {
     }
 
     render() {
-
+        const { translate } = this.props;
         let x = 1;
         var buttons = this.props.classes.map(function (classroom, i) {
             if (classroom._id > x) {
@@ -163,7 +162,7 @@ class ClassSelection extends Component {
 		    key={x + 1}
 		    onClick={() => this.createClass()}
 		    className="btn btn-info">
-		    {this.props.translate('new_class')}
+		    {translate('new_class')}
 		</button>);
 	}
         // console.log(buttons);
@@ -171,7 +170,7 @@ class ClassSelection extends Component {
         if (this.state.loading) {
             return (
                 <div className="SelectClass">
-                    <h1>{this.props.translate('select_class')}</h1>
+                    <h1>{translate('select_class')}</h1>
                     <div className='spinner-container'>
                         <Spinner />
                     </div>
@@ -180,10 +179,10 @@ class ClassSelection extends Component {
         } else {
             return (
                 <div className="class-selection">
-                    <h1>{this.props.translate('select_class')}</h1>
+                    <h1>{translate('select_class')}</h1>
 		    {this.state.warning &&
 		    <div className="alert alert-danger alert-dismissible fade show" role="alert">
-		     {this.props.translate('error_select_class')}
+		     {translate('error_select_class')}
 		    </div>
 		    }
 

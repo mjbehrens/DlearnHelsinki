@@ -14,6 +14,7 @@ module.exports = {
       home: 'Home',
       about: 'About',
       contact: 'Contact',
+      locale: 'English',
 
       //Home
       slogan: 'Learning global competencies with new pedagogical tools',
@@ -63,12 +64,14 @@ module.exports = {
 
       //StudentSurveyQuestion
       next: 'Next',
+      back: 'Back',
       loading_survey: 'Loading the survey...',
       finish_survey: 'You finished the survey !',
 
       //LinearGraph
       data_no_found: 'No Data Found',
       class: 'Class',
+      progression: 'Progression',
 
 
 
@@ -147,6 +150,7 @@ module.exports = {
       profile: 'Profile',
       survey: 'Survey',
       latest_result: 'Last Result Survey',
+      no_surveys_done: 'You haven\'t done any surveys yet',
 
     }
   },
@@ -166,6 +170,7 @@ module.exports = {
       home: 'Aloitus',
       about: 'Tietoja meistä',
       contact: 'Yhteystiedot',
+      locale: 'Suomeksi',
 
       //Home
       slogan: 'Uutta pedagogiikkaa globaalien kompetenssien oppimiseen',
@@ -215,12 +220,14 @@ module.exports = {
 
       //StudentSurveyQuestion
       next: 'Seuraava',
+      back: 'Takaisin',
       loading_survey: 'Ladataan kyselyä...',
       finish_survey: 'Olet suorittanut kyselyn !',
 
       //LinearGraph
       data_no_found: 'Tietoja ei löydy',
       class: 'Luokka',
+      progression: 'Edistyminen',
 
 
  /*------------- Teacher ---------------*/
@@ -276,7 +283,7 @@ module.exports = {
       reset_password: 'Päivitä salasana',
 
       //Group
-      error_check_username: 'Vihre uuden käyttäjän luonnissa. Varmista, ettei käyttäjää ole jo olemassa.',
+      error_check_username: 'Virhe uuden käyttäjän luonnissa. Varmista, ettei käyttäjää ole jo olemassa.',
       student_info: 'Oppilastiedot',
       quit: 'Sulje',
 
@@ -296,6 +303,7 @@ module.exports = {
   profile: 'Profiili',
   survey: 'Kysely',
   latest_result: 'Viimeisimmän kyselyn tulokset',
+  no_surveys_done: 'Et ole vielä tehnyt kyselyjä',
 
     }
   }

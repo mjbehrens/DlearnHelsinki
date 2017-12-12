@@ -9,3 +9,17 @@
     margin: auto;
     margin-bottom: 20px;
 }
+
+#progressbar {
+    width: 35%;
+    min-width: 120px;
+    margin: auto;
+}
+
+#back-button {
+    margin-right: 40px;
+}
+
+#next-button {
+    margin-left: 40px;
+}

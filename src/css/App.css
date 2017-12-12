@@ -43,8 +43,9 @@ h1 {
     margin-bottom: 20px;
 }
 
-.footer-icon {
+#footer-icon {
     height: 50px;
+    margin-right: 10px;
 }
 
 /* Fix form input validation css on firefox */

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import { ROUTES, BACKEND_API } from '../constants.js';
 import { withTranslate } from 'react-redux-multilingual';
 
-import StudentSurveyQuestion from './StudentSurveyQuestion.js'
 import SpiderGraph from '../components/shared/SpiderGraph.js';
 import SpiderGraph2 from '../components/shared/SpiderGraph2.js';
 import LinearGraph from '../components/shared/LinearGraph.js';
@@ -17,7 +15,6 @@ import iconSurveyOpen from "../res/icons/survey.svg";
 import iconSurveyClose from "../res/icons/close_survey.svg";
 import iconMyCompetenceWall from "../res/icons/competence_wall.png"
 
-import * as userActions from '../actions/userActions';
 import { connect } from 'react-redux';
 
 
@@ -68,7 +65,7 @@ class StudentDashboard extends Component {
 			lastSurvey: {
 				_id: survey_id,
 				open: false,
-				title: this.props.translate('latest_result'),
+				title: translate('latest_result'),
 				description: null,
 				start_date: null,
 				end_date: null,
@@ -129,7 +126,6 @@ class StudentDashboard extends Component {
 	checkIfSurveyOpen = function (surveys) {
 
 		let noSurveyOpen = true;
-		let openSurvey = null;
 		surveys.forEach(function (s) {
 			if (s.open) {
 				noSurveyOpen = false;
@@ -139,14 +135,6 @@ class StudentDashboard extends Component {
 
 		// if no survey open then do nothing.
 		if (noSurveyOpen) {
-			openSurvey = {
-				_id: null,
-				open: false,
-				title: null,
-				description: null,
-				start_date: null,
-				end_date: null,
-			};
 		}
 	}
 
@@ -235,6 +223,7 @@ class StudentDashboard extends Component {
 	}
 
 	displaySpiderGraph = function () {
+		const { translate } = this.props;
 
 		// get all 
 		let parametersStudent = [{
@@ -244,7 +233,7 @@ class StudentDashboard extends Component {
 			groups: null,
 			surveys: 27,
 			name: "student result",
-			request: "students/"+this.props.user.id+"/survey_averages",
+			request: "students/" + this.props.user.id + "/survey_averages",
 
 		},
 		{
@@ -254,7 +243,7 @@ class StudentDashboard extends Component {
 			groups: null,
 			surveys: 27,
 			name: "(Fake) class result",
-			request: "students/"+this.props.user.id+"/classes/"+this.props.user.classid+"/class_averages",
+			request: "students/" + this.props.user.id + "/classes/" + this.props.user.classid + "/class_averages",
 		},
 		{
 			teachers: null,
@@ -263,7 +252,7 @@ class StudentDashboard extends Component {
 			groups: null,
 			surveys: 27,
 			name: "(Fake) group result",
-			request: "students/"+this.props.user.id+"/classes/"+this.props.user.classid+"/group_averages",
+			request: "students/" + this.props.user.id + "/classes/" + this.props.user.classid + "/group_averages",
 		}
 		];
 
@@ -285,7 +274,7 @@ class StudentDashboard extends Component {
 					<div className='spinner-container'>
 						<Spinner />
 					</div>
-					{this.props.translate('check_open_survey')} ...
+					{translate('check_open_survey')} ...
 				</div>
 			)
 		}
@@ -293,11 +282,12 @@ class StudentDashboard extends Component {
 			return (
 				<div>
 
-					{this.props.translate('data_no_found')} ...
+					{translate('no_surveys_done')} ...
 				</div>
 			)
 		}
 	}
+
 
 
 	changeSurveyButton = function () {
@@ -312,12 +302,12 @@ class StudentDashboard extends Component {
 		if (this.state.disabledSurvey) {
 			return (
 				<div className="card card-inverse w-100">
-						<img className="card-img-top teacher-card-img" src={iconSurveyClose} width="100" height="100"
+					<img className="card-img-top teacher-card-img" src={iconSurveyClose} width="100" height="100"
 
-							alt="profil icon" />
-						<div className="card-body">
-							<h4 className="card-title">{"Survey"}</h4>
-						</div>
+						alt="profil icon" />
+					<div className="card-body">
+						<h4 className="card-title">{"Survey"}</h4>
+					</div>
 				</div>
 			)
 
@@ -390,6 +380,8 @@ class StudentDashboard extends Component {
 
 
 	render() {
+		const { translate } = this.props;
+		
 		return (
 			<div>
 				<div className="container text-center">

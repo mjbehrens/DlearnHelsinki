@@ -4,13 +4,11 @@ import Spinner from 'react-spinner'
 import { withTranslate } from 'react-redux-multilingual';
 
 //redux setup
-import { ROUTES, BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
+import { BACKEND_API } from '../../constants.js';
 import { connect } from 'react-redux';
 
 
 let GET_ANSWERS = '';
-let GET_QUESTIONS_FOR_SURVEY = '';
 
 
 
@@ -29,7 +27,6 @@ class SpiderGraph extends Component {
 	constructor(props) {
 		super(props);
 
-		const {translate} = this.props;
 		params = this.props.parameters;
 
 		this.state = {
@@ -65,7 +62,7 @@ class SpiderGraph extends Component {
 
 	// Called everytime a props value change
 	componentWillReceiveProps(nextProps) {
-		if ( (params != nextProps.parameters) && (nextProps.parameters.surveys != null) ) {
+		if ( (params !== nextProps.parameters) && (nextProps.parameters.surveys != null) ) {
 			params = nextProps.parameters;
 			console.log(params);
 			this.getDataForGraph();
@@ -114,11 +111,11 @@ class SpiderGraph extends Component {
 		}
 
 		GET_ANSWERS = s + '/answers';
-		GET_QUESTIONS_FOR_SURVEY = s + '/questions';
 
 	}
 
 	getSurveyAnswersREST = function () {
+		const { translate } = this.props;
 		// set the spinner to true
 		this.setState({ isLoading: true });
 
@@ -136,23 +133,21 @@ class SpiderGraph extends Component {
 			if (response.ok) {
 				response.json().then(data => {
 					data.forEach(function (a) {
-						let answer = {
-							theme_id: a.theme_id,
-							answer: a.answer,
-							theme_title: a.theme_title,
-							description: a.description,
-							start_date: a.start_date,
-						}
 						Answers.push(a);
-
 					}, this);
 
+
 					if (Answers.length > 0) {
+
 
 						let labelsArray = [];
 						let answerArray = [];
 						Answers.forEach(function (e) {
-							labelsArray.push(e.theme_title);
+							if (translate('dashboard') == 'Dashboard') {
+								labelsArray.push(e.theme_title);
+							} else {
+								labelsArray.push(e.theme_title_fi);
+							}
 							answerArray.push((e.answer).toFixed(1));
 							// if description supported, added here
 						}, this);
@@ -221,6 +216,7 @@ class SpiderGraph extends Component {
 
 
 	render() {
+		const { translate } = this.props;
 
 		var options = {
 			responsive: true,
@@ -244,7 +240,7 @@ class SpiderGraph extends Component {
 			return (
 				<div className="jumbotron">
 					<h5>{this.props.name}</h5>
-					{this.props.translate('data_no_found')}
+					{translate('data_no_found')}
 				</div>
 
 			);

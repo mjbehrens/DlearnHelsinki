@@ -1,14 +1,11 @@
 import React from "react";
-import { Link } from 'react-router-dom';
 import Popup from 'react-popup';
-import { ROUTES, BACKEND_API } from '../../constants.js';
+import { BACKEND_API } from '../../constants.js';
 import { withTranslate } from 'react-redux-multilingual';
 
 import InfoStudent from "./InfoStudent";
-import TeacherGroupManagement from "../../pages/TeacherGroupManagement";
 import AddStudent from "./AddStudent";
 
-import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
 function mapStateToProps(store) {
@@ -26,7 +23,6 @@ class Group extends React.Component {
     constructor(props) {
         super(props);
         compo = this;
-        const { translate } = this.props;
 
         this.state = {
             picture: null,
@@ -45,6 +41,7 @@ class Group extends React.Component {
     + this should be investiget
     */
     onClickAddStudent = function (group_id, allStudentsList) {
+        const { translate } = this.props;
         Popup.plugins().addStudent((infoStudent) => {
             console.log(infoStudent);
             let data = JSON.stringify({
@@ -76,7 +73,7 @@ class Group extends React.Component {
                     compo.props.callbackGM();
                 } else {
                     console.log('Network response was not ok.');
-                    alert(this.props.translate('error_check_username'));
+                    alert(translate('error_check_username'));
                 }
             }).catch(function (err) {
                 // Error :(
@@ -117,7 +114,7 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
     let _applied_changes = false;
 
     let getGender = function (e) {
-        if (e.target.value == 'male') {
+        if (e.target.value === 'male') {
           _gender = props.translate('male');
         } else {
           _gender = props.translate('female');
@@ -125,9 +122,6 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
     };
     let getAge = function (e) {
         _age = e.target.value;
-    };
-    let getStudentId = function (e) {
-        _studentId = e.target.value;
     };
     let getChanges = function (hasChanged) {
         _applied_changes = hasChanged;
@@ -178,7 +172,7 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList, p
         let id = e.target.value;
 
         let student = allStudentsList.filter(function (stud) {
-            return stud._id == id;
+            return stud._id === id;
         })[0];
 
         if (student !== null) {
@@ -202,7 +196,7 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList, p
     };
 
     let getGender = function (e) {
-      if (e.target.value == props.translate('male')) {
+      if (e.target.value === props.translate('male')) {
         _gender = 'male';
       } else {
         _gender = 'female';

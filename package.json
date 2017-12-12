@@ -17,6 +17,7 @@
     "react-dom": "^15.6.1",
     "react-input-calendar": "^0.4.1",
     "react-popup": "^0.8.0",
+    "react-progressbar": "^15.4.1",
     "react-pure-grid": "^2.1.1",
     "react-redux": "^5.0.6",
     "react-redux-multilingual": "^1.0.4",

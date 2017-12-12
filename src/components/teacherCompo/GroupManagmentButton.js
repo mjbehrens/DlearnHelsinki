@@ -5,13 +5,6 @@ import { withTranslate } from 'react-redux-multilingual';
 import iconGrpManagment from "../../res/icons/manage_groups.svg";
 import { ROUTES } from '../../constants.js';
 
-const style = {
-    padding: 50,
-    margin: 50,
-    textAlign: 'center',
-    background: 'green'
-};
-
 
 class GroupManagmentButton extends React.Component {
 
@@ -19,7 +12,7 @@ class GroupManagmentButton extends React.Component {
         super(props);
         const { translate } = this.props;
         this.state = {
-            text: this.props.translate('group_management'),
+            text: translate('group_management'),
             picture: iconGrpManagment,
         }
     }

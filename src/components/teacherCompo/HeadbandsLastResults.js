@@ -1,10 +1,7 @@
 import React from "react";
 import SpiderGraph from '../shared/SpiderGraph.js';
-import Spinner from 'react-spinner'
 import { withTranslate } from 'react-redux-multilingual';
 
-import { BACKEND_API } from '../../constants.js';
-import * as userActions from '../../actions/userActions';
 import { connect } from 'react-redux';
 
 
@@ -16,19 +13,10 @@ function mapStateToProps(store) {
 }
 
 
-const style = {
-    marginLeft: "100px",
-    marginRight: "100px",
-    border: "2px solid black",
-    borderColor: "black"
-};
-
 const styleButton = {
     marginLeft: "15px",
     marginTop: "15px"
 }
-
-var GET_GROUPS = '';
 
 //Get unique groups for the teacher from the database
 var compo;
@@ -50,7 +38,6 @@ class HeadbandsLastResults extends React.Component {
             group_name: classroom[0].name,
             survey: this.props.survey,
         };
-        const { translate } = this.props;
     }
 
     createGroupButtons = function (groups) {
@@ -72,7 +59,7 @@ class HeadbandsLastResults extends React.Component {
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
 
-        if (compo.state.survey != nextProps.survey) {
+        if (compo.state.survey !== nextProps.survey) {
             compo.setState({survey: nextProps.survey});
         }
     }
@@ -94,8 +81,7 @@ class HeadbandsLastResults extends React.Component {
     }
 
     render() {
-
-        console.log(this.state)
+        const { translate } = this.props;
 
         if (compo.state.survey == null) {
             return (
@@ -131,7 +117,7 @@ class HeadbandsLastResults extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-sm-7">
-                                    <h6> {this.props.translate('survey_results', {title: compo.state.survey.title})}</h6>
+                                    <h6> {translate('survey_results', {title: compo.state.survey.title})}</h6>
                                     <SpiderGraph name={this.state.group_name} parameters={parameters} color={this.state.group_name} />
                                 </div>
                             </div>

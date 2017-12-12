@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { ROUTES } from '../../constants.js';
 import CompetenceWallLog from './CompetenceWallLog.js';
 import SpiderGraph2 from '../shared/SpiderGraph2.js';
 

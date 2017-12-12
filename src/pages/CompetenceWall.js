@@ -30,7 +30,6 @@ class CompetenceWall extends Component {
         })
     }
 
-
     render() {
 
         let parameters = [{

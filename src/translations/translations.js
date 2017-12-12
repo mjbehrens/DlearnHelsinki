@@ -57,6 +57,7 @@ module.exports = {
       //History
       surveys: 'Surveys',
       students: 'Students',
+      outliers: 'Outliers',
 
       //HistoryFinder
       search: 'Search',
@@ -213,6 +214,7 @@ module.exports = {
       //History
       surveys: 'Kyselyt',
       students: 'Oppilaat',
+      outliers: 'Poikkeavat Havainnot',
 
       //HistoryFinder
       search: 'Etsi',

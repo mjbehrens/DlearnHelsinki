@@ -301,6 +301,15 @@ class History extends Component {
         })
     }
 
+    OnClickOutliers = function () {
+        sampleData = this.state.students;
+        this.setState({
+            filteredData: this.state.students,
+            researchType: 'student',
+            selectedItemId: null,
+        })
+    }
+
     render() {
         const { translate } = this.props;
 
@@ -327,6 +336,7 @@ class History extends Component {
                                 <button className="btn btn-primary" onClick={this.OnClickSurveys.bind(this)}>{translate('surveys')}</button>
                                 <button className="btn btn-primary" onClick={this.OnClickStudents.bind(this)}>{translate('students')}</button>
                                 <button className="btn btn-primary" onClick={this.OnClickGroups.bind(this)}>{translate('groups')}</button>
+                                <button className="btn btn-primary" onClick={this.OnClickOutliers.bind(this)}>{translate('outliers')}</button>
                             </div>
 
                             <HistoryFinder query={this.state.query}

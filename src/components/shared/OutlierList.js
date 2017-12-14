@@ -62,6 +62,26 @@ class OutlierList extends Component {
     }
 
     render() {
+        let table;
+        if (sampleData.length > 0) {
+          table = (
+            <table className="table table-hover table-stripped">
+              <tr>
+                <th>Username</th>
+                <th>Local outlier score</th>
+              </tr>
+              {sampleData.map(function(outlier, index) {
+                return <tr key={outlier._id}>
+                    <td>{outlier.username}</td>
+                    <td>{outlier.lofScore}</td>
+                     </tr>;
+              })}
+            </table>
+          )
+        } else {
+            table = (<p>No outliers</p>)
+        }
+
         return (
 
         <div>
@@ -69,19 +89,8 @@ class OutlierList extends Component {
         		<h3>Outliers</h3>
         	</div>
         	<div>
-        		<table className="table table-hover table-stripped">
-        			<tr>
-        				<th>Username</th>
-        				<th>Local outlier score</th>
-        			</tr>
-        			{sampleData.map(function(outlier, index) {
-        				return <tr key={outlier._id}>
-        						<td>{outlier.username}</td>
-        						<td>{outlier.lofScore}</td>
-        					   </tr>;
-        			})}
-        		</table>
-            </div>
+            {table}
+          </div>
         </div>
         );
     }

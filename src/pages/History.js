@@ -309,6 +309,8 @@ class History extends Component {
     OnClickOutliers = function () {
         this.setState({
             selectedItemId: -666,
+            researchType: null,
+            filteredData: null,
         })
     }
 

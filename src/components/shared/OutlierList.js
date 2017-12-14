@@ -63,9 +63,10 @@ class OutlierList extends Component {
 
     render() {
         return (
+
         <div>
         	<div>
-        		<h3>Outliers for class {this.props.classid}</h3>
+        		<h3>Outliers</h3>
         	</div>
         	<div>
         		<table className="table table-hover table-stripped">

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Spinner from 'react-spinner';
 
+import { BACKEND_API } from '../../constants.js';
 import { connect } from 'react-redux';
 
 
@@ -11,6 +12,7 @@ function mapStateToProps(store) {
     }
 }
 
+var sampleData = [];
 var compo = null;
 
 class OutlierList extends Component {
@@ -18,16 +20,53 @@ class OutlierList extends Component {
     constructor(props) {
         super(props);
         compo = this;
+        sampleData = [];
+
         this.state = {
             isLoading: false,
         }
     }
 
+    componentWillMount() {
+    	this.getOutliers();
+    }
+
+    getOutliers= function () {
+
+        compo.setState({ isLoading: true });
+
+        let GET_OUTLIERS = 'outliers/' + this.props.classid;
+
+        fetch(BACKEND_API.ROOT + GET_OUTLIERS, {
+            method: "GET",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Basic ' + this.props.user.hash,
+            }
+        }).then(function (response) {
+            if (response.ok) {
+                response.json().then(data => {
+                    sampleData = data;
+                    compo.setState({
+                        outliers: data,
+                        isLoading: false,
+                    });
+                });
+            } else {
+                console.log('Network response was not ok.');
+            }
+        }).catch(function (err) {
+            // Error
+            console.log(err);
+        });
+    }
 
     render() {
         return (
         	<div>
-            	Moi
+        		{typeof this.sampleData}
+        		<br/>
+            	{this.props.classid}
             </div>
         );
     }

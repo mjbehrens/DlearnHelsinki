@@ -360,7 +360,7 @@ class History extends Component {
                             {compo.selectGraphRenderer()}
                         </div>
                         <div className="col-sm-8" hidden={this.state.selectedItemId != -666}>
-                            <OutlierList />
+                            <OutlierList classid = {this.props.user.classid} />
                         </div>
                     </div>
                 </div>

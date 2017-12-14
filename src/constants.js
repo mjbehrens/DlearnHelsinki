@@ -16,6 +16,7 @@ export const ROUTES = {
 
 export const BACKEND_API = {
     ROOT: 'https://dlearn-helsinki-backend.herokuapp.com/webapi/',
+    //ROOT: 'https://dlearn-helsinki-backend-dev.herokuapp.com/webapi/',
     GET_STUDENT: ''
 }
 
@@ -26,14 +27,14 @@ export const ACTION_TYPES = {
     ADD_CLASS: 'ADD_CLASS',
     DELETE_CLASS: 'DELETE_CLASS',
     UPDATE_CLASS: 'UPDATE_CLASS',
-    
+
     // groupReducer
     SET_ALL_GROUPS: 'SET_ALL_GROUPS',
     DELETE_ALL_GROUPS: 'DELETE_ALL_GROUPS',
     ADD_GROUP: 'ADD_GROUP',
     DELETE_GROUP: 'DELETE_GROUP',
     UPDATE_GROUP: 'UPDATE_GROUP',
-     
+
     // modalReducer
     SET_MODAL: 'SET_MODAL',
     SHOW_MODAL: 'SHOW_MODAL',
@@ -45,14 +46,14 @@ export const ACTION_TYPES = {
     ADD_STUDENT: 'ADD_STUDENT',
     DELETE_STUDENT: 'DELETE_STUDENT',
     UPDATE_STUDENT: 'UPDATE_STUDENT',
-    
+
     // surveyReducer
     SET_ALL_SURVEYS: 'SET_ALL_SURVEYS',
     DELETE_ALL_SURVEYS: 'DELETE_ALL_SURVEYS',
     ADD_SURVEY: 'ADD_SURVEY',
     DELETE_SURVEY: 'DELETE_SURVEY',
     UPDATE_SURVEY: 'UPDATE_SURVEY',
-    
+
     // userReducer
     FETCH_USER: 'FETCH_USER',
     FETCH_USER_REJECTED: 'FETCH_USER_REJECTED',

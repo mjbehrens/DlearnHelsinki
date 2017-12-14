@@ -9,6 +9,7 @@ import HistoryDisplay from '../components/shared/HistoryDisplay.js';
 import GraphRendererForSurveys from '../components/shared/GraphRendererForSurveys.js';
 import GraphRendererForStudents from '../components/shared/GraphRendererForStudents.js';
 import GraphRendererForGroups from '../components/shared/GraphRendererForGroups.js';
+import OutlierList from '../components/shared/OutlierList.js';
 
 
 import { BACKEND_API } from '../constants.js';
@@ -266,6 +267,10 @@ class History extends Component {
                     return (
                         <GraphRendererForStudents student={std[0]} surveys={this.state.surveys} />
                     )
+                case 'outlier':
+                    return (
+                        <OutlierList />
+                    )
                 default:
                     break;
             }
@@ -302,11 +307,8 @@ class History extends Component {
     }
 
     OnClickOutliers = function () {
-        sampleData = this.state.students;
         this.setState({
-            filteredData: this.state.students,
-            researchType: 'student',
-            selectedItemId: null,
+            selectedItemId: -666,
         })
     }
 
@@ -354,8 +356,11 @@ class History extends Component {
                             />
 
                         </div>
-                        <div className="col-sm-8" hidden={this.state.selectedItemId == null}>
+                        <div className="col-sm-8" hidden={this.state.selectedItemId == null || this.state.selectedItemId == -666}>
                             {compo.selectGraphRenderer()}
+                        </div>
+                        <div className="col-sm-8" hidden={this.state.selectedItemId != -666}>
+                            <OutlierList />
                         </div>
                     </div>
                 </div>

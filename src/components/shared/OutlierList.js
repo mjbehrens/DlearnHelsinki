@@ -68,7 +68,11 @@ class OutlierList extends Component {
         		<h3>Outliers for class {this.props.classid}</h3>
         	</div>
         	<div>
-        		<table class="table table-hover table-stripped">
+        		<table className="table table-hover table-stripped">
+        			<tr>
+        				<th>Username</th>
+        				<th>Local outlier score</th>
+        			</tr>
         			{sampleData.map(function(outlier, index) {
         				return <tr key={outlier._id}>
         						<td>{outlier.username}</td>

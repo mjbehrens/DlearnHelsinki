@@ -46,6 +46,7 @@ class History extends Component {
             surveys: [],
             filteredData: [],
             selectedItemId: null,
+            outlierAccess: null,
             researchType: '',
             dateSelected: false,
             warning: "",
@@ -280,6 +281,7 @@ class History extends Component {
     OnClickSurveys = function () {
         sampleData = this.state.surveys;
         this.setState({
+            outlierAccess: null,
             filteredData: this.state.surveys,
             researchType: 'survey',
             selectedItemId: null,
@@ -289,6 +291,7 @@ class History extends Component {
     OnClickGroups = function () {
         sampleData = this.state.groups;
         this.setState({
+            outlierAccess: null,
             filteredData: this.state.groups,
             researchType: 'group',
             selectedItemId: null,
@@ -300,6 +303,7 @@ class History extends Component {
     OnClickStudents = function () {
         sampleData = this.state.students;
         this.setState({
+            outlierAccess: null,
             filteredData: this.state.students,
             researchType: 'student',
             selectedItemId: null,
@@ -307,8 +311,10 @@ class History extends Component {
     }
 
     OnClickOutliers = function () {
+        sampleData = [];
         this.setState({
-            selectedItemId: -666,
+            outlierAccess: 1,
+            selectedItemId: null,
             researchType: null,
             filteredData: null,
         })
@@ -358,10 +364,10 @@ class History extends Component {
                             />
 
                         </div>
-                        <div className="col-sm-8" hidden={this.state.selectedItemId == null || this.state.selectedItemId == -666}>
+                        <div className="col-sm-8" hidden={this.state.selectedItemId == null}>
                             {compo.selectGraphRenderer()}
                         </div>
-                        <div className="col-sm-8" hidden={this.state.selectedItemId != -666}>
+                        <div className="col-sm-8" hidden={this.state.outlierAccess == null}>
                             <OutlierList classid = {this.props.user.classid} />
                         </div>
                     </div>

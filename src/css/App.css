@@ -94,6 +94,10 @@ input.inputModified:invalid {
     pointer-events: none;
     opacity: 0.4;
 }
+
+.button-right {
+    float: right;
+}
 #button-translate {
 	 margin-right: 10px;
 }

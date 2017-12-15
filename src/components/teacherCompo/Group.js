@@ -162,6 +162,7 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
 });
 
 Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList, props) {
+    console.log("allstudentslist: " + allStudentsList)
     let _id = null;
     let _username = '';
     let _age = 0;
@@ -169,22 +170,19 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList, p
     let _password = '';
 
     let onSelectStudent = function (e) {
-        let id = e.target.value;
+        let id = parseInt(e.target.value);
 
         let student = allStudentsList.filter(function (stud) {
             return stud._id === id;
         })[0];
 
-        if (student !== null) {
+        if (student != null) {
             _id = student._id;
             _username = student.username;
             _age = student.age;
             _gender = student.gender;
             _password = "password";
         }
-
-        console.log(student);
-
     }
 
     let getUsername = function (e) {

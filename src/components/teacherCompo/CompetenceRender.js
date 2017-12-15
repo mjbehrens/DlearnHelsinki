@@ -16,20 +16,20 @@ class CompetenceRender extends Component {
         super(props);
         this.state = {
             data_competence: [{
-                name: "paula",
+                name: "Antti",
                 students: "",
                 classes: "",
                 groups: "",
                 request: "teachers/1/classes/1/students/1/surveys/27/answers",
             },{
-                name: "damiana",
+                name: "Jaakko",
                 students: "",
                 classes: "",
                 groups: "",
                 request: "teachers/1/classes/1/students/2/surveys/27/answers",
             },
             {
-                name: "malte",
+                name: "Veera",
                 students: "",
                 classes: "",
                 groups: "",

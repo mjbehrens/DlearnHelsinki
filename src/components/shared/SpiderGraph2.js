@@ -51,8 +51,8 @@ class SpiderGraph2 extends Component {
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        if ((parameters != nextProps.parameters) && (nextProps.parameters.surveys != null)) {
 
+        if ((parameters != nextProps.parameters)) {
             // 1. add new parameters and download then
             nextProps.parameters.forEach(next_param => {
                 if (!(next_param in parameters)){
@@ -64,6 +64,9 @@ class SpiderGraph2 extends Component {
 
             //2. remove unwanted data from dataset's state
             // (the one that are not anymore in paramters)
+            console.log("parameters 1")
+            console.log(parameters)
+            
             parameters.forEach(parm => {
                 if (!(parm in nextProps.parameters)){
                     let index = parameters.indexOf(parm);
@@ -84,6 +87,9 @@ class SpiderGraph2 extends Component {
                     });
                 }
             });
+
+            console.log("parameters 2")
+            console.log(parameters)
 
             this.getDataForGraph();
         }
@@ -195,9 +201,6 @@ class SpiderGraph2 extends Component {
                             pointHoverBorderColor: 'rgba(179,181,198,1)',
                             data: answerArray,
                         })
-
-                        console.log(new_datasets)
-                        console.log(request)
 
                         component.setState({
                             ...component.state,

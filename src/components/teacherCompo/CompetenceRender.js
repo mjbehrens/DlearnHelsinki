@@ -15,7 +15,26 @@ class CompetenceRender extends Component {
 
         super(props);
         this.state = {
-            data_competence: ["teachers/1/classes/2/gruops/1/students/3", "teachers/1/classes/2/gruops/2/students/2", "teachers/1/classes/2/gruops/1/students/1"],            
+            data_competence: [{
+                name: "paula",
+                students: "",
+                classes: "",
+                groups: "",
+                request: "teachers/1/classes/1/students/1/surveys/27/answers",
+            },{
+                name: "damiana",
+                students: "",
+                classes: "",
+                groups: "",
+                request: "teachers/1/classes/1/students/2/surveys/27/answers",
+            },
+            {
+                name: "malte",
+                students: "",
+                classes: "",
+                groups: "",
+                request: "teachers/1/classes/1/students/3/surveys/27/answers",
+            }]  
         };
     }
 
@@ -26,7 +45,7 @@ class CompetenceRender extends Component {
     deleteFromLog = function (id) {
         let temp = [] 
         this.state.data_competence.forEach(function(element) {
-            if(element != id){
+            if(element.request != id){
                 temp.push(element)
             }
         }, this);
@@ -41,30 +60,11 @@ class CompetenceRender extends Component {
 
     render() {
 
-
-        let parameters = [{
-            name: "student 8 - hlqejqe",
-            teachers: this.props.user.id,
-            students: 8,
-            classes: 1,
-            groups: null,
-            surveys: 27,
-        },
-        {
-            name: "1 - class",
-            teachers: this.props.user.id,
-            students: null,
-            classes: 1,
-            groups: null,
-            surveys: 27,
-        }
-        ]
-
         return (
             <div className="container">
                 <div className="row">
-                    <div className="left-align col-sm-3"><CompetenceWallLog myFunction={this.helloWolrd} data_competence={this.state.data_competence} functionDelete={this.deleteFromLog.bind(this)}/></div>
-                    <div className="col-sm-9"><SpiderGraph2 parameters={parameters} name="toto" color="black" /></div>
+                    <div className="left-align col-sm-3"><CompetenceWallLog data_competence={this.state.data_competence} functionDelete={this.deleteFromLog.bind(this)}/></div>
+                    <div className="col-sm-9"><SpiderGraph2 parameters={this.state.data_competence} name="toto" color="black" /></div>
                 </div>
             </div>
         );

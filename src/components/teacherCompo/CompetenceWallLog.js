@@ -59,10 +59,10 @@ class CompetenceWallLog extends React.Component {
         var li_item = [];
         this.props.data_competence.forEach(function (element) {
             li_item.push(
-                <il id={element}
+                <il id={element.request}
                     className="list-group-item">
-                    {element}
-                  <button type="button" onClick={() => compo.props.functionDelete(element)} className="btn btn-secondary button-right">X</button>
+                    {element.name}
+                  <button type="button" onClick={() => compo.props.functionDelete(element.request)} className="btn btn-secondary button-right">X</button>
                 </il>
             )
             count += 1;
@@ -98,7 +98,6 @@ class CompetenceWallLog extends React.Component {
         */
 
     render() {
-        this.props.myFunction();
         return (
             <div>
                 <ul className="list-group" id="logList">

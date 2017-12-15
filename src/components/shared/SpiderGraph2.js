@@ -39,7 +39,7 @@ class SpiderGraph2 extends Component {
             cpt: 0,
             data: {
                 labels: [], //label of the themes
-                datasets: []
+                datasets: [],
             }
         };
 
@@ -51,41 +51,23 @@ class SpiderGraph2 extends Component {
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        if ((parameters != nextProps.parameters) && (nextProps.parameters.surveys != null)) {
 
-            // 1. add new parameters and download then
-            nextProps.parameters.forEach(next_param => {
-                if (!(next_param in parameters)){
-                    parameters.push(next_param)
-                    let request = component.buildRequestRest(next_param);
-                    component.getSurveyAnswersREST(request, next_param.name);
-                }
-            });
+        if ((parameters != nextProps.parameters)) {
+        
+            this.setState({
+                isLoading: false,
+                noData: true,
+                cpt: 0,
+                data: {
+                    labels: [], //label of the themes
+                    datasets: [],
+                }});
 
-            //2. remove unwanted data from dataset's state
-            // (the one that are not anymore in paramters)
-            parameters.forEach(parm => {
-                if (!(parm in nextProps.parameters)){
-                    let index = parameters.indexOf(parm);
-                    parameters.splice(index, 1)
-                    let request = component.buildRequestRest(parm);
-                    let datasets = component.state.data.datasets;
-                    datasets.forEach(data => {
-                        if(data.id == request){
-                            datasets.splice(datasets.indexOf(data), 1);
-                            component.setState({
-                                ...component.state,
-                                data: {
-                                    ...component.state.data,
-                                    datasets: datasets,
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-
-            this.getDataForGraph();
+            if(nextProps.parameters.length > 0){
+                parameters = nextProps.parameters;
+                this.getDataForGraph();
+            }
+            
         }
     }
 
@@ -195,9 +177,6 @@ class SpiderGraph2 extends Component {
                             pointHoverBorderColor: 'rgba(179,181,198,1)',
                             data: answerArray,
                         })
-
-                        console.log(new_datasets)
-                        console.log(request)
 
                         component.setState({
                             ...component.state,

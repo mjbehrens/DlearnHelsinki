@@ -68,7 +68,7 @@ class CompetenceWall extends Component {
                 <br />
                 <div className="btn-group btn-group-lg" role="group">
                     <button className={this.state.buttonState1} onClick={() => this.selectView('competence')}>Competence</button>
-                    <button className={this.state.buttonState2} onClick={() => this.selectView('progression')}>Progression</button>
+                    <button disabled className={this.state.buttonState2} onClick={() => this.selectView('progression')}>Progression</button>
                 </div>
                 <br /><br /><br />
                 {this.state.view === 'competence' ? <CompetenceRender /> : <ProgressionRender />}

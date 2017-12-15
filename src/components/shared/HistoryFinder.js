@@ -8,8 +8,14 @@ import { withTranslate } from 'react-redux-multilingual';
 var rangeStart;
 var rangeEnd;
 
-const margins = {
+const buttonMargins = {
     margin: '5px'
+}
+const barMargins = {
+    marginTop: '8px',
+    marginRight: '5px',
+    marginLeft: '15px',
+    padding: '2px'
 }
 
 class HistoryFinder extends Component {
@@ -46,12 +52,12 @@ class HistoryFinder extends Component {
             <div>
                 <div className="searchBar">
                     <input type="text"
-                        style={margins}
+                        style={barMargins}
                         placeholder={translate('search')}
                         value={this.props.query}
                         onChange={this.searchHistory.bind(this)} />
                     <button className="btn btn-primary"
-                        style={margins}
+                        style={buttonMargins}
                         onClick={this.props.sortData}>
                         {translate('sort')}
                     </button>

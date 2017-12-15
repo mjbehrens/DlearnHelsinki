@@ -162,7 +162,6 @@ Popup.registerPlugin('studentInformation', function (callbackConfirm, student, l
 });
 
 Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList, props) {
-    console.log("allstudentslist: " + allStudentsList)
     let _id = null;
     let _username = '';
     let _age = 0;

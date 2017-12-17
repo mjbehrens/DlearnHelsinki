@@ -81,8 +81,14 @@ input.inputModified:invalid {
     margin-top: 10px;
 }
 
+.expand-width {
+    width: 100%;
+    margin: auto;
+}
+
 .graph-container {
-    min-width: 400px;
+    min-width: 300px;
+    width: 100%;
 }
 
 .warning {

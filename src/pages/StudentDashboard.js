@@ -341,7 +341,7 @@ class StudentDashboard extends Component {
 
 						</div>
 
-						<div className="col-sm-9">
+						<div className="col-sm-9 expand-width">
 							<div className="jumbotron">
 								{this.state.toRender}			
 							</div>

@@ -110,8 +110,14 @@ class StudentDashboard extends Component {
 			if (response.ok) {
 				response.json().then(data => {
 					surveys = data;
+					console.log(data);
 					compo.setState({
-						toRender : <StudentHistory data={surveys}/>
+						toRender: (
+							<div>
+								<h4><u>Result</u></h4>
+								<br /><br />
+								<StudentHistory data={surveys} />
+							</div>)
 					})
 
 					// check if a survey is open & check the last survey done
@@ -244,7 +250,7 @@ class StudentDashboard extends Component {
 
 						alt="profil icon" />
 					<div className="card-body">
-						<h4 className="card-title">{"No Survey close"}</h4>
+						<h4 className="card-title">{"Survey closed"}</h4>
 					</div>
 				</div>
 			)
@@ -294,7 +300,7 @@ class StudentDashboard extends Component {
 						alt="competence wall icon"
 					/>
 					<div className="card-body">
-						<h4 className="card-title">{"History"}</h4>
+						<h4 className="card-title">{"Result"}</h4>
 
 					</div>
 				</div>
@@ -310,8 +316,13 @@ class StudentDashboard extends Component {
 
 	showStudentHistory = function () {
 		let item = (<div></div>)
-		item = <StudentHistory data={surveys}/>
-
+		item = <StudentHistory data={surveys} />
+		item = (
+			<div>
+				<h4><u>Result</u></h4>
+				<br /><br />
+				{item}
+			</div>)
 		compo.setState({ toRender: item })
 	}
 
@@ -343,7 +354,7 @@ class StudentDashboard extends Component {
 
 						<div className="col-sm-9 expand-width">
 							<div className="jumbotron">
-								{this.state.toRender}			
+								{this.state.toRender}
 							</div>
 						</div>
 

@@ -206,11 +206,6 @@ Popup.registerPlugin('addStudent', function (callbackConfirm, allStudentsList, p
 
     let checkForm = function () {
 
-        console.log("student info");
-        console.log(_username.length);
-        console.log(_password.length);
-        console.log(_gender.length);
-
         if ((_username.length >= 5)
             && (_age > 1)
             && (_password.length >= 5)

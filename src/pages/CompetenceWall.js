@@ -11,6 +11,7 @@ import ProgressionRender from '../components/teacherCompo/ProgressionRender.js';
 function mapStateToProps(store) {
     return {
         user: store.user.user,
+        classes: store.classroom.classes,
     }
 }
 
@@ -21,20 +22,28 @@ class CompetenceWall extends Component {
         this.state = {
             view: "competence",
             buttonState1: "btn btn-primary",
-            buttonState2: "btn btn-secondary"
+            buttonState2: "btn btn-secondary",
+            classes: [],
+            groups: [],
+            students: [],
         };
+    }
+
+
+    getClasses = () => {
+        console.log(this.props.classes);
     }
 
     selectView = (newView) => {
 
-        if(newView=="competence"){
+        if (newView == "competence") {
             this.setState({
                 ...this.state,
                 buttonState1: "btn btn-primary",
                 buttonState2: "btn btn-secondary",
                 view: newView,
             })
-        }else {
+        } else {
             this.setState({
                 ...this.state,
                 buttonState1: "btn btn-secondary",
@@ -46,21 +55,7 @@ class CompetenceWall extends Component {
 
     render() {
 
-        let parameters = [{
-            teachers: this.props.user.id,
-            students: 8,
-            classes: 1,
-            groups: null,
-            surveys: 27,
-        },
-        {
-            teachers: this.props.user.id,
-            students: 12,
-            classes: 1,
-            groups: null,
-            surveys: 27,
-        }
-        ]
+        this.getClasses();
 
         return (
             <div className="container">
@@ -71,9 +66,9 @@ class CompetenceWall extends Component {
                     <button disabled className={this.state.buttonState2} onClick={() => this.selectView('progression')}>Progression</button>
                 </div>
                 <br /><br /><br />
-                {this.state.view === 'competence' ? <CompetenceRender /> : <ProgressionRender />}
+                {this.state.view === 'competence' ? <CompetenceRender data={this.props.classes}/> : <ProgressionRender />}
                 {
-                    
+
                 }
                 <br />
             </div>

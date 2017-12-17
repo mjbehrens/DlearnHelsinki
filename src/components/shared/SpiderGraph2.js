@@ -52,6 +52,8 @@ class SpiderGraph2 extends Component {
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
 
+        console.log(nextProps.parameters)
+
         if ((parameters != nextProps.parameters)) {
         
             this.setState({

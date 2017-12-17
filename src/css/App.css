@@ -87,7 +87,7 @@ input.inputModified:invalid {
 }
 
 .graph-container {
-    min-width: 300px;
+    min-width: 600px;
     width: 100%;
 }
 

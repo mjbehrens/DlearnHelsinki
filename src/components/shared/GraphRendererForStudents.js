@@ -32,23 +32,24 @@ class GraphRendererForStudents extends Component {
 
 
     componentDidMount() {
-        this.loadGraphs();
+        this.loadGraphs(this.props);
     }
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        if (this.props !== nextProps) {
+        //if (this.props !== nextProps) {
             //this.render();
-            this.loadGraphs();
-        }
+            console.log(nextProps)
+            this.loadGraphs(nextProps);
+        //}
     }
 
-    loadGraphs = function () {
+    loadGraphs = function (parms) {
 
         //Load progression
         let progression = <LinearGraph parameters={{
             teachers: compo.props.user.id,
-            students: compo.props.student._id,
+            students: parms.student._id,
             classes: compo.props.user.classid,
             groups: null,
             progression: 5,
@@ -56,12 +57,12 @@ class GraphRendererForStudents extends Component {
 
         // load spider graph
         let spiders = [];
-        this.props.surveys.forEach(function (s) {
+        parms.surveys.forEach(function (s) {
             spiders.push(
                 <div key={s._id}>
                     <SpiderGraph name={s.title + " " + s.start_date} parameters={{
                         teachers: compo.props.user.id,
-                        students: compo.props.student._id,
+                        students: parms.student._id,
                         classes: compo.props.user.classid,
                         groups: null,
                         surveys: s._id,

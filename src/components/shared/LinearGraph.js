@@ -104,6 +104,8 @@ class LinearGraph extends Component {
         // set the spinner to true
         this.setState({ isLoading: true });
 
+        console.log(GET_ANSWERS)
+
         console.log(BACKEND_API.ROOT + GET_ANSWERS);
 
         fetch(BACKEND_API.ROOT + GET_ANSWERS, {

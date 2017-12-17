@@ -33,25 +33,25 @@ class GraphRendererForGroups extends Component {
 
 
     componentDidMount() {
-        this.loadGraphs(SELECT_DEFAULT_VALUE);
+        this.loadGraphs(this.props, SELECT_DEFAULT_VALUE);
     }
 
     // Called everytime a props value change
     componentWillReceiveProps(nextProps) {
-        if (this.props !== nextProps) {
+        //if (this.props !== nextProps) {
             //this.render();
-            this.loadGraphs(SELECT_DEFAULT_VALUE);
-        }
+            this.loadGraphs(nextProps, SELECT_DEFAULT_VALUE);
+        //}
     }
 
-    loadGraphs = function (select_value) {
+    loadGraphs = function (parms, select_value) {
 
         //Load progression
         let progression = <LinearGraph parameters={{
             teachers: compo.props.user.id,
             students: null,
             classes: compo.props.user.classid,
-            groups: compo.props.group._id,
+            groups: parms.group._id,
             progression: select_value,
         }} />
 
@@ -67,9 +67,9 @@ class GraphRendererForGroups extends Component {
                             teachers: compo.props.user.id,
                             students: null,
                             classes: compo.props.user.classid,
-                            groups: compo.props.group._id,
+                            groups: parms.group._id,
                             surveys: s._id,
-                        }} color={compo.props.group.name} />
+                        }} color={parms.group.name} />
                     </div>);
             }
         }
@@ -104,7 +104,7 @@ class GraphRendererForGroups extends Component {
     }
 
     onChangeSelect = function (e) {
-        compo.loadGraphs(e.target.value);
+        compo.loadGraphs(compo.props, e.target.value);
     }
 
 

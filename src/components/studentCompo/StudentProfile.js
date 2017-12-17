@@ -25,6 +25,8 @@ class StudentProfile extends Component {
     render() {
         return (
             <div>
+                <h4><u>My Profile</u></h4>
+                <br/><br/>
                 <div className="container" id="studentProfile">
                     <ul className="list-group">
                         <li className="list-group-item active">
@@ -41,7 +43,7 @@ class StudentProfile extends Component {
                         <li className="list-group-item" style={{ margin: 0, padding: 0 }}>
                             <div className="row">
                                 <div className="col right-align border border-top-0 border-bottom-0" style={{ margin: 0, padding: 10 }}>Gender</div>
-                                <div className="col left-align border border-top-0 border-bottom-0" style={{ margin: 0, padding: 10 }}>{this.props.user.sex}F</div>
+                                <div className="col left-align border border-top-0 border-bottom-0" style={{ margin: 0, padding: 10 }}>{this.props.user.sex}Male</div>
                             </div>
                         </li>
                         <li className="list-group-item" style={{ margin: 0, padding: 0 }}>

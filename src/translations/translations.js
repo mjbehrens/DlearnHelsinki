@@ -74,6 +74,11 @@ module.exports = {
       class: 'Class',
       progression: 'Progression',
 
+      //Outliers
+      outlier_title: 'Students with outlier results',
+      outliers_name: 'Student',
+      outlier_score: 'Outlier score',
+      what_is_outlier: 'Local outlier score is based on the particular student\'s results on this class. If the results differs from 1, the results are deviant results comparing to other students',
 
 
 /*------------- Teacher ---------------*/
@@ -155,6 +160,8 @@ module.exports = {
 
     }
   },
+
+  /*--------------- Suomeksi -----------*/
   fi: {
     locale: 'fi',
     messages: {
@@ -214,7 +221,7 @@ module.exports = {
       //History
       surveys: 'Kyselyt',
       students: 'Oppilaat',
-      outliers: 'Poikkeavat Havainnot',
+      outliers: 'Poikkeavuudet',
 
       //HistoryFinder
       search: 'Etsi',
@@ -230,6 +237,12 @@ module.exports = {
       data_no_found: 'Tietoja ei löydy',
       class: 'Luokka',
       progression: 'Edistyminen',
+
+      //Outliers
+      outlier_title: 'Poikkeavuudet',
+      outliers_name: 'Oppilas',
+      outlier_score: 'Poikkeavuuden tulos',
+      what_is_outlier: 'Poikkeavuuden tulos perustuu oppilaan vastaamiin kyseyiden tuloksiin tässä ryhmässä. Jos tulos on 1 poikkeava, oppilaan vastaukset eroavat huomattavasti muista oppilaista.',
 
 
  /*------------- Teacher ---------------*/

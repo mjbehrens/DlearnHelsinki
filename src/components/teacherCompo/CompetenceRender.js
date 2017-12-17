@@ -18,6 +18,7 @@ class CompetenceRender extends Component {
         super(props);
         this.state = {
             data_competence: []
+
         };
     }
 

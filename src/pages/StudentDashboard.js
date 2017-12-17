@@ -63,7 +63,7 @@ class StudentDashboard extends Component {
 		}
 
 		this.state = {
-			toRender: null,
+			toRender: (<StudentProfile />),
 			isLoading: true,
 			disabledSurvey: true,
 			lastSurvey: {
@@ -244,7 +244,7 @@ class StudentDashboard extends Component {
 
 						alt="profil icon" />
 					<div className="card-body">
-						<h4 className="card-title">{"Survey"}</h4>
+						<h4 className="card-title">{"No Survey close"}</h4>
 					</div>
 				</div>
 			)
@@ -257,7 +257,7 @@ class StudentDashboard extends Component {
 						<img className="card-img-top teacher-card-img" src={iconSurveyOpen} width="100" height="100"
 							alt="profil icon" />
 						<div className="card-body">
-							<h4 className="card-title">{"Survey"}</h4>
+							<h4 className="card-title">{"Answer survey"}</h4>
 						</div>
 					</div>
 				</div>
@@ -295,6 +295,7 @@ class StudentDashboard extends Component {
 					/>
 					<div className="card-body">
 						<h4 className="card-title">{"History"}</h4>
+
 					</div>
 				</div>
 			</div>
@@ -310,13 +311,14 @@ class StudentDashboard extends Component {
 	showStudentHistory = function () {
 		let item = (<div></div>)
 		item = <StudentHistory data={surveys}/>
+
 		compo.setState({ toRender: item })
 	}
 
 
 	render() {
 		const { translate } = this.props;
-		
+
 		return (
 			<div>
 				<div className="container text-center">

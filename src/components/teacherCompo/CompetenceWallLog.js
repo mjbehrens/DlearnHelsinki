@@ -17,13 +17,15 @@ class CompetenceWallLog extends React.Component {
         }
     }
 
-    addToLog = () => {
+    addItem = () => {
         this.setState({
             ...this.state,
             modalProps: {
                 ...this.state.modalProps,
+                getRequest : this.props.getRequest,
+                data : this.props.data,
             }
-        }, () => this.props.dispatch(modalActions.setModal('CompetenceWallLogModal', this.state.modalProps)));
+        }, () => this.props.dispatch(modalActions.setModal('CompetenceWallLogModal', this.state.modalProps )));
         this.props.dispatch(modalActions.showModal())
     }
 
@@ -33,36 +35,22 @@ class CompetenceWallLog extends React.Component {
         if (elem != null) {
             elem.parentNode.removeChild(elem);
         }
-        this.addItemToLog();
+        this.renderItemIntoLog();
 
     }
 
-    addItemToLog = function () {
+    renderItemIntoLog = function () {
 
-        /*
-        for (let x = 0; x < y; x++) {
-            var count = y-x;
-            var ul = document.getElementById("logList");
-            var li = document.createElement("li");
-            li.appendChild(document.createTextNode("Student "+count));
-            var button = document.createElement("button");
-            button.innerHTML = "X";
-            button.className = "btn btn-secondary button-right";
-            li.appendChild(button);
-            li.setAttribute("id", "attrib"+count);
-            li.className = "list-group-item";
-            ul.insertBefore(li, ul.childNodes[1]);
-        }
-        */
         let compo = this;
         let count = 1;
         var li_item = [];
+        console.log(this.props.data_competence)
         this.props.data_competence.forEach(function (element) {
             li_item.push(
                 <il id={element.request}
                     className="list-group-item">
                     {element.name}
-                  <button type="button" onClick={() => compo.props.functionDelete(element.request)} className="btn btn-secondary button-right">X</button>
+                    <button type="button" onClick={() => compo.props.functionDelete(element.request)} className="btn btn-secondary button-right">X</button>
                 </il>
             )
             count += 1;
@@ -72,38 +60,14 @@ class CompetenceWallLog extends React.Component {
 
     }
 
-    /*
-        renderList = function () {
-            return (
-                <div >
-                    <ul className="list-group" id="logList">
-                        <li className="list-group-item active">Log</li>
-                        <li className="list-group-item" id="attrib01">
-                            Student 1<button type="button" className="btn btn-secondary button-right" onClick={this.deleteFromLog.bind(this, "attrib01")}>X</button>
-                        </li>
-                        <li className="list-group-item" id="attrib02">
-                            Student 2<button type="button" className="btn btn-secondary button-right" onClick={this.deleteFromLog.bind(this, "attrib02")}>X</button>
-                        </li>
-                        <li className="list-group-item" id="attrib03">
-                            Student 3<button type="button" className="btn btn-secondary button-right" onClick={this.deleteFromLog.bind(this, "attrib03")}>X</button>
-                        </li>
-                        <li className="list-group-item" id="attrib04">
-                            Student 4<button type="button" className="btn btn-secondary button-right" onClick={this.deleteFromLog.bind(this, "attrib04")}>X</button>
-                        </li>
-                        <button type="button" className="list-group-item list-group-item-secondary list-group-item-action" onClick={this.addToLog}>Add an item</button>
-                    </ul>
-                </div>
-            )
-        }
-        */
 
     render() {
         return (
             <div>
                 <ul className="list-group" id="logList">
                     <li className="list-group-item active">Log</li>
-                    {this.addItemToLog()}
-                    <button type="button" className="list-group-item list-group-item-secondary list-group-item-action" onClick={this.addToLog}>Add an item</button>
+                    {this.renderItemIntoLog()}
+                    <button type="button" className="list-group-item list-group-item-secondary list-group-item-action" onClick={this.addItem}>Add an item</button>
                 </ul>
 
             </div>

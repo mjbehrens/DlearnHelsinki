@@ -20,7 +20,7 @@ class AddStudent extends React.Component {
     renderExistedStudent = function () {
 	const { translate } = this.props;
         let lst = this.props.allStudentsList;
-        console.log(lst);
+
         let options = [];
         if (lst != null) {
             options.push(<option value={-1}> {translate('select_student')} </option>);

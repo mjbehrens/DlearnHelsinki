@@ -8,12 +8,16 @@ import LinearGraph from '../components/shared/LinearGraph.js';
 import Spinner from 'react-spinner';
 import StudentProfile from '../components/studentCompo/StudentProfile.js';
 import StudentProfileButton from '../components/studentCompo/StudentProfileButton.js';
+import StudentHistory from '../components/studentCompo/StudentHistory.js';
+
 
 //icons:
 import iconGrpManagment from "../res/icons/manage_groups.svg";
 import iconSurveyOpen from "../res/icons/survey.svg";
 import iconSurveyClose from "../res/icons/close_survey.svg";
 import iconMyCompetenceWall from "../res/icons/competence_wall.png"
+import iconHistory from "../res/icons/history.svg";
+
 
 import { connect } from 'react-redux';
 
@@ -106,8 +110,9 @@ class StudentDashboard extends Component {
 			if (response.ok) {
 				response.json().then(data => {
 					surveys = data;
-					//print received surveys
-					console.log(surveys);
+					compo.setState({
+						toRender : <StudentHistory data={surveys}/>
+					})
 
 					// check if a survey is open & check the last survey done
 					compo.checkIfSurveyOpen(surveys);
@@ -222,73 +227,6 @@ class StudentDashboard extends Component {
 		console.log(this.state.survey);
 	}
 
-	displaySpiderGraph = function () {
-		const { translate } = this.props;
-
-		// get all 
-		let parametersStudent = [{
-			teachers: null,
-			students: this.props.user.id,
-			classes: this.props.user.classid,
-			groups: null,
-			surveys: 27,
-			name: "student result",
-			request: "students/" + this.props.user.id + "/survey_averages",
-
-		},
-		{
-			teachers: null,
-			students: this.props.user.id,
-			classes: this.props.user.classid,
-			groups: null,
-			surveys: 27,
-			name: "(Fake) class result",
-			request: "students/" + this.props.user.id + "/classes/" + this.props.user.classid + "/class_averages",
-		},
-		{
-			teachers: null,
-			students: this.props.user.id,
-			classes: this.props.user.classid,
-			groups: null,
-			surveys: 27,
-			name: "(Fake) group result",
-			request: "students/" + this.props.user.id + "/classes/" + this.props.user.classid + "/group_averages",
-		}
-		];
-
-
-		if (parametersStudent[0].surveys) {
-			return (
-				<div>
-					<SpiderGraph2 parameters={parametersStudent} name="toto" color="black" />
-					{
-						//<SpiderGraph name={this.state.lastSurvey.title} parameters={parametersClass} />
-					}
-
-				</div>
-			)
-		} else if (this.state.isLoading) {
-
-			return (
-				<div>
-					<div className='spinner-container'>
-						<Spinner />
-					</div>
-					{translate('check_open_survey')} ...
-				</div>
-			)
-		}
-		else {
-			return (
-				<div>
-
-					{translate('no_surveys_done')} ...
-				</div>
-			)
-		}
-	}
-
-
 
 	changeSurveyButton = function () {
 		if (this.state.disabledSurvey) {
@@ -328,9 +266,6 @@ class StudentDashboard extends Component {
 			//return <button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">Survey</button>
 		}
 
-
-
-
 	}
 
 	renderProfileButton = function () {
@@ -351,15 +286,15 @@ class StudentDashboard extends Component {
 	}
 
 
-	renderCompetenceWallButton = function () {
+	renderHistoryButton = function () {
 		return (
-			<div className="card card-inverse w-100" onClick={this.showCompetenceWall}>
+			<div className="card card-inverse w-100" onClick={this.showStudentHistory}>
 				<div className="hoverCard">
-					<img className="card-img-top teacher-card-img" src={iconMyCompetenceWall} width="100" height="100"
+					<img className="card-img-top teacher-card-img" src={iconHistory} width="100" height="100"
 						alt="competence wall icon"
 					/>
 					<div className="card-body">
-						<h4 className="card-title">{"My Competence Wall"}</h4>
+						<h4 className="card-title">{"History"}</h4>
 					</div>
 				</div>
 			</div>
@@ -372,9 +307,9 @@ class StudentDashboard extends Component {
 		compo.setState({ toRender: item })
 	}
 
-	showCompetenceWall = function () {
+	showStudentHistory = function () {
 		let item = (<div></div>)
-		item = compo.displaySpiderGraph()
+		item = <StudentHistory data={surveys}/>
 		compo.setState({ toRender: item })
 	}
 
@@ -398,7 +333,7 @@ class StudentDashboard extends Component {
 									<br />
 									{this.renderProfileButton()}
 									<br />
-									{this.renderCompetenceWallButton()}
+									{this.renderHistoryButton()}
 								</div>
 							</div>
 
@@ -406,7 +341,7 @@ class StudentDashboard extends Component {
 
 						<div className="col-sm-9">
 							<div className="jumbotron">
-								{this.state.toRender}
+								{this.state.toRender}			
 							</div>
 						</div>
 

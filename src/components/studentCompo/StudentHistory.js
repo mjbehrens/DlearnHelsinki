@@ -93,7 +93,7 @@ class StudentHistory extends Component {
                         {this.renderSurveysSelect(this.props.data)}
                     </div>
                     <div className="row">
-                        <div className="col-sm-9"><SpiderGraph2 parameters={requests} name="Previous results" /></div>
+                        <div className="col-sm-9 expand-width"><SpiderGraph2 parameters={requests} name="Previous results" /></div>
                     </div>
                 </div>
             </div>

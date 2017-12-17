@@ -9,6 +9,7 @@ import HistoryDisplay from '../components/shared/HistoryDisplay.js';
 import GraphRendererForSurveys from '../components/shared/GraphRendererForSurveys.js';
 import GraphRendererForStudents from '../components/shared/GraphRendererForStudents.js';
 import GraphRendererForGroups from '../components/shared/GraphRendererForGroups.js';
+import OutlierList from '../components/shared/OutlierList.js';
 
 
 import { BACKEND_API } from '../constants.js';
@@ -45,6 +46,7 @@ class History extends Component {
             surveys: [],
             filteredData: [],
             selectedItemId: null,
+            outlierAccess: null,
             researchType: '',
             dateSelected: false,
             warning: "",
@@ -266,6 +268,10 @@ class History extends Component {
                     return (
                         <GraphRendererForStudents student={std[0]} surveys={this.state.surveys} />
                     )
+                case 'outlier':
+                    return (
+                        <OutlierList />
+                    )
                 default:
                     break;
             }
@@ -275,6 +281,7 @@ class History extends Component {
     OnClickSurveys = function () {
         sampleData = this.state.surveys;
         this.setState({
+            outlierAccess: null,
             filteredData: this.state.surveys,
             researchType: 'survey',
             selectedItemId: null,
@@ -284,6 +291,7 @@ class History extends Component {
     OnClickGroups = function () {
         sampleData = this.state.groups;
         this.setState({
+            outlierAccess: null,
             filteredData: this.state.groups,
             researchType: 'group',
             selectedItemId: null,
@@ -295,6 +303,7 @@ class History extends Component {
     OnClickStudents = function () {
         sampleData = this.state.students;
         this.setState({
+            outlierAccess: null,
             filteredData: this.state.students,
             researchType: 'student',
             selectedItemId: null,
@@ -302,11 +311,12 @@ class History extends Component {
     }
 
     OnClickOutliers = function () {
-        sampleData = this.state.students;
+        sampleData = [];
         this.setState({
-            filteredData: this.state.students,
-            researchType: 'student',
+            outlierAccess: 1,
             selectedItemId: null,
+            researchType: null,
+            filteredData: null,
         })
     }
 
@@ -356,6 +366,9 @@ class History extends Component {
                         </div>
                         <div className="col-sm-8" hidden={this.state.selectedItemId == null}>
                             {compo.selectGraphRenderer()}
+                        </div>
+                        <div className="col-sm-8" hidden={this.state.outlierAccess == null}>
+                            <OutlierList classid = {this.props.user.classid} />
                         </div>
                     </div>
                 </div>

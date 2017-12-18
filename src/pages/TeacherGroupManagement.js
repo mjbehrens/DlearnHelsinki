@@ -6,6 +6,7 @@ import { withTranslate } from 'react-redux-multilingual'
 
 import Group from "../components/teacherCompo/Group";
 import AddGroup from "../components/teacherCompo/AddGroup";
+import DeleteGroup from "../components/teacherCompo/DeleteGroup";
 
 import { connect } from 'react-redux';
 
@@ -18,7 +19,7 @@ function mapStateToProps(store) {
 
 var groups = []; // groups of this class
 var allStudentsList = []; // student of all the school
-
+var listGrps = [];
 var compo;
 
 class TeacherGroupManagement extends React.Component {
@@ -106,7 +107,7 @@ class TeacherGroupManagement extends React.Component {
         //to change and go to students
         this.loadGroups();
         groups.forEach(function (g) {
-            listGroups.push(<div key={g._id}><Group allStudentsList={allStudentsList} list={g.students} group_name={g.name} group_id={g._id} listGroups={compo.state.listGrps} callbackGM={compo.getGroupsREST} /></div>);
+            listGroups.push(<div key={g._id}><Group group_lenght={g.students.length} allStudentsList={allStudentsList} list={g.students} group_name={g.name} group_id={g._id} listGroups={compo.state.listGrps} callbackGM={compo.getGroupsREST} /></div>);
         });
         this.setState({ groups: listGroups });
         console.log(groups);
@@ -117,9 +118,8 @@ class TeacherGroupManagement extends React.Component {
         let listGroups = [];
         //to change and go to students
         groups.forEach(function (g) {
-            listGroups.push({ groupId: g._id, groupName: g.name });
+            listGroups.push({ groupId: g._id, groupName: g.name, groupsLength: g.students.length});
         });
-        console.log(listGroups);
         this.setState({ listGrps: listGroups });
 
     }
@@ -160,27 +160,8 @@ class TeacherGroupManagement extends React.Component {
     }
 
     onClickDeleteGroup = function () {
-        /** fetch(ORIGIN + this.state.currentQuestion.id, {
-            method: "POST",
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa('teacher:password')
-            },
-            body: data
-        }).then(function (response) {
-            if (response.ok) {
-                console.log(response.body)
-                console.log("answer put on server")
-            } else {
-                console.log('Network response was not ok.');
-            }
-        }).catch(function (err) {
-            // Error :(
-            console.log(err);
-        }); */
-        console.log("Delete a group");
-
+        let groupsToDelete
+        Popup.plugins().deleteGroup(compo.state.listGrps);
     }
 
     render() {
@@ -206,7 +187,7 @@ class TeacherGroupManagement extends React.Component {
 			</div>
 		    <div className="btn-group btn-group-lg" role="group">
                     <button className="btn btn-primary" onClick={this.onClickAddGroup}>{translate('add_group')}</button>
-                    <button className="btn btn-primary" disabled={true} onClick={this.onClickDeleteGroup}>{translate('delete_group')}</button>
+                    <button className="btn btn-primary" onClick={this.onClickDeleteGroup}>{translate('delete_group')}</button>
 		    </div>
                 </div>
             )
@@ -245,6 +226,67 @@ Popup.registerPlugin('addGroup', function (props, callbackConfirm) {
                         alert(props.translate('error_group_name'))
                     }
 
+                }
+            }]
+        },
+        className: null, // or string
+        noOverlay: true, // hide overlay layer (default is false, overlay visible)
+        position: { x: 0, y: 0 }, // or a function, more on this further down
+        closeOnOutsideClick: false, // Should a click outside the popup close it? (default is closeOnOutsideClick property on the component)
+    });
+});
+
+
+Popup.registerPlugin('deleteGroup', function (listGr) {
+    let _group_id = '';
+
+    let onChangeSelectGroup = function (e) {
+        _group_id = e.target.value;
+    }
+
+    let callback = function () {
+        let DELETE_GROUP = 'teachers/' + compo.props.user.id + '/classes/' + compo.props.user.classid + '/groups/' + _group_id;
+        console.log("delete fetch: " + DELETE_GROUP)
+        fetch(BACKEND_API.ROOT + DELETE_GROUP, {
+            method: "DELETE",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + compo.props.user.hash,
+            },
+        }).then(function (response) {
+            if (response.ok) {
+                console.log(response.body)
+                console.log("answer put on server")
+            } else {
+                console.log('Network response was not ok.');
+            }
+        }).catch(function (err) {
+            // Error :(
+            console.log(err);
+        });
+    }
+
+    this.create({
+        title: 'Delete group',
+        content: <DeleteGroup
+            listGroups={listGr} onChangeSelectGroup={onChangeSelectGroup}
+        />,
+        buttons: {
+            left: [{
+                text: 'Quit',
+                className: null, // optional
+                action: function (popup) {
+                    //do things
+                    popup.close();
+                }
+            }],
+            right: [{
+                text: 'Confirm',
+                className: 'success', // optional
+                action: function (popup) {
+                    callback();
+                    popup.close();
                 }
             }]
         },

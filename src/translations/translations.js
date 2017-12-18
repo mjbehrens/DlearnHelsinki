@@ -168,7 +168,9 @@ module.exports = {
       //StudentHistory
       all_surveys: 'All surveys',
       previous_results: 'Previous results',
-
+      your_class: 'Your Class',
+      your_group: 'Your Group',
+      your_result: 'Your Results',
 
     }
   },

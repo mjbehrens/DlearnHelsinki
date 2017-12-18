@@ -55,7 +55,7 @@ class SpiderGraph2 extends Component {
         console.log(nextProps.parameters)
 
         if ((parameters != nextProps.parameters)) {
-        
+
             this.setState({
                 isLoading: false,
                 noData: true,
@@ -69,7 +69,7 @@ class SpiderGraph2 extends Component {
                 parameters = nextProps.parameters;
                 this.getDataForGraph();
             }
-            
+
         }
     }
 
@@ -128,6 +128,7 @@ class SpiderGraph2 extends Component {
     }
 
     getSurveyAnswersREST = function (request, name) {
+        const { translate } = this.props;
         // set the spinner to true
         this.setState({ isLoading: true });
 
@@ -160,7 +161,11 @@ class SpiderGraph2 extends Component {
                         let labelsArray = [];
                         let answerArray = [];
                         Answers.forEach(function (e) {
+                          if (translate('dashboard') == 'Dashboard') {
                             labelsArray.push(e.theme_title);
+                          }else {
+                            labelsArray.push(e.theme_title_fi);
+                          }
                             answerArray.push((e.answer).toFixed(1));
                             // if description supported, added here
                         }, this);

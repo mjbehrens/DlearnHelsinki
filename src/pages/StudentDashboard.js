@@ -100,6 +100,8 @@ class StudentDashboard extends Component {
 	// Get all the survey from one class
 	getAllSurveyREST = function () {
 
+		const { translate } = this.props;
+
 		fetch(BACKEND_API.ROOT + GET_SURVEYS, {
 			method: "GET",
 			headers: {
@@ -114,7 +116,7 @@ class StudentDashboard extends Component {
 					compo.setState({
 						toRender: (
 							<div>
-								<h4><u>Result</u></h4>
+								<h4><u>{translate('result')}</u></h4>
 								<br /><br />
 								<StudentHistory data={surveys} />
 							</div>)
@@ -150,7 +152,7 @@ class StudentDashboard extends Component {
 	}
 
 
-	// check if a survey is currently open 
+	// check if a survey is currently open
 	checkLastSurveyDone = function () {
 
 		if (this.state.lastSurvey._id == null) {
@@ -235,14 +237,16 @@ class StudentDashboard extends Component {
 
 
 	changeSurveyButton = function () {
+		const { translate } = this.props;
 		if (this.state.disabledSurvey) {
-			return <button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">No Survey</button>
+			return <button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">{translate('no_survey')}</button>
 		} else {
-			return <button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">Survey</button>
+			return <button type="button" disabled={this.state.disabledSurvey} onClick={this.startSurvey} className="btn btn-primary">{translate('survey')}</button>
 		}
 	}
 
 	renderAccessSurveyButton = function () {
+		const { translate } = this.props;
 		if (this.state.disabledSurvey) {
 			return (
 				<div className="card card-inverse w-100">
@@ -250,7 +254,7 @@ class StudentDashboard extends Component {
 
 						alt="profil icon" />
 					<div className="card-body">
-						<h4 className="card-title">{"Survey closed"}</h4>
+						<h4 className="card-title">{translate('survey_closed')}</h4>
 					</div>
 				</div>
 			)
@@ -263,7 +267,7 @@ class StudentDashboard extends Component {
 						<img className="card-img-top teacher-card-img" src={iconSurveyOpen} width="100" height="100"
 							alt="profil icon" />
 						<div className="card-body">
-							<h4 className="card-title">{"Answer survey"}</h4>
+							<h4 className="card-title">{translate('answer_survey')}</h4>
 						</div>
 					</div>
 				</div>
@@ -275,6 +279,7 @@ class StudentDashboard extends Component {
 	}
 
 	renderProfileButton = function () {
+		const { translate } = this.props;
 		return (
 
 			<div className="card card-inverse w-100" onClick={this.showProfile}>
@@ -284,7 +289,7 @@ class StudentDashboard extends Component {
 					/>
 					<div className="card-body">
 
-						<h4 className="card-title">{"My Profile"}</h4>
+						<h4 className="card-title">{translate('profile')}</h4>
 					</div>
 				</div>
 			</div >
@@ -293,6 +298,7 @@ class StudentDashboard extends Component {
 
 
 	renderHistoryButton = function () {
+		const { translate } = this.props;
 		return (
 			<div className="card card-inverse w-100" onClick={this.showStudentHistory}>
 				<div className="hoverCard">
@@ -300,7 +306,7 @@ class StudentDashboard extends Component {
 						alt="competence wall icon"
 					/>
 					<div className="card-body">
-						<h4 className="card-title">{"Result"}</h4>
+						<h4 className="card-title">{translate('results')}</h4>
 
 					</div>
 				</div>
@@ -333,7 +339,7 @@ class StudentDashboard extends Component {
 		return (
 			<div>
 				<div className="container text-center">
-					<h1>Welcome {this.props.user.name}</h1>
+					<h1>{translate('welcome')} {this.props.user.name}</h1>
 					<br />
 
 					<div className="row">

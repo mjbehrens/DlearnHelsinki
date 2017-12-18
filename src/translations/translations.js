@@ -153,10 +153,24 @@ module.exports = {
       //Dashboard
       check_open_survey: 'Checking for open survey',
       welcome: 'Welcome',
-      profile: 'Profile',
+      profile: 'My profile',
       survey: 'Survey',
       latest_result: 'Last Result Survey',
       no_surveys_done: 'You haven\'t done any surveys yet',
+      result: 'Result',
+      no_survey: 'No survey',
+      survey_closed: 'Survey closed',
+      answer_survey: 'Anwer survey',
+      results: 'Results',
+      user_info: 'User information',
+      username: 'Username',
+
+      //StudentHistory
+      all_surveys: 'All surveys',
+      previous_results: 'Previous results',
+      your_class: 'Your Class',
+      your_group: 'Your Group',
+      your_result: 'Your Results',
 
     }
   },
@@ -315,10 +329,25 @@ module.exports = {
   //Dashboard
   check_open_survey: 'Ladataan kyselyjä',
   welcome: 'Tervetuloa',
-  profile: 'Profiili',
+  profile: 'Minun profiili',
   survey: 'Kysely',
   latest_result: 'Viimeisimmän kyselyn tulokset',
   no_surveys_done: 'Et ole vielä tehnyt kyselyjä',
+  result: 'Tulokset',
+  no_survey: 'Ei kyselyä',
+  survey_closed: 'Kysely suljettu',
+  answer_survey: 'Vastaa kyselyyn',
+  results: 'Tulokset',
+  user_info: 'Käyttäjän tiedot',
+  username: 'Käyttäjänimi',
+
+  //StudentHistory
+  all_surveys: 'Kaikki kyselyt',
+  previous_results: 'Aiemmat tulokset',
+  your_class: 'Sinun luokkasi',
+  your_group: 'Sinun ryhmäsi',
+  your_result: 'Sinun tuloksesi',
+
 
     }
   }
